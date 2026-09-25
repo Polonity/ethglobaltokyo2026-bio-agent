@@ -1,0 +1,18 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #101a20; color: #e2eee9; }
+body { margin: 0; }
+main { max-width: 1080px; margin: 5rem auto; padding: 0 1.5rem; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin: .5rem 0; letter-spacing: -.04em; }
+h2 { font-size: 1rem; color: #adc5bb; }
+.eyebrow { font-size: .75rem; letter-spacing: .16em; color: #7cddaa; }
+.notice { padding: 1rem; border-left: 3px solid #d8b66a; background: #202b2e; margin: 2rem 0; }
+button { background: #94efba; color: #13251c; padding: .8rem 1.2rem; border: 0; border-radius: .5rem; font: inherit; cursor: pointer; }
+button:disabled { opacity: .5; cursor: wait; }
+button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+#status { min-height: 1.5rem; color: #adc5bb; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 2rem 0; }
+article { border: 1px solid #31453f; border-radius: .7rem; padding: 1rem; }
+article p { font-size: 1.4rem; overflow-wrap: anywhere; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+th, td { padding: .9rem; border-bottom: 1px solid #31453f; }
+th { color: #adc5bb; font-weight: 500; }

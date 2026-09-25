@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bio Agent Observatory</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">ETHGLOBAL TOKYO 2026 · LOCAL SCAFFOLD</p>
+    <h1>Bio Agent Observatory</h1>
+    <p>入力から生まれる状態と行動を観察する。</p>
+    <p class="notice">模擬入力 / 閾値モデル — 実チェーン・MaleCNS 回路は未接続</p>
+    <button id="step">模擬入力を1件実行</button>
+    <p id="status" role="status" aria-live="polite">読み込み中…</p>
+    <section aria-label="最新の状態" class="metrics">
+      <article><h2>行動</h2><p id="action">—</p></article>
+      <article><h2>活性値</h2><p id="activation">—</p></article>
+      <article><h2>モデル</h2><p id="model">threshold-demo-v1</p></article>
+    </section>
+    <h2>実行履歴</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>ID</th><th>時刻</th><th>入力元</th><th>模擬ブロック</th><th>活性値</th><th>行動</th></tr></thead>
+      <tbody id="runs"></tbody>
+    </table></div>
+  </main>
+</body>
+</html>
