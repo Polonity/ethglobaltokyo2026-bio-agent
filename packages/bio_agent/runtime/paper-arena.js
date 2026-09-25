@@ -151,6 +151,7 @@ export class PaperArena {
       } else {
         f.lastKey = key;
         f.lastAction = 0;
+        f.decision = 'hold';
       }
     }
     this.rng = rng;
@@ -201,6 +202,7 @@ export class PaperArena {
       selection: selection.length,
     };
     f.state = 'learning';
+    f.decision = 'hold';
     f.pending = null;
     this.record(f, 'Learning reward estimates; position remains exposed');
     return true;

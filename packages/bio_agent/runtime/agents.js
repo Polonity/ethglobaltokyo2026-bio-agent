@@ -21,7 +21,7 @@ export class IBioAgentRuntime {
     throw new Error('observe must be implemented');
   }
   step(dt = 0.2) {
-    if (!Number.isFinite(dt) || dt <= 0 || dt > 0.2) throw new Error('Tick must be in (0, 0.2]');
+    if (dt !== 0.2) throw new Error('Tick must be exactly 0.2 seconds');
     this.arena.tick(dt);
     return this.snapshot();
   }

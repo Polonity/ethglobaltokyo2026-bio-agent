@@ -53,11 +53,14 @@ test('learning pauses decisions but preserves holdings and mark-to-market exposu
   for (let n = 1; n <= 6; n++) await a.consume(event(n, n % 2 ? 1 : 1.1), quotes);
   assert.ok(a.flies.some((f) => f.state === 'learning'));
   const f = a.flies.find((f) => f.state === 'learning');
+  assert.equal(f.decision, 'hold');
+  assert.equal(f.pending, null);
   f.units = 5n * ATOM;
   f.cash = 90n * ATOM;
   const id = f.id;
   await a.consume(event(7), quotes);
   assert.equal(a.flies[id].state, 'learning');
+  assert.equal(a.flies[id].decision, 'hold');
   assert.equal(a.flies[id].units, 5n * ATOM);
   assert.ok(a.flies[id].pnl < 0n);
   for (let n = 0; n < 41; n++) a.advanceLearning();

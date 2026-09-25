@@ -1,7 +1,9 @@
 import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
-const deployment = JSON.parse(await readFile('.local/deployment.json', 'utf8'));
+const deployment = JSON.parse(
+  await readFile(`${process.env.LOCAL_STATE_DIR || '.local'}/deployment.json`, 'utf8'),
+);
 const base = deployment.guiUrl;
 assert.ok(['localhost', '127.0.0.1'].includes(new URL(base).hostname));
 const browser = await chromium.launch({
