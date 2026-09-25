@@ -1,6 +1,8 @@
 # ログ受信・Agent 実行・データ管理
 
-状態: **設計案 / 未実装**。
+状態: **共有Runtime・永続化・SSEの設計案 / 未実装**。
+
+ローカルAnvilからブラウザー内Runtimeへのイベント接続は実装済みです。以下のProtocol、DBテーブル、API、checkpoint復旧は将来の共有構成に対する提案で、現在の機能ではありません。現在の契約は [ローカルAPI](../reference/local-api.md)、動作と復旧の境界は [アーキテクチャ](../architecture.md) を参照してください。
 
 ## 1回の Status 更新が届くまで
 

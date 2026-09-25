@@ -1,6 +1,6 @@
 # Fly Lab: 競争と自己学習の GUI
 
-状態: **Cloudflare Workers 公開済み / ブラウザー内 Runtime**。
+状態: **ブラウザー内 Runtime / 公開用12匹モード・Anvil接続3匹モードを実装済み**。
 
 公開 URL: https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev
 
@@ -37,9 +37,9 @@
 
 ## 境界と次の接続
 
-MaleCNS 回路はまだ読み込んでおらず、生物学的学習の実証ではない。画面にもモデル種別と未接続状態を表示する。Sepolia Registry は未デプロイで、入力はブラウザー内のローカル Status 操作である。
+MaleCNS 回路はまだ読み込んでおらず、生物学的学習の実証ではない。画面にもモデル種別と未接続状態を表示する。Sepolia Registry は未デプロイ。公開用モードの入力はブラウザー内のStatus操作、Anvilモードの入力は実コントラクトのイベント経由である。
 
-既存の [イベント駆動設計](runtime-and-events.md) は次段階の構成。将来の共有 Runtime と永続化、チェーンイベント入力、MaleCNS モデルは、今回のブラウザー用 Runtime と区別して実装・検証する。Cloudflare 用の秘密情報を GUI へ渡す必要はない。
+既存の [イベント駆動設計](runtime-and-events.md) は次段階の構成。将来の共有 Runtime と永続化、Sepoliaのチェーンイベント入力、MaleCNS モデルは、今回のブラウザー用 Runtime と区別して実装・検証する。Cloudflare 用の秘密情報を GUI へ渡す必要はない。
 
 ## 検証
 

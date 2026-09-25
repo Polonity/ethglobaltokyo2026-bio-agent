@@ -6,6 +6,8 @@
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
+**[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
+
 ## 構成
 
 | パス | 役割 |
@@ -98,5 +100,5 @@ make contracts-dry-run contracts-check-deployment
 - 各要素の境界と未実装項目は [アーキテクチャ](docs/architecture.md) を参照。
 - 作業単位で動作確認し、小さなコミットを残します。
 - RPC URL、トークン、大容量データ、学習成果物はコミットしません。
-- 初期の対象チェーンは Ethereum Sepolia。イベントの型は `contracts/src/interfaces/` に定義し、学習目的は今後決定します。
+- 現在の動作確認は Anvil。次の対象は Ethereum Sepolia。イベントの型は `contracts/src/interfaces/`、現在の学習目的・評価条件は [Fly Lab設計](docs/design/fly-arena.md) を参照。
 - スポンサー固有の統合・スマートコントラクトは選定後に追加します。
