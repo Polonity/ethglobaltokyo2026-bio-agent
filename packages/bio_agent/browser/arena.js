@@ -188,7 +188,7 @@ export class Arena {
       fly.activeTicks++;
       fly.score += result.collected ? 1 : 0;
       fly.collisions += result.hit ? 1 : 0;
-      fly.lastDecision = action === 8 ? '休息してエネルギー回復' : result.hit ? '危険刺激を検知' : result.collected ? '蜜を獲得 +1' : '蜜の匂いに向かう';
+      fly.lastDecision = action === 8 ? '休息してエネルギー回復' : result.hit ? '危険刺激を検知' : result.collected ? '蜜を獲得 +1' : `${['東', '南東', '南', '南西', '西', '北西', '北', '北東'][action]}へ移動`;
       fly.observation = { bearing: obs.direction, danger: Boolean(obs.mask), energy: fly.energy };
       fly.trail.push({ x: fly.x, y: fly.y });
       if (fly.trail.length > 16) fly.trail.shift();

@@ -53,7 +53,7 @@ class PipelineTests(unittest.TestCase):
                 else:
                     self.fail('HTTP server did not start')
                 self.assertEqual(json.loads(fetch('/api/runs')[1]), {'runs': []})
-                self.assertIn(b'Bio Agent Observatory', fetch('/')[1])
+                self.assertIn(b'FLY LAB', fetch('/')[1])
                 for path in ['/app.js', '/style.css']:
                     self.assertEqual(fetch(path)[0], 200)
                 for expected_id in (1, 2):

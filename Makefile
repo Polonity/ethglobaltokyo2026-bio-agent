@@ -1,7 +1,7 @@
 PYTHON ?= python3
 .PHONY: dev train test
 
-dev:
+dev: frontend-build
 	$(PYTHON) -m services.backend
 
 train:
@@ -37,3 +37,7 @@ ANVIL ?= anvil
 .PHONY: contracts-check-deployment
 contracts-check-deployment:
 	FORGE=$(FORGE) ANVIL=$(ANVIL) $(PYTHON) scripts/check-deployment.py
+
+.PHONY: frontend-build
+frontend-build:
+	npm run build

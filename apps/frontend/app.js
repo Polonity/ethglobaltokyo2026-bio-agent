@@ -1,40 +1,196 @@
-const el = (id) => document.getElementById(id);
-
-async function request(path, options) {
-  const response = await fetch(path, options);
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
-  return response.json();
-}
-
-async function refresh() {
-  const { runs } = await request('/api/runs');
-  el('runs').replaceChildren();
-  for (const run of runs) {
-    const row = document.createElement('tr');
-    for (const value of [run.id, new Date(run.created_at).toLocaleString('ja-JP'), run.stimulus.source, run.stimulus.block_number, run.state.activation.toFixed(2), run.state.action]) {
-      const cell = document.createElement('td');
-      cell.textContent = value;
-      row.append(cell);
+import { Arena, WIDTH, HEIGHT, MODEL, random } from '../../packages/bio_agent/browser/arena.js';
+const $ = id => document.getElementById(id);
+const arena = new Arena();
+const field = $('field'), ctx = field.getContext('2d');
+let speed = 1, pendingMode = 'forage', lastTime = performance.now(), accumulator = 0, uiTime = 0, lastEvent = -1;
+const visual = arena.flies.map(f => ({ x: f.x, y: f.y }));
+const textureRng = random(737);
+const grass = Array.from({ length: 85 }, () => ({ x: textureRng() * WIDTH, y: textureRng() * HEIGHT, size: textureRng() + 0.6 }));
+let cssWidth = 0, cssHeight = 0, ratio = 1;
+const resize = () => {
+  const rect = field.getBoundingClientRect();
+  cssWidth = rect.width; cssHeight = rect.height;
+  ratio = Math.min(window.devicePixelRatio || 1, 2);
+  field.width = Math.round(cssWidth * ratio); field.height = Math.round(cssHeight * ratio);
+};
+new ResizeObserver(resize).observe(field);
+function flyDrawing(c, x, y, angle, color, scale, time, resting = false) {
+  c.save(); c.translate(x, y); c.rotate(angle); c.scale(scale, scale);
+  c.fillStyle = '#23302425'; c.beginPath(); c.ellipse(1, 4, 10, 5, 0, 0, Math.PI * 2); c.fill();
+  c.strokeStyle = '#344338'; c.lineWidth = 1.05;
+  for (const side of [-1, 1]) {
+    for (const offset of [-3, 0, 3]) {
+      c.beginPath(); c.moveTo(offset, side * 2); c.lineTo(offset - 2, side * 5); c.lineTo(offset + (offset > 0 ? 3 : -4), side * 7); c.stroke();
     }
-    el('runs').append(row);
   }
-  if (runs.length) {
-    el('action').textContent = runs[0].state.action;
-    el('activation').textContent = runs[0].state.activation.toFixed(2);
-    el('model').textContent = runs[0].state.model_version;
+  const flap = resting ? 0.35 : Math.sin(time * 0.065) * 0.22;
+  c.fillStyle = '#f1f2ddaa'; c.strokeStyle = '#64786377'; c.lineWidth = 0.55;
+  for (const side of [-1, 1]) {
+    c.save(); c.rotate(side * (0.5 + flap)); c.beginPath(); c.ellipse(-3, side * 5, 9, 3.8, side * 0.1, 0, Math.PI * 2); c.fill(); c.stroke(); c.restore();
   }
-  el('status').textContent = runs.length ? `最近の ${runs.length} 件を表示` : 'まだ実行はありません。模擬入力を実行してください。';
+  c.fillStyle = '#394938'; c.beginPath(); c.ellipse(-3, 0, 6, 3.3, 0, 0, Math.PI * 2); c.fill();
+  c.strokeStyle = '#859172'; c.lineWidth = .8;
+  for (const i of [-5, -3, -1]) { c.beginPath(); c.moveTo(i, -2.5); c.lineTo(i, 2.5); c.stroke(); }
+  c.fillStyle = color; c.beginPath(); c.ellipse(2, 0, 4.3, 3.8, 0, 0, Math.PI * 2); c.fill();
+  c.fillStyle = '#29372d'; c.beginPath(); c.arc(6, 0, 3.5, 0, Math.PI * 2); c.fill();
+  c.fillStyle = '#bf6653'; for (const side of [-1, 1]) { c.beginPath(); c.ellipse(7, side * 2, 1.8, 1.5, 0, 0, Math.PI * 2); c.fill(); }
+  c.strokeStyle = '#344338'; c.beginPath(); c.moveTo(8, -1); c.lineTo(11, -4); c.moveTo(8, 1); c.lineTo(11, 4); c.stroke();
+  c.restore();
 }
-
-el('step').addEventListener('click', async () => {
-  el('step').disabled = true;
-  try {
-    await request('/api/demo/step', { method: 'POST' });
-    await refresh();
-  } catch (error) {
-    el('status').textContent = `実行結果を確認できませんでした: ${error.message}`;
-  } finally {
-    el('step').disabled = false;
+function draw(time) {
+  const w = cssWidth, h = cssHeight;
+  if (!w || !h) return;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  ctx.fillStyle = '#d7ddbf'; ctx.fillRect(0, 0, w, h);
+  const sx = w / WIDTH, sy = h / HEIGHT;
+  // Soft terrain, paths and sparse observation grid.
+  for (const [x, y, rx, ry] of [[8, 6, 8, 5], [27, 17, 10, 6], [32, 3, 9, 5]]) {
+    ctx.fillStyle = '#b9c79c50'; ctx.beginPath(); ctx.ellipse(x * sx, y * sy, rx * sx, ry * sy, -.3, 0, Math.PI * 2); ctx.fill();
   }
+  ctx.strokeStyle = '#faf5d02d'; ctx.lineWidth = 24;
+  ctx.beginPath(); ctx.moveTo(-10, h * .77); ctx.bezierCurveTo(w * .2, h * .6, w * .4, h * .2, w + 10, h * .35); ctx.stroke();
+  ctx.fillStyle = '#7c8e6550';
+  for (let x = 1; x < WIDTH; x += 2) for (let y = 1; y < HEIGHT; y += 2) { ctx.beginPath(); ctx.arc(x * sx, y * sy, .8, 0, Math.PI * 2); ctx.fill(); }
+  ctx.strokeStyle = '#82946a60'; ctx.lineWidth = .8;
+  for (const g of grass) {
+    const x = g.x * sx, y = g.y * sy;
+    ctx.beginPath(); ctx.moveTo(x - 3 * g.size, y); ctx.lineTo(x - 4 * g.size, y - 4 * g.size); ctx.moveTo(x, y + 1); ctx.lineTo(x, y - 5 * g.size); ctx.moveTo(x + 2 * g.size, y); ctx.lineTo(x + 4 * g.size, y - 3 * g.size); ctx.stroke();
+  }
+  for (const hazard of arena.world.hazards) {
+    const x = hazard.x * sx, y = hazard.y * sy, r = hazard.radius * Math.min(sx, sy);
+    ctx.fillStyle = '#c28b7740'; ctx.strokeStyle = '#b7806e88'; ctx.setLineDash([3, 5]);
+    ctx.beginPath(); ctx.ellipse(x, y, hazard.radius * sx, hazard.radius * sy, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#aa7462'; ctx.font = '10px monospace'; ctx.textAlign = 'center'; ctx.fillText('!', x, y + 4);
+    ctx.font = '6px monospace'; ctx.fillText('AVOID', x, y + r + 10);
+  }
+  for (const food of arena.world.foods) {
+    const x = food.x * sx, y = food.y * sy, pulse = (Math.sin(time * .002 + food.id) + 1) / 2;
+    ctx.strokeStyle = '#b69b4770'; ctx.lineWidth = .8;
+    ctx.beginPath(); ctx.arc(x, y, 13 + pulse * 5, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#ece6a6';
+    for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5; ctx.beginPath(); ctx.ellipse(x + Math.cos(a) * 4, y + Math.sin(a) * 4, 4, 3, a, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#b99840'; ctx.beginPath(); ctx.arc(x, y, 2.6, 0, Math.PI * 2); ctx.fill();
+  }
+  arena.flies.forEach((f, i) => {
+    visual[i].x += (f.x - visual[i].x) * .16; visual[i].y += (f.y - visual[i].y) * .16;
+    if (f.state === 'learning') return;
+    if (f.trail.length > 1) {
+      ctx.strokeStyle = f.color + (i === arena.selected ? '90' : '40'); ctx.lineWidth = 1;
+      ctx.beginPath(); f.trail.forEach((p, index) => index ? ctx.lineTo(p.x * sx, p.y * sy) : ctx.moveTo(p.x * sx, p.y * sy)); ctx.stroke();
+    }
+    const x = visual[i].x * sx, y = visual[i].y * sy;
+    if (i === arena.selected) {
+      ctx.strokeStyle = '#53664588'; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    }
+    flyDrawing(ctx, x, y, f.heading, f.color, Math.max(.72, Math.min(1.05, w / 740)), time + i * 90, arena.paused || arena.finished);
+    ctx.font = `${i === arena.selected ? '600 ' : ''}7px monospace`; ctx.textAlign = 'center'; ctx.fillStyle = '#44543b';
+    ctx.fillText(f.name, x, y - 17);
+  });
+}
+function renderUI() {
+  const remaining = Math.ceil(arena.duration - arena.time);
+  $('timer').textContent = `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
+  $('time-progress').style.width = `${remaining / arena.duration * 100}%`;
+  $('round-label').textContent = `ROUND ${String(arena.round).padStart(2, '0')}`;
+  $('total-nectar').textContent = arena.flies.reduce((n, f) => n + f.score, 0);
+  $('field-count').textContent = `${arena.flies.filter(f => f.state === 'racing').length} agents active`;
+  $('ranking').replaceChildren(...arena.ranking().map((f, i) => {
+    const row = document.createElement('button'); row.className = `rank-row ${f.id === arena.selected ? 'selected' : ''}`;
+    row.setAttribute('aria-label', `${f.name} を観察、${f.score} nectar`);
+    row.setAttribute('aria-pressed', String(f.id === arena.selected));
+    row.innerHTML = `<span class="rank-number">${String(i + 1).padStart(2, '0')}</span><span class="rank-dot" style="background:${f.color}"></span><span class="rank-name">${f.name}</span>${f.state === 'learning' ? '<span class="rank-tag">LEARNING</span>' : ''}<span class="rank-score">${f.score}</span>`;
+    row.onclick = () => { arena.selected = f.id; renderUI(); }; return row;
+  }));
+  const f = arena.flies[arena.selected];
+  $('selected-name').textContent = f.name;
+  $('selected-name').style.color = f.color;
+  $('selected-version').textContent = `POLICY V${f.version}`;
+  $('selected-state').textContent = f.state === 'learning' ? 'LEARNING' : arena.world.mode.toUpperCase();
+  $('selected-energy').textContent = `${Math.round(f.energy * 100)}%`;
+  $('energy-bar').style.width = `${f.energy * 100}%`;
+  $('decision').textContent = f.state === 'learning' ? `経験を再生中 / ${f.training.steps} updates` : f.lastDecision;
+  $('sensors').textContent = f.observation ? `蜜: ${['東', '南東', '南', '南西', '西', '北西', '北', '北東'][f.observation.bearing]} / 近くの危険: ${f.observation.danger ? 'あり' : 'なし'}` : '感覚入力を待機中';
+  $('memory-count').textContent = f.memory.length;
+  $('selected-score').textContent = f.score;
+  $('train-selected').disabled = f.state === 'learning' || arena.finished;
+  const sc = $('specimen').getContext('2d'); sc.clearRect(0, 0, 400, 150);
+  flyDrawing(sc, 200, 75, -.4, f.color, 3.7, performance.now());
+  const learning = arena.flies.filter(f => f.state === 'learning');
+  const recent = [...arena.flies].filter(f => f.lastReport && f.state !== 'learning').sort((a, b) => b.lastTraining - a.lastTraining);
+  const slots = learning.slice(0, 2).map(f => ({ f, active: true }));
+  for (const r of recent) { if (slots.length >= 2) break; slots.push({ f: r, active: false }); }
+  while (slots.length < 2) slots.push({ f: null });
+  $('learning-slots').replaceChildren(...slots.map(({ f, active }, i) => {
+    const el = document.createElement('div'); el.className = `learning-slot ${active ? 'active' : ''}`;
+    if (!f) {
+      el.innerHTML = `<div class="slot-heading"><span>◎</span> TRAINING POD ${String(i + 1).padStart(2, '0')}<span>STANDBY</span></div><p class="slot-detail">下位の個体が到着するまで待機中</p>`;
+    } else if (active) {
+      el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${Math.floor(f.training.elapsed / 8 * 100)}%</span></div><p class="slot-detail">経験再生 + 練習環境 / ${f.training.steps} updates</p><div class="training-track"><i style="width:${f.training.elapsed / 8 * 100}%"></i></div>`;
+    } else {
+      const r = f.lastReport;
+      el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${r.accepted ? 'POLICY UPDATED' : 'POLICY KEPT'}</span></div><p class="slot-detail">検証報酬 ${r.before.toFixed(1)} → ${r.after.toFixed(1)}<br>${r.accepted ? `v${f.version} で競争に復帰` : '改善なし。既存方策で復帰'}</p>`;
+    }
+    return el;
+  }));
+  $('auto-indicator').textContent = arena.autoLearn ? 'ON' : 'OFF';
+  if (arena.revision !== lastEvent) {
+    lastEvent = arena.revision;
+    $('events').replaceChildren(...arena.events.slice(0, 5).map(e => {
+      const row = document.createElement('div'); row.className = 'event-row'; row.dataset.kind = e.kind;
+      const time = document.createElement('time'); time.textContent = `${Math.floor(e.time).toString().padStart(2, '0')}s`;
+      const title = document.createElement('strong'); title.textContent = e.title;
+      const detail = document.createElement('span'); detail.textContent = e.detail;
+      row.append(time, title, detail); return row;
+    }));
+  }
+  $('round-end').hidden = !arena.finished;
+  if (arena.finished) { const winner = arena.ranking()[0]; $('winner').textContent = `${winner.name} WINS`; $('winner-detail').textContent = `${winner.score} nectar / ${arena.flies.reduce((n, f) => n + f.trainingCount, 0)} learning sessions`; }
+}
+field.addEventListener('click', e => {
+  if (arena.finished) return;
+  const rect = field.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width * WIDTH, y = (e.clientY - rect.top) / rect.height * HEIGHT;
+  const fly = arena.flies.find(f => f.state !== 'learning' && Math.hypot(f.x - x, f.y - y) < 1.2);
+  if (fly) arena.selected = fly.id; else arena.addFood(x, y);
+  renderUI();
 });
-refresh().catch((error) => { el('status').textContent = `接続できません: ${error.message}`; });
+$('pause').onclick = () => {
+  arena.paused = !arena.paused; $('pause').innerHTML = arena.paused ? '▶ <span>Resume</span>' : 'Ⅱ <span>Pause</span>';
+  $('pause').setAttribute('aria-label', arena.paused ? '再開' : '一時停止');
+};
+$('speed').onclick = () => { speed = speed === 1 ? 2 : speed === 2 ? 4 : 1; $('speed').textContent = `${speed}×`; };
+for (const name of ['stimulus', 'energy']) $(name).oninput = () => { $(`${name}-value`).textContent = `${$(name).value}%`; };
+for (const button of document.querySelectorAll('[data-mode]')) button.onclick = () => {
+  pendingMode = button.dataset.mode;
+  document.querySelectorAll('[data-mode]').forEach(b => { b.classList.toggle('selected', b === button); b.setAttribute('aria-pressed', String(b === button)); });
+};
+$('apply').onclick = () => {
+  arena.applyStatus({ stimulus: Number($('stimulus').value) / 100, energy: Number($('energy').value) / 100, mode: pendingMode });
+  $('input-feedback').textContent = '刺激を適用しました';
+  $('apply').innerHTML = '適用しました ✓'; setTimeout(() => { $('apply').innerHTML = '刺激を適用する <span>↗</span>'; }, 1200);
+  renderUI();
+};
+$('train-selected').onclick = () => { arena.startTraining(arena.flies[arena.selected]); renderUI(); };
+$('auto-learn').onchange = () => { arena.autoLearn = $('auto-learn').checked; renderUI(); };
+$('next-agent').onclick = () => { arena.selected = (arena.selected + 1) % arena.flies.length; renderUI(); };
+$('next-round').onclick = () => { arena.nextRound(); $('pause').innerHTML = 'Ⅱ <span>Pause</span>'; $('pause').setAttribute('aria-label', '一時停止'); renderUI(); };
+$('about').onclick = () => $('about-dialog').showModal();
+$('close-about').onclick = $('about-ok').onclick = () => $('about-dialog').close();
+$('export').onclick = () => {
+  const result = { model: MODEL, seed: arena.seed, round: arena.round, time: arena.time, world: arena.world, source: 'browser-local', events: arena.events, agents: arena.flies.map(f => ({ id: f.id, name: f.name, score: f.score, version: f.version, q: f.q, experiences: f.memory, lastReport: f.lastReport })) };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' }));
+  const link = document.createElement('a'); link.href = url; link.download = `fly-lab-round-${arena.round}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+};
+// Explicit diagnostic mode for repeatable browser acceptance tests; no network writes.
+if (new URLSearchParams(location.search).has('test')) window.__arena = arena;
+function frame(now) {
+  const elapsed = Math.min((now - lastTime) / 1000, .1); lastTime = now;
+  if (!document.hidden && !arena.paused && !arena.finished) {
+    accumulator += elapsed * speed;
+    while (accumulator >= .2) { arena.tick(.2); accumulator -= .2; }
+  }
+  draw(now);
+  if (now - uiTime > 250) { renderUI(); uiTime = now; }
+  requestAnimationFrame(frame);
+}
+renderUI(); requestAnimationFrame(frame);

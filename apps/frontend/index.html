@@ -1,30 +1,38 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bio Agent Observatory</title>
-  <link rel="stylesheet" href="/style.css">
-  <script src="/app.js" defer></script>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171b19"><meta name="description" content="12匹のハエが競い、経験から学ぶ。Bio Agent のインタラクティブな2D実験場。">
+  <title>FLY LAB — Bio Agent Arena</title>
+  <link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script>
 </head>
 <body>
-  <main>
-    <p class="eyebrow">ETHGLOBAL TOKYO 2026 · LOCAL SCAFFOLD</p>
-    <h1>Bio Agent Observatory</h1>
-    <p>入力から生まれる状態と行動を観察する。</p>
-    <p class="notice">模擬入力 / 閾値モデル — 実チェーン・MaleCNS 回路は未接続</p>
-    <button id="step">模擬入力を1件実行</button>
-    <p id="status" role="status" aria-live="polite">読み込み中…</p>
-    <section aria-label="最新の状態" class="metrics">
-      <article><h2>行動</h2><p id="action">—</p></article>
-      <article><h2>活性値</h2><p id="activation">—</p></article>
-      <article><h2>モデル</h2><p id="model">threshold-demo-v1</p></article>
-    </section>
-    <h2>実行履歴</h2>
-    <div class="table-wrap"><table>
-      <thead><tr><th>ID</th><th>時刻</th><th>入力元</th><th>模擬ブロック</th><th>活性値</th><th>行動</th></tr></thead>
-      <tbody id="runs"></tbody>
-    </table></div>
-  </main>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Fly Lab ホーム"><svg viewBox="0 0 36 36" aria-hidden="true"><ellipse cx="12" cy="14" rx="6" ry="10" transform="rotate(-35 12 14)"/><ellipse cx="24" cy="14" rx="6" ry="10" transform="rotate(35 24 14)"/><path d="M18 12v19M12 23h12"/></svg>FLY<span>LAB</span><b>01</b></a>
+  <nav aria-label="メイン"><a class="active" href="#arena">Arena</a><a href="#learning">Learning lab</a><button id="about">この実験について ↗</button></nav>
+  <div class="edition"><span class="live-dot"></span>ETHGLOBAL TOKYO <b>2026</b></div>
+</header>
+<main>
+  <section class="intro">
+    <div><p class="eyebrow">BIO AGENT EXPERIMENT / 001</p><h1>Small brains.<br><span>Wild decisions.</span></h1><p class="lead">感じる。競う。学びなおす。<br>小さなハエたちの、大きな生存競争。</p></div>
+    <div class="intro-note"><span class="note-index">↗ LIVE EXPERIMENT</span><p>蜜を探す12の個体。<br>遅れをとったハエは学習室へ。<br>経験を持って、もう一度フィールドに。</p><div class="model-badge"><span></span>ADAPTIVE MODEL <b>Q-LEARNING</b></div></div>
+  </section>
+  <section class="arena-layout" id="arena">
+    <div class="field-panel">
+      <div class="panel-heading"><div><span class="live-dot"></span><h2>THE FORAGING FIELD</h2><span id="round-label" class="pill">ROUND 01</span></div><div class="field-tools"><button id="speed" aria-label="再生速度">1×</button><button id="pause" aria-label="一時停止">Ⅱ <span>Pause</span></button></div></div>
+      <div class="field-wrap"><canvas id="field" aria-label="蜜を競って集める12匹のハエ。クリックするとその場所に蜜を置けます。" role="img"></canvas><div class="field-corner"><span class="crosshair">⊕</span> CLICK TO PLACE NECTAR</div><div class="field-scale">OBSERVATION AREA <i></i>36 × 22</div><div id="round-end" class="round-end" hidden><p class="eyebrow">ROUND COMPLETE</p><h2 id="winner">MOMO WINS</h2><p id="winner-detail"></p><button id="next-round" class="primary">学習を引き継いで次のラウンド ↗</button></div></div>
+      <div class="field-footer"><div class="legend"><span><i class="nectar"></i>蜜 / +1</span><span><i class="danger"></i>危険刺激</span><span><i class="learning-dot"></i>学習中</span></div><span id="field-count">12 agents active</span></div>
+    </div>
+    <aside class="standings"><div class="standings-top"><p class="eyebrow">SURVIVAL IS A SKILL</p><h2>Leaderboard<span>↗</span></h2><div class="clock"><span id="timer">01:30</span><div><b id="total-nectar">0</b><small>NECTAR COLLECTED</small></div></div><div class="time-track"><i id="time-progress"></i></div></div><div class="ranking-label"><span>AGENT</span><span>NECTAR</span></div><div id="ranking"></div><p class="ranking-foot">下位の個体は自動で学習へ <span id="auto-indicator">ON</span></p></aside>
+  </section>
+  <section class="workbench">
+    <article class="control-panel"><div class="section-title"><span class="eyebrow">01 / WORLD INPUT</span><h2>世界に刺激を。</h2><p>環境を変えて、ハエの判断を観察しよう。</p></div><div class="mode-switch" aria-label="活動モード"><button data-mode="forage" class="selected" aria-pressed="true">採餌</button><button data-mode="explore" aria-pressed="false">探索</button><button data-mode="rest" aria-pressed="false">休息</button></div><label class="slider-label" for="stimulus">刺激の強さ <output id="stimulus-value">55%</output></label><input id="stimulus" type="range" min="0" max="100" value="55"><label class="slider-label" for="energy">エネルギー供給 <output id="energy-value">70%</output></label><input id="energy" type="range" min="0" max="100" value="70"><button class="primary" id="apply">刺激を適用する <span>↗</span></button><p class="input-source"><span class="source-dot"></span>ブラウザー内の入力 · Sepolia 未接続</p><p id="input-feedback" class="sr-only" role="status" aria-live="polite"></p></article>
+    <article class="agent-panel"><div class="section-title"><span class="eyebrow">02 / AGENT INSPECTOR</span><div class="agent-heading"><h2 id="selected-name">MOMO</h2><button id="next-agent" aria-label="次のハエを観察">→</button><span class="pill" id="selected-version">POLICY V1</span></div></div><div class="specimen"><canvas id="specimen" width="400" height="150" aria-label="選択中のハエ" role="img"></canvas><span id="selected-state">FORAGING</span></div><div class="energy-label"><span>ENERGY</span><b id="selected-energy">70%</b></div><div class="energy-bar"><i id="energy-bar"></i></div><div class="decision"><small>状態・刺激 → 判定</small><p id="decision">蜜の匂いを探索</p><p id="sensors" class="sensory-readout">感覚入力を待機中</p></div><div class="agent-stats"><div><b id="memory-count">0</b><span>EXPERIENCES</span></div><div><b id="selected-score">0</b><span>NECTAR</span></div><button id="train-selected">学習室へ ↗</button></div></article>
+    <article class="learning-panel" id="learning"><div class="section-title"><span class="eyebrow">03 / LEARNING LAB</span><div class="learning-heading"><h2>失敗は、次の本能に。</h2><label class="toggle"><input id="auto-learn" type="checkbox" checked><span></span><b>AUTO</b></label></div><p>経験を再生して方策を更新。検証スコアが上がったときだけ採用します。</p></div><div id="learning-slots"></div><div class="lab-bottom"><span class="lab-indicator"></span><p>EXPERIENCE → LEARN → EVALUATE → RETURN</p></div></article>
+  </section>
+  <section class="event-section"><div class="events-heading"><h2>Field notes<span> / 行動と学習の記録</span></h2><button id="export">実験データを保存 ↓</button></div><div id="events"></div></section>
+  <footer><div class="brand small">FLY<span>LAB</span></div><p>Bio Agent · ETHGlobal Tokyo 2026</p><span>ローカル学習モデル / MaleCNS 回路は未接続</span></footer>
+</main>
+<dialog id="about-dialog"><button class="dialog-close" id="close-about" aria-label="閉じる">×</button><p class="eyebrow">ABOUT THE EXPERIMENT</p><h2>小さな判断の積み重ね。</h2><p>各ハエは蜜の方向・危険な方向・エネルギーを観測し、Q値から移動や休息を選びます。18秒ごとに成績下位の2体が学習室に入り、レース中の経験と練習環境から実際にQ値を更新します。</p><p>学習に使わない固定3コースで新旧方策を比較し、改善した候補のみ採用。復帰時の体力回復は学習効果とは別です。検証スコアは蜜の数ではなく報酬の合計です。</p><p>これはブラウザー内で動く適応モデルです。MaleCNSの神経回路やブロックチェーンとはまだ接続していません。タブごとに独立した実験で、再読込するとリセットされます。実験データは保存ボタンから取得できます。</p><button id="about-ok" class="primary">観察をはじめる ↗</button></dialog>
 </body>
 </html>

@@ -10,7 +10,7 @@ from packages.bio_agent import step
 from packages.shared import Stimulus
 from services.backend.store import Store
 
-FRONTEND = Path(__file__).resolve().parents[2] / 'apps' / 'frontend'
+FRONTEND = Path(__file__).resolve().parents[2] / 'dist'
 ASSETS = {'/': ('index.html', 'text/html'), '/app.js': ('app.js', 'text/javascript'), '/style.css': ('style.css', 'text/css')}
 
 
