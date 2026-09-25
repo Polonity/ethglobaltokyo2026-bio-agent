@@ -13,6 +13,7 @@
 | デモ動画を見る・再収録する | [動画と再収録](demo-video.md) |
 | GUIとWorkerをつなぐ | [ローカルAPIリファレンス](reference/local-api.md) |
 | 型・権限・イベントを変更する | [オンチェーン設計](design/onchain-contracts.md)、[Foundry開発](../contracts/README.md) |
+| 第2ゲームのペーパートレード案を読む | [Paper Trading Arena（設計案）](design/paper-trading-arena.md) |
 | Agentの種類・価格入力・walletを拡張する | [Agent拡張設計](design/agent-types-and-wallets.md) |
 | 判定・自己学習を理解する | [Fly Labモデル](design/fly-arena.md) |
 | テストして変更を引き継ぐ | [開発ガイド](development.md) |
