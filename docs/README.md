@@ -4,6 +4,8 @@
 
 ## 現在の仕様検討の入口
 
+[生物模倣からBioAgentへ](submission/biomimicry-positioning.md): 鮫肌など4つの製品事例、神経回路を借りる理由、性能仮説と比較計画。
+
 [なぜBioAgentを定義するか — オンチェーン入力・ERC動向・コネクトーム研究](standards/why-bioagent.md)。共通Agent基盤に生物由来モデルを解釈するprofileを追加する方針です。
 
 [BioAgentの思想・設計方針](standards/bioagent-design-direction.md) → [既存ERCとの差分調査](standards/prior-art-and-bioagent.md) → [身体・学習profile案](standards/embodied-learning-profile.md) → [提出説明案](submission/bioagent-thesis.md)。NFT/SBTは派生構造の比喩であり、機能追加要件ではありません。実装では通常のRegistryと任意の刺激拡張を用います。

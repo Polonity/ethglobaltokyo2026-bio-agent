@@ -8,6 +8,8 @@
 
 ## 日本語ピッチ
 
+鮫肌の微細な溝は航空機の摩擦を減らすフィルムへ、植物の実の鉤は面ファスナーへ。生物の仕組みを製品へ取り入れる発想は、すでに実用化されています。**私たちは、その発想を神経回路から行動を生むAgentへ広げます。** [製品事例・理由・検証方針](biomimicry-positioning.md)
+
 AI Agentが自律的に行動する世界では、判断の根拠となったデータを確かめられることが重要です。オンチェーンデータは、出来事の発生元と記録を複数の参加者が共有・検証できるため、Agentが外部の情報を受け取り、行動するための有力な基盤になります。
 
 この方向では、Agentの識別・評判・検証を扱うERC-8004など、共通基盤の整備が進められています。私たちは、その先の問いに取り組みます。**生物の神経回路に由来するAgentを、この世界でどう扱うべきでしょうか。**
@@ -25,6 +27,8 @@ AI Agentが自律的に行動する世界では、判断の根拠となったデ
 - オンチェーンに書かれた外部情報の正しさにはoracle等の信頼条件が残る。「この記録がある」と「この情報が真で、この行動が正しい」は分ける。[公式解説](https://ethereum.org/developers/docs/oracles/)
 
 ## English pitch
+
+Sharkskin inspired aircraft surfaces that reduce drag. Burrs inspired hook-and-loop fasteners. We bring this engineering idea to agents: learning how to generate actions from the structure of biological circuits. [Examples and evaluation rationale](biomimicry-positioning.md)
 
 As agents act autonomously, the origin of their inputs matters. Onchain records give participants a shared way to inspect where an event came from and what was recorded. We see this as a useful foundation for systems that turn external observations into actions.
 
@@ -55,7 +59,7 @@ Our foraging and paper-trading demos illustrate this interaction model using syn
 
 **「コネクトームを使うと優秀になる？」**
 
-今回の根拠からその一般的結論は出ません。私たちが提案するのは優位性の認定ではなく、出典・仮定・評価を比較できる形式です。回路の除去やシャッフル対照で寄与を検証する計画です。
+神経回路の構造が、少ない経験での適応や限られた計算量での応答に役立つかを調べます。生物模倣の製品化事例は試す動機になりますが、Agentの性能は別途検証が必要です。現在は接続除去による応答差を確認済みで、シャッフル構造や同等規模の人工モデルとの性能比較は今後の課題です。仕様には、その出典・仮定・評価条件を記述します。
 
 **「価格上昇を感じるのはハエの本当の感覚？」**
 

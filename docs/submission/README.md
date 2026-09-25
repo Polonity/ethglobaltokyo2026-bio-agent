@@ -8,6 +8,8 @@ Prepared 2026-09-26. This is a local prototype and a specification proposal, not
 
 ## Motivation and standardization position
 
+Biomimicry provides the engineering motivation: sharkskin-inspired aircraft surfaces and burr-inspired fasteners show how biological structures can become useful products. We explore the same approach for action-generating circuits. Faster adaptation and efficient computation are hypotheses to test, with engineering utility and biological fidelity evaluated separately. See [examples, primary sources and comparison plan](biomimicry-positioning.md).
+
 Onchain records give independent participants a shared reference for the source and history of inputs. Agent infrastructure is developing around ERC-8004, which remains a Draft at the time of review. We build toward compatibility with common agent infrastructure, adding the information needed to interpret a model's biological origin and engineered assumptions. Current contracts do not implement ERC-8004.
 
 This is an extension profile, not a replacement for general agent identity, communication or wallets. Body state and learning are also useful to ordinary AI agents. The stronger rationale is the source-to-circuit correspondence and the ability to distinguish measured structure, artificial sensory/motor mappings and learned components. Independent ERC status requires further interoperability evidence.
