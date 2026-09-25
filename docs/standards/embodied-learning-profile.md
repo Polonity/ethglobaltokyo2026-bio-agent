@@ -1,12 +1,18 @@
 # BioAgent Embodied Learning Profile v0.1
 
-**Proposed semantic profile; not implemented by the current runtime.** [Application type definitions](application-types.md) now exist with compile-time examples; they are not full runtime conformance. 2026-09-26. This document specifies what future conforming producers/consumers must mean by biological origin, embodiment and learning continuity. It does not add deployed Solidity interfaces or claim compliance with an assigned ERC. MUST/SHOULD/MAY are normative only for implementations claiming this proposed profile.
+**Proposed semantic profile; partially exercised by synthetic demos, not fully implemented or conformant.** [Application type definitions](application-types.md) now exist with compile-time examples; they are not full runtime conformance. 2026-09-26. This document specifies what future conforming producers/consumers must mean by biological origin, embodiment and learning continuity. It does not add deployed Solidity interfaces or claim compliance with an assigned ERC. MUST/SHOULD/MAY are normative only for implementations claiming this proposed profile.
 
 ## 1. Scope and identity
 
 The profile is optional metadata associated with `(chainId, registry, agentId)`. It is independent of NFT/SBT tokenization and may accompany a future adapter to an existing Agent identity standard. The profile MUST NOT require a particular species, trading venue, neural simulator or ownership transfer policy.
 
 A profile consumer MUST distinguish **declaration**, **content integrity**, **reproduced execution**, and **task-specific validation**. A hash or control authority is not evidence for the last two.
+
+## 1.1 Why this is an extension
+
+[Research rationale](why-bioagent.md) distinguishes common agent infrastructure from connectome-specific interpretation. The target BioAgent uses measured biological connectivity in its action-generating computation. Synthetic and bio-inspired implementations may use the shared format as explicit comparison classes; they MUST NOT claim connectome-derived status.
+
+Identity, authorization and communication remain shared with general agents. Embodiment and learning are cross-cutting capabilities, not exclusive biological properties. The additional profile describes source-to-model correspondence, dynamics, engineered mappings, retained biological constraints and the scope of validation. It does not require every agent to have a simulated body or online plasticity. An independent ERC is conditional on demonstrated interoperability needs.
 
 ## 2. Model descriptor
 

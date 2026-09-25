@@ -4,7 +4,15 @@ Prepared 2026-09-26. This is a local prototype and a specification proposal, not
 
 ## Short description
 
-**Tiny agents, traceable lives.** BioAgent explores how applications can describe an agent's model origin, sensory input, body state and learning history. Two playable demos connect registered flies to blockchain events: an embodied foraging arena and a paper-trading competition driven by a real Uniswap V3 pool on Anvil.
+**From verifiable events to biologically grounded action.** BioAgent proposes a profile for agents that use connectome-derived structure to generate actions. It connects onchain input provenance with model origin, sensory mappings, body state and learning history. Two synthetic demos — foraging and paper trading — illustrate the proposed interaction model.
+
+## Motivation and standardization position
+
+Onchain records give independent participants a shared reference for the source and history of inputs. Agent infrastructure is developing around ERC-8004, which remains a Draft at the time of review. We build toward compatibility with common agent infrastructure, adding the information needed to interpret a model's biological origin and engineered assumptions. Current contracts do not implement ERC-8004.
+
+This is an extension profile, not a replacement for general agent identity, communication or wallets. Body state and learning are also useful to ordinary AI agents. The stronger rationale is the source-to-circuit correspondence and the ability to distinguish measured structure, artificial sensory/motor mappings and learned components. Independent ERC status requires further interoperability evidence.
+
+See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). Connectome execution remains a future milestone; our synthetic demos do not establish biological fidelity or a performance advantage.
 
 ## What we built
 
