@@ -42,3 +42,17 @@ Chrome が別の場所にある場合は `CHROME_PATH` を指定します。ス�
 ffprobe -v error -show_entries format=duration,size -show_entries stream=codec_name,width,height,r_frame_rate -of json artifacts/demo/fly-lab-anvil-demo.mp4
 ffmpeg -v error -i artifacts/demo/fly-lab-anvil-demo.mp4 -f null -
 ```
+
+## 最新GUIの英語デモ（2026-09-25）
+
+```sh
+node scripts/record-demo-en.mjs
+```
+
+英語GUI・英語字幕・音声なし。オリジナルの丸いハエ、状態の実況、取引カード、Tx hashから開くAnvil receipt、休息の吹き出し、その場で止まる自動学習と復帰を収録します。日本語版の成果物は上書きしません。
+
+出力は `artifacts/demo-en/fly-lab-english-demo.mp4`。同ディレクトリに `evidence.json`、`final.png`、`raw/` を保存します。録画には実際のローカルStatus更新が含まれます。`test:local` などAnvilを書き換える検証と同時実行しないでください。
+
+英語版は `en-US` のブラウザーを作成し、GUIでもEnglishを選択します。字幕は画面の説明用であり、Agentの状態は変更しません。学習中の座標が変わらないこと、復帰後の評価、取引receiptの採掘成功、判定回数の変化を検証します。
+
+最後に現在の接続範囲を英語で明記します。Uniswap価格観察Runtimeとwallet参照の基盤は追加済みですが、この動画のGUIには未接続です。MaleCNS回路の実行でもありません。
