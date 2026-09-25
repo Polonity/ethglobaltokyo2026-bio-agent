@@ -46,4 +46,6 @@ ARENA_URL=http://127.0.0.1:8787 npm run test:browser
 ## 公開履歴
 
 - 2026-09-25: 初回公開。version `18e03808-54ae-42c9-8b40-f5f2d2188839`。
+- 2026-09-25: 最終版を反映。version `000bd0fb-2770-4bc6-bcc4-82cd4a7b404e`（コード commit `fc3bc57`）。
+- 公開 URL で競争・操作・学習復帰・モバイル表示を実 Chrome で検証済み。
 - Sepolia コントラクトのデプロイは実施していない。
