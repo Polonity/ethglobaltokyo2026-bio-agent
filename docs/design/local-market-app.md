@@ -1,5 +1,7 @@
 # Market Meadow — 実Uniswap入力とペーパートレード
 
+> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+
 2026-09-26。ローカルAnvil + Workersで実装・ブラウザー検証済み。`/market`から開く。
 
 ## 起動

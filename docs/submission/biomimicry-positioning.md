@@ -1,5 +1,7 @@
 # 生物模倣からBioAgentへ
 
+> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](../design/malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+
 2026-09-26調査。提出用の訴求と検証方針。[ピッチ](bioagent-thesis.md)を補足する。
 
 ## 中心となるメッセージ

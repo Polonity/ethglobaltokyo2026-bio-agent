@@ -2,7 +2,7 @@
 
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。判定・学習はブラウザー内の Q-learning モデルです。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
+現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。公開版は旧Q-learningモデルです。現行ローカル版は採餌・市場・Aquaの全用途でMaleCNS実測部分回路を必須とし、行動選択部分を学習します。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
@@ -12,9 +12,13 @@
 
 **[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
 
+## MaleCNS必須と学習の即時反映
+
+**[現在の判断・学習基盤](docs/design/malecns-learning.md)**。MaleCNSを省略するフォールバックはありません。出典とRuntimeをhashで照合し、採用した学習結果を次の判断へ反映・保存します。現行の専用ローカルGUIは http://127.0.0.1:8800/ です。
+
 ## Aqua Connectome — 共有流動性の箱庭
 
-**Powered by Aqua — © Degensoft Ltd 2025.** 実測7神経・19接続の人工rate modelを公式Aqua SDKへ接続。3個体が同じウォレットから仮想残高を提示し、人工刺激に応じて縮小・撤回します。実Aqua本体と独自AquaAppをAnvilに配置し、実TX・テストトークン交換を確認できます。固定回路で学習なし、全脳・ガスレス撤回・クロスチェーンではありません。
+**Powered by Aqua — © Degensoft Ltd 2025.** 実測7神経・19接続の人工rate modelを公式Aqua SDKへ接続。3個体が同じウォレットから仮想残高を提示し、人工刺激に応じて縮小・撤回します。実Aqua本体と独自AquaAppをAnvilに配置し、実TX・テストトークン交換を確認できます。実測接続を固定し、行動変換を学習します。全脳・ガスレス撤回・クロスチェーンではありません。
 
 起動済みのローカル環境で `npm run local:aqua` → `/aqua`。独自のstate directoryを使う場合は同じ `LOCAL_STATE_DIR` を渡してください。[設計・調査結果・起動手順](docs/design/aqua-connectome.md)。
 

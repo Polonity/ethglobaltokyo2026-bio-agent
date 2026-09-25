@@ -1,5 +1,7 @@
 # Fly Lab: 競争と自己学習の GUI
 
+> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+
 状態: **ブラウザー内 Runtime / 公開用12匹モード・Anvil接続3匹モードを実装済み**。
 
 公開 URL: https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev

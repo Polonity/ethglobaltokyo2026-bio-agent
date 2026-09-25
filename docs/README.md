@@ -2,6 +2,10 @@
 
 現在の実装を把握する入口です。最終照合: 2026-09-26。
 
+## 現在の必須実装
+
+[MaleCNS必須・3用途の学習・即時反映](design/malecns-learning.md)。以前の「2ゲームはsynthetic」「Aquaは学習なし」という記録を更新します。全脳ではなく実測部分回路です。
+
 ## 現在の仕様検討の入口
 
 [生物模倣からBioAgentへ](submission/biomimicry-positioning.md): 鮫肌など4つの製品事例、神経回路を借りる理由、性能仮説と比較計画。

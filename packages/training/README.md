@@ -1,28 +1,15 @@
-# 学習基盤
+# MaleCNS学習基盤
 
-現在は2つの別々の学習経路があります。
+主経路は `browser/` の共通学習・成果物モジュールと、用途別Runtimeです。全用途でMaleCNS v1.0の実測部分回路を必須とし、接続を固定したまま小さな行動選択部分を学習します。
 
-| 経路 | 実装 | 成果物・適用 |
+| 用途 | 実装 | 採用・保存 |
 | --- | --- | --- |
-| GUIの自己学習 | `packages/bio_agent/browser/arena.js` | タブ内Q値。検証で改善した候補のみ適用 |
-| Pythonジョブひな型 | このディレクトリの `__main__.py` | JSONファイル。自動適用しない |
+| 採餌 | `bio_agent/browser/arena.js` + `browser/learning.js` | 960環境更新を分割、固定選択コースで改善したQ値を次tickへ反映。版付きlocalStorage |
+| 市場 | `bio_agent/runtime/paper-arena.js` + `browser/learning.js` | 256更新単位、時系列選択MSEが改善した値を次Swapへ反映。版付きlocalStorage |
+| Aqua | `browser/aqua-learning.js` | 人工教材192点でreadout gainをfit、64点で選択。新Status revision・ローカルKV・新戦略へ反映 |
 
-## GUIの自己学習
+`learning.js` は共通評価レポートと計算予算、`readout.js` は用途・個体・graphを検査する成果物の保存/復元を扱います。GUIの学習は完了後に固定待機せず、結果が改善したときだけ採用します。
 
-[モデルと評価条件](../../docs/design/fly-arena.md)を参照してください。学習はブラウザー内で行い、このPythonジョブを呼び出しません。固定3コースはモデル選別用の検証セットで、独立した最終評価ではありません。
+[必須条件・アルゴリズム・整合性・実測・再現手順](../../docs/design/malecns-learning.md)を参照してください。`npm run test:male-learning`、`npm run benchmark:male-learning`、`npm run test:male-learning:browser` が主要な確認コマンドです。
 
-## Pythonジョブ
-
-リポジトリルートで実行します。
-
-```sh
-make train
-# 出力先を指定する場合
-python3 -m packages.training --output data/training/experiment.json
-```
-
-合成4サンプルに対して閾値0.25 / 0.5 / 0.75を探索します。既定出力は `data/training/demo-model.json`。schema_version、base_model_version、dataset、threshold、training_accuracy、sample_count、evaluation、automatically_appliedを保存します。
-
-これはジョブと成果物の配線確認用です。訓練データ上の正解率を記録し、汎化性能や生物学的学習は検証しません。既存パスへの出力は上書きされるため、比較実験では出力先を分けます。
-
-次段階では、チェーン由来の入力履歴、モデル・seed・適用tick、学習用と評価用の分離、成果物の明示的な適用を接続します。
+Pythonの `make train` は同じMaleCNS部分回路を使う閾値校正の参照ジョブです。4つの人工ラベルを使うため汎化性能は主張せず、成果物を自動適用しません。GUIに接続された学習基盤と、この参照ジョブを混同しないでください。

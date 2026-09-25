@@ -8,13 +8,13 @@
 
 「トランザクションを送ったら、ハエはどう動く？」から始める。観客が刺激を送り、個体が反応し、食べたり、立ち止まって学び直したりする。その出来事をTX・イベント・入力・反応へとたどれる、小さな実験場として見せる。
 
-今回のオンチェーン部分は個体登録と入力条件・刺激の記録であり、神経計算や身体・学習のシミュレーションはブラウザーで動く。「箱庭」はこの一連の体験を表す。全シミュレーションがチェーン上で実行されるという意味には使わない。採餌・市場のsyntheticモデルと、実測接続を使うCircuit Labの区別も表示・説明する。
+今回のオンチェーン部分は個体登録と入力条件・刺激の記録であり、神経計算や身体・学習のシミュレーションはブラウザーで動く。「箱庭」はこの一連の体験を表す。全シミュレーションがチェーン上で実行されるという意味には使わない。採餌・市場・Aquaの全用途でMaleCNSの実測部分回路を使い、学習する行動選択部分と固定する接続を区別して表示する。
 
 見せ方の順序は、**刺激を送る → ハエを観察する → TXを開く → 回路と仮定を確かめる → 共通仕様の意義を伝える**。面白い実験を先に体験してもらい、その後に検証できる実装と仕様を示す。
 
 語り口は大胆な問いを短く、証拠は具体的に。ハエの吹き出しは状態・計算の可視化として扱い、意識や本当の感情を測定したという説明にはしない。標準化は、この箱庭で得たモデルと入力の記述を、別のアプリでも読めるようにする取り組みとして紹介する。
 
-English demo hook: **An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.** Stimuli are recorded onchain; agents run in the browser. The two games use synthetic models; Circuit Lab separately explores measured connectivity with engineered dynamics.
+English demo hook: **An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.** Stimuli are recorded onchain; agents run in the browser. All three apps require measured MaleCNS connectivity, with engineered dynamics and learned readouts.
 
 ## 仕様を説明する一文
 
@@ -34,7 +34,7 @@ AI Agentが自律的に行動する世界では、判断の根拠となったデ
 
 そこで私たちは、一般のAgent基盤に接続できるBioAgentの拡張profileを提案します。生物的な出典、感覚・運動の対応、神経計算の仮定、身体との相互作用、学習による変化を共通化し、異なるアプリでもその個体を解釈・比較できることを目指します。
 
-今回の採餌と市場の2つのデモでは、その使われ方を体験できます。現在の実行モデルはsyntheticな比較用実装です。別のCircuit Labでは実測7神経・19接続を人工動力学で実行し、接続除去との違いを示します。生物学的な検証と、独立した実装間の相互運用を次の段階としています。
+今回の採餌と市場の2つのデモでは、その使われ方を体験できます。現在は両用途ともMaleCNSの実測部分回路を入力の特徴計算に必須とし、行動選択部分を学習します。別のCircuit Labでは実測7神経・19接続を人工動力学で実行し、接続除去との違いを示します。生物学的な検証と、独立した実装間の相互運用を次の段階としています。
 
 ## 発表時の根拠
 
@@ -54,7 +54,7 @@ Agent infrastructure is developing around proposals such as ERC-8004. BioAgent a
 
 We propose a compatible profile for tracing biological source data into an executable model: its neural dynamics, sensory and motor mappings, body coupling, and permitted learning changes. The aim is to let different applications interpret and compare the same individual without hiding the assumptions behind its behavior.
 
-Our foraging and paper-trading demos illustrate this interaction model using synthetic agents today. A separate Circuit Lab now executes a seven-neuron measured topology with artificial dynamics and a graph-removal control. Biological validation and full profile interoperability remain research milestones.
+Our foraging, paper-trading and Aqua apps now require a measured MaleCNS partial topology and train application-specific readouts. A separate Circuit Lab now executes a seven-neuron measured topology with artificial dynamics and a graph-removal control. Biological validation and full profile interoperability remain research milestones.
 
 ## なぜBioAgent用の仕様が必要か
 
@@ -89,6 +89,8 @@ Our foraging and paper-trading demos illustrate this interaction model using syn
 
 **「今、MaleCNSが動いている？」**
 
-採餌・市場はsyntheticモデルです。別のCircuit LabではMaleCNS v1.0の7神経・19接続を実際に計算へ使っています。ただし動力学・入力・行動decoderは人工的で、全脳や生物の行動再現ではありません。[検証と制約](../design/circuit-evidence.md)を参照してください。
+採餌・市場・AquaはすべてMaleCNSの実測部分回路を判断に使います。別のCircuit LabではMaleCNS v1.0の7神経・19接続を実際に計算へ使っています。ただし動力学・入力・行動decoderは人工的で、全脳や生物の行動再現ではありません。[検証と制約](../design/circuit-evidence.md)を参照してください。
 
 関連: [設計方針](../standards/bioagent-design-direction.md)、[既存ERC調査](../standards/prior-art-and-bioagent.md)、[profile案](../standards/embodied-learning-profile.md)、[提出パッケージ](README.md)。
+
+実装更新: [MaleCNS必須の学習基盤と検証](../design/malecns-learning.md)。

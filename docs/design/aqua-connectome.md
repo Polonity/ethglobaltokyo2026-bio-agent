@@ -1,5 +1,7 @@
 # Aqua Connectome — 刺激で変わる共有流動性
 
+> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+
 2026-09-26。Powered by Aqua — © Degensoft Ltd 2025.
 
 **ハエに危険の刺激を送ったら、流動性の提示はどう変わる？**
@@ -94,3 +96,5 @@ GUI: http://127.0.0.1:8799/aqua 。APIは `/api/aqua/snapshot`、`stimulus`、`a
 - 証跡: `artifacts/aqua-browser/evidence.json`、`shared-wallet.png`、`cautious.png`、`danger.png`、`mobile.png`。画像は実画面の記録。現在の統合デモ動画にはまだAquaを収録していない。
 
 確認はローカルの機能接続に限る。未見市場での性能、長期損益、生物学的機能、本番セキュリティの実証ではない。
+
+現行v2のstrategy bytesは旧4項目に `bytes32 policyHash` を追加する。AquaAppの生物的計算を証明する値ではなく、学習結果の参照である。`/api/aqua/train` は選択用MSEが改善する場合に新revisionとpolicy保存を行う。GUIは続けてapplyを呼び、新しい戦略へ反映する。

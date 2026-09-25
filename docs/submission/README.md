@@ -6,11 +6,11 @@ Prepared 2026-09-26. This is a local prototype and a specification proposal, not
 
 **An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.**
 
-Visitors change recorded stimuli and observe simulated individuals. The chain holds registrations and input records; the browser runs behavior, body state and learning. Present the playful experiment first, then inspect its transactions and model assumptions, and explain why these descriptions should travel across applications. The two games use synthetic agents; the separate Circuit Lab uses measured connectivity with engineered dynamics.
+Visitors change recorded stimuli and observe simulated individuals. The chain holds registrations and input records; the browser runs behavior, body state and learning. Present the playful experiment first, then inspect its transactions and model assumptions, and explain why these descriptions should travel across applications. Foraging, market and Aqua all require measured MaleCNS connectivity; application mappings and dynamics remain engineered.
 
 ## Short description
 
-**From verifiable events to biologically grounded action.** BioAgent proposes a profile for agents that use connectome-derived structure to generate actions. It connects onchain input provenance with model origin, sensory mappings, body state and learning history. Two synthetic demos — foraging and paper trading — illustrate the proposed interaction model.
+**From verifiable events to biologically grounded action.** BioAgent proposes a profile for agents that use connectome-derived structure to generate actions. It connects onchain input provenance with model origin, sensory mappings, body state and learning history. Three apps — foraging, paper trading and Aqua — use measured MaleCNS connectivity and application-specific learned readouts.
 
 ## Motivation and standardization position
 
@@ -20,11 +20,11 @@ Onchain records give independent participants a shared reference for the source 
 
 This is an extension profile, not a replacement for general agent identity, communication or wallets. Body state and learning are also useful to ordinary AI agents. The stronger rationale is the source-to-circuit correspondence and the ability to distinguish measured structure, artificial sensory/motor mappings and learned components. Independent ERC status requires further interoperability evidence.
 
-See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). A separate [Circuit Lab](../design/circuit-evidence.md) now executes a measured seven-neuron MaleCNS topology with explicitly artificial dynamics and readout. The two games remain synthetic; no biological fidelity or performance advantage is established. See the [goal audit](goal-audit.md) for remaining work.
+See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). A separate [Circuit Lab](../design/circuit-evidence.md) now executes a measured seven-neuron MaleCNS topology with explicitly artificial dynamics and readout. All three apps now require MaleCNS; no biological fidelity or performance advantage is established. See the [goal audit](goal-audit.md) for remaining work.
 
 ## Aqua Connectome: additional local experiment
 
-**Powered by Aqua — © Degensoft Ltd 2025.** Three registered simulation instances use a seven-neuron measured topology with artificial dynamics to control shared liquidity. Confirmed synthetic risk stimuli drive a smaller offer or withdrawal through `@1inch/aqua-sdk@0.3.4`. The upstream Aqua contract runs on Anvil, alongside a custom test-token AquaApp. Inspect real ship/dock receipts and execute a test fill while the maker retains custody until settlement. This is a frozen controller with engineered risk mapping, not a full brain, live MEV detector, learned portfolio, gasless withdrawal, or cross-chain router.
+**Powered by Aqua — © Degensoft Ltd 2025.** Three registered simulation instances use a seven-neuron measured topology with artificial dynamics to control shared liquidity. Confirmed synthetic risk stimuli drive a smaller offer or withdrawal through `@1inch/aqua-sdk@0.3.4`. The upstream Aqua contract runs on Anvil, alongside a custom test-token AquaApp. Inspect real ship/dock receipts and execute a test fill while the maker retains custody until settlement. This uses a fixed topology with a learned gain calibrated on a synthetic risk curriculum, not a full brain, live MEV detector, learned portfolio, gasless withdrawal, or cross-chain router.
 
 See [architecture, corrections to the proposal and reproduction](../design/aqua-connectome.md). The existing integrated demo video predates this addition and does not show Aqua.
 
@@ -40,7 +40,7 @@ Both apps share typed identity, body, input and runtime-view concepts. Their pro
 
 Circuit Lab binds a common descriptor to three onchain simulation instances. It preserves seven original MaleCNS neuron IDs and 19 connection counts, verifies local artifact hashes against the registered descriptor, and shows a real status transaction driving the graph-based calculation and an advance/wait action. A graph-removal control isolates dependence on the connections. An independent Python implementation matches the exported traces within 1e-12 absolute tolerance.
 
-This is a topology-derived engineering model, with artificial excitatory dynamics and an engineered decoder. It has no learning or body simulation, and is not a whole-brain or biologically validated fly model. The two game arenas retain their synthetic policies.
+This is a topology-derived engineering model, with artificial excitatory dynamics and an engineered decoder. It has no learning or body simulation, and is not a whole-brain or biologically validated fly model. The games now use this MaleCNS topology as a required feature encoder, with learned action readouts.
 
 ## Why a BioAgent profile?
 
@@ -53,7 +53,7 @@ See [prior-art research](../standards/prior-art-and-bioagent.md), [design direct
 ## How it works
 
 - **Contracts / Foundry:** owner-controlled registration, explicit input revision, full status events, optional schema-tagged stimulus payloads with independent nonces, optional declared wallet reference.
-- **Runtime:** browser-based synthetic foraging Q-learning and market reward estimation; shared synthetic body dynamics; deterministic foraging checkpoint restore including active training.
+- **Runtime:** browser-based MaleCNS encoding with foraging Q-learning and market reward estimation; shared synthetic body dynamics; deterministic foraging checkpoint restore including active training.
 - **Market source:** pinned Uniswap V3 core factory artifact, local pool and callback harness, verified Swap receipts and block-pinned quotes. The live demo does not call the Trading API.
 - **Frontend / hosting:** original procedural fly drawings, continuously parameterized bellies, emotional bubbles, English/Japanese/system language, local Cloudflare Workers.
 - **Common types:** strict TypeScript views and domain profiles, explicit units and string-encoded token amounts. Full cross-runtime protocol migration is still future work.
@@ -72,7 +72,7 @@ See [prior-art research](../standards/prior-art-and-bioagent.md), [design direct
 | Open Circuit Lab | “A measured MaleCNS topology: seven neurons, nineteen connections, with artificial dynamics.” |
 | Send 0% then 100% | Show real transactions and wait→advance, compared with an edge-removal control. |
 | Inspect source | Show registered descriptor, provenance and engineered assumptions. |
-| Close | “Two synthetic games and one topology-derived experiment; biological validation and full portability remain future work.” |
+| Close | “Three MaleCNS-based applications and a circuit control experiment; biological validation and full portability remain future work.” |
 
 Supplement: [Circuit Lab recording and checks](../design/circuit-evidence.md).
 
@@ -80,7 +80,7 @@ Latest integrated video and reproduction: [English submission demo](../demo-vide
 
 ## Evidence and reproduction
 
-Start with [local Anvil/Workers](../deployment/local-anvil.md), then [Market Meadow](../design/local-market-app.md). `local:market` creates a new market; do not use it to resume an existing competition. The current validation instance uses GUI port 8799, RPC 18546 and `.local/embodied`.
+Start with [local Anvil/Workers](../deployment/local-anvil.md), then [Market Meadow](../design/local-market-app.md). `local:market` creates a new market; do not use it to resume an existing competition. The current validation instance uses GUI port 8800, RPC 18547 and `.local/malecns`.
 
 | Claim | Check / evidence |
 | --- | --- |
@@ -98,7 +98,7 @@ The combined arena, agent, swap, body, paper, circuit, explorer and translation 
 
 ## Honest boundaries
 
-- The two games are **synthetic**. Circuit Lab uses a small measured MaleCNS topology with artificial dynamics; none of these models establishes biologically validated physiology.
+- All three apps now **require MaleCNS**. They use a small measured topology with artificial dynamics; none of these models establishes biologically validated physiology.
 - Learning candidate selection is visible and reproducible locally; it does not establish out-of-sample improvement, trading skill or profitability.
 - Market balances and orders are paper-only. The real onchain swaps use local test tokens.
 - Foraging checkpoint restore is a trusted local format. Cross-implementation replay, portable learning attestations and persistent reorg rollback are not implemented.
@@ -117,3 +117,5 @@ The combined arena, agent, swap, body, paper, circuit, explorer and translation 
 - [x] Minimal measured-connectivity example, source/artifact binding and independent scalar replay check.
 - [ ] Full connectome integration into both games, biological validation and cross-application portability.
 - [ ] External submission form, team metadata and final hosted URL: fill in when the actual submission destination is selected.
+
+Current learning implementation and evidence: [MaleCNS required pipeline](../design/malecns-learning.md). Runtime integrity checks reject missing or altered artifacts. Accepted readouts apply to the next decision and persist per registered model/individual.
