@@ -35,7 +35,11 @@ const errors = [],
 const snapshot = async () => (await fetch(`${base}/api/chain/snapshot`)).json();
 let reorgSnapshot;
 try {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({
+    locale: 'ja-JP',
+    viewport: { width: 1440, height: 1200 },
+    deviceScaleFactor: 1,
+  });
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto(`${base}/?test=1`);
   await page.waitForFunction(() => window.__chain?.ready);
@@ -177,6 +181,7 @@ try {
   }));
   await page.screenshot({ path: `${out}/desktop.png`, fullPage: true });
   const mobile = await browser.newPage({
+    locale: 'ja-JP',
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,

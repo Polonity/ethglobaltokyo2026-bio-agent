@@ -1,7 +1,10 @@
 import { Arena, WIDTH, HEIGHT, MODEL, random } from '../../packages/bio_agent/browser/arena.js';
 import { ChainSession } from './chain.js';
 import { transactionLink } from './explorer.js';
+import { translate, translateDOM, getPreference, setPreference } from './i18n.js';
 const $ = (id) => document.getElementById(id);
+$('language').value = getPreference();
+translateDOM();
 const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
 const chainMode = config.mode === 'anvil';
 const arena = new Arena(2026, { agentCount: chainMode ? 3 : 12 });
@@ -35,6 +38,7 @@ function bindTransactionLink(element, hash, event) {
             return [dt, dd];
           }),
         );
+        translateDOM(dialog);
       };
       display([
         ['Tx hash', hash],
@@ -184,6 +188,7 @@ function thought(f) {
 }
 function bubble(c, x, y, f, boundWidth) {
   const mood = thought(f);
+  mood.text = translate(mood.text);
   c.font = '600 11px sans-serif';
   const width = c.measureText(mood.text).width + 20;
   const left = Math.max(4, Math.min(boundWidth - width - 4, x - width / 2));
@@ -514,6 +519,7 @@ function renderUI() {
     $('winner-detail').textContent =
       `${winner.score} nectar / ${arena.flies.reduce((n, f) => n + f.trainingCount, 0)} learning sessions`;
   }
+  translateDOM();
 }
 field.addEventListener('click', (e) => {
   if (arena.finished) return;
@@ -529,6 +535,7 @@ $('pause').onclick = () => {
   arena.paused = !arena.paused;
   $('pause').innerHTML = arena.paused ? '▶ <span>Resume</span>' : 'Ⅱ <span>Pause</span>';
   $('pause').setAttribute('aria-label', arena.paused ? '再開' : '一時停止');
+  renderUI();
 };
 $('speed').onclick = () => {
   speed = speed === 1 ? 2 : speed === 2 ? 4 : 1;
@@ -668,5 +675,23 @@ if (chainMode) {
   if (chain.ready) selectFly(0);
   setInterval(() => chain.sync(), 600);
 }
+$('language').onchange = () => {
+  setPreference($('language').value);
+  renderUI();
+};
+window.addEventListener('languagechange', () => {
+  if (getPreference() === 'system') renderUI();
+});
+window.addEventListener('storage', (event) => {
+  if (event.key === 'fly-lab.language') {
+    setPreference(event.newValue);
+    $('language').value = getPreference();
+    renderUI();
+  }
+});
+$('field').setAttribute(
+  'aria-label',
+  `蜜を競って集める${arena.flies.length}匹のハエ。クリックするとその場所に蜜を置けます。`,
+);
 renderUI();
 requestAnimationFrame(frame);

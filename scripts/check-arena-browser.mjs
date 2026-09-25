@@ -11,7 +11,11 @@ const browser = await chromium.launch({
 });
 const errors = [];
 try {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({
+    locale: 'ja-JP',
+    viewport: { width: 1440, height: 1200 },
+    deviceScaleFactor: 1,
+  });
   page.on('pageerror', (e) => errors.push(e.message));
   const response = await page.goto(`${base}/?test=1`);
   assert.equal(response.status(), 200);
@@ -59,6 +63,7 @@ try {
   await page.locator('#next-round').click();
   assert.equal(await page.evaluate(() => window.__arena.round), 2);
   const mobile = await browser.newPage({
+    locale: 'ja-JP',
     viewport: { width: 390, height: 844 },
     deviceScaleFactor: 1,
     isMobile: true,

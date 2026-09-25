@@ -13,6 +13,7 @@ const browser = await chromium.launch({
   args: ['--no-sandbox'],
 });
 const context = await browser.newContext({
+  locale: 'ja-JP',
   viewport: { width: 1600, height: 1100 },
   recordVideo: { dir: `${out}/raw`, size: { width: 1600, height: 1100 } },
 });
