@@ -1,0 +1,200 @@
+[
+  {
+    "type": "function",
+    "name": "getStatus",
+    "inputs": [
+      {
+        "name": "agentId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct IBioAgent.BioAgentStatus",
+        "components": [
+          {
+            "name": "activity",
+            "type": "uint8",
+            "internalType": "enum IBioAgent.Activity"
+          },
+          {
+            "name": "energy",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "stimulus",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "revision",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "updatedAt",
+            "type": "uint64",
+            "internalType": "uint64"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "updateStatus",
+    "inputs": [
+      {
+        "name": "agentId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "expectedRevision",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "activity",
+        "type": "uint8",
+        "internalType": "enum IBioAgent.Activity"
+      },
+      {
+        "name": "energy",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "stimulus",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "BioAgentStatusUpdated",
+    "inputs": [
+      {
+        "name": "agentId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "revision",
+        "type": "uint64",
+        "indexed": true,
+        "internalType": "uint64"
+      },
+      {
+        "name": "writer",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "activity",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum IBioAgent.Activity"
+      },
+      {
+        "name": "energy",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "stimulus",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "updatedAt",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "AgentNotFound",
+    "inputs": [
+      {
+        "name": "agentId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "InvalidEnergy",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "InvalidStimulus",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "RevisionMismatch",
+    "inputs": [
+      {
+        "name": "agentId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "expected",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "actual",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "UnauthorizedWriter",
+    "inputs": [
+      {
+        "name": "agentId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "writer",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  }
+]
