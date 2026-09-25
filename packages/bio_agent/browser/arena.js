@@ -152,7 +152,7 @@ export function evaluate(q) {
   return total / 3;
 }
 export class Arena {
-  constructor(seed = 2026) {
+  constructor(seed = 2026, { agentCount = 12 } = {}) {
     this.seed = seed;
     this.rng = random(seed);
     this.world = createWorld(this.rng);
@@ -166,7 +166,7 @@ export class Arena {
     this.lastSelection = 0;
     this.events = [];
     this.selected = 0;
-    this.flies = NAMES.map((name, id) => ({
+    this.flies = NAMES.slice(0, agentCount).map((name, id) => ({
       id,
       name,
       color: COLORS[id],
@@ -187,8 +187,11 @@ export class Arena {
       lastDecision: '蜜の匂いを探索',
       trail: [],
       activeTicks: 0,
+      decisionCounts: { rest: 0, move: 0 },
+      input: null,
+      chain: null,
     }));
-    this.log('system', 'FIELD OPEN', '12体のハエが蜜の探索を開始');
+    this.log('system', 'FIELD OPEN', `${this.flies.length}体のハエが蜜の探索を開始`);
   }
   log(kind, title, detail, flyId = null) {
     this.events.unshift({ id: ++this.revision, time: this.time, kind, title, detail, flyId });
@@ -203,6 +206,34 @@ export class Arena {
       'STATUS APPLIED',
       `刺激 ${Math.round(stimulus * 100)}% / エネルギー供給 ${Math.round(energy * 100)}% / ${this.world.mode}`,
     );
+  }
+  applyAgentStatus(agentId, status, cause) {
+    const fly = this.flies[Number(agentId) - 1];
+    if (!fly || !['0', '1', '2'].includes(String(status.activity)))
+      throw new Error('Unsupported Agent Status');
+    for (const key of ['energy', 'stimulus'])
+      if (!Number.isInteger(status[key]) || status[key] < 0 || status[key] > 10000)
+        throw new Error('Invalid Status range');
+    if (fly.chain && BigInt(status.revision) <= BigInt(fly.chain.revision)) return false;
+    fly.input = {
+      mode: ['rest', 'explore', 'forage'][status.activity],
+      energy: status.energy / 10000,
+      stimulus: status.stimulus / 10000,
+    };
+    fly.chain = {
+      agentId: String(agentId),
+      revision: status.revision,
+      status: { ...status },
+      cause,
+      appliedAt: this.time,
+    };
+    this.log(
+      'input',
+      `${fly.name} / ONCHAIN INPUT`,
+      `#${agentId} rev ${status.revision} / ${fly.input.mode} / 刺激 ${status.stimulus / 100}% / Tx ${cause.transactionHash.slice(0, 12)}…`,
+      fly.id,
+    );
+    return true;
   }
   addFood(x, y) {
     const oldest = this.world.foods.shift();
@@ -272,15 +303,17 @@ export class Arena {
         this.trainTick(fly, dt);
         continue;
       }
-      const obs = observe(fly, this.world);
-      let action = choose(fly.q, obs, this.rng, fly.exploration + this.world.stimulus * 0.09);
-      if (this.world.mode === 'rest' && this.rng() < 0.75) action = 8;
-      if (this.world.mode === 'explore' && this.rng() < 0.4) action = Math.floor(this.rng() * 8);
+      const world = fly.input ? { ...this.world, ...fly.input } : this.world;
+      const obs = observe(fly, world);
+      let action = choose(fly.q, obs, this.rng, fly.exploration + world.stimulus * 0.09);
+      if (world.mode === 'rest' && this.rng() < 0.75) action = 8;
+      if (world.mode === 'explore' && this.rng() < 0.4) action = Math.floor(this.rng() * 8);
       if (fly.energy < 0.08) action = 8;
-      const result = transition(fly, this.world, action, this.rng);
+      const result = transition(fly, world, action, this.rng);
       fly.memory.push({ state: result.state, action, reward: result.reward, next: result.next });
       if (fly.memory.length > 300) fly.memory.shift();
       fly.activeTicks++;
+      fly.decisionCounts[action === 8 ? 'rest' : 'move']++;
       fly.score += result.collected ? 1 : 0;
       fly.collisions += result.hit ? 1 : 0;
       fly.lastDecision =
@@ -303,7 +336,9 @@ export class Arena {
           a.score / Math.max(1, a.activeTicks) - b.score / Math.max(1, b.activeTicks) ||
           b.collisions - a.collisions,
       );
-      candidates.slice(0, 2).forEach((f) => this.startTraining(f));
+      candidates
+        .slice(0, Math.min(2, Math.max(1, Math.floor(this.flies.length / 3))))
+        .forEach((f) => this.startTraining(f));
     }
     if (this.time >= this.duration) {
       this.time = this.duration;

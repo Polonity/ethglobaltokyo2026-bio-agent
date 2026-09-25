@@ -1144,3 +1144,55 @@ dialog > p:not(.eyebrow) {
     font-size: 5px;
   }
 }
+.chain-panel {
+  border: 1px solid #596c50;
+  border-radius: 9px;
+  background: #263122;
+  padding: 16px 19px;
+  margin-bottom: 18px;
+}
+.chain-panel[hidden] {
+  display: none;
+}
+.chain-top {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.chain-top b {
+  color: #b5c899;
+}
+#chain-stage {
+  color: #f08259;
+}
+#chain-target {
+  margin-left: auto;
+}
+#chain-summary {
+  margin-top: 10px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+#chain-summary[data-stage='error'],
+#chain-summary[data-stage='offline'] {
+  color: #f7a18e;
+}
+#chain-status {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #b5c899;
+}
+.chain-details {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 9px;
+  color: #9faf94;
+  overflow-wrap: anywhere;
+}
+.chain-mode .standings {
+  align-self: start;
+}

@@ -1,6 +1,26 @@
 import { Arena, WIDTH, HEIGHT, MODEL, random } from '../../packages/bio_agent/browser/arena.js';
+import { ChainSession } from './chain.js';
 const $ = (id) => document.getElementById(id);
-const arena = new Arena();
+const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
+const chainMode = config.mode === 'anvil';
+const arena = new Arena(2026, { agentCount: chainMode ? 3 : 12 });
+let chain = null;
+function selectFly(id) {
+  arena.selected = id;
+  const input = arena.flies[id].input;
+  if (chain && input) {
+    pendingMode = input.mode;
+    for (const name of ['energy', 'stimulus']) {
+      $(name).value = Math.round(input[name] * 100);
+      $(`${name}-value`).textContent = `${$(name).value}%`;
+    }
+    document.querySelectorAll('[data-mode]').forEach((b) => {
+      b.classList.toggle('selected', b.dataset.mode === pendingMode);
+      b.setAttribute('aria-pressed', String(b.dataset.mode === pendingMode));
+    });
+  }
+  renderUI();
+}
 const field = $('field'),
   ctx = field.getContext('2d');
 let speed = 1,
@@ -238,8 +258,7 @@ function renderUI() {
       row.setAttribute('aria-pressed', String(f.id === arena.selected));
       row.innerHTML = `<span class="rank-number">${String(i + 1).padStart(2, '0')}</span><span class="rank-dot" style="background:${f.color}"></span><span class="rank-name">${f.name}</span>${f.state === 'learning' ? '<span class="rank-tag">LEARNING</span>' : ''}<span class="rank-score">${f.score}</span>`;
       row.onclick = () => {
-        arena.selected = f.id;
-        renderUI();
+        selectFly(f.id);
       };
       return row;
     }),
@@ -248,7 +267,8 @@ function renderUI() {
   $('selected-name').textContent = f.name;
   $('selected-name').style.color = f.color;
   $('selected-version').textContent = `POLICY V${f.version}`;
-  $('selected-state').textContent = f.state === 'learning' ? 'LEARNING' : arena.world.mode.toUpperCase();
+  $('selected-state').textContent =
+    f.state === 'learning' ? 'LEARNING' : (f.input?.mode || arena.world.mode).toUpperCase();
   $('selected-energy').textContent = `${Math.round(f.energy * 100)}%`;
   $('energy-bar').style.width = `${f.energy * 100}%`;
   $('decision').textContent =
@@ -256,6 +276,20 @@ function renderUI() {
   $('sensors').textContent = f.observation
     ? `蜜: ${['東', '南東', '南', '南西', '西', '北西', '北', '北東'][f.observation.bearing]} / 近くの危険: ${f.observation.danger ? 'あり' : 'なし'}`
     : '感覚入力を待機中';
+  if (chain) {
+    $('chain-summary').textContent = chain.message;
+    $('chain-stage').textContent = chain.stage.toUpperCase();
+    $('chain-summary').dataset.stage = chain.stage;
+    $('apply').disabled = !chain.ready || chain.busy;
+    $('chain-target').textContent = `${f.name} / Agent #${f.id + 1}`;
+    $('chain-status').textContent = f.chain
+      ? `登録済み rev ${f.chain.revision} · ${f.input.mode} · 刺激 ${f.chain.status.stimulus / 100}% · 供給 ${f.chain.status.energy / 100}%`
+      : '登録確認中';
+    $('chain-tx').textContent = chain.lastTx?.transactionHash || f.chain?.cause.transactionHash || '—';
+    $('chain-block').textContent = f.chain
+      ? `Block ${f.chain.cause.blockNumber} / log ${f.chain.cause.logIndex} / tick ${(f.chain.appliedAt / 0.2).toFixed(0)}`
+      : '—';
+  }
   $('memory-count').textContent = f.memory.length;
   $('selected-score').textContent = f.score;
   $('train-selected').disabled = f.state === 'learning' || arena.finished;
@@ -320,7 +354,7 @@ field.addEventListener('click', (e) => {
   const x = ((e.clientX - rect.left) / rect.width) * WIDTH,
     y = ((e.clientY - rect.top) / rect.height) * HEIGHT;
   const fly = arena.flies.find((f) => f.state !== 'learning' && Math.hypot(f.x - x, f.y - y) < 1.2);
-  if (fly) arena.selected = fly.id;
+  if (fly) selectFly(fly.id);
   else arena.addFood(x, y);
   renderUI();
 });
@@ -345,7 +379,21 @@ for (const button of document.querySelectorAll('[data-mode]'))
       b.setAttribute('aria-pressed', String(b === button));
     });
   };
-$('apply').onclick = () => {
+$('apply').onclick = async () => {
+  if (chain) {
+    try {
+      await chain.send(String(arena.selected + 1), {
+        activity: ['rest', 'explore', 'forage'].indexOf(pendingMode),
+        energy: Number($('energy').value) * 100,
+        stimulus: Number($('stimulus').value) * 100,
+      });
+      $('input-feedback').textContent = 'イベント受信後、選択したハエに適用しました';
+    } catch (error) {
+      $('input-feedback').textContent = error.message;
+    }
+    renderUI();
+    return;
+  }
   arena.applyStatus({
     stimulus: Number($('stimulus').value) / 100,
     energy: Number($('energy').value) / 100,
@@ -367,8 +415,7 @@ $('auto-learn').onchange = () => {
   renderUI();
 };
 $('next-agent').onclick = () => {
-  arena.selected = (arena.selected + 1) % arena.flies.length;
-  renderUI();
+  selectFly((arena.selected + 1) % arena.flies.length);
 };
 $('next-round').onclick = () => {
   arena.nextRound();
@@ -385,7 +432,10 @@ $('export').onclick = () => {
     round: arena.round,
     time: arena.time,
     world: arena.world,
-    source: 'browser-local',
+    source: chain ? 'anvil-31337' : 'browser-local',
+    chain: chain
+      ? { registryAddress: config.registryAddress, cursor: chain.cursor, lastTx: chain.lastTx }
+      : null,
     events: arena.events,
     agents: arena.flies.map((f) => ({
       id: f.id,
@@ -395,6 +445,7 @@ $('export').onclick = () => {
       q: f.q,
       experiences: f.memory,
       lastReport: f.lastReport,
+      chain: f.chain,
     })),
   };
   const url = URL.createObjectURL(new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' }));
@@ -405,11 +456,14 @@ $('export').onclick = () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 // Explicit diagnostic mode for repeatable browser acceptance tests; no network writes.
-if (new URLSearchParams(location.search).has('test')) window.__arena = arena;
+if (new URLSearchParams(location.search).has('test')) {
+  window.__arena = arena;
+  window.__chain = chain;
+}
 function frame(now) {
   const elapsed = Math.min((now - lastTime) / 1000, 0.1);
   lastTime = now;
-  if (!document.hidden && !arena.paused && !arena.finished) {
+  if (!document.hidden && !arena.paused && !arena.finished && (!chain || chain.ready)) {
     accumulator += elapsed * speed;
     while (accumulator >= 0.2) {
       arena.tick(0.2);
@@ -422,6 +476,23 @@ function frame(now) {
     uiTime = now;
   }
   requestAnimationFrame(frame);
+}
+if (chainMode) {
+  document.body.classList.add('chain-mode');
+  $('chain-panel').hidden = false;
+  $('chain-registry').textContent = config.registryAddress;
+  $('input-source-label').textContent = 'ANVIL 31337 · 選択中の1匹に送信';
+  $('apply').innerHTML = 'コントラクトに刺激を送信 <span>↗</span>';
+  $('intro-agent-count').textContent = '蜜を探す3つの個体。';
+  $('world-input-title').textContent = 'このハエに刺激を。';
+  $('world-input-help').textContent = '選択した個体の入力を Anvil に記録します。';
+  $('about-chain').parentElement.textContent =
+    'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はブラウザー内の Q学習モデルです。MaleCNS 回路ではありません。';
+  chain = new ChainSession(arena, config, renderUI);
+  if (new URLSearchParams(location.search).has('test')) window.__chain = chain;
+  await chain.sync();
+  if (chain.ready) selectFly(0);
+  setInterval(() => chain.sync(), 600);
 }
 renderUI();
 requestAnimationFrame(frame);

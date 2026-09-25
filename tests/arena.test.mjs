@@ -59,3 +59,20 @@ test('pause, input bounds, local stimuli, round completion and retained policies
     policies,
   );
 });
+
+test('chain input affects only its agent, rejects duplicates, and survives next round', () => {
+  const a = new Arena(2026, { agentCount: 3 });
+  const status = { activity: 2, energy: 8000, stimulus: 9000, revision: '2', updatedAt: '1' };
+  const cause = { transactionHash: '0x' + 'a'.repeat(64), eventId: 'event:1' };
+  assert.equal(a.applyAgentStatus('2', status, cause), true);
+  assert.equal(a.flies[1].input.mode, 'forage');
+  assert.equal(a.flies[1].input.stimulus, 0.9);
+  assert.equal(a.flies[0].input, null);
+  assert.equal(a.flies[2].input, null);
+  const count = a.events.length;
+  assert.equal(a.applyAgentStatus('2', status, cause), false);
+  assert.equal(a.events.length, count);
+  a.nextRound();
+  assert.equal(a.flies[1].chain.revision, '2');
+  assert.equal(a.flies[1].input.stimulus, 0.9);
+});

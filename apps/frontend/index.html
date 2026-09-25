@@ -37,9 +37,21 @@
         <div class="intro-note">
           <span class="note-index">↗ LIVE EXPERIMENT</span>
           <p>
-            蜜を探す12の個体。<br />遅れをとったハエは学習室へ。<br />経験を持って、もう一度フィールドに。
+            <span id="intro-agent-count">蜜を探す12の個体。</span
+            ><br />遅れをとったハエは学習室へ。<br />経験を持って、もう一度フィールドに。
           </p>
           <div class="model-badge"><span></span>ADAPTIVE MODEL <b>Q-LEARNING</b></div>
+        </div>
+      </section>
+      <section id="chain-panel" class="chain-panel" hidden aria-label="Anvil 接続とトランザクション">
+        <div class="chain-top">
+          <b>ANVIL / 31337</b><span id="chain-stage">CONNECTING</span><span id="chain-target">—</span>
+        </div>
+        <p id="chain-summary" role="status" aria-live="polite">コントラクトを確認中</p>
+        <p id="chain-status">—</p>
+        <div class="chain-details">
+          <span>Registry <code id="chain-registry"></code></span><span>Tx <code id="chain-tx">—</code></span
+          ><span id="chain-block">—</span>
         </div>
       </section>
       <section class="arena-layout" id="arena">
@@ -97,8 +109,8 @@
         <article class="control-panel">
           <div class="section-title">
             <span class="eyebrow">01 / WORLD INPUT</span>
-            <h2>世界に刺激を。</h2>
-            <p>環境を変えて、ハエの判断を観察しよう。</p>
+            <h2 id="world-input-title">世界に刺激を。</h2>
+            <p id="world-input-help">環境を変えて、ハエの判断を観察しよう。</p>
           </div>
           <div class="mode-switch" aria-label="活動モード">
             <button data-mode="forage" class="selected" aria-pressed="true">採餌</button
@@ -114,7 +126,10 @@
           ><input id="energy" type="range" min="0" max="100" value="70" /><button class="primary" id="apply">
             刺激を適用する <span>↗</span>
           </button>
-          <p class="input-source"><span class="source-dot"></span>ブラウザー内の入力 · Sepolia 未接続</p>
+          <p class="input-source">
+            <span class="source-dot"></span
+            ><span id="input-source-label">ブラウザー内の入力 · Sepolia 未接続</span>
+          </p>
           <p id="input-feedback" class="sr-only" role="status" aria-live="polite"></p>
         </article>
         <article class="agent-panel">
@@ -185,7 +200,8 @@
         学習に使わない固定3コースで新旧方策を比較し、改善した候補のみ採用。復帰時の体力回復は学習効果とは別です。検証スコアは蜜の数ではなく報酬の合計です。
       </p>
       <p>
-        これはブラウザー内で動く適応モデルです。MaleCNSの神経回路やブロックチェーンとはまだ接続していません。タブごとに独立した実験で、再読込するとリセットされます。実験データは保存ボタンから取得できます。
+        <span id="about-chain">これはブラウザー内で動く適応モデルです。</span
+        >MaleCNSの神経回路やブロックチェーンとはまだ接続していません。タブごとに独立した実験で、再読込するとリセットされます。実験データは保存ボタンから取得できます。
       </p>
       <button id="about-ok" class="primary">観察をはじめる ↗</button>
     </dialog>
