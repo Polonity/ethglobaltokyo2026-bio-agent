@@ -3,7 +3,8 @@ src = "src"
 test = "test"
 script = "script"
 out = "out"
-libs = ["lib"]
+libs = ["lib", "../node_modules"]
+remappings = ["@openzeppelin/contracts/=../node_modules/@openzeppelin/contracts/"]
 solc_version = "0.8.30"
 evm_version = "cancun"
 optimizer = true

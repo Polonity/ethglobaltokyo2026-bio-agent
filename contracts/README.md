@@ -48,3 +48,7 @@ Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/
 ## Agent用wallet参照
 
 `IBioAgentWallet` の `getAgentWallet` / `setAgentWallet` を追加しています。ownerが同一チェーン上のwalletアドレスを登録し、専用イベントを発行します。初期値はゼロで、設定しても操作権限は委任しません。実walletの作成・所有検証は別工程です。旧Registryへの自動アップグレードはありません。[Agent拡張設計](../docs/design/agent-types-and-wallets.md)を参照してください。
+
+## Experimental NFT / SBT profiles
+
+Run `npm ci` at repository root before Foundry builds (OpenZeppelin 5.4.0 is pinned). `BioAgentNFT` adds ERC-721 identity and `IBioAgentStimulus`; `BioAgentSBT` adds permanent ERC-5192 locking. See [specification](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the original Registry; these profiles require explicit new deployments and have not been deployed to Sepolia.
