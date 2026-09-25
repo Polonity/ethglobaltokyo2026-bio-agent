@@ -22,7 +22,7 @@
 
 ## システム設計
 
-[設計ドキュメント v0.1](docs/design/README.md) に `IBioAgent`、Registry、Status、イベント、ログ受信、GUI デモの設計をまとめています。Status は Agent への入力となる状態・刺激です。Registry が発行するイベントを起動中の Agent が処理し、その実行結果を GUI に反映します。Registry コントラクトは実装済みで、イベント受信・Runtime・GUI の接続は次段階です。
+[設計ドキュメント v0.1](docs/design/README.md) に `IBioAgent`、Registry、Status、イベント、ログ受信、GUI デモの設計をまとめています。Status は Agent への入力となる状態・刺激です。Registry が発行するイベントを起動中の Agent が処理し、その実行結果を GUI に反映します。Registry コントラクトと、ローカル Anvil のイベント受信・Runtime・GUI の接続を実装済みです。
 
 ## Anvil とローカル Workers で動かす
 
@@ -36,6 +36,8 @@ npm run local:up
 Foundry の forge / anvil が必要です。AnvilへRegistryを実デプロイして3匹を登録し、GUIで選んだ1匹に刺激を送れます。Cloudflareの認証情報やブラウザーウォレットは不要です。
 
 起動後、別ターミナルの `npm run test:local` でGUI→コントラクト→イベント→個体反応を実ブラウザーで検証できます。**[詳しい起動・操作・動作確認ガイド](docs/deployment/local-anvil.md)** を参照してください。
+
+ローカル版の字幕付きデモ動画は `node scripts/record-demo.mjs` で収録できます。[動画の内容と再収録手順](docs/demo-video.md)を参照してください。
 
 ## ブラウザー内デモを起動
 
