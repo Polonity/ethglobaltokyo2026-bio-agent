@@ -102,3 +102,7 @@ make contracts-dry-run contracts-check-deployment
 - RPC URL、トークン、大容量データ、学習成果物はコミットしません。
 - 現在の動作確認は Anvil。次の対象は Ethereum Sepolia。イベントの型は `contracts/src/interfaces/`、現在の学習目的・評価条件は [Fly Lab設計](docs/design/fly-arena.md) を参照。
 - スポンサー固有の統合・スマートコントラクトは選定後に追加します。
+
+### Experimental agent profiles and market inputs
+
+[ERC-style working draft](docs/standards/bio-agent-draft.md): ERC-721 identity, ERC-5192 soulbound variant, and schema-tagged stimuli. [Swap event milestone](docs/design/swap-event-game.md): `npm run demo:swaps` verifies three agents using synthetic V3-shaped events on a separate Anvil. This is not a live Uniswap integration or a completed trading game.

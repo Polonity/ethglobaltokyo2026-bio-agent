@@ -25,3 +25,4 @@ jobs:
           FOUNDRY_PROFILE: ci
       - run: make contracts-dry-run contracts-check-deployment contracts-abi
       - run: git diff --exit-code -- contracts/abi
+      - run: npm run demo:swaps

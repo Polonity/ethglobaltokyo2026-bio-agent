@@ -14,7 +14,9 @@
     "test:local": "node scripts/check-local-chain.mjs",
     "test:i18n": "node --test tests/i18n.test.mjs && node scripts/check-i18n.mjs",
     "test:agents": "node --test tests/agent-types.test.mjs",
-    "demo:agents": "node scripts/demo-agent-types.mjs"
+    "demo:agents": "node scripts/demo-agent-types.mjs",
+    "test:swaps": "node --test tests/swap-agents.test.mjs",
+    "demo:swaps": "node scripts/demo-swap-agents.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
