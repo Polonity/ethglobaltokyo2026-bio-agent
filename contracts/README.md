@@ -44,3 +44,7 @@ Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/
 ## ローカルアプリ層を実デプロイ
 
 `script/DeployLocalArena.s.sol` は chain ID 31337 のみに対応し、Registry と3匹を用意します。`npm run local:up` が Anvil の起動から GUI 配信まで実行します。[ローカル接続ガイド](../docs/deployment/local-anvil.md) を参照してください。
+
+## Agent用wallet参照
+
+`IBioAgentWallet` の `getAgentWallet` / `setAgentWallet` を追加しています。ownerが同一チェーン上のwalletアドレスを登録し、専用イベントを発行します。初期値はゼロで、設定しても操作権限は委任しません。実walletの作成・所有検証は別工程です。旧Registryへの自動アップグレードはありません。[Agent拡張設計](../docs/design/agent-types-and-wallets.md)を参照してください。

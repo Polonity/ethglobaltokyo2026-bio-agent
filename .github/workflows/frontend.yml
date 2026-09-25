@@ -17,4 +17,6 @@ jobs:
       - run: npm run format:check
       - run: npm run build
       - run: npm run test:arena
+      - run: npm run test:agents
+      - run: node --test tests/i18n.test.mjs tests/explorer.test.mjs
       - run: make test

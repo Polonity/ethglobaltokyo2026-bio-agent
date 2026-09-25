@@ -24,3 +24,7 @@
 いずれもMaleCNS神経回路シミュレーションではありません。将来のモデル差し替えでは、入力・出力対応、モデルmanifest、評価条件を合わせて更新します。
 
 検証: ルートで `npm run test:arena`、Pythonは `make test`。
+
+## 入力元が異なるAgent
+
+`runtime/agents.js` に `IBioAgentRuntime` を継承する `ForagingBioAgent` と `UniswapPriceBioAgent` を追加しています。既存GUIとは別の拡張基盤です。`npm run demo:agents` で固定データの刺激→判定を確認できます。[仕様・出典・walletの境界](../../docs/design/agent-types-and-wallets.md)を参照してください。
