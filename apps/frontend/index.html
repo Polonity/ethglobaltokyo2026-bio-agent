@@ -31,35 +31,56 @@
       <section class="intro">
         <div>
           <p class="eyebrow">BIO AGENT EXPERIMENT / 001</p>
-          <h1>Small brains.<br /><span>Wild decisions.</span></h1>
-          <p class="lead">感じる。競う。学びなおす。<br />小さなハエたちの、大きな生存競争。</p>
+          <h1>ちいさな羽で、<br /><span>大きな一歩。</span></h1>
+          <p class="lead">
+            おやつを探して、ときどきひとやすみ。<br />あなたの刺激が、この子たちの次の一歩に。
+          </p>
         </div>
         <div class="intro-note">
           <span class="note-index">↗ LIVE EXPERIMENT</span>
           <p>
             <span id="intro-agent-count">蜜を探す12の個体。</span
-            ><br />遅れをとったハエは学習室へ。<br />経験を持って、もう一度フィールドに。
+            ><br />遅れをとった子は「？」と学びなおし。<br />その場で考えて、もう一度歩き出す。
           </p>
           <div class="model-badge"><span></span>ADAPTIVE MODEL <b>Q-LEARNING</b></div>
         </div>
       </section>
       <section id="chain-panel" class="chain-panel" hidden aria-label="Anvil 接続とトランザクション">
         <div class="chain-top">
-          <b>ANVIL / 31337</b><span id="chain-stage">CONNECTING</span><span id="chain-target">—</span>
+          <b id="network-label">ANVIL / 31337 · ローカルチェーン</b><span id="chain-stage">CONNECTING</span
+          ><span id="chain-target">—</span>
         </div>
         <p id="chain-summary" role="status" aria-live="polite">コントラクトを確認中</p>
         <p id="chain-status">—</p>
-        <div class="chain-details">
-          <span>Registry <code id="chain-registry"></code></span><span>Tx <code id="chain-tx">—</code></span
-          ><span id="chain-block">—</span>
+        <ol class="tx-journey" aria-label="直近の送信状況">
+          <li>1 刺激を送信</li>
+          <li>2 ブロックに記録</li>
+          <li>3 イベント受信</li>
+          <li>4 ハエに反映</li>
+        </ol>
+        <p id="tx-context">まだ送信していません</p>
+        <details>
+          <summary>チェーンの証拠を見る</summary>
+          <div class="chain-details">
+            <span>Registry <code id="chain-registry"></code></span><span>Tx <code id="chain-tx">—</code></span
+            ><span id="chain-block">—</span>
+          </div>
+        </details>
+      </section>
+      <section class="live-story" aria-label="現在のアリーナ">
+        <div>
+          <span class="eyebrow">いま、どうなってる？</span>
+          <h2 id="arena-status" role="status" aria-live="polite">観察の準備中</h2>
+          <p id="arena-story"></p>
         </div>
+        <span id="session-badge">ブラウザー内の実験</span>
       </section>
       <section class="arena-layout" id="arena">
         <div class="field-panel">
           <div class="panel-heading">
             <div>
               <span class="live-dot"></span>
-              <h2>THE FORAGING FIELD</h2>
+              <h2>おやつの草原</h2>
               <span id="round-label" class="pill">ROUND 01</span>
             </div>
             <div class="field-tools">
@@ -73,7 +94,7 @@
               aria-label="蜜を競って集める12匹のハエ。クリックするとその場所に蜜を置けます。"
               role="img"
             ></canvas>
-            <div class="field-corner"><span class="crosshair">⊕</span> CLICK TO PLACE NECTAR</div>
+            <div class="field-corner"><span class="crosshair">⊕</span> クリックでお花を置こう</div>
             <div class="field-scale">OBSERVATION AREA <i></i>36 × 22</div>
             <div id="round-end" class="round-end" hidden>
               <p class="eyebrow">ROUND COMPLETE</p>
@@ -82,6 +103,11 @@
               <button id="next-round" class="primary">学習を引き継いで次のラウンド ↗</button>
             </div>
           </div>
+          <p class="thought-key">
+            ？ 学びなおし　♡ おやつ獲得　！ 危険　すやすや＝休息<br /><small
+              >吹き出しは判定の可視化です。コネクトームの思考・感情を読み取るものではありません。</small
+            >
+          </p>
           <div class="field-footer">
             <div class="legend">
               <span><i class="nectar"></i>蜜 / +1</span><span><i class="danger"></i>危険刺激</span
@@ -93,7 +119,7 @@
         <aside class="standings">
           <div class="standings-top">
             <p class="eyebrow">SURVIVAL IS A SKILL</p>
-            <h2>Leaderboard<span>↗</span></h2>
+            <h2>おやつランキング<span>✦</span></h2>
             <div class="clock">
               <span id="timer">01:30</span>
               <div><b id="total-nectar">0</b><small>NECTAR COLLECTED</small></div>
@@ -130,7 +156,7 @@
             <span class="source-dot"></span
             ><span id="input-source-label">ブラウザー内の入力 · Sepolia 未接続</span>
           </p>
-          <p id="input-feedback" class="sr-only" role="status" aria-live="polite"></p>
+          <p id="input-feedback" class="input-feedback" role="status" aria-live="polite"></p>
         </article>
         <article class="agent-panel">
           <div class="section-title">
@@ -162,7 +188,7 @@
           <div class="section-title">
             <span class="eyebrow">03 / LEARNING LAB</span>
             <div class="learning-heading">
-              <h2>失敗は、次の本能に。</h2>
+              <h2>ひとやすみして、学びなおそう。</h2>
               <label class="toggle"
                 ><input id="auto-learn" type="checkbox" checked /><span></span><b>AUTO</b></label
               >
@@ -186,7 +212,7 @@
       <footer>
         <div class="brand small">FLY<span>LAB</span></div>
         <p>Bio Agent · ETHGlobal Tokyo 2026</p>
-        <span>ローカル学習モデル / MaleCNS 回路は未接続</span>
+        <span>吹き出しはQ学習の状態表現 / MaleCNS 回路は未接続</span>
       </footer>
     </main>
     <dialog id="about-dialog">

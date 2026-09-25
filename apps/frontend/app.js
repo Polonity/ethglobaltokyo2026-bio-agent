@@ -51,77 +51,90 @@ new ResizeObserver(resize).observe(field);
 function flyDrawing(c, x, y, angle, color, scale, time, resting = false) {
   c.save();
   c.translate(x, y);
-  c.rotate(angle);
+  c.rotate(Math.sin(time * 0.003) * (resting ? 0.02 : 0.08));
   c.scale(scale, scale);
-  c.fillStyle = '#23302425';
-  c.beginPath();
-  c.ellipse(1, 4, 10, 5, 0, 0, Math.PI * 2);
-  c.fill();
-  c.strokeStyle = '#344338';
-  c.lineWidth = 1.05;
-  for (const side of [-1, 1]) {
-    for (const offset of [-3, 0, 3]) {
-      c.beginPath();
-      c.moveTo(offset, side * 2);
-      c.lineTo(offset - 2, side * 5);
-      c.lineTo(offset + (offset > 0 ? 3 : -4), side * 7);
+  const oval = (x, y, rx, ry, fill, stroke = '#665b64') => {
+    c.beginPath();
+    c.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+    c.fillStyle = fill;
+    c.fill();
+    if (stroke) {
+      c.strokeStyle = stroke;
+      c.lineWidth = 1.1;
       c.stroke();
     }
-  }
-  const flap = resting ? 0.35 : Math.sin(time * 0.065) * 0.22;
-  c.fillStyle = '#f1f2ddaa';
-  c.strokeStyle = '#64786377';
-  c.lineWidth = 0.55;
-  for (const side of [-1, 1]) {
-    c.save();
-    c.rotate(side * (0.5 + flap));
-    c.beginPath();
-    c.ellipse(-3, side * 5, 9, 3.8, side * 0.1, 0, Math.PI * 2);
-    c.fill();
-    c.stroke();
-    c.restore();
-  }
-  c.fillStyle = '#394938';
-  c.beginPath();
-  c.ellipse(-3, 0, 6, 3.3, 0, 0, Math.PI * 2);
-  c.fill();
-  c.strokeStyle = '#859172';
-  c.lineWidth = 0.8;
-  for (const i of [-5, -3, -1]) {
-    c.beginPath();
-    c.moveTo(i, -2.5);
-    c.lineTo(i, 2.5);
-    c.stroke();
-  }
-  c.fillStyle = color;
-  c.beginPath();
-  c.ellipse(2, 0, 4.3, 3.8, 0, 0, Math.PI * 2);
-  c.fill();
-  c.fillStyle = '#29372d';
-  c.beginPath();
-  c.arc(6, 0, 3.5, 0, Math.PI * 2);
-  c.fill();
-  c.fillStyle = '#bf6653';
+  };
+  oval(0, 13, 11, 3, '#71646d20', null);
+  const flap = resting ? 0 : Math.sin(time * 0.04) * 2;
+  oval(-11, -3 - flap, 7, 10, '#ffffffce', '#a3c9cc');
+  oval(11, -3 + flap, 7, 10, '#ffffffce', '#a3c9cc');
+  oval(-5, 11, 3, 3, color);
+  oval(5, 11, 3, 3, color);
+  oval(0, 0, 12, 12, '#fff9f0');
+  oval(0, -9, 6, 3, color, null);
+  c.strokeStyle = '#665b64';
+  c.lineWidth = 1.3;
+  c.lineCap = 'round';
   for (const side of [-1, 1]) {
     c.beginPath();
-    c.ellipse(7, side * 2, 1.8, 1.5, 0, 0, Math.PI * 2);
-    c.fill();
+    c.moveTo(side * 5, -10);
+    c.quadraticCurveTo(side * 8, -19, side * 10, -16);
+    c.stroke();
+    oval(side * 10, -16, 1.7, 1.7, color, null);
+    if (resting) {
+      c.beginPath();
+      c.moveTo(side * 4 - 2, -1);
+      c.lineTo(side * 4 + 2, -1);
+      c.stroke();
+    } else {
+      oval(side * 4, -1, 1.7, 2.3, '#514b54', null);
+      oval(side * 4 - 0.4, -1.8, 0.55, 0.7, '#fff', null);
+    }
+    oval(side * 8, 3, 2.7, 1.5, '#efb7b4', null);
   }
-  c.strokeStyle = '#344338';
   c.beginPath();
-  c.moveTo(8, -1);
-  c.lineTo(11, -4);
-  c.moveTo(8, 1);
-  c.lineTo(11, 4);
+  c.moveTo(-2, 4);
+  c.quadraticCurveTo(0, 7, 2, 4);
   c.stroke();
+
   c.restore();
+}
+function thought(f) {
+  if (f.state === 'learning') return { text: '？ どうしよう…', color: '#f1e4ff' };
+  if (f.lastDecision.includes('危険')) return { text: '！ あぶない', color: '#ffe1d8' };
+  if (f.lastDecision.includes('獲得')) return { text: '♡ やった！', color: '#fff0be' };
+  if (f.lastDecision.includes('休息')) return { text: 'すやすや…', color: '#e5edf9' };
+  return { text: 'おやつ、どこ？', color: '#fffdf4' };
+}
+function bubble(c, x, y, f, boundWidth) {
+  const mood = thought(f);
+  c.font = '600 11px sans-serif';
+  const width = c.measureText(mood.text).width + 20;
+  const left = Math.max(4, Math.min(boundWidth - width - 4, x - width / 2));
+  const top = Math.max(5, y - 74);
+  c.fillStyle = mood.color;
+  c.strokeStyle = '#ac9cae';
+  c.lineWidth = 1;
+  c.beginPath();
+  c.roundRect(left, top, width, 27, 12);
+  c.fill();
+  c.stroke();
+  c.beginPath();
+  c.moveTo(left + width / 2 - 4, top + 27);
+  c.lineTo(left + width / 2, top + 32);
+  c.lineTo(left + width / 2 + 4, top + 27);
+  c.fill();
+  c.stroke();
+  c.fillStyle = '#62516b';
+  c.textAlign = 'center';
+  c.fillText(mood.text, left + width / 2, top + 18);
 }
 function draw(time) {
   const w = cssWidth,
     h = cssHeight;
   if (!w || !h) return;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  ctx.fillStyle = '#d7ddbf';
+  ctx.fillStyle = '#edf3dc';
   ctx.fillRect(0, 0, w, h);
   const sx = w / WIDTH,
     sy = h / HEIGHT;
@@ -206,7 +219,10 @@ function draw(time) {
   arena.flies.forEach((f, i) => {
     visual[i].x += (f.x - visual[i].x) * 0.16;
     visual[i].y += (f.y - visual[i].y) * 0.16;
-    if (f.state === 'learning') return;
+    if (f.state === 'learning') {
+      visual[i].x = f.x;
+      visual[i].y = f.y;
+    }
     if (f.trail.length > 1) {
       ctx.strokeStyle = f.color + (i === arena.selected ? '90' : '40');
       ctx.lineWidth = 1;
@@ -232,17 +248,43 @@ function draw(time) {
       y,
       f.heading,
       f.color,
-      Math.max(0.72, Math.min(1.05, w / 740)),
+      Math.max(0.85, Math.min(1.5, w / 550)),
       time + i * 90,
-      arena.paused || arena.finished,
+      arena.paused || arena.finished || f.state === 'learning' || f.lastDecision.includes('休息'),
     );
-    ctx.font = `${i === arena.selected ? '600 ' : ''}7px monospace`;
+    ctx.font = `${i === arena.selected ? '600 ' : ''}10px sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillStyle = '#44543b';
-    ctx.fillText(f.name, x, y - 17);
+    ctx.fillText(f.name, x, y + 29);
+    if (chainMode || i === arena.selected || f.state === 'learning') bubble(ctx, x, y, f, w);
   });
 }
 function renderUI() {
+  const learners = arena.flies.filter((f) => f.state === 'learning');
+  const leader = arena.ranking()[0];
+  $('arena-status').textContent =
+    chain && !chain.ready
+      ? 'チェーン接続を待っています'
+      : arena.finished
+        ? `${leader.name} が優勝！`
+        : arena.paused
+          ? 'みんな、ちょっと待ってね。'
+          : learners.length
+            ? `${learners.map((f) => f.name).join('・')} は学びなおし中`
+            : 'おやつレース、開催中！';
+  $('arena-story').textContent =
+    chain && !chain.ready
+      ? '接続が戻るまで競技と新しい送信を待機します。'
+      : arena.finished
+        ? '学んだことを引き継いで、次のラウンドへ。'
+        : arena.paused
+          ? '競技は一時停止中。チェーンの入力受信は続いています。'
+          : learners.length
+            ? 'その場で立ち止まって経験から練習中。評価を終えたら動き出します。'
+            : `${leader.name} が ${leader.score} 個でリード。好きな子を選んで、刺激を届けよう。`;
+  $('session-badge').textContent = chain
+    ? `Anvil ${chain.ready ? '接続中' : '未接続'} · ローカル / 31337`
+    : 'チェーン未接続 · ブラウザーデモ';
   const remaining = Math.ceil(arena.duration - arena.time);
   $('timer').textContent =
     `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
@@ -256,7 +298,7 @@ function renderUI() {
       row.className = `rank-row ${f.id === arena.selected ? 'selected' : ''}`;
       row.setAttribute('aria-label', `${f.name} を観察、${f.score} nectar`);
       row.setAttribute('aria-pressed', String(f.id === arena.selected));
-      row.innerHTML = `<span class="rank-number">${String(i + 1).padStart(2, '0')}</span><span class="rank-dot" style="background:${f.color}"></span><span class="rank-name">${f.name}</span>${f.state === 'learning' ? '<span class="rank-tag">LEARNING</span>' : ''}<span class="rank-score">${f.score}</span>`;
+      row.innerHTML = `<span class="rank-number">${String(i + 1).padStart(2, '0')}</span><span class="rank-dot" style="background:${f.color}"></span><span class="rank-name">${f.name}</span><span class="rank-tag">${f.state === 'learning' ? '学び中' : f.lastDecision.includes('休息') ? 'すやすや' : 'おやつ探し'}</span><span class="rank-score">${f.score}</span>`;
       row.onclick = () => {
         selectFly(f.id);
       };
@@ -265,7 +307,7 @@ function renderUI() {
   );
   const f = arena.flies[arena.selected];
   $('selected-name').textContent = f.name;
-  $('selected-name').style.color = f.color;
+  $('selected-name').style.color = '#665168';
   $('selected-version').textContent = `POLICY V${f.version}`;
   $('selected-state').textContent =
     f.state === 'learning' ? 'LEARNING' : (f.input?.mode || arena.world.mode).toUpperCase();
@@ -277,25 +319,55 @@ function renderUI() {
     ? `蜜: ${['東', '南東', '南', '南西', '西', '北西', '北', '北東'][f.observation.bearing]} / 近くの危険: ${f.observation.danger ? 'あり' : 'なし'}`
     : '感覚入力を待機中';
   if (chain) {
+    const stages = {
+      connecting: '接続確認中',
+      connected: '接続済み',
+      submitting: '送信中',
+      submitted: '採掘待ち',
+      mined: '採掘済み',
+      applied: '反映済み',
+      offline: '接続待ち',
+      error: '送信を確認してください',
+    };
     $('chain-summary').textContent = chain.message;
-    $('chain-stage').textContent = chain.stage.toUpperCase();
+    $('chain-stage').textContent = stages[chain.stage] || chain.stage;
+    $('chain-panel').dataset.state = chain.ready ? 'online' : 'offline';
     $('chain-summary').dataset.stage = chain.stage;
     $('apply').disabled = !chain.ready || chain.busy;
-    $('chain-target').textContent = `${f.name} / Agent #${f.id + 1}`;
+    $('chain-target').textContent = `観察中：${f.name} / #${f.id + 1}`;
     $('chain-status').textContent = f.chain
-      ? `登録済み rev ${f.chain.revision} · ${f.input.mode} · 刺激 ${f.chain.status.stimulus / 100}% · 供給 ${f.chain.status.energy / 100}%`
-      : '登録確認中';
-    $('chain-tx').textContent = chain.lastTx?.transactionHash || f.chain?.cause.transactionHash || '—';
+      ? `${f.name} の登録入力 · rev ${f.chain.revision} · ${{ rest: '休息', explore: '探索', forage: '採餌' }[f.input.mode]} · 刺激 ${f.chain.status.stimulus / 100}% · 供給 ${f.chain.status.energy / 100}%`
+      : '3匹の登録を確認しています';
+    // Evidence always belongs to the selected agent, not a different last sender.
+    $('chain-tx').textContent = f.chain?.cause.transactionHash || '—';
     $('chain-block').textContent = f.chain
-      ? `Block ${f.chain.cause.blockNumber} / log ${f.chain.cause.logIndex} / tick ${(f.chain.appliedAt / 0.2).toFixed(0)}`
+      ? `Block ${f.chain.cause.blockNumber} / log ${f.chain.cause.logIndex} / 適用tick ${(f.chain.appliedAt / 0.2).toFixed(0)}`
       : '—';
+    const tx = chain.lastTx;
+    const progress = tx?.applied ? 4 : chain.stage === 'mined' ? 2 : chain.stage === 'submitted' ? 1 : 0;
+    document.querySelectorAll('.tx-journey li').forEach((el, i) => {
+      el.classList.toggle('done', i < progress);
+      el.classList.toggle('current', chain.busy && i === progress);
+    });
+    $('tx-context').textContent = tx
+      ? `直近の送信先：${arena.flies[Number(tx.agentId) - 1].name} #${tx.agentId} · ${tx.applied ? 'イベント受信・反映を確認 ✓' : '反映未確認（送信成功だけでは動きを変えません）'}`
+      : '1匹を選んで刺激を送ろう。ブロックに記録されると、その子に届きます。';
   }
   $('memory-count').textContent = f.memory.length;
   $('selected-score').textContent = f.score;
   $('train-selected').disabled = f.state === 'learning' || arena.finished;
   const sc = $('specimen').getContext('2d');
   sc.clearRect(0, 0, 400, 150);
-  flyDrawing(sc, 200, 75, -0.4, f.color, 3.7, performance.now());
+  flyDrawing(
+    sc,
+    200,
+    78,
+    -0.4,
+    f.color,
+    3.3,
+    performance.now(),
+    f.state === 'learning' || f.lastDecision.includes('休息'),
+  );
   const learning = arena.flies.filter((f) => f.state === 'learning');
   const recent = [...arena.flies]
     .filter((f) => f.lastReport && f.state !== 'learning')
@@ -353,7 +425,7 @@ field.addEventListener('click', (e) => {
   const rect = field.getBoundingClientRect();
   const x = ((e.clientX - rect.left) / rect.width) * WIDTH,
     y = ((e.clientY - rect.top) / rect.height) * HEIGHT;
-  const fly = arena.flies.find((f) => f.state !== 'learning' && Math.hypot(f.x - x, f.y - y) < 1.2);
+  const fly = arena.flies.find((f) => Math.hypot(f.x - x, f.y - y) < 1.2);
   if (fly) selectFly(fly.id);
   else arena.addFood(x, y);
   renderUI();
@@ -487,7 +559,7 @@ if (chainMode) {
   $('input-source-label').textContent = 'ANVIL 31337 · 選択中の1匹に送信';
   $('apply').innerHTML = 'コントラクトに刺激を送信 <span>↗</span>';
   $('intro-agent-count').textContent = '蜜を探す3つの個体。';
-  $('world-input-title').textContent = 'このハエに刺激を。';
+  $('world-input-title').textContent = 'この子に刺激を届けよう。';
   $('world-input-help').textContent = '選択した個体の入力を Anvil に記録します。';
   $('about-chain').parentElement.textContent =
     'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はブラウザー内の Q学習モデルです。MaleCNS 回路ではありません。';

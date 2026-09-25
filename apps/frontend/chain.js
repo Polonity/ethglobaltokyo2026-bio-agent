@@ -39,6 +39,7 @@ export class ChainSession {
       Object.assign(this.arena, new Arena(this.arena.seed, { agentCount: 3 }));
       this.arena.paused = paused;
       this.seen.clear();
+      this.lastTx = null;
       this.arena.log('system', 'CHAIN RESYNC', 'チェーンの巻戻りを検知。現在の入力から新しい競争を開始');
     }
     for (const agent of snapshot.agents) {
@@ -113,6 +114,7 @@ export class ChainSession {
     if (!this.ready || this.busy) throw new Error('接続または送信完了を待ってください');
     const fly = this.arena.flies[Number(agentId) - 1];
     this.busy = true;
+    this.lastTx = null;
     this.stage = 'submitting';
     this.message = `Agent #${agentId} のトランザクションを送信中`;
     this.notify();

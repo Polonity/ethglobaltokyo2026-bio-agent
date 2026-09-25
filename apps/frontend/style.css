@@ -1250,3 +1250,379 @@ dialog > p:not(.eyebrow) {
     margin-left: 0;
   }
 }
+
+/* Soft original mascots and a readable live experiment dashboard. */
+:root {
+  color: #514954;
+  background: #faf7f2;
+  --muted: #766e7b;
+  --line: #e3dcd9;
+  --orange: #b6533c;
+  --green: #527859;
+  --panel: #fffdf9;
+}
+.topbar {
+  border-bottom: 1px solid var(--line);
+}
+main {
+  max-width: 1500px;
+}
+.intro,
+.chain-mode .intro {
+  padding: 28px 0 20px;
+}
+h1,
+.chain-mode h1 {
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.35;
+}
+.chain-mode .intro .lead {
+  display: block;
+}
+.lead,
+.intro-note > p {
+  color: var(--muted);
+}
+.chain-mode .intro-note {
+  display: block;
+}
+.intro-note {
+  background: #f0ede8;
+  border: 0;
+  border-radius: 24px;
+  padding: 20px 26px;
+}
+.chain-panel {
+  background: #f0f5ef;
+  border: 1px solid #c4d9c6;
+  border-radius: 20px;
+  padding: 18px 24px;
+}
+.chain-panel[data-state='offline'] {
+  background: #fff1e8;
+  border-color: #d7a994;
+}
+.chain-top {
+  flex-wrap: wrap;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.chain-top b,
+#chain-status {
+  color: #42634a;
+}
+#chain-stage {
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #42634a;
+  font-weight: 700;
+}
+#chain-summary {
+  font-size: 14px;
+}
+#chain-status,
+#tx-context {
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.chain-details {
+  color: #635c67;
+  font-size: 11px;
+}
+.chain-panel details {
+  margin-top: 10px;
+  font-size: 12px;
+}
+.chain-panel summary {
+  cursor: pointer;
+  width: fit-content;
+  padding: 4px 0;
+}
+.tx-journey {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 6px;
+}
+.tx-journey li {
+  background: #e2e7df;
+  color: #666e63;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.tx-journey .done {
+  background: #42674c;
+  color: #fff;
+}
+.tx-journey .current {
+  outline: 2px solid #b6533c;
+  background: #fff4db;
+  color: #6d4c23;
+}
+.live-story {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 24px;
+  background: #fff0dc;
+  border-radius: 20px;
+  margin: 18px 0;
+}
+.live-story h2 {
+  font-size: 21px;
+  margin: 6px 0;
+}
+.live-story p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #756045;
+}
+#session-badge {
+  font-size: 12px;
+  padding: 10px 14px;
+  border-radius: 20px;
+  background: #fffaf1;
+  white-space: nowrap;
+}
+.field-panel,
+.standings,
+.workbench > article {
+  border: 1px solid var(--line);
+  background: #fffdf9;
+  border-radius: 22px;
+  box-shadow: 0 5px 20px #70625408;
+}
+.field-wrap {
+  border-radius: 16px;
+}
+.panel-heading h2 {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.pill {
+  color: #6c665f;
+  border-color: #d9d4cb;
+  border-radius: 10px;
+}
+.field-tools button {
+  border-color: #d9d4cb;
+  border-radius: 10px;
+  min-height: 32px;
+  color: #655e62;
+}
+.field-tools button:hover {
+  background: #eee9df;
+}
+.field-footer {
+  color: #685e63;
+}
+.standings h2 {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.rank-row {
+  height: 48px;
+  border-color: #eee7e0;
+  font-size: 12px;
+}
+.rank-row.selected,
+.rank-row:hover {
+  background: #fff0df;
+}
+.rank-name {
+  font-size: 12px;
+}
+.rank-number {
+  font-size: 12px;
+}
+.rank-tag {
+  color: #766381;
+  font-size: 10px;
+}
+.rank-score {
+  font-size: 18px;
+}
+.chain-mode .standings > .control-panel {
+  background: #fffaf3;
+  padding: 20px;
+}
+.section-title p,
+.slider-label,
+.input-source {
+  font-size: 12px;
+  color: #736974;
+}
+.section-title h2 {
+  font-weight: 700;
+}
+.mode-switch {
+  border-radius: 14px;
+  background: #f3eee7;
+}
+.mode-switch button {
+  font-size: 13px;
+  padding: 10px 5px;
+  border-radius: 10px;
+}
+.mode-switch .selected {
+  background: #657b61;
+  color: white;
+}
+.primary {
+  background: #b6533c;
+  color: #fff;
+  border-radius: 12px;
+  min-height: 44px;
+  font-size: 12px;
+}
+.primary:hover {
+  background: #91402f;
+}
+.input-feedback {
+  font-size: 12px;
+  margin-top: 10px;
+  line-height: 1.6;
+  color: #7d472d;
+  overflow-wrap: anywhere;
+}
+.specimen {
+  height: 150px;
+  background: radial-gradient(ellipse, #ffefda, transparent 70%);
+}
+.specimen > span {
+  color: #526c50;
+  font-size: 10px;
+}
+.energy-label b {
+  color: #526c50;
+}
+.energy-bar,
+.time-track {
+  background: #e4e8de;
+  border-radius: 6px;
+  height: 5px;
+  overflow: hidden;
+}
+.learning-slot {
+  border-color: #d5cadd;
+  border-radius: 14px;
+}
+.learning-slot.active {
+  background: #f3eafa;
+  border-color: #b9a4ca;
+}
+.slot-heading > span:last-child {
+  color: #755489;
+}
+.slot-detail {
+  font-size: 12px;
+}
+.slot-heading {
+  font-size: 12px;
+}
+.event-row {
+  border-color: #e5ded7;
+}
+.event-row > span {
+  color: #6d666e;
+}
+.event-row strong {
+  color: #42674c;
+}
+.event-row[data-kind='learning'] strong {
+  color: #806292;
+}
+.round-end {
+  background: #fff8eeee;
+}
+.round-end > p {
+  color: #655d60;
+}
+dialog {
+  background: #fffaf3;
+  color: #514954;
+  border-color: #e3dcd9;
+  border-radius: 24px;
+}
+dialog > p:not(.eyebrow) {
+  color: #6e646b;
+}
+@media (max-width: 800px) {
+  .intro-note,
+  .chain-mode .intro-note {
+    display: none;
+  }
+  .live-story {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #ranking {
+    grid-template-columns: 1fr;
+  }
+  .rank-row {
+    height: 46px;
+  }
+  .tx-journey {
+    grid-template-columns: 1fr 1fr;
+  }
+  .chain-top {
+    gap: 8px;
+  }
+  #chain-target {
+    margin-left: 0;
+    width: 100%;
+  }
+  .workbench {
+    grid-template-columns: 1fr;
+  }
+  #learning-slots {
+    grid-template-columns: 1fr;
+  }
+  .chain-mode h1 span {
+    margin-left: 0;
+  }
+  .chain-mode h1 br {
+    display: block;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  button {
+    transition: none;
+  }
+}
+.thought-key {
+  padding: 12px 18px 0;
+  font-size: 12px;
+  color: #6b5d73;
+  line-height: 1.8;
+}
+.thought-key small {
+  font-size: 10px;
+  color: #807381;
+}
+#chain-summary[data-stage='error'],
+#chain-summary[data-stage='offline'] {
+  color: #963c28;
+}
+.chain-mode .intro {
+  padding: 16px 0;
+}
+.chain-mode .intro-note {
+  padding: 12px 20px;
+}
+.chain-mode .intro-note > p {
+  margin: 8px 0;
+}
