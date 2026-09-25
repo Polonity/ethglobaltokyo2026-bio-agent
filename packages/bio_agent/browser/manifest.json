@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "modelId": "foraging-q-v1",
+  "modelType": "adaptive-demo",
+  "runtime": "browser",
+  "description": "Tabular Q-learning foraging agent; not a MaleCNS neural circuit",
+  "inputs": { "activity": ["Rest", "Explore", "Forage"], "energy": [0, 10000], "stimulus": [0, 10000] },
+  "tickSeconds": 0.2,
+  "seed": 2026,
+  "learning": { "alpha": 0.09, "gamma": 0.6, "validationSeeds": [90001, 90019, 90103] }
+}

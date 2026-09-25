@@ -19,3 +19,4 @@ contracts/broadcast/
 .dev.vars
 .dev.vars.*
 artifacts/
+.local/

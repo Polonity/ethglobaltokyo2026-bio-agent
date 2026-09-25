@@ -1,6 +1,7 @@
 export default {
   async fetch(request, env) {
     const path = new URL(request.url).pathname;
+    if (path === '/api/config') return Response.json({ mode: 'browser' });
     if (path === '/api/health')
       return Response.json({
         status: 'ok',
