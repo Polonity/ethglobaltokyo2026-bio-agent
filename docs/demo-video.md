@@ -1,3 +1,26 @@
+# 最新版: 2アプリの英語デモ（2026-09-26）
+
+提出用の最新版は `artifacts/two-app-demo/bioagent-two-apps-english.mp4`。英語GUI・英語字幕、音声なし、1600×1100のH.264動画です。採餌への実TX、食事と身体入力、ローカル実Uniswap V3の価格変化、紙約定・PnL、source receipt、学習結果を約53秒で紹介します。
+
+`evidence.json`には字幕時刻、実際の入力TX、身体状態、市場snapshot、ブラウザー例外を記録しています。映像内の字幕は説明用であり、結果を注入するものではありません。成果物はGit管理対象外です。
+
+## 最新版の再収録
+
+[市場アプリの起動](design/local-market-app.md)に従いAnvilとWorkersを起動します。以下は検証に使用した別ポート構成です。
+
+```sh
+LOCAL_STATE_DIR=.local/embodied ANVIL_PORT=18546 LOCAL_GUI_PORT=8799 LOCAL_INSPECTOR_PORT=9250 npm run local:up
+# 別ターミナル。新しい市場を作るため、それまでの市場セッションは終了:
+LOCAL_STATE_DIR=.local/embodied npm run local:market
+LOCAL_GUI_URL=http://127.0.0.1:8799 node scripts/record-two-app-demo.mjs
+```
+
+forge/anvilをPATHに置き、Chromeとffmpegを用意してください。録画中は同じチェーンを書き換える他の検証を実行しないでください。既存のtwo-app-demo成果物は上書きされます。動画はsyntheticモデルのローカル実験であり、MaleCNS実行や実資金トレード、Sepolia配置を示しません。
+
+以下は以前の採餌のみの録画手順・当時の状態です。現在の2アプリについては上記と[提出パッケージ](submission/README.md)を参照してください。
+
+---
+
 # ローカル版デモ動画
 
 2026-09-25 時点の Anvil + Cloudflare Workers ローカル版を、実際のブラウザー操作で収録しています。日本語字幕付き、音声なしの MP4 です。

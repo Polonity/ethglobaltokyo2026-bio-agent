@@ -63,7 +63,7 @@ BioAgent semantic core
 | 共通記述 | 生物モデルdescriptorと状態遷移profile | 新設計。文書のみ。encodingと検証を先に詰める |
 | Identity binding | Agent識別子からdescriptorを解決する薄いbinding。既存registry利用も可能にする | 現在のRegistryを初期adapterとして利用。独自identity標準を主張しない |
 | On-chain stimulus transport | `IBioAgentStimulus`のschema/nonce/event方式を候補にする | 実験実装あり。独自性の中心ではない。deadline、source検証、入力認可を別途レビュー |
-| Off-chain runtime | observe / advance / checkpoint / restore等の意味を共通化 | ABIではなく実行時契約。完全checkpointは未実装 |
+| Off-chain runtime | observe / advance / checkpoint / restore等の意味を共通化 | ABIではなく実行時契約。採餌のローカルcheckpointは実装済み、実装間互換は未検証 |
 | 学習履歴の固定 | 必要な境界で既存のcommitment方式と接続する | ERC-8350等のadapterを検討。新しい汎用履歴registryは今は作らない |
 
 現行`IBioAgent.sol`は採餌入力profile v0として凍結し、既存GUIの互換性を維持する。`getStatus`が返すのは入力設定であり、内部stateやruntime lifecycleではないことを明記する。将来の基底interfaceに同じ名称を再利用するか、`IBioAgentDescriptor`等へ分けるかは、責務・ABI差分を確認してから決める。
@@ -84,9 +84,9 @@ BioAgent semantic core
 4. 完全checkpointから再実行し、宣言した数値精度内で比較する。
 5. 生物回路を使った場合はdataset→graph→実行モデルまでの出典を示す。
 
-この実験ができれば、GUIのかわいさが仕様の説明になる。膨らんだお腹は身体入力、停止と「？」は学習lifecycle、TXリンクは刺激の出典を表す。現在、身体入力・完全checkpoint・MaleCNS実行は未実装で、実験を完了したとは説明しない。
+この実験ができれば、GUIのかわいさが仕様の説明になる。膨らんだお腹は身体入力、停止と「？」は学習lifecycle、TXリンクは刺激の出典を表す。現在、synthetic採餌モデルで身体を変える対照実験と、学習中を含むローカルcheckpoint再開を検証済み。MaleCNS実行、異なる実装間のcheckpoint互換、学習効果の独立held-out評価は未完了。詳細は[身体モデル](../design/embodied-foraging.md)を参照。
 
-## 8. 次の設計ゲート
+## 8. 設計ゲートと到達点
 
 順序は以下を推奨する。今回は1と2の提案文書までで、3以降を実装したとは扱わない。
 
@@ -95,7 +95,9 @@ BioAgent semantic core
 3. descriptor・observation・checkpoint・transitionのschema、単位、hash対象bytes、PRNG、時間、エラー条件を定義し、test vectorを用意する。
 4. 2つのruntimeに読み書きを実装し、身体入力と再実行を検証する。
 5. その結果に基づき`IBioAgent`のABI、必要なevent、認可・永続化境界を決める。
-6. 不要だったNFT/SBT実験コードと依存を別コミットで整理し、旧GUIへの回帰を確認する。
+6. NFT/SBT実験コードと依存の削除は完了。通常の刺激Registryへ置換し、採餌・市場GUIを検証済み。
+
+共通型と用途別Viewは両GUIで使用済み。以下の提出版は局所的な実装・検証であり、profile全体の準拠認証ではない。
 
 ## 判断の基準
 

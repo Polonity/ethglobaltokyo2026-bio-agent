@@ -6,7 +6,9 @@
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
-**提出物の設計軸:** 生物モデルの出典、身体状態を含む個体、刺激から反応・学習への変化を共通形式で追う。[思想と設計方針](docs/standards/bioagent-design-direction.md) / [既存ERC調査](docs/standards/prior-art-and-bioagent.md) / [審査員向け説明案](docs/submission/bioagent-thesis.md)。NFT/SBT機能追加は要件ではなく、採餌と市場観測を用途別profileとして整理しています。新profileは設計段階です。
+**提出物の設計軸:** 生物モデルの出典、身体状態を含む個体、刺激から反応・学習への変化を共通形式で追う。[思想と設計方針](docs/standards/bioagent-design-direction.md) / [既存ERC調査](docs/standards/prior-art-and-bioagent.md) / [審査員向け説明案](docs/submission/bioagent-thesis.md)。NFT/SBT機能追加は要件ではなく、採餌と市場観測を用途別profileとして整理しています。共通型を両GUIで使用し、profile全体の相互運用性は今後検証します。
+
+**[提出パッケージ・英語説明・検証索引](docs/submission/README.md)** / **[最新2アプリ英語動画](docs/demo-video.md)**
 
 **[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
 

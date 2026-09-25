@@ -4,11 +4,11 @@
 
 ## 現在の仕様検討の入口
 
-[BioAgentの思想・設計方針](standards/bioagent-design-direction.md) → [既存ERCとの差分調査](standards/prior-art-and-bioagent.md) → [身体・学習profile案](standards/embodied-learning-profile.md) → [提出説明案](submission/bioagent-thesis.md)。NFT/SBTは派生構造の比喩であり、機能追加要件ではありません。先行実験コードは設計方針の根拠にせず、ABI変更は保留します。
+[BioAgentの思想・設計方針](standards/bioagent-design-direction.md) → [既存ERCとの差分調査](standards/prior-art-and-bioagent.md) → [身体・学習profile案](standards/embodied-learning-profile.md) → [提出説明案](submission/bioagent-thesis.md)。NFT/SBTは派生構造の比喩であり、機能追加要件ではありません。実装では通常のRegistryと任意の刺激拡張を用います。
 
 ## 2アプリの型
 
-[採餌・市場アプリの型定義と単位](standards/application-types.md): 共通coreと用途別profileをTypeScript化。型検査と基本値検証を実装、runtime/ABI移行は未実施。
+[採餌・市場アプリの型定義と単位](standards/application-types.md): 共通coreと用途別profileをTypeScript化。型検査と基本値検証を実装し、両GUIのViewへ接続済み。完全な共通Runtimeへの移行は未完了。
 
 ## 目的から読む
 
@@ -51,16 +51,18 @@
 | 公開用Workers | 12匹のブラウザーデモ。オンチェーン入力は未接続 |
 | Sepolia | 配置スクリプトと手順を準備。未デプロイ |
 | SQLite Backend・Python学習 | 独立したひな型。GUI競争とは未接続 |
-| 共有Runtime・SSE・checkpoint復元 | 設計案 |
+| 採餌の身体状態・checkpoint復元 | ローカル再開と学習中の再現を検証済み |
+| 実V3 Pool・市場GUI・ペーパートレード | Anvilで実装・ブラウザー検証済み |
+| サーバー共有Runtime・SSE・互換checkpoint | 設計案 |
 | MaleCNS回路実行 | 未実装 |
 
 「ローカル版の完了」と「最終プロダクトの完成」は別です。検証記録は各手順の実行日付き記録を参照し、過去の結果を現在の稼働保証として扱わないでください。
 
-## 先行実験の記録（2026-09-26、方針再検討中）
+## 提出パッケージ
 
-[ERC形式の草案](standards/bio-agent-draft.md)とNFT/SBT参照実装を追加しました。未提出・番号未付与で、従来のRegistryとGUIはそのままです。NFT/SBT追加は意図の取り違えによる先行実装で、今後の要件として採用しません。ERC-8004準拠や実行証明は主張しません。
+[英語の提出文・デモ台本・検証索引](submission/README.md)を参照してください。[ERC形式の草案](standards/bio-agent-draft.md)は未提出・番号未付与です。NFT/SBT実装と依存は削除済み。ERC-8004準拠や実行証明は主張しません。
 
-[Swapイベントゲームの実装状況・再現手順](design/swap-event-game.md): 専用Anvilの合成イベントで3匹への入力を検証済み。実Uniswap接続、GUI、ペーパートレードは次段階です。
+[合成Swapイベントの小規模テスト](design/swap-event-game.md)も残しています。現在の市場GUIは別途、実Uniswap V3コアをローカル配置して動作します。
 
 ## 採餌モデル v2
 

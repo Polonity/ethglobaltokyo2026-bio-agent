@@ -65,8 +65,8 @@ Status を入力として扱う方針はユーザー確認済み。それ以外�
 
 Anvil 上の実コントラクトからGUIの3匹へ入力する構成は [ローカル接続ガイド](../deployment/local-anvil.md) を参照。
 
-## 先行実験の記録（2026-09-26、方針再検討中）
+## 現在の共通仕様と用途別アプリ
 
-[ERC形式の草案](../standards/bio-agent-draft.md)とNFT/SBT参照実装を追加しました。未提出・番号未付与で、従来のRegistryとGUIはそのままです。NFT/SBT追加は意図の取り違えによる先行実装で、今後の要件として採用しません。ERC-8004準拠や実行証明は主張しません。
+[ERC形式の草案](../standards/bio-agent-draft.md)は通常のRegistryとschema付き刺激拡張を定義します。NFT/SBT実験コードと依存は削除済み。未提出・番号未付与で、ERC-8004準拠や実行証明は主張しません。
 
-最新の仕様検討は[思想と設計方針](../standards/bioagent-design-direction.md)を参照。既存の採餌用ABIと、新しく検討するBioAgent共通profileを区別します。
+[思想と設計方針](../standards/bioagent-design-direction.md)、[2アプリの型](../standards/application-types.md)、[身体を持つ採餌](embodied-foraging.md)、[実Uniswapの市場](local-market-app.md)、[提出パッケージ](../submission/README.md)を参照してください。既存の採餌ABIと共通profile全体の相互運用性を区別します。
