@@ -1,6 +1,6 @@
 # Bio Agent システム設計 v0.1
 
-状態: **設計案 / 未実装**。ユーザーの構想を実装可能な境界に整理する文書です。既存の Python デモの動作を説明するものではありません。
+状態: **Registry・型・イベントは Solidity 実装済み / 未デプロイ。Runtime・GUI 接続は設計段階**。ユーザーの構想を実装可能な境界に整理する文書です。既存の Python デモの動作を説明するものではありません。
 
 ## 目指す体験
 
@@ -18,7 +18,7 @@
 
 | 項目 | v0.1 の案 |
 | --- | --- |
-| チェーン | EVM 系。実ネットワークは未選定 |
+| チェーン | Ethereum Sepolia（11155111）。ローカル検証は Foundry / Anvil |
 | コントラクト配置 | 1 Registry に複数 Agent。1 Agent ごとのコントラクトは作らない |
 | Agent の同一性 | `(chainId, registryAddress, agentId)` |
 | IBioAgent | オンチェーンの型・Status 更新契約。Runtime の処理契約は別名で定義 |
@@ -45,12 +45,14 @@ Status を入力として扱う方針はユーザー確認済み。それ以外�
 | `packages/training` | 状態遷移記録を利用する学習・評価ジョブ |
 | `services/backend` | 保存・読取 API・SSE。RPC と Runtime を別モジュールとして接続 |
 | `apps/frontend` | 個体群の表示、Status 操作、Tx と処理の可視化 |
-| 未作成 `contracts/` | Solidity interface、Registry、コントラクトテスト |
+| `contracts/`（実装済み） | Solidity interface、Registry、Foundry テスト、Forge Script、公開 ABI |
 
 ## 実装前に確定すること
 
-- 対象チェーン、RPC、ウォレット、確認ブロック数。
+- Sepolia の RPC、ウォレット、確認ブロック数。
 - 初期 Agent モデルと MaleCNS 部分回路、刺激・行動の対応。
 - デモの個体数と操作項目。初期提案は24体、活動モード・エネルギー・刺激強度。
 
 スポンサー固有の API や賞の要件は、この基礎設計の確定条件にしない。
+
+コントラクトのビルドとデプロイ準備は [contracts README](../../contracts/README.md) を参照。

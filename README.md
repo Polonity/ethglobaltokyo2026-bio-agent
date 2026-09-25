@@ -2,7 +2,7 @@
 
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-本リポジトリは新規開発用のモノレポです。現在はローカルで起動できるひな型で、実チェーン取得・MaleCNS 神経回路・生物学的な学習は未実装です。
+本リポジトリは新規開発用のモノレポです。現在はローカルで起動できるひな型に加え、Foundry による Registry コントラクトと Sepolia デプロイ準備があります。実デプロイ、ログ受信と Runtime の接続、MaleCNS 神経回路・生物学的な学習は未実装です。
 
 ## 構成
 
@@ -12,13 +12,14 @@
 | `packages/training/` | 学習基盤。実験実行、評価、モデル成果物の管理 |
 | `apps/frontend/` | エージェントの入力・状態・行動の観察画面 |
 | `services/backend/` | データ管理 API。入力と実行結果を SQLite に保存 |
+| `contracts/` | Foundry: Solidity 型、Registry、テスト、デプロイスクリプト、ABI |
 | `packages/shared/` | コンポーネント間で共通のデータ形式 |
 | `docs/` | アーキテクチャ・データ出典・開発計画 |
 | `data/` | ローカル実行データ（Git 管理対象外） |
 
 ## システム設計
 
-[設計ドキュメント v0.1](docs/design/README.md) に `IBioAgent`、Registry、Status、イベント、ログ受信、GUI デモの設計をまとめています。Status は Agent への入力となる状態・刺激です。Registry が発行するイベントを起動中の Agent が処理し、その実行結果を GUI に反映します。設計は既存デモとは別で、オンチェーン機能はまだ未実装です。
+[設計ドキュメント v0.1](docs/design/README.md) に `IBioAgent`、Registry、Status、イベント、ログ受信、GUI デモの設計をまとめています。Status は Agent への入力となる状態・刺激です。Registry が発行するイベントを起動中の Agent が処理し、その実行結果を GUI に反映します。Registry コントラクトは実装済みで、イベント受信・Runtime・GUI の接続は次段階です。
 
 ## 起動
 
@@ -54,6 +55,18 @@ Blockchain RPC / events
 
 現在のデモは模擬入力と閾値ベースの Agent を使用します。学習ジョブの成果物は実行中 Agent に自動適用されません。
 
+## コントラクト開発・Sepolia
+
+コントラクト開発は **Foundry** を使用します。[コントラクト README](contracts/README.md) に環境とテスト、[Sepolia 手順](docs/deployment/sepolia.md) に未送信の dry-run と将来のデプロイ操作をまとめています。
+
+```sh
+git submodule update --init --recursive
+make contracts-build contracts-test
+make contracts-dry-run contracts-check-deployment
+```
+
+上記の確認コマンドは実ネットワークにトランザクションを送信しません。
+
 ## MaleCNS
 
 [Male CNS Connectome](https://male-cns.janelia.org/) は雄ショウジョウバエの中枢神経系コネクトームの公開プロジェクトです。接続データを神経回路モデル構築の参照元とし、Agent の実装・実行エンジンは本プロジェクトで用意します。公開データそのものが動作する Agent ではありません。
@@ -65,5 +78,5 @@ Blockchain RPC / events
 - 各要素の境界と未実装項目は [アーキテクチャ](docs/architecture.md) を参照。
 - 作業単位で動作確認し、小さなコミットを残します。
 - RPC URL、トークン、大容量データ、学習成果物はコミットしません。
-- 対象チェーン、イベント、学習目的は今後決定します。
+- 初期の対象チェーンは Ethereum Sepolia。イベントの型は `contracts/src/interfaces/` に定義し、学習目的は今後決定します。
 - スポンサー固有の統合・スマートコントラクトは選定後に追加します。

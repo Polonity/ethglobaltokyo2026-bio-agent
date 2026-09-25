@@ -1,6 +1,6 @@
 # IBioAgent・Registry・Status・イベント
 
-状態: **提案 / Solidity は未実装・未コンパイル**。
+状態: **Solidity 実装・Foundry テスト済み / 未デプロイ**。正確な型と custom error は [IBioAgent](../../contracts/src/interfaces/IBioAgent.sol)・[IBioAgentRegistry](../../contracts/src/interfaces/IBioAgentRegistry.sol) を参照。
 
 ## 責務と識別
 
@@ -8,7 +8,7 @@
 
 `agentId` は Registry が1から連番で採番し、0は未登録を表す。チェーンをまたぐ識別には必ず chainId と Registry アドレスを組み合わせる。Registry の登録情報は Runtime の起動状態を保証しない。
 
-## 型の案
+## 型の概要
 
 ```solidity
 interface IBioAgent {
@@ -66,19 +66,19 @@ interface IBioAgentRegistry is IBioAgent {
 }
 ```
 
-これは ABI の合意を進めるための案。実装では入力制約、エラー、テストを追加する。`IBioAgentRegistry` は `IBioAgent` を継承する共通 Registry API であり、EIP/ERC 準拠やトークンを意味しない。
+以下の実装には入力制約、custom error、Foundry テストがある。上の抜粋は error 宣言を省略しており、ABI の正本は Solidity ソースから生成した `contracts/abi/` とする。`IBioAgentRegistry` は `IBioAgent` を継承する共通 Registry API であり、EIP/ERC 準拠やトークンを意味しない。
 
 ## 登録と更新のルール
 
 | 操作 | 検証 | 状態変更とイベント |
 | --- | --- | --- |
-| registerAgent | modelHash は非ゼロ。metadataURI は UTF-8 のバイト数で1..512 | owner = msg.sender。定義を保存。初期 Status = Rest / energy 5000 / stimulus 0 / revision 1。Registered → StatusUpdated の順に同一 Tx で emit |
+| registerAgent | modelHash は非ゼロ。metadataURI は1..512バイト（UTF-8 妥当性は検証しない） | owner = msg.sender。定義を保存。初期 Status = Rest / energy 5000 / stimulus 0 / revision 1。Registered → StatusUpdated の順に同一 Tx で emit |
 | updateStatus | 登録済み、msg.sender = owner、energy/stimulus は0..10000、expectedRevision = 現在のrevision | Status を置換し revision を1増加。StatusUpdated を1件 emit |
 | getAgent / getStatus | 登録済み | 最新値を返す。未知 ID は revert |
 
 登録情報は v0.1 では不変。モデル変更は別 Agent 登録として扱う。同じ値を再度設定しても新しい revision として受理し、再刺激できる。競合した更新は revert し、GUI が最新値を読んで再入力を促す。revision の加算オーバーフローは revert する。
 
-書込権限、未知 ID、範囲外入力、revision 競合にはそれぞれ識別可能な custom error を設ける。無効 enum 値は ABI デコード時も含め拒否する。コントラクトは外部 URI を取得せず、URL の内容も検証しない。
+書込権限、未知 ID、範囲外入力、revision 競合にはそれぞれ識別可能な custom error を定義している。無効 enum 値は ABI デコード時も含め拒否する。コントラクトは外部 URI を取得せず、URL の内容も検証しない。
 
 ## Status と RuntimeState の違い
 
