@@ -76,3 +76,14 @@ await build({
   outfile: 'dist/circuit.js',
 });
 await copyFile('apps/frontend/circuit.html', 'dist/circuit.html');
+
+await import('./build-aqua.mjs');
+await build({
+  entryPoints: ['apps/frontend/aqua.js'],
+  bundle: true,
+  minify: true,
+  format: 'esm',
+  target: 'es2022',
+  outfile: 'dist/aqua.js',
+});
+for (const file of ['aqua.html', 'aqua.css']) await copyFile('apps/frontend/' + file, 'dist/' + file);

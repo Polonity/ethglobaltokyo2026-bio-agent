@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aqua Connectome · BioAgent</title>
+    <link rel="stylesheet" href="/aqua.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/">BIOAGENT / FIELD NOTES 03</a>
+      <nav>
+        <a href="/market">Market</a><a href="/circuit">Circuit Lab</a
+        ><select id="language" aria-label="Language">
+          <option value="system">System</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+        </select>
+      </nav>
+    </header>
+    <main>
+      <div class="eyebrow">AQUA CONNECTOME · LOCAL EXPERIMENT</div>
+      <h1 data-t="title"></h1>
+      <p class="intro" data-t="intro"></p>
+      <div class="status">
+        <span id="light"></span><strong id="status" role="status"></strong><span id="block"></span>
+      </div>
+      <section class="wallet">
+        <div><small data-t="wallet"></small><strong id="wallet">—</strong></div>
+        <div><small data-t="custody"></small><strong id="custody">—</strong></div>
+        <div><small data-t="chain"></small><strong>Anvil · 31337</strong></div>
+      </section>
+      <div class="layout">
+        <section class="brain panel">
+          <div class="eyebrow" data-t="brain"></div>
+          <h2 data-t="graph"></h2>
+          <canvas id="brain" width="720" height="430"></canvas>
+          <div id="signal"></div>
+          <div class="legend" data-t="legend"></div>
+          <div class="control">
+            <label for="agent" data-t="agent"></label
+            ><select id="agent">
+              <option value="1">MOMO · 0.7×</option>
+              <option value="2">SORA · 1.0×</option>
+              <option value="3">KIKI · 1.3×</option>
+            </select>
+          </div>
+          <label for="stimulus" data-t="stimulus"></label
+          ><input id="stimulus" type="range" min="0" max="100" value="0" /><output id="level">0%</output>
+          <div class="presets">
+            <button data-level="0" data-t="calm"></button><button data-level="40" data-t="uneasy"></button
+            ><button data-level="100" data-t="danger"></button>
+          </div>
+          <button class="primary" id="send" disabled data-t="send"></button>
+          <p class="note" data-t="source"></p>
+        </section>
+        <section class="panel">
+          <div class="eyebrow" data-t="liquidity"></div>
+          <h2 data-t="strategies"></h2>
+          <div id="flies"></div>
+          <p class="note" data-t="shared"></p>
+          <button id="apply" disabled data-t="apply"></button
+          ><button id="fill" disabled data-t="fill"></button>
+          <div id="error" role="alert"></div>
+        </section>
+      </div>
+      <section class="panel evidence">
+        <h2 data-t="trail"></h2>
+        <p data-t="gas"></p>
+        <div id="transactions"></div>
+        <details>
+          <summary data-t="provenance"></summary>
+          <pre id="provenance"></pre>
+        </details>
+      </section>
+      <footer>
+        <p data-t="limits"></p>
+        <p>Powered by Aqua — © Degensoft Ltd 2025 · @1inch/aqua-sdk 0.3.4</p>
+        <a href="https://github.com/1inch/aqua">Aqua source</a> ·
+        <a href="https://male-cns.janelia.org/">MaleCNS source</a>
+      </footer>
+    </main>
+    <dialog id="receipt">
+      <h2 data-t="receipt"></h2>
+      <p data-t="local"></p>
+      <pre id="receipt-data"></pre>
+      <button id="close" data-t="close"></button>
+    </dialog>
+    <script type="module" src="/aqua.js"></script>
+  </body>
+</html>

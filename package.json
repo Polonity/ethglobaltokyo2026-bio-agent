@@ -24,9 +24,13 @@
     "test:market": "node scripts/check-market-browser.mjs",
     "local:circuit": "node scripts/setup-local-circuit.mjs",
     "test:circuit": "node scripts/build-circuit.mjs && node --test tests/circuit.test.mjs",
-    "test:circuit:browser": "node scripts/check-circuit-browser.mjs"
+    "test:circuit:browser": "node scripts/check-circuit-browser.mjs",
+    "local:aqua": "node scripts/setup-local-aqua.mjs",
+    "test:aqua": "node --test tests/aqua.test.mjs",
+    "test:aqua:browser": "node scripts/check-aqua-browser.mjs"
   },
   "devDependencies": {
+    "@openzeppelin/contracts": "5.4.0",
     "@playwright/test": "1.63.0",
     "@uniswap/v3-core": "1.0.1",
     "esbuild": "0.28.2",
@@ -35,6 +39,8 @@
     "wrangler": "4.140.0"
   },
   "dependencies": {
+    "@1inch/aqua-sdk": "0.3.4",
+    "@1inch/sdk-core": "0.1.5",
     "ethers": "6.17.0"
   }
 }

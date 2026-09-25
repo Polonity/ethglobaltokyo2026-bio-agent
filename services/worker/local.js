@@ -1,3 +1,4 @@
+import { aquaRoute } from './aqua.js';
 import { marketRoute } from './market.js';
 // Local-only application API. This entrypoint is never used by wrangler.jsonc (public hosting).
 import { Interface } from 'ethers/abi';
@@ -134,11 +135,13 @@ const localWorker = {
     if (
       !url.pathname.startsWith('/api/chain/') &&
       !url.pathname.startsWith('/api/market/') &&
+      !url.pathname.startsWith('/api/aqua/') &&
       url.pathname !== '/api/health'
     )
       return hosting.fetch(request, env);
     try {
       await validateChain(env);
+      if (url.pathname.startsWith('/api/aqua/')) return await aquaRoute(request, env, rpc);
       if (url.pathname.startsWith('/api/market/')) return await marketRoute(request, env, rpc);
       if (url.pathname === '/api/health')
         return json({
@@ -243,7 +246,7 @@ const localWorker = {
       return json({ error: 'not_found' }, 404);
     } catch (error) {
       return json(
-        { error: error instanceof ApiError ? error.message : 'Local chain request failed' },
+        { error: error instanceof Error ? error.message : 'Local chain request failed' },
         error instanceof ApiError ? error.status : 503,
       );
     }
