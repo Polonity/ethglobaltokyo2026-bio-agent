@@ -1,11 +1,48 @@
 {
   "schemaVersion": 1,
-  "modelId": "foraging-q-v1",
+  "modelId": "foraging-embodied-q-v2",
   "modelType": "adaptive-demo",
   "runtime": "browser",
   "description": "Tabular Q-learning foraging agent; not a MaleCNS neural circuit",
-  "inputs": { "activity": ["Rest", "Explore", "Forage"], "energy": [0, 10000], "stimulus": [0, 10000] },
+  "inputs": {
+    "activity": [
+      "Rest",
+      "Explore",
+      "Forage"
+    ],
+    "energy": [
+      0,
+      10000
+    ],
+    "stimulus": [
+      0,
+      10000
+    ]
+  },
   "tickSeconds": 0.2,
   "seed": 2026,
-  "learning": { "alpha": 0.09, "gamma": 0.6, "validationSeeds": [90001, 90019, 90103] }
+  "learning": {
+    "alpha": 0.09,
+    "gamma": 0.6,
+    "validationSeeds": [
+      90001,
+      90019,
+      90103
+    ]
+  },
+  "body": {
+    "model": "synthetic-metabolism-v1",
+    "observations": [
+      "activityEnergy",
+      "satiety",
+      "reserves"
+    ],
+    "mass": "slow reserve-linked visual state",
+    "validatedPhysiology": false
+  },
+  "checkpoint": {
+    "schema": "bioagent.arena-checkpoint.v1",
+    "prng": "mulberry32",
+    "fixedTickSeconds": 0.2
+  }
 }

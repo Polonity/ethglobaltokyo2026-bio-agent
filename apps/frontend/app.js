@@ -1,3 +1,5 @@
+import { address, uint } from '../../packages/shared/types/primitives.ts';
+import { foragingView } from '../../packages/shared/types/foraging-view.ts';
 import { Arena, WIDTH, HEIGHT, MODEL, random } from '../../packages/bio_agent/browser/arena.js';
 import { ChainSession } from './chain.js';
 import { transactionLink } from './explorer.js';
@@ -6,6 +8,7 @@ const $ = (id) => document.getElementById(id);
 $('language').value = getPreference();
 translateDOM();
 const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
+const bodyModel = await fetch('/models/body-reference.json').then((r) => r.json());
 const chainMode = config.mode === 'anvil';
 const arena = new Arena(2026, { agentCount: chainMode ? 3 : 12 });
 let chain = null;
@@ -128,7 +131,7 @@ const resize = () => {
   field.height = Math.round(cssHeight * ratio);
 };
 new ResizeObserver(resize).observe(field);
-function flyDrawing(c, x, y, angle, color, scale, time, resting = false) {
+function flyDrawing(c, x, y, angle, color, scale, time, resting = false, body = null) {
   c.save();
   c.translate(x, y);
   c.rotate(Math.sin(time * 0.003) * (resting ? 0.02 : 0.08));
@@ -150,7 +153,9 @@ function flyDrawing(c, x, y, angle, color, scale, time, resting = false) {
   oval(11, -3 + flap, 7, 10, '#ffffffce', '#a3c9cc');
   oval(-5, 11, 3, 3, color);
   oval(5, 11, 3, 3, color);
-  oval(0, 0, 12, 12, '#fff9f0');
+  const belly = body ? (body.massRatio ?? 1) * (1 + (body.satiety ?? 0) * 0.18) : 1;
+  oval(0, 3, 12 * belly, 11 * belly, '#fff9f0');
+  oval(0, -2, 11, 10, '#fff9f0', null);
   oval(0, -9, 6, 3, color, null);
   c.strokeStyle = '#665b64';
   c.lineWidth = 1.3;
@@ -184,6 +189,8 @@ function thought(f) {
   if (f.lastDecision.includes('危険')) return { text: '！ あぶない', color: '#ffe1d8' };
   if (f.lastDecision.includes('獲得')) return { text: '♡ やった！', color: '#fff0be' };
   if (f.lastDecision.includes('休息')) return { text: 'すやすや…', color: '#e5edf9' };
+  if (f.satiety > 0.8) return { text: 'おなかいっぱい…', color: '#fff0be' };
+  if (f.satiety < 0.15) return { text: 'ぐぅ…おなかすいた', color: '#fffdf4' };
   return { text: 'おやつ、どこ？', color: '#fffdf4' };
 }
 function bubble(c, x, y, f, boundWidth) {
@@ -332,6 +339,7 @@ function draw(time) {
       Math.max(0.85, Math.min(1.5, w / 550)),
       time + i * 90,
       arena.paused || arena.finished || f.state === 'learning' || f.lastDecision.includes('休息'),
+      f,
     );
     ctx.font = `${i === arena.selected ? '600 ' : ''}10px sans-serif`;
     ctx.textAlign = 'center';
@@ -394,6 +402,24 @@ function renderUI() {
     f.state === 'learning' ? 'LEARNING' : (f.input?.mode || arena.world.mode).toUpperCase();
   $('selected-energy').textContent = `${Math.round(f.energy * 100)}%`;
   $('energy-bar').style.width = `${f.energy * 100}%`;
+  const view = foragingView(
+    arena,
+    f,
+    chainMode
+      ? {
+          kind: 'evm',
+          chainId: uint(String(config.chainId)),
+          registry: address(config.registryAddress),
+          agentId: uint(String(f.id + 1)),
+        }
+      : { kind: 'local', sessionId: 'gui', agentId: String(f.id + 1) },
+    bodyModel,
+    Date.now(),
+  );
+  $('body-satiety').textContent = `${Math.round(view.body.satiety * 100)}%`;
+  $('body-reserves').textContent = `${Math.round(view.body.reserves * 100)}%`;
+  $('body-mass').textContent = `${view.body.massRatio.toFixed(2)}×`;
+  $('body-encoded').textContent = f.observation?.encodedKey || '—';
   $('decision').textContent =
     f.state === 'learning' ? `経験を再生中 / ${f.training.steps} updates` : f.lastDecision;
   $('sensors').textContent = f.observation
@@ -467,6 +493,7 @@ function renderUI() {
     3.3,
     performance.now(),
     f.state === 'learning' || f.lastDecision.includes('休息'),
+    f,
   );
   const learning = arena.flies.filter((f) => f.state === 'learning');
   const recent = [...arena.flies]

@@ -61,3 +61,7 @@
 [ERC形式の草案](standards/bio-agent-draft.md)とNFT/SBT参照実装を追加しました。未提出・番号未付与で、従来のRegistryとGUIはそのままです。NFT/SBT追加は意図の取り違えによる先行実装で、今後の要件として採用しません。ERC-8004準拠や実行証明は主張しません。
 
 [Swapイベントゲームの実装状況・再現手順](design/swap-event-game.md): 専用Anvilの合成イベントで3匹への入力を検証済み。実Uniswap接続、GUI、ペーパートレードは次段階です。
+
+## 採餌モデル v2
+
+[身体入力・可変なお腹・学習中の再開検証](design/embodied-foraging.md)を実装。新manifestを登録した独立Anvil/WorkersでGUI検証済み。満腹度・蓄えは実際の観測に入ります。

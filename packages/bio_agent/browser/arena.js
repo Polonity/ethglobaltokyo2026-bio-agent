@@ -1,5 +1,6 @@
+import { bodyStep, bodyObservation, ensureBody } from './body.js';
 // Adaptive simulation model. This is not a MaleCNS connectome simulation.
-export const MODEL = 'foraging-q-v1';
+export const MODEL = 'foraging-embodied-q-v2';
 export const WIDTH = 36;
 export const HEIGHT = 22;
 export const DIRECTIONS = Array.from({ length: 8 }, (_, i) => [
@@ -36,12 +37,14 @@ export const NAMES = [
 ];
 export function random(seed) {
   let n = seed >>> 0;
-  return () => {
-    n += 0x6d2b79f5;
+  const next = () => {
+    n = (n + 0x6d2b79f5) >>> 0;
     let t = Math.imul(n ^ (n >>> 15), 1 | n);
     t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+  next.state = () => n;
+  return next;
 }
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -60,7 +63,8 @@ export function createWorld(rng) {
     mode: 'forage',
   };
 }
-function observe(fly, world) {
+export function observe(fly, world) {
+  ensureBody(fly);
   const target = world.foods.reduce((a, b) => (distance(fly, a) < distance(fly, b) ? a : b));
   const direction = bearing(target.x - fly.x, target.y - fly.y);
   let mask = 0;
@@ -75,19 +79,25 @@ function observe(fly, world) {
     )
       mask |= 1 << a;
   });
-  return { key: `${direction}:${mask}:${fly.energy < 0.2 ? 1 : 0}`, target, direction, mask };
+  return {
+    key: `${direction}:${mask}:${fly.energy < 0.2 ? 1 : 0}:${Math.floor(fly.satiety * 3)}:${Math.floor(fly.reserves * 3)}`,
+    target,
+    direction,
+    mask,
+    body: bodyObservation(fly),
+  };
 }
-function values(q, observation) {
-  if (!q[observation.key]) {
-    // Weak shared instinct; experience adjusts the action values during learning.
-    q[observation.key] = DIRECTIONS.map((_, a) =>
-      a === 8 ? -0.15 : Math.cos(((a - observation.direction) * Math.PI) / 4) * 0.14,
-    );
-  }
-  return q[observation.key];
+function values(q, observation, initialize = true) {
+  if (q[observation.key]) return q[observation.key];
+  const full = Number(observation.key.split(':')[3]) >= 2;
+  const row = DIRECTIONS.map((_, a) =>
+    a === 8 ? (full ? 0.2 : -0.15) : Math.cos(((a - observation.direction) * Math.PI) / 4) * 0.14,
+  );
+  if (initialize) q[observation.key] = row;
+  return row;
 }
 function choose(q, observation, rng, epsilon) {
-  const row = values(q, observation);
+  const row = values(q, observation, false);
   if (rng() < epsilon) return Math.floor(rng() * 9);
   return row.indexOf(Math.max(...row));
 }
@@ -113,11 +123,12 @@ function transition(fly, world, action, rng) {
   let collected = false;
   if (distance(fly, before.target) < 1.1) {
     collected = true;
-    reward += 5;
+    reward += 5 * (1 - fly.satiety * 0.8);
     fly.energy = Math.min(1, fly.energy + 0.22);
     before.target.x = 2 + rng() * (WIDTH - 4);
     before.target.y = 2 + rng() * (HEIGHT - 4);
   }
+  bodyStep(fly, { fed: collected, resting: action === 8 });
   const after = observe(fly, world);
   return { state: before.key, action, reward, next: after.key, collected, hit, observation: before };
 }
@@ -174,6 +185,9 @@ export class Arena {
       y: 3 + this.rng() * 16,
       heading: this.rng() * Math.PI * 2,
       energy: 0.7,
+      satiety: 0.4,
+      reserves: 0.5,
+      massRatio: 1,
       score: 0,
       collisions: 0,
       q: {},
@@ -296,10 +310,12 @@ export class Arena {
     }
   }
   tick(dt = 0.2) {
+    if (dt !== 0.2) throw new Error('This model requires a fixed 0.2 second tick');
     if (this.paused || this.finished) return;
     this.time += dt;
     for (const fly of this.flies) {
       if (fly.state === 'learning') {
+        bodyStep(fly, { resting: true });
         this.trainTick(fly, dt);
         continue;
       }
@@ -324,7 +340,21 @@ export class Arena {
             : result.collected
               ? '蜜を獲得 +1'
               : `${['東', '南東', '南', '南西', '西', '北西', '北', '北東'][action]}へ移動`;
-      fly.observation = { bearing: obs.direction, danger: Boolean(obs.mask), energy: fly.energy };
+      fly.observation = {
+        bearing: obs.direction,
+        danger: Boolean(obs.mask),
+        energy: fly.energy,
+        body: obs.body,
+        encodedKey: obs.key,
+      };
+      fly.lastTransition = {
+        observation: obs.key,
+        bodyBefore: obs.body,
+        action,
+        reward: result.reward,
+        nextObservation: result.next,
+        bodyAfter: bodyObservation(fly),
+      };
       fly.trail.push({ x: fly.x, y: fly.y });
       if (fly.trail.length > 16) fly.trail.shift();
     }
@@ -346,6 +376,25 @@ export class Arena {
       const winner = this.ranking()[0];
       this.log('system', `${winner.name} WINS`, `${winner.score} nectar / ラウンド ${this.round} 終了`);
     }
+  }
+  checkpoint() {
+    const data = JSON.parse(
+      JSON.stringify(this, (_key, value) =>
+        typeof value === 'function' && value.state ? { __prng: 'mulberry32', state: value.state() } : value,
+      ),
+    );
+    return { schema: 'bioagent.arena-checkpoint.v1', model: MODEL, data };
+  }
+  static restore(checkpoint) {
+    if (checkpoint?.schema !== 'bioagent.arena-checkpoint.v1' || checkpoint.model !== MODEL)
+      throw new Error('Unsupported checkpoint model');
+    // Local trusted checkpoints only. Untrusted artifact parsing is handled separately.
+    const data = JSON.parse(JSON.stringify(checkpoint.data), (_key, value) =>
+      value?.__prng === 'mulberry32' ? random(value.state) : value,
+    );
+    if (!Array.isArray(data.flies) || typeof data.rng !== 'function' || !Number.isFinite(data.time))
+      throw new Error('Incomplete checkpoint');
+    return Object.assign(Object.create(Arena.prototype), data);
   }
   ranking() {
     return [...this.flies].sort((a, b) => b.score - a.score || a.collisions - b.collisions);

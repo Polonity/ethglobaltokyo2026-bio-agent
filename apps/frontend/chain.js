@@ -1,4 +1,4 @@
-import { Arena } from '../../packages/bio_agent/browser/arena.js';
+import { Arena, MODEL } from '../../packages/bio_agent/browser/arena.js';
 async function request(path, options) {
   const response = await fetch(path, options);
   const body = await response.json();
@@ -24,7 +24,7 @@ export class ChainSession {
     this.syncing = false;
   }
   async initialize(reset = false) {
-    const manifestResponse = await fetch('/models/foraging-q-v1.json');
+    const manifestResponse = await fetch(`/models/${MODEL}.json`);
     const bytes = await manifestResponse.arrayBuffer();
     const digest =
       '0x' +

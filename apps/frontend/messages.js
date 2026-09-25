@@ -1,6 +1,14 @@
 // Japanese source messages, translated only at the presentation boundary.
 // Technical identifiers (hashes, event names, agent names) remain unchanged.
 export const messages = {
+  満腹度: 'Fullness',
+  蓄え: 'Reserves',
+  体格: 'Body size',
+  実際の観測キー: 'Actual observation key',
+  身体モデルはゲーム用の仮定です: 'Body dynamics are game assumptions',
+  'おなかいっぱい…': 'So full…',
+  'ぐぅ…おなかすいた': 'Rumble… hungry!',
+
   システム: 'System',
   表示言語: 'Language',
   'Fly Lab ホーム': 'Fly Lab home',

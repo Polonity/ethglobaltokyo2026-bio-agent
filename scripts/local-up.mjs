@@ -1,3 +1,4 @@
+import path from 'node:path';
 // Owns a fresh Anvil and local workerd instance. Ctrl-C stops only these child processes.
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdir, readFile, writeFile, open, access } from 'node:fs/promises';
@@ -5,6 +6,8 @@ import { createHash } from 'node:crypto';
 import { homedir } from 'node:os';
 import net from 'node:net';
 const root = process.cwd();
+const stateDir = path.resolve(root, process.env.LOCAL_STATE_DIR || '.local');
+if (!stateDir.startsWith(root + path.sep)) throw new Error('State directory must be inside workspace');
 const anvilPort = Number(process.env.ANVIL_PORT || 8545);
 const guiPort = Number(process.env.LOCAL_GUI_PORT || 8798);
 const inspectorPort = Number(process.env.LOCAL_INSPECTOR_PORT || 9248);
@@ -56,12 +59,12 @@ async function rpc(method, params = []) {
 }
 try {
   for (const port of [anvilPort, guiPort, inspectorPort]) await freePort(port);
-  await mkdir('.local', { recursive: true });
+  await mkdir(stateDir, { recursive: true });
   const forge = await tool('forge'),
     anvil = await tool('anvil');
   if (spawnSync('npm', ['run', 'build'], { stdio: 'inherit' }).status)
     throw new Error('Frontend build failed');
-  const log = await open('.local/anvil.log', 'w');
+  const log = await open(path.join(stateDir, 'anvil.log'), 'w');
   const node = spawn(
     anvil,
     ['--host', '127.0.0.1', '--port', String(anvilPort), '--chain-id', '31337', '--silent'],
@@ -101,7 +104,7 @@ try {
       env: { ...process.env, DEPLOYER_ADDRESS: owner, LOCAL_MODEL_HASH: modelHash, LOCAL_GUI_URL: guiUrl },
     },
   );
-  await writeFile('.local/forge.log', result.stdout + result.stderr);
+  await writeFile(path.join(stateDir, 'forge.log'), result.stdout + result.stderr);
   if (result.status !== 0) throw new Error('Local deployment failed; see .local/forge.log');
   const receipt = JSON.parse(
     await readFile('contracts/broadcast/DeployLocalArena.s.sol/31337/run-latest.json', 'utf8'),
@@ -128,16 +131,16 @@ try {
   for (const hash of config.transactionHashes)
     if ((await rpc('eth_getTransactionReceipt', [hash])).status !== '0x1')
       throw new Error('Registration failed');
-  await writeFile('.local/deployment.json', JSON.stringify(config, null, 2) + '\n');
+  await writeFile(path.join(stateDir, 'deployment.json'), JSON.stringify(config, null, 2) + '\n');
   await writeFile(
-    '.local/wrangler.json',
+    path.join(stateDir, 'wrangler.json'),
     JSON.stringify(
       {
         name: 'bio-agent-anvil-local',
-        main: '../services/worker/local.js',
+        main: path.join(root, 'services/worker/local.js'),
         compatibility_date: '2026-09-25',
         workers_dev: false,
-        assets: { directory: '../dist', binding: 'ASSETS', run_worker_first: true },
+        assets: { directory: path.join(root, 'dist'), binding: 'ASSETS', run_worker_first: true },
         vars: {
           LOCAL_ANVIL: 'true',
           ANVIL_RPC_URL: rpcUrl,
@@ -157,7 +160,7 @@ try {
     [
       'dev',
       '--config',
-      '.local/wrangler.json',
+      path.join(stateDir, 'wrangler.json'),
       '--local',
       '--ip',
       '127.0.0.1',
@@ -177,7 +180,7 @@ try {
   });
   worker.on('exit', (code) => stop(code || 0));
   console.log(
-    `\nGUI: ${guiUrl}\nRegistry: ${config.registryAddress}\nAgents: 1=MOMO, 2=SORA, 3=KIKI\nLocal setup: .local/deployment.json\nCtrl-C stops this local environment.\n`,
+    `\nGUI: ${guiUrl}\nRegistry: ${config.registryAddress}\nAgents: 1=MOMO, 2=SORA, 3=KIKI\nLocal setup: ${stateDir}/deployment.json\nCtrl-C stops this local environment.\n`,
   );
 } catch (error) {
   console.error(error.message);

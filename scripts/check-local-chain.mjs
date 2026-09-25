@@ -2,7 +2,9 @@ import { chromium } from '@playwright/test';
 import { Interface } from 'ethers/abi';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const deployment = JSON.parse(await readFile('.local/deployment.json', 'utf8'));
+const deployment = JSON.parse(
+  await readFile(`${process.env.LOCAL_STATE_DIR || '.local'}/deployment.json`, 'utf8'),
+);
 const base = process.env.LOCAL_GUI_URL || deployment.guiUrl;
 assert.ok(
   ['localhost', '127.0.0.1'].includes(new URL(base).hostname),
