@@ -5,14 +5,16 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-frontend.mjs",
-    "dev": "npm run build && wrangler dev",
+    "dev": "npm run build && node scripts/dev-frontend.mjs",
     "test:arena": "node --test tests/arena.test.mjs",
     "test:browser": "node scripts/check-arena-browser.mjs",
-    "deploy": "npm run build && node scripts/cloudflare.mjs deploy"
+    "deploy": "npm run build && node scripts/cloudflare.mjs deploy",
+    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\""
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "esbuild": "0.28.2",
+    "prettier": "3.9.9",
     "wrangler": "4.140.0"
   }
 }

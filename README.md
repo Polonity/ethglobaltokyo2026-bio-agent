@@ -2,7 +2,9 @@
 
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-本リポジトリは新規開発用のモノレポです。現在はローカルで起動できるひな型に加え、Foundry による Registry コントラクトと Sepolia デプロイ準備があります。実デプロイ、ログ受信と Runtime の接続、MaleCNS 神経回路・生物学的な学習は未実装です。
+現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。判定・学習はブラウザー内の Q-learning モデルです。MaleCNS 回路・Sepolia 接続は未実装で、コントラクトは Foundry によるデプロイ準備まで完了しています。
+
+**[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
 ## 構成
 
@@ -11,6 +13,7 @@
 | `packages/bio_agent/` | Bio Agent 本体。刺激を受け取り内部状態・行動を出力 |
 | `packages/training/` | 学習基盤。実験実行、評価、モデル成果物の管理 |
 | `apps/frontend/` | エージェントの入力・状態・行動の観察画面 |
+| `services/worker/` | Cloudflare Workers による GUI 配信と health API |
 | `services/backend/` | データ管理 API。入力と実行結果を SQLite に保存 |
 | `contracts/` | Foundry: Solidity 型、Registry、テスト、デプロイスクリプト、ABI |
 | `packages/shared/` | コンポーネント間で共通のデータ形式 |
@@ -23,23 +26,25 @@
 
 ## 起動
 
-Python 3.11 以上を使用します。初期版は標準ライブラリのみで動作します。
-リポジトリのルートで実行してください。
+Node.js 22以上を使用し、ルートで実行します。
 
 ```sh
-cp .env.example .env  # 設定例。環境変数はシェルから設定してください
-make dev
-# http://127.0.0.1:8000 を開く
+npm ci
+npm run dev
+# Wrangler が表示するローカル URL を開く
 ```
 
-画面の「模擬入力を1件実行」で、模擬ブロック情報 → Agent → SQLite 保存 → 画面表示を確認できます。入力・行動ともデモ用で、実ネットワークに接続しません。
+蜜を集める90秒のレースが自動で始まります。活動・刺激・エネルギー供給を変更し、ハエを選んで判断を観察できます。下位2体は自動で学習室へ入り、評価後に復帰します。
 
 ```sh
-make train  # 合成データを使った学習ジョブの配線確認
-make test
+npm run test:arena
+npm run test:browser  # ローカルサーバーを先に起動。既定はポート8797
+npm run deploy       # Cloudflare に公開する操作
 ```
 
-`HOST`（既定 `127.0.0.1`）、`PORT`（`8000`）、`BIO_AGENT_DB`（`data/bio-agent.sqlite3`）をシェル環境変数で変更できます。`.env` は自動読込しません。
+詳細は [Fly Lab 設計](docs/design/fly-arena.md) / [Workers 手順](docs/deployment/workers.md)。
+
+元の Python API ひな型も残しています。Python 3.11以上で `make dev`（ポート8000）、`make train`、`make test` が使えます。GUI の競争データはブラウザー内で管理され、SQLite Backend にはまだ接続していません。
 
 ## 目標のデータフロー
 
@@ -53,7 +58,7 @@ Blockchain RPC / events
 保存済み入力 → 学習基盤: 学習・評価 → モデル成果物 → Bio Agent
 ```
 
-現在のデモは模擬入力と閾値ベースの Agent を使用します。学習ジョブの成果物は実行中 Agent に自動適用されません。
+現在公開中の GUI はローカル入力 → ブラウザー内 Agent → 描画の構成です。学習室で更新した方策は評価後に適用されます。上記のチェーン・共有Backend経由の構成は次段階です。
 
 ## コントラクト開発・Sepolia
 

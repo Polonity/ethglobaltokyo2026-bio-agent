@@ -1,3 +1,7 @@
-# 観察 Frontend
+# Fly Lab GUI
 
-HTML/CSS/JavaScript の最小構成です。ルートの `make dev` で Backend と同一オリジンから配信します。ビルドは不要です。模擬入力の実行、最新状態、実行履歴を表示します。取得は初期表示とボタン実行時です。
+12体のハエの競争、状態・刺激入力、個体観察、成績下位の自己学習と復帰を表示する Canvas GUI。
+
+ルートで `npm ci && npm run dev`。Worker 配信用に `dist/` をビルドする。`make dev` は同じ成果物を Python Backend とともに配信する。
+
+[体験と学習モデル](../../docs/design/fly-arena.md) / [Workers 公開手順](../../docs/deployment/workers.md)

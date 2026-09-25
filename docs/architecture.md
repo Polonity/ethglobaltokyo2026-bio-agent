@@ -1,6 +1,6 @@
 # アーキテクチャ
 
-このページは現在のひな型を説明します。次段階の IBioAgent / Registry / Status とイベント駆動の設計は [設計ドキュメント v0.1](design/README.md) を参照してください。
+このページは初期の Python ひな型を説明します。現在公開中の GUI とブラウザー内学習 Runtime は [Fly Lab 設計](design/fly-arena.md) を参照してください。次段階の IBioAgent / Registry / Status とイベント駆動の設計は [設計ドキュメント v0.1](design/README.md) を参照してください。
 
 ## コンポーネント境界
 
