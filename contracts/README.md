@@ -40,3 +40,7 @@ Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/
 登録は誰でも可能で、登録者が owner です。owner だけが自身の Agent の Status を更新できます。modelHash は非ゼロ、metadataURI は1..512バイトです。URI の UTF-8 妥当性や参照先の内容は検証しません。定義変更、所有権移転、削除、管理者権限、アップグレード、トークン発行はありません。
 
 デプロイだけでは Agent は登録されません。稼働 Runtime や GUI の接続も別途必要です。[型の設計](../docs/design/onchain-contracts.md) と [Sepolia 手順](../docs/deployment/sepolia.md) を参照してください。
+
+## ローカルアプリ層を実デプロイ
+
+`script/DeployLocalArena.s.sol` は chain ID 31337 のみに対応し、Registry と3匹を用意します。`npm run local:up` が Anvil の起動から GUI 配信まで実行します。[ローカル接続ガイド](../docs/deployment/local-anvil.md) を参照してください。

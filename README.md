@@ -2,7 +2,7 @@
 
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。判定・学習はブラウザー内の Q-learning モデルです。MaleCNS 回路・Sepolia 接続は未実装で、コントラクトは Foundry によるデプロイ準備まで完了しています。
+現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。判定・学習はブラウザー内の Q-learning モデルです。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。MaleCNS 回路・Sepolia 接続は未実装で、コントラクトは Foundry によるデプロイ準備まで完了しています。
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
@@ -24,7 +24,20 @@
 
 [設計ドキュメント v0.1](docs/design/README.md) に `IBioAgent`、Registry、Status、イベント、ログ受信、GUI デモの設計をまとめています。Status は Agent への入力となる状態・刺激です。Registry が発行するイベントを起動中の Agent が処理し、その実行結果を GUI に反映します。Registry コントラクトは実装済みで、イベント受信・Runtime・GUI の接続は次段階です。
 
-## 起動
+## Anvil とローカル Workers で動かす
+
+```sh
+npm ci
+git submodule update --init --recursive
+npm run local:up
+# http://127.0.0.1:8798
+```
+
+Foundry の forge / anvil が必要です。AnvilへRegistryを実デプロイして3匹を登録し、GUIで選んだ1匹に刺激を送れます。Cloudflareの認証情報やブラウザーウォレットは不要です。
+
+起動後、別ターミナルの `npm run test:local` でGUI→コントラクト→イベント→個体反応を実ブラウザーで検証できます。**[詳しい起動・操作・動作確認ガイド](docs/deployment/local-anvil.md)** を参照してください。
+
+## ブラウザー内デモを起動
 
 Node.js 22以上を使用し、ルートで実行します。
 

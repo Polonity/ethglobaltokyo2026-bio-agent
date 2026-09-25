@@ -1196,3 +1196,57 @@ dialog > p:not(.eyebrow) {
 .chain-mode .standings {
   align-self: start;
 }
+.chain-mode .intro {
+  padding: 22px 0;
+}
+.chain-mode h1 {
+  font-size: 38px;
+  letter-spacing: -1.8px;
+  margin: 12px 0;
+}
+.chain-mode h1 br {
+  display: none;
+}
+.chain-mode h1 span {
+  margin-left: 12px;
+}
+.chain-mode .intro .lead,
+.chain-mode .intro-note {
+  display: none;
+}
+.chain-mode .standings > .control-panel {
+  padding: 18px;
+  border-top: 1px solid var(--line);
+  background: #1d241f;
+}
+.chain-mode .standings-top {
+  padding: 12px 18px;
+}
+.chain-mode .standings-top > .eyebrow {
+  display: none;
+}
+.chain-mode .standings .clock {
+  margin-top: 10px;
+}
+.chain-mode .standings .clock > span {
+  font-size: 24px;
+}
+.chain-mode .workbench {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 800px) {
+  .chain-mode .workbench {
+    grid-template-columns: 1fr;
+  }
+  .chain-mode .intro h1 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 520px) {
+  .chain-mode h1 br {
+    display: block;
+  }
+  .chain-mode h1 span {
+    margin-left: 0;
+  }
+}

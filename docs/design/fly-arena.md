@@ -47,3 +47,9 @@ MaleCNS 回路はまだ読み込んでおらず、生物学的学習の実証で
 - `npm run test:browser`: 実 Chrome で移動、刺激変更、学習復帰、下位選抜、ダイアログ、JSON保存、ラウンド更新、モバイルの横はみ出しを確認。
 - `ARENA_URL=... ARENA_ARTIFACTS=... npm run test:browser`: 公開サイトにも同じ確認を実施可能。
 - スクリーンショットと検証記録は `artifacts/` に保存し Git には含めない。
+
+## Anvil 接続モード（追加）
+
+`npm run local:up` では実際に Registry を Anvil に配置し、登録した3匹を表示する。ローカル Worker が型付きの書込APIと読み取りAPIを提供し、GUIは採掘済みの StatusUpdated ログから個体別入力を更新する。3匹の場合、自動学習の選抜は下位1匹。公開中の12匹・ブラウザー入力モードとは別の実行設定。
+
+[起動・操作・API・検証・制約](../deployment/local-anvil.md) を参照。生物モデルは同じ Q-learning モデルで、MaleCNS 回路への接続はまだ行っていない。

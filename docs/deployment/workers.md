@@ -10,7 +10,11 @@ Worker: `ethglobaltokyo-bio-agent-arena`
 
 [Cloudflare Static Assets](https://developers.cloudflare.com/workers/static-assets/) の構成に基づく。
 
-## ローカル起動
+## Anvil と接続したローカル起動
+
+3匹のコントラクト登録と刺激送信を試す場合は `npm run local:up`。手順は [Anvil + ローカル Workers](local-anvil.md) を参照してください。公開用 Worker とは別の entrypoint で起動し、公開環境を変更しません。
+
+## ブラウザー内デモのローカル起動
 
 Node.js 22以上（今回確認した版は22.14.0）。
 

@@ -479,6 +479,9 @@ function frame(now) {
 }
 if (chainMode) {
   document.body.classList.add('chain-mode');
+  document.querySelector('.standings').append(document.querySelector('.control-panel'));
+  $('about-mechanism').textContent =
+    '3匹が蜜・危険・エネルギーから行動を選びます。18秒ごとに下位1匹が学習室に入り、経験を再生して方策を更新します。入力は選択した個体のコントラクト Status に記録されます。';
   $('chain-panel').hidden = false;
   $('chain-registry').textContent = config.registryAddress;
   $('input-source-label').textContent = 'ANVIL 31337 · 選択中の1匹に送信';

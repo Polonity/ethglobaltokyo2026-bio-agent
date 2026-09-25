@@ -1,6 +1,6 @@
 # Bio Agent システム設計 v0.1
 
-状態: **Registry・型・イベントは Solidity 実装済み / 未デプロイ。チェーンと Runtime・GUI の接続は設計段階。ローカル学習 GUI は公開済み**。ユーザーの構想を実装可能な境界に整理する文書です。既存の Python デモの動作を説明するものではありません。
+状態: **Registry・型・イベントは Solidity 実装済み / 未デプロイ。Anvil とローカル Workers の3匹接続は実装済み。共有 Runtime・Sepolia 接続は次段階**。ユーザーの構想を実装可能な境界に整理する文書です。既存の Python デモの動作を説明するものではありません。
 
 ## 目指す体験
 
@@ -58,3 +58,5 @@ Status を入力として扱う方針はユーザー確認済み。それ以外�
 コントラクトのビルドとデプロイ準備は [contracts README](../../contracts/README.md) を参照。
 
 現在のブラウザー内競争・自己学習デモは [Fly Lab](fly-arena.md) を参照。以下の共有 Runtime / イベント駆動の設計とは接続段階が異なる。
+
+Anvil 上の実コントラクトからGUIの3匹へ入力する構成は [ローカル接続ガイド](../deployment/local-anvil.md) を参照。
