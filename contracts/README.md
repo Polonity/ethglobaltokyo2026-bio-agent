@@ -49,8 +49,6 @@ Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/
 
 `IBioAgentWallet` の `getAgentWallet` / `setAgentWallet` を追加しています。ownerが同一チェーン上のwalletアドレスを登録し、専用イベントを発行します。初期値はゼロで、設定しても操作権限は委任しません。実walletの作成・所有検証は別工程です。旧Registryへの自動アップグレードはありません。[Agent拡張設計](../docs/design/agent-types-and-wallets.md)を参照してください。
 
-## Experimental NFT / SBT profiles
+## Experimental stimulus extension
 
-Run `npm ci` at repository root before Foundry builds (OpenZeppelin 5.4.0 is pinned). `BioAgentNFT` adds ERC-721 identity and `IBioAgentStimulus`; `BioAgentSBT` adds permanent ERC-5192 locking. See [specification](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the original Registry; these profiles require explicit new deployments and have not been deployed to Sepolia.
-
-**Design review update (2026-09-26):** NFT/SBT support was an interpretation error, not a requested feature. These experimental contracts remain unchanged during the design discussion and are not the future BioAgent requirements. See [design direction](../docs/standards/bioagent-design-direction.md).
+`BioAgentStimulusRegistry` extends the existing Registry with schema-tagged inputs and ERC-165 discovery. It does not tokenize agents. See [mailbox semantics](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the base Registry; the separate Swap fixture demo deploys the stimulus extension on its own Anvil. No Sepolia deployment has been performed.

@@ -22,8 +22,8 @@ Uniswap V3 pool / Swap event
 - `readSwapReceipt`: Uniswap V3形式のSwap ABI、指定chain/pool、成功レシート、確認数、canonical block hashを検証して入力イベントを生成。
 - `UniswapSwapBioAgent`: 同一poolの価格変化率を整数で計算。初回/長い欠測後はbaseline、上昇はcurious、下落はcautious。採餌Arenaへの入力を変える**固定マッピングの観察モデル**で、売買を学習するモデルではない。
 - 重複は無視、順序逆転/同じ高さの異なるblockHashは拒否、古い入力ならtickを停止。
-- NFT/SBTプロファイルと汎用入力契約。詳細は[ERC草案](../standards/bio-agent-draft.md)。
-- 独立Anvilで3体のNFTを登録し、3回の価格イベント→9回の入力TX→3匹の反応を検証するスクリプト。
+- 通常のRegistry派生による汎用入力契約。詳細は[ERC草案](../standards/bio-agent-draft.md)。
+- 独立Anvilで3体のAgentを登録し、3回の価格イベント→9回の入力TX→3匹の反応を検証するスクリプト。
 
 プール価格は `token1_base_units / token0_base_units = sqrtPriceX96² / 2¹⁹²`。同一poolの変化率ではdecimal倍率が相殺されます。USD価格、希望数量の約定価格、利益確率とは異なります。表示用価格にはtoken0/token1とdecimalsの解決が必要です。基準価格方向を反転すると上昇/下落の意味も変わるため、GUIは必ずペア方向を明示します。
 
@@ -48,7 +48,7 @@ npm run demo:swaps
 
 forge/anvilがPATHにない場合は環境変数`FORGE`と`ANVIL`に実行ファイルの絶対パスを渡します。スクリプトは127.0.0.1:18545に専用Anvilを起動して終了時に停止します。既存プロセスがそのポートを使っていれば中止します。GUI用8545は使用しません。
 
-出力: `artifacts/swap-demo/evidence.json`。NFTアドレス、刺激schema、元イベントTX、Agentごとの入力TX・入力値・反応・位置を保存します。2026-09-26実行結果はbaseline→curious（+2099 bps）→cautious（-1735 bps）、全3匹で検証済み。sqrt固定小数点と整数除算による丸めを含みます。
+出力: `artifacts/swap-demo/evidence.json`。Registryアドレス、刺激schema、元イベントTX、Agentごとの入力TX・入力値・反応・位置を保存します。2026-09-26実行結果はbaseline→curious（+2099 bps）→cautious（-1735 bps）、全3匹で検証済み。sqrt固定小数点と整数除算による丸めを含みます。
 
 **このローカルデモはSwapEventFixtureの合成イベントです。実際のUniswapプール・流動性・スワップを使っていません。** TXとレシート自体はAnvil上の実トランザクションですが、Uniswap接続実績として説明しません。全個体の入力変換は同じで、異なる戦略の優劣を示すものでもありません。
 
@@ -63,7 +63,7 @@ forge/anvilがPATHにない場合は環境変数`FORGE`と`ANVIL`に実行ファ
 
 ## 審査員へ説明する軸（改訂）
 
-[NFT/SBT追加は派生構造の例を機能要件と取り違えた先行実装](../standards/bioagent-design-direction.md)であり、提出の主軸にしません。このデモはその実験契約をまだ使用しています。契約整理は設計レビュー後に行います。
+[NFT/SBT追加は派生構造の例を機能要件と取り違えた先行実装](../standards/bioagent-design-direction.md)であり、提出の主軸にしません。NFT/SBT実験契約を撤去し、このデモも通常のBioAgentStimulusRegistryへ移行しました。
 
 BioAgentの差分候補は生物モデルの出典、身体を含む個体状態、入力から反応・学習への過程の記述です。市場観測はその用途別profileとして位置付けます。[提出説明案](../submission/bioagent-thesis.md)で実装済みと構想を区別します。
 

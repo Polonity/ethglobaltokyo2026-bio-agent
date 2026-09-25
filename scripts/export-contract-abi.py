@@ -6,7 +6,7 @@ import subprocess
 
 root = Path(__file__).resolve().parents[1]
 forge = os.environ.get('FORGE', 'forge')
-for name in ('IBioAgent', 'IBioAgentRegistry', 'IBioAgentWallet', 'BioAgentRegistry', 'IBioAgentStimulus', 'BioAgentNFT', 'BioAgentSBT'):
+for name in ('IBioAgent', 'IBioAgentRegistry', 'IBioAgentWallet', 'BioAgentRegistry', 'IBioAgentStimulus', 'BioAgentStimulusRegistry'):
     result = subprocess.run(
         [forge, 'inspect', name, 'abi', '--json'],
         cwd=root / 'contracts', check=True, capture_output=True, text=True,

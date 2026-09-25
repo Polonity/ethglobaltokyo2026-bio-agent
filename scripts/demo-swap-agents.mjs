@@ -48,7 +48,7 @@ try {
     await contract.waitForDeployment();
     return contract;
   };
-  const registry = await deploy('BioAgentNFT');
+  const registry = await deploy('BioAgentStimulusRegistry');
   const fixture = await deploy('SwapEventFixture');
   const pool = await fixture.getAddress();
   const market = { chainId: 31337, pool, confirmations: 1 };

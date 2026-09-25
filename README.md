@@ -107,4 +107,4 @@ make contracts-dry-run contracts-check-deployment
 
 ### Experimental market inputs
 
-[Swap event milestone](docs/design/swap-event-game.md): `npm run demo:swaps` verifies three agents using synthetic V3-shaped events on a separate Anvil. This is not a live Uniswap integration or a completed trading game. The existing demo currently uses the earlier experimental NFT contract; tokenization is not a requirement and its implementation cleanup is deferred until the design review is settled.
+[Swap event milestone](docs/design/swap-event-game.md): `npm run demo:swaps` verifies three agents using synthetic V3-shaped events on a separate Anvil. This is not a live Uniswap integration or a completed trading game. The demo now uses the non-token BioAgentStimulusRegistry. NFT/SBT experiments have been removed.

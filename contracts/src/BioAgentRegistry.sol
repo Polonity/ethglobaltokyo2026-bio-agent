@@ -19,7 +19,6 @@ contract BioAgentRegistry is IBioAgentRegistry, IBioAgentWallet {
 
     function registerAgent(bytes32 modelHash, string calldata metadataURI)
         external
-        virtual
         override
         returns (uint256 agentId)
     {
@@ -34,7 +33,6 @@ contract BioAgentRegistry is IBioAgentRegistry, IBioAgentWallet {
         uint64 timestamp = uint64(block.timestamp);
         _statuses[agentId] = BioAgentStatus(Activity.Rest, 5000, 0, 1, timestamp);
 
-        _afterRegistration(agentId);
         emit BioAgentRegistered(agentId, msg.sender, modelHash, metadataURI);
         emit BioAgentStatusUpdated(agentId, 1, msg.sender, Activity.Rest, 5000, 0, timestamp);
     }
@@ -87,8 +85,6 @@ contract BioAgentRegistry is IBioAgentRegistry, IBioAgentWallet {
         _wallets[agentId] = smartWallet;
         emit BioAgentWalletUpdated(agentId, previous, smartWallet);
     }
-
-    function _afterRegistration(uint256 agentId) internal virtual {}
 
     function _requireAgent(uint256 agentId) internal view {
         if (_agents[agentId].owner == address(0)) revert AgentNotFound(agentId);

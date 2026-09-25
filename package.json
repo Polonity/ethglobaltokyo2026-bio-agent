@@ -17,7 +17,8 @@
     "demo:agents": "node scripts/demo-agent-types.mjs",
     "test:swaps": "node --test tests/swap-agents.test.mjs",
     "demo:swaps": "node scripts/demo-swap-agents.mjs",
-    "test:types": "tsc -p packages/shared/tsconfig.json && node --experimental-strip-types --test tests/shared-types.test.mjs"
+    "test:types": "tsc -p packages/shared/tsconfig.json && node --experimental-strip-types --test tests/shared-types.test.mjs",
+    "test:body": "node --test tests/body-checkpoint.test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
@@ -27,7 +28,6 @@
     "wrangler": "4.140.0"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "5.4.0",
     "ethers": "6.17.0"
   }
 }
