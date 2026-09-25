@@ -1,3 +1,8 @@
+import {
+  trainAquaPolicy,
+  defaultAquaPolicy,
+  validateAquaPolicy,
+} from '../../packages/training/browser/aqua-learning.js';
 // Powered by Aqua — © Degensoft Ltd 2025. Local prototype only.
 import { Interface, AbiCoder, keccak256, parseEther, formatEther } from 'ethers';
 import { AquaProtocolContract } from '@1inch/aqua-sdk';
@@ -18,10 +23,10 @@ const aq = new Interface([
 const erc = new Interface(['function balanceOf(address) view returns(uint256)']);
 const appAbi = new Interface(['function swap(address,bytes,bool,uint256,uint256) returns(uint256)']);
 const coder = AbiCoder.defaultAbiCoder();
-const types = ['uint256', 'uint256', 'uint256', 'bytes32'];
+const types = ['uint256', 'uint256', 'uint256', 'bytes32', 'bytes32'];
 const json = (x, s = 200) => Response.json(x, { status: s, headers: { 'Cache-Control': 'no-store' } });
 export async function aquaRoute(request, env, rpc) {
-  if (!env.AQUA_CONFIG) return json({ error: 'Run npm run local:aqua first' }, 503);
+  if (!env.AQUA_CONFIG || !env.AQUA_LEARNING) return json({ error: 'Run npm run local:aqua first' }, 503);
   const cfg = JSON.parse(env.AQUA_CONFIG),
     url = new URL(request.url);
   const deployed = await rpc(env, 'eth_getBlockByNumber', [
@@ -29,6 +34,8 @@ export async function aquaRoute(request, env, rpc) {
     false,
   ]);
   if (deployed?.hash !== cfg.deploymentBlockHash) return json({ error: 'Aqua deployment changed' }, 409);
+  const policyKey = (id, revision) => `${cfg.registry}:${cfg.modelHash}:${id}:${revision}`;
+  const policyHash = (p) => keccak256(new TextEncoder().encode(JSON.stringify(p)));
   const sdk = new AquaProtocolContract(new Address(cfg.aqua));
   const tip = await rpc(env, 'eth_getBlockByNumber', ['latest', false]);
   const call = async (abi, to, name, args = [], block = tip.number) =>
@@ -54,12 +61,13 @@ export async function aquaRoute(request, env, rpc) {
     )
       continue;
     if (e.name === 'Shipped') {
-      const [id, revision, spread, hash] = coder.decode(types, e.args.strategy);
+      const [id, revision, spread, hash, learnedHash] = coder.decode(types, e.args.strategy);
       strategies.push({
         agentId: Number(id),
         revision: String(revision),
         spreadBps: Number(spread),
         modelHash: hash,
+        policyHash: learnedHash,
         strategy: e.args.strategy,
         strategyHash: e.args.strategyHash,
         transactionHash: l.transactionHash,
@@ -98,7 +106,11 @@ export async function aquaRoute(request, env, rpc) {
     });
     if (!source || Number(reg.parseLog(source).args.stimulus) !== Number(status.stimulus))
       return json({ error: 'Confirmed stimulus event missing' }, 409);
-    const decision = decideAqua(graph, Number(status.stimulus), id);
+    const policy = validateAquaPolicy(
+      (await env.AQUA_LEARNING.get(policyKey(id, String(status.revision)), 'json')) || defaultAquaPolicy(),
+    );
+    const learnedHash = policyHash(policy);
+    const decision = decideAqua(graph, Number(status.stimulus), id, policy);
     const active = [];
     for (const s of strategies.filter((s) => s.agentId === id && s.active)) {
       const [b0, b1] = await Promise.all([
@@ -108,11 +120,13 @@ export async function aquaRoute(request, env, rpc) {
       active.push({
         ...s,
         balances: [formatEther(b0[0]), formatEther(b1[0])],
-        current: s.revision === String(status.revision),
+        current: s.revision === String(status.revision) && s.policyHash === learnedHash,
       });
     }
     agents.push({
       id,
+      policy,
+      policyHash: learnedHash,
       source: {
         transactionHash: source.transactionHash,
         blockHash: source.blockHash,
@@ -195,12 +209,35 @@ export async function aquaRoute(request, env, rpc) {
   if (url.pathname === '/api/aqua/stimulus') {
     if (!Number.isInteger(body.stimulus) || body.stimulus < 0 || body.stimulus > 10000)
       return json({ error: 'Invalid stimulus' }, 400);
-    return json(
-      await send({
-        to: cfg.registry,
-        data: reg.encodeFunctionData('updateStatus', [agent.id, agent.revision, 0, 5000, body.stimulus]),
-      }),
+    const tx = await send({
+      to: cfg.registry,
+      data: reg.encodeFunctionData('updateStatus', [agent.id, agent.revision, 0, 5000, body.stimulus]),
+    });
+    await env.AQUA_LEARNING.put(
+      policyKey(agent.id, String(BigInt(agent.revision) + 1n)),
+      JSON.stringify(agent.policy),
     );
+    return json(tx);
+  }
+  if (url.pathname === '/api/aqua/train') {
+    const started = performance.now();
+    const policy = trainAquaPolicy(agent.policy, agent.id);
+    if (!policy.report.adopted)
+      return json({ policy, transactions: [], trainingMs: performance.now() - started });
+    // New confirmed input revision blocks old strategies before learned policy is published.
+    const tx = await send({
+      to: cfg.registry,
+      data: reg.encodeFunctionData('updateStatus', [agent.id, agent.revision, 0, 5000, agent.stimulus]),
+    });
+    await env.AQUA_LEARNING.put(
+      policyKey(agent.id, String(BigInt(agent.revision) + 1n)),
+      JSON.stringify(policy),
+    );
+    return json({
+      policy,
+      transactions: [{ operation: 'learning-revision', ...tx }],
+      trainingMs: performance.now() - started,
+    });
   }
   if (url.pathname === '/api/aqua/apply') {
     const d = agent.decision,
@@ -220,7 +257,13 @@ export async function aquaRoute(request, env, rpc) {
         )),
       });
     if (d.action !== 'dock') {
-      const strategy = coder.encode(types, [agent.id, agent.revision, d.spreadBps, cfg.modelHash]);
+      const strategy = coder.encode(types, [
+        agent.id,
+        agent.revision,
+        d.spreadBps,
+        cfg.modelHash,
+        agent.policyHash,
+      ]);
       const ship = sdk.ship({
         app: new Address(cfg.app),
         strategy: new HexString(strategy),

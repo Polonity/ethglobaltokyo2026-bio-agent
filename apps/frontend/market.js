@@ -1,3 +1,5 @@
+import { policyStorage } from '../../packages/training/browser/readout.js';
+import { verifyMaleAssets } from '../../packages/bio_agent/connectome/male-cns.js';
 import { marketView } from '../../packages/shared/types/market-view.ts';
 import { address, uint } from '../../packages/shared/types/primitives.ts';
 import { PaperArena, ATOM } from '../../packages/bio_agent/runtime/paper-arena.js';
@@ -5,7 +7,13 @@ import { flyDrawing } from './fly-art.js';
 import { translate as t, translateDOM, getPreference, setPreference } from './i18n.js';
 const $ = (id) => document.getElementById(id);
 const arena = new PaperArena();
-const manifestBytes = await fetch('/models/market-paper-reward-v1.json').then((r) => r.arrayBuffer());
+const manifestBytes = await fetch('/models/market-malecns-reward-v2.json').then((r) => r.arrayBuffer());
+let modelError = '';
+try {
+  await verifyMaleAssets(JSON.parse(new TextDecoder().decode(manifestBytes)));
+} catch (e) {
+  modelError = e.message;
+}
 const manifestHash =
   '0x' +
   [...new Uint8Array(await crypto.subtle.digest('SHA-256', manifestBytes))]
@@ -13,6 +21,7 @@ const manifestHash =
     .join('');
 const bodyModel = await fetch('/models/body-reference.json').then((r) => r.json());
 const paperModel = await fetch('/models/paper-reference.json').then((r) => r.json());
+let savedPolicies = null;
 let meta = null,
   cursor = null,
   busy = false,
@@ -43,6 +52,10 @@ const quote = (side, amount, event) =>
     `/api/market/quote?direction=${side}&amount=${amount}&block=${event.blockNumber}&hash=${event.blockHash}`,
   );
 async function poll() {
+  if (modelError) {
+    $('status').textContent = modelError;
+    return;
+  }
   if (polling || paused) return;
   polling = true;
   try {
@@ -51,6 +64,16 @@ async function poll() {
     if (meta && meta.pool !== snapshot.pool)
       throw new Error(t('市場の設定が変わりました。再読込してください。'));
     if (snapshot.modelHash !== manifestHash) throw new Error(t('モデルmanifestが登録内容と一致しません'));
+    if (!meta) {
+      try {
+        savedPolicies = policyStorage(
+          localStorage,
+          `bioagent:${snapshot.registry}:${manifestHash}`,
+          'market',
+        );
+        arena.flies.forEach((f) => savedPolicies.restore(f));
+      } catch {}
+    }
     meta = snapshot;
     for (const event of snapshot.events) await arena.consume(event, quote);
     cursor = { blockNumber: snapshot.blockNumber, blockHash: snapshot.blockHash };
@@ -68,7 +91,7 @@ async function poll() {
   }
 }
 async function move(direction) {
-  if (busy || paused) return;
+  if (busy || paused || modelError) return;
   busy = true;
   render();
   try {
@@ -161,6 +184,7 @@ function label(f) {
         : '今は見送ろう';
 }
 function render() {
+  if (online) arena.flies.forEach((f) => savedPolicies?.save(f));
   const typedViews = meta
     ? arena.flies.map((f) =>
         marketView(
@@ -224,7 +248,7 @@ function render() {
   $('observation').textContent = arena.flies
     .map(
       (f) =>
-        `${f.name}: Δ ${f.deltaBps} bps\nattention=${f.attention.toFixed(2)}\nstate=${f.lastKey || 'baseline'} → ${f.decision}`,
+        `${f.name}: Δ ${f.deltaBps} bps\nMaleCNS=[${(f.neural || []).map((x) => x.toFixed(3)).join(', ')}]\nattention=${f.attention.toFixed(2)}\nstate=${f.lastKey || 'baseline'} → ${f.decision}`,
     )
     .join('\n\n');
   $('learning').replaceChildren(

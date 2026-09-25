@@ -28,12 +28,13 @@ const en = {
   shared:
     'Virtual offers share the same assets; they are not additive reserves. Actual fills depend on wallet balance and allowance.',
   apply: 'Apply / retry current decision',
+  train: 'Learn risk response → apply',
   fill: 'Test fill · 1 NECTAR',
   trail: 'Follow the transaction trail',
   gas: 'ship() and dock() are mined, gas-consuming transactions. No gasless cancellation claim.',
   provenance: 'Model origin, addresses & assumptions',
   limits:
-    '7 measured neurons / 19 connections. Three sensitivity settings, one topology. Frozen circuit; no learning. Synthetic risk mapping, 1:1 test-token pricing; no whole-brain, MEV-detection, biological-fidelity or profit claim.',
+    '7 measured neurons / 19 connections. Three sensitivity settings, one topology. Fixed measured topology; learned readout gain. Synthetic risk mapping, 1:1 test-token pricing; no whole-brain, MEV-detection, biological-fidelity or profit claim.',
   receipt: 'Transaction receipt',
   local: 'Local Anvil: no Etherscan entry. This receipt comes from the local chain.',
   close: 'Close',
@@ -75,12 +76,13 @@ const ja = {
   strategies: '3匹のハエ。1つのウォレット。',
   shared: '仮想的な提示は同じ資産を共有し、準備金の合計ではありません。約定には実残高と承認が必要です。',
   apply: '現在の判断を反映 / 再試行',
+  train: '危険への反応を学習 → 反映',
   fill: '試しに交換 · 1 NECTAR',
   trail: 'トランザクションをたどる',
   gas: 'ship()とdock()はガスを使うトランザクションです。署名だけのガスレス撤回ではありません。',
   provenance: 'モデルの出典・アドレス・仮定',
   limits:
-    '実測7神経・19接続。同じ構造で感度が違う3個体。固定回路で学習はしません。危険度変換と1:1のテスト価格は人工設計。全脳・MEV検出・生物学的再現・利益の実証ではありません。',
+    '実測7神経・19接続。同じ構造で感度が違う3個体。実測接続を固定し、行動変換の係数を学習。危険度変換と1:1のテスト価格は人工設計。全脳・MEV検出・生物学的再現・利益の実証ではありません。',
   receipt: 'トランザクションの記録',
   local: 'ローカルAnvilのためEtherscanにはありません。実際のローカルチェーンのreceiptを表示します。',
   close: '閉じる',
@@ -144,7 +146,7 @@ async function refresh() {
   const s = await api('snapshot');
   if (!graph || s.config.modelHash !== state?.config.modelHash) await verify(s);
   for (const a of s.agents) {
-    const d = decideAqua(graph, a.stimulus, a.id);
+    const d = decideAqua(graph, a.stimulus, a.id, a.policy);
     if (JSON.stringify(d) !== JSON.stringify(a.decision)) throw Error('Decision replay mismatch');
   }
   state = s;
@@ -157,7 +159,7 @@ function render() {
   $('status').textContent = tr(busy ? 'working' : online ? 'connected' : error ? 'failed' : 'loading');
   $('light').className = online ? 'online' : '';
   $('error').textContent = error;
-  $('send').disabled = $('apply').disabled = busy || !online;
+  $('train').disabled = $('send').disabled = $('apply').disabled = busy || !online;
   $('fill').disabled = busy || !online || !state?.agents[selected - 1].active.some((s) => s.current);
   if (!state) return;
   $('block').textContent = tr('block') + ' ' + state.blockNumber;
@@ -166,6 +168,12 @@ function render() {
     .join(' / ');
   $('custody').textContent = state.balances.map((b) => Number(b.aqua).toFixed(0)).join(' / ');
   const active = state.agents[selected - 1].decision;
+  const learned = state.agents[selected - 1].policy;
+  $('learning-report').textContent = learned.report
+    ? `${getLanguage() === 'ja' ? '人工シナリオでの選択用MSE' : 'Synthetic curriculum selection MSE'}: ${learned.report.before.toFixed(6)} → ${learned.report.after.toFixed(6)} · v${learned.version} · ${learned.report.samples}/${learned.report.selectionSamples}`
+    : getLanguage() === 'ja'
+      ? '学習前の行動変換。実測接続は固定です。'
+      : 'Initial readout. Measured connections remain fixed.';
   $('signal').textContent =
     `INPUT ${active.drive.toFixed(2)} → RESPONSE ${active.response.toFixed(4)} → ${active.action.toUpperCase()} · ABLATED ${active.control.final.response.toFixed(4)}`;
   $('flies').replaceChildren();
@@ -179,7 +187,7 @@ function render() {
     el.querySelector('.meter span').style.width =
       (current ? Math.min(100, Number(current.balances[1])) : 0) + '%';
     el.querySelector('.metrics').textContent =
-      `${tr('offer')}: ${current ? current.balances.map((x) => Number(x).toFixed(2)).join(' / ') : '0 / 0'} · ${tr('spread')}: ${current ? current.spreadBps : '—'} bps · ${tr('response')}: ${d.response.toFixed(4)}`;
+      `${tr('offer')}: ${current ? current.balances.map((x) => Number(x).toFixed(2)).join(' / ') : '0 / 0'} · ${tr('spread')}: ${current ? current.spreadBps : '—'} bps · ${tr('response')}: ${d.response.toFixed(4)} · policy v${a.policy.version} · gain ${a.policy.gain.toFixed(3)}`;
     el.querySelector('.hash').textContent = current
       ? `${tr('ready')} · ${current.strategyHash}`
       : a.active.length
@@ -194,6 +202,7 @@ function render() {
     {
       descriptorHash: state.config.modelHash,
       descriptor,
+      learning: state.agents.map((a) => ({ id: a.id, policy: a.policy, policyHash: a.policyHash })),
       biologicalSource: {
         dataset: graph.dataset,
         attribution: graph.attribution,
@@ -253,6 +262,12 @@ async function operate(kind) {
   render();
   try {
     let a = state.agents[selected - 1];
+    if (kind === 'train') {
+      const result = await api('train', { agentId: selected, revision: a.revision });
+      transactions.push(...result.transactions);
+      await refresh();
+      a = state.agents[selected - 1];
+    }
     if (kind === 'send') {
       const tx = await api('stimulus', {
         agentId: selected,
@@ -368,6 +383,7 @@ document.querySelectorAll('[data-level]').forEach(
 $('send').onclick = () => operate('send');
 $('apply').onclick = () => operate('apply');
 $('fill').onclick = () => operate('fill');
+$('train').onclick = () => operate('train');
 $('close').onclick = () => $('receipt').close();
 window.__aqua = { snapshot: () => ({ state, busy, online, error, transactions }) };
 render();

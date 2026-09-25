@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { build } from 'esbuild';
 import { mkdir, copyFile, writeFile, readFile } from 'node:fs/promises';
 await mkdir('dist', { recursive: true });
+await import('./build-male-models.mjs');
 await build({
   entryPoints: ['apps/frontend/app.js'],
   bundle: true,
@@ -14,14 +15,14 @@ for (const file of ['index.html', 'style.css']) await copyFile(`apps/frontend/${
 console.log('Built Fly Lab static assets in dist/');
 
 await mkdir('dist/models/agents', { recursive: true });
-await copyFile('packages/bio_agent/browser/manifest.json', 'dist/models/foraging-embodied-q-v2.json');
+await copyFile('packages/bio_agent/browser/manifest.json', 'dist/models/foraging-malecns-q-v3.json');
 for (const [i, name] of ['MOMO', 'SORA', 'KIKI'].entries())
   await writeFile(
     `dist/models/agents/${i + 1}.json`,
     JSON.stringify({
       name,
-      modelId: 'foraging-embodied-q-v2',
-      manifest: '/models/foraging-embodied-q-v2.json',
+      modelId: 'foraging-malecns-q-v3',
+      manifest: '/models/foraging-malecns-q-v3.json',
     }),
   );
 
@@ -54,14 +55,14 @@ await writeFile(
   }),
 );
 
-await copyFile('packages/bio_agent/runtime/paper-manifest.json', 'dist/models/market-paper-reward-v1.json');
+await copyFile('packages/bio_agent/runtime/paper-manifest.json', 'dist/models/market-malecns-reward-v2.json');
 for (const [i, name] of ['MOMO', 'SORA', 'KIKI'].entries())
   await writeFile(
     `dist/models/market-agent-${i + 1}.json`,
     JSON.stringify({
       name,
-      modelId: 'market-paper-reward-v1',
-      manifest: '/models/market-paper-reward-v1.json',
+      modelId: 'market-malecns-reward-v2',
+      manifest: '/models/market-malecns-reward-v2.json',
       profile: 'market-paper.v1',
     }),
   );

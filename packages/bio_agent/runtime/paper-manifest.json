@@ -1,16 +1,52 @@
 {
   "schemaVersion": 1,
-  "modelId": "market-paper-reward-v1",
-  "modelType": "synthetic-demo",
+  "modelId": "market-malecns-reward-v2",
+  "modelType": "connectome-derived",
   "profile": "market-paper.v1",
   "source": "local Uniswap V3 core Swap events and block-pinned eth_call quotes",
   "bodyModel": "synthetic-metabolism-v1",
   "bodyClock": "one 0.2-second synthetic body tick per market observation",
-  "learning": "tabular immediate reward prediction from chronological 70/30 training/selection split",
+  "learning": "MaleCNS features + action reward readout, chronological 70/30 fitting/selection; 256 updates per tick, adopt next decision",
   "evaluation": "selection reward prediction MSE; not held-out profitability",
   "initialCapitalToken1": "100000000000000000000",
   "orderSizeToken1": "10000000000000000000",
   "gasAssumptionToken1": "1000000000000000",
   "execution": "paper-only; next-block-or-later size-specific quote; no virtual price impact across agents",
-  "biologicalValidation": false
+  "biologicalValidation": false,
+  "connectome": {
+    "dataset": "male-cns:v1.0",
+    "neurons": 7,
+    "edges": 19,
+    "graphSha256": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+    "license": "CC-BY-4.0",
+    "attribution": "MaleCNS: FlyEM / HHMI Janelia, University of Cambridge, MRC LMB and Google Research. https://male-cns.janelia.org/",
+    "required": true,
+    "refs": {
+      "graph": {
+        "uri": "/models/male-cns/male-cns-slice.json",
+        "sha256": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987"
+      },
+      "dynamics": {
+        "uri": "/models/male-cns/circuit.js",
+        "sha256": "0x08f0653357e939a4a845d2775bcecd300a16410e161a9f5df05cce6a798e3e65"
+      },
+      "encoder": {
+        "uri": "/models/male-cns/male-cns.js",
+        "sha256": "0x352f924bed3285b86e731af7e97da213312500d61fb8a9fd57607519ff0ceec0"
+      },
+      "learner": {
+        "uri": "/models/male-cns/learning.js",
+        "sha256": "0x424d48edb15f4c2801f3597907e71e7e1de5b06d4c497c9eeb37aa5bb51a0efc"
+      },
+      "readout": {
+        "uri": "/models/male-cns/readout.js",
+        "sha256": "0x5f9183e3aaffacef8426887fec9b7a16828c7af7b2e83fcd64d4bf89280459dc"
+      },
+      "runtime": {
+        "uri": "/models/male-cns/market-runtime.js",
+        "sha256": "0xd2cb25a3874531e007054a27a22399c45345e11650fd5c903fbd265bd1fc1a9f"
+      }
+    }
+  },
+  "learningTopology": "frozen measured edges; train action readout only"
 }

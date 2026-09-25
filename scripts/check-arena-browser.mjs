@@ -42,7 +42,7 @@ try {
   await page.locator('#speed').click();
   await page.waitForFunction(() => window.__arena.flies[1].lastReport, { timeout: 15000 });
   const report = await page.evaluate(() => window.__arena.flies[1].lastReport);
-  assert.ok(report.steps >= 3800);
+  assert.ok(report.steps === 960);
   // Advance deterministic engine to automatically select low-performing agents.
   await page.evaluate(() => {
     for (let i = 0; i < 100; i++) window.__arena.tick();

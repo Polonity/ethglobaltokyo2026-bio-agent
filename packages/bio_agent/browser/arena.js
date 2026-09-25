@@ -1,6 +1,8 @@
+import { MALE_CNS, forageChannels } from '../connectome/male-cns.js';
+import { learningReport, FORAGE_UPDATES, FORAGE_BATCH } from '../../training/browser/learning.js';
 import { bodyStep, bodyObservation, ensureBody } from './body.js';
-// Adaptive simulation model. This is not a MaleCNS connectome simulation.
-export const MODEL = 'foraging-embodied-q-v2';
+// Measured MaleCNS feature encoder + learned action readout; artificial body/dynamics.
+export const MODEL = 'foraging-malecns-q-v3';
 export const WIDTH = 36;
 export const HEIGHT = 22;
 export const DIRECTIONS = Array.from({ length: 8 }, (_, i) => [
@@ -79,8 +81,18 @@ export function observe(fly, world) {
     )
       mask |= 1 << a;
   });
+  const neural = forageChannels({
+    direction,
+    mask,
+    energy: fly.energy,
+    satiety: fly.satiety,
+    stimulus: world.stimulus,
+    mode: world.mode,
+  });
+  const code = neural.map((x) => Math.round(x * 20)).join(',');
   return {
-    key: `${direction}:${mask}:${fly.energy < 0.2 ? 1 : 0}:${Math.floor(fly.satiety * 3)}:${Math.floor(fly.reserves * 3)}`,
+    neural,
+    key: `${direction}:${mask}:${fly.energy < 0.2 ? 1 : 0}:${Math.floor(fly.satiety * 3)}:${Math.floor(fly.reserves * 3)}:${code}`,
     target,
     direction,
     mask,
@@ -89,10 +101,15 @@ export function observe(fly, world) {
 }
 function values(q, observation, initialize = true) {
   if (q[observation.key]) return q[observation.key];
-  const full = Number(observation.key.split(':')[3]) >= 2;
-  const row = DIRECTIONS.map((_, a) =>
-    a === 8 ? (full ? 0.2 : -0.15) : Math.cos(((a - observation.direction) * Math.PI) / 4) * 0.14,
-  );
+  const channels =
+    observation.neural ||
+    observation.key
+      .split(':')[5]
+      ?.split(',')
+      .map((x) => Number(x) / 20);
+  if (!channels || channels.length !== 9 || channels.some((x) => !Number.isFinite(x)))
+    throw Error('MaleCNS observation required');
+  const row = channels.map((x, a) => x * 0.3 - (a === 8 ? 0.035 : 0));
   if (initialize) q[observation.key] = row;
   return row;
 }
@@ -267,6 +284,8 @@ export class Arena {
       error: 0,
       candidate: clone(fly.q),
       before: evaluate(fly.q),
+      totalUpdates: FORAGE_UPDATES,
+      baseVersion: fly.version,
       rng,
       world: createWorld(rng),
       actor: { x: 3 + rng() * 30, y: 3 + rng() * 16, energy: 0.7 },
@@ -277,7 +296,7 @@ export class Arena {
   trainTick(fly, dt) {
     const t = fly.training;
     t.elapsed += dt;
-    for (let i = 0; i < 96; i++) {
+    for (let i = 0; i < FORAGE_BATCH && t.steps < FORAGE_UPDATES; i++) {
       const obs = observe(t.actor, t.world);
       const item = transition(t.actor, t.world, choose(t.candidate, obs, t.rng, 0.28), t.rng);
       t.error = learn(t.candidate, item);
@@ -289,14 +308,28 @@ export class Arena {
         t.actor = { x: 2 + t.rng() * 32, y: 2 + t.rng() * 18, energy: 0.7 };
       }
     }
-    if (t.elapsed >= 8) {
+    if (t.steps >= FORAGE_UPDATES) {
       const after = evaluate(t.candidate);
       const accepted = after > t.before + 0.01;
       if (accepted) {
         fly.q = t.candidate;
         fly.version++;
       }
-      fly.lastReport = { before: t.before, after, accepted, steps: t.steps };
+      fly.lastReport = {
+        ...learningReport({
+          useCase: 'foraging',
+          version: t.baseVersion,
+          before: t.before,
+          after,
+          samples: fly.memory.length,
+          updates: t.steps,
+          adopted: accepted,
+          model: MALE_CNS.graphSha256,
+          metric: 'selection-seed reward; not independent generalization',
+        }),
+        accepted,
+        steps: t.steps,
+      };
       fly.state = 'racing';
       // Restoring energy is an explicit rest benefit, independent of policy improvement.
       fly.energy = Math.max(0.65, fly.energy);
@@ -322,8 +355,6 @@ export class Arena {
       const world = fly.input ? { ...this.world, ...fly.input } : this.world;
       const obs = observe(fly, world);
       let action = choose(fly.q, obs, this.rng, fly.exploration + world.stimulus * 0.09);
-      if (world.mode === 'rest' && this.rng() < 0.75) action = 8;
-      if (world.mode === 'explore' && this.rng() < 0.4) action = Math.floor(this.rng() * 8);
       if (fly.energy < 0.08) action = 8;
       const result = transition(fly, world, action, this.rng);
       fly.memory.push({ state: result.state, action, reward: result.reward, next: result.next });
@@ -341,6 +372,8 @@ export class Arena {
               ? '蜜を獲得 +1'
               : `${['東', '南東', '南', '南西', '西', '北西', '北', '北東'][action]}へ移動`;
       fly.observation = {
+        neural: obs.neural,
+        connectome: MALE_CNS,
         bearing: obs.direction,
         danger: Boolean(obs.mask),
         energy: fly.energy,
@@ -348,6 +381,8 @@ export class Arena {
         encodedKey: obs.key,
       };
       fly.lastTransition = {
+        connectome: MALE_CNS.graphSha256,
+        policyVersion: fly.version,
         observation: obs.key,
         bodyBefore: obs.body,
         action,
@@ -383,10 +418,14 @@ export class Arena {
         typeof value === 'function' && value.state ? { __prng: 'mulberry32', state: value.state() } : value,
       ),
     );
-    return { schema: 'bioagent.arena-checkpoint.v1', model: MODEL, data };
+    return { schema: 'bioagent.arena-checkpoint.v1', model: MODEL, connectome: MALE_CNS.graphSha256, data };
   }
   static restore(checkpoint) {
-    if (checkpoint?.schema !== 'bioagent.arena-checkpoint.v1' || checkpoint.model !== MODEL)
+    if (
+      checkpoint?.schema !== 'bioagent.arena-checkpoint.v1' ||
+      checkpoint.model !== MODEL ||
+      checkpoint.connectome !== MALE_CNS.graphSha256
+    )
       throw new Error('Unsupported checkpoint model');
     // Local trusted checkpoints only. Untrusted artifact parsing is handled separately.
     const data = JSON.parse(JSON.stringify(checkpoint.data), (_key, value) =>

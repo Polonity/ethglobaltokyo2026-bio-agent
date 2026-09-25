@@ -1,3 +1,5 @@
+import { policyStorage } from '../../packages/training/browser/readout.js';
+import { MALE_CNS, verifyMaleAssets } from '../../packages/bio_agent/connectome/male-cns.js';
 import { flyDrawing } from './fly-art.js';
 import { address, uint } from '../../packages/shared/types/primitives.ts';
 import { foragingView } from '../../packages/shared/types/foraging-view.ts';
@@ -11,7 +13,24 @@ translateDOM();
 const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
 const bodyModel = await fetch('/models/body-reference.json').then((r) => r.json());
 const chainMode = config.mode === 'anvil';
+let modelError = '';
+try {
+  await verifyMaleAssets(await fetch(`/models/${MODEL}.json`).then((r) => r.json()));
+} catch (e) {
+  modelError = e.message;
+  document.getElementById('intro-agent-count').textContent = e.message;
+}
 const arena = new Arena(2026, { agentCount: chainMode ? 3 : 12 });
+if (modelError) arena.paused = true;
+let savedPolicies = null;
+try {
+  savedPolicies = policyStorage(
+    localStorage,
+    `bioagent:${config.registryAddress || 'browser'}:${config.modelHash || MODEL}`,
+    'foraging',
+  );
+  arena.flies.forEach((f) => savedPolicies.restore(f));
+} catch {}
 let chain = null;
 let receiptRequest = 0;
 function bindTransactionLink(element, hash, event) {
@@ -297,6 +316,7 @@ function draw(time) {
   });
 }
 function renderUI() {
+  if (!modelError && (!chain || chain.ready)) arena.flies.forEach((f) => savedPolicies?.save(f));
   const learners = arena.flies.filter((f) => f.state === 'learning');
   const leader = arena.ranking()[0];
   $('arena-status').textContent =
@@ -460,7 +480,7 @@ function renderUI() {
       if (!f) {
         el.innerHTML = `<div class="slot-heading"><span>◎</span> TRAINING POD ${String(i + 1).padStart(2, '0')}<span>STANDBY</span></div><p class="slot-detail">下位の個体が到着するまで待機中</p>`;
       } else if (active) {
-        el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${Math.floor((f.training.elapsed / 8) * 100)}%</span></div><p class="slot-detail">経験再生 + 練習環境 / ${f.training.steps} updates</p><div class="training-track"><i style="width:${(f.training.elapsed / 8) * 100}%"></i></div>`;
+        el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${Math.floor((f.training.steps / f.training.totalUpdates) * 100)}%</span></div><p class="slot-detail">経験再生 + 練習環境 / ${f.training.steps} updates</p><div class="training-track"><i style="width:${(f.training.steps / f.training.totalUpdates) * 100}%"></i></div>`;
       } else {
         const r = f.lastReport;
         el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${r.accepted ? 'POLICY UPDATED' : 'POLICY KEPT'}</span></div><p class="slot-detail">検証報酬 ${r.before.toFixed(1)} → ${r.after.toFixed(1)}<br>${r.accepted ? `v${f.version} で競争に復帰` : '改善なし。既存方策で復帰'}</p>`;
@@ -581,6 +601,7 @@ $('close-about').onclick = $('about-ok').onclick = () => $('about-dialog').close
 $('export').onclick = () => {
   const result = {
     model: MODEL,
+    connectome: MALE_CNS,
     seed: arena.seed,
     round: arena.round,
     time: arena.time,
@@ -616,7 +637,7 @@ if (new URLSearchParams(location.search).has('test')) {
 function frame(now) {
   const elapsed = Math.min((now - lastTime) / 1000, 0.1);
   lastTime = now;
-  if (!document.hidden && !arena.paused && !arena.finished && (!chain || chain.ready)) {
+  if (!modelError && !document.hidden && !arena.paused && !arena.finished && (!chain || chain.ready)) {
     accumulator += elapsed * speed;
     while (accumulator >= 0.2) {
       arena.tick(0.2);
@@ -643,7 +664,7 @@ if (chainMode) {
   $('world-input-title').textContent = 'この子に刺激を届けよう。';
   $('world-input-help').textContent = '選択した個体の入力を Anvil に記録します。';
   $('about-chain').parentElement.textContent =
-    'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はブラウザー内の Q学習モデルです。MaleCNS 回路ではありません。';
+    'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はMaleCNSの実測7神経・19接続を特徴計算に使い、行動選択を学習します。身体と動力学は人工設計です。';
   chain = new ChainSession(arena, config, renderUI);
   if (new URLSearchParams(location.search).has('test')) window.__chain = chain;
   await chain.sync();

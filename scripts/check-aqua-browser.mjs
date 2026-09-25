@@ -43,7 +43,7 @@ try {
   assert.equal(s.error, '');
   assert.equal(Number(s.state.balances[0].maker), Number(before[0]) + 1);
   assert.equal(Number(s.state.balances[1].maker), Number(before[1]) - 0.997);
-  s = await send(2, 40);
+  s = await send(2, 25);
   assert.equal(s.state.agents[1].decision.action, 'cautious');
   assert.equal(s.state.agents[1].active[0].balances[1], '40.0');
   await page.waitForTimeout(2200);

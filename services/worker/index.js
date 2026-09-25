@@ -6,7 +6,7 @@ export default {
       return Response.json({
         status: 'ok',
         app: 'fly-lab',
-        model: 'foraging-embodied-q-v2',
+        model: 'foraging-malecns-q-v3',
         runtime: 'browser',
         chainConnected: false,
       });

@@ -1,3 +1,4 @@
+import { verifyMaleAssets } from '../../packages/bio_agent/connectome/male-cns.js';
 import { Arena, MODEL } from '../../packages/bio_agent/browser/arena.js';
 async function request(path, options) {
   const response = await fetch(path, options);
@@ -26,6 +27,7 @@ export class ChainSession {
   async initialize(reset = false) {
     const manifestResponse = await fetch(`/models/${MODEL}.json`);
     const bytes = await manifestResponse.arrayBuffer();
+    await verifyMaleAssets(JSON.parse(new TextDecoder().decode(bytes)));
     const digest =
       '0x' +
       [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]

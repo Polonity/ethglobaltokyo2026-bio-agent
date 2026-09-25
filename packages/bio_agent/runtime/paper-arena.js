@@ -1,3 +1,5 @@
+import { MALE_CNS, marketChannels } from '../connectome/male-cns.js';
+import { learningReport, MARKET_BATCH } from '../../training/browser/learning.js';
 import { random } from '../browser/arena.js';
 import { bodyStep } from '../browser/body.js';
 export const ATOM = 10n ** 18n;
@@ -44,10 +46,12 @@ export class PaperArena {
   }
   row(f, key, q = f.q) {
     if (q[key]) return q[key];
-    const [sign, held] = key.split(':').map(Number);
+    const [sign, held, satiety, positive, negative] = key.split(':').map(Number);
+    if (![positive, negative].every(Number.isFinite)) throw Error('MaleCNS market observation required');
+    const neuralTrend = (positive - negative) / 20;
     // Named engineering priors, not biological instincts or learned market knowledge.
-    const buy = f.id === 0 ? sign * 0.04 : f.id === 1 ? -sign * 0.04 : -0.01;
-    const sell = f.id === 0 ? -sign * 0.04 : f.id === 1 ? sign * 0.04 : 0.015;
+    const buy = f.id === 0 ? neuralTrend * 0.04 : f.id === 1 ? -neuralTrend * 0.04 : -0.01;
+    const sell = f.id === 0 ? -neuralTrend * 0.04 : f.id === 1 ? neuralTrend * 0.04 : 0.015;
     return [0, held ? -1 : buy, held ? sell : -1];
   }
   record(f, text) {
@@ -134,7 +138,9 @@ export class PaperArena {
       bodyStep(f, { fed: reward > 0, resting: f.state === 'learning' });
       f.deltaBps = delta.toString();
       f.attention = Math.min(1, Number(delta < 0n ? -delta : delta) / 1000);
-      const key = `${delta > 0n ? 1 : delta < 0n ? -1 : 0}:${f.units > 0n ? 1 : 0}:${f.satiety > 0.7 ? 1 : 0}`;
+      f.neural = marketChannels(Number(delta), f.units > 0n, f.satiety);
+      f.connectome = MALE_CNS;
+      const key = `${Math.sign(f.neural[0] - f.neural[1])}:${f.neural[2] > 0.5 ? 1 : 0}:${f.neural[3] > 0.7 ? 1 : 0}:${Math.round(f.neural[0] * 20)}:${Math.round(f.neural[1] * 20)}`;
       if (f.state !== 'learning' && !f.pending) {
         const row = this.row(f, key);
         const allowed = f.units > 0n ? [0, 2] : f.cash >= 10n * ATOM + PAPER_GAS ? [0, 1] : [0];
@@ -144,10 +150,12 @@ export class PaperArena {
             ? allowed[Math.floor(rng() * allowed.length)]
             : allowed.reduce((a, b) => (row[b] > row[a] ? b : a));
         f.decision = actions[index];
+        f.decisionVersion = f.version;
         f.lastKey = key;
         f.lastAction = index;
         f.reason = this.lastEvent ? 'policy-choice' : 'baseline';
-        if (index > 0) f.pending = { side: actions[index], blockNumber: event.blockNumber, key };
+        if (index > 0)
+          f.pending = { side: actions[index], blockNumber: event.blockNumber, key, policyVersion: f.version };
       } else {
         f.lastKey = key;
         f.lastAction = 0;
@@ -185,21 +193,15 @@ export class PaperArena {
     const candidate = clone(f.q),
       training = f.memory.slice(0, split),
       selection = f.memory.slice(split);
-    for (let epoch = 0; epoch < 12; epoch++)
-      for (const sample of training) {
-        const row = (candidate[sample.key] ||= [...this.row(f, sample.key)]);
-        row[sample.action] += 0.12 * (sample.reward - row[sample.action]);
-      }
-    const loss = (q) =>
-      selection.reduce((sum, x) => sum + (this.row(f, x.key, q)[x.action] - x.reward) ** 2, 0) /
-      selection.length;
     f.training = {
-      remaining: 8,
+      remaining: Math.ceil((training.length * 12) / MARKET_BATCH) * 0.2,
       candidate,
-      before: loss(f.q),
-      after: loss(candidate),
+      training,
+      selection,
+      steps: 0,
+      totalUpdates: training.length * 12,
       samples: training.length,
-      selection: selection.length,
+      baseVersion: f.version,
     };
     f.state = 'learning';
     f.decision = 'hold';
@@ -210,21 +212,39 @@ export class PaperArena {
   advanceLearning(dt = 0.2) {
     for (const f of this.flies)
       if (f.state === 'learning') {
-        f.training.remaining -= dt;
-        if (f.training.remaining <= 0) {
-          const t = f.training;
-          const adopted = t.after < t.before - 1e-9;
+        if (!Number.isFinite(dt) || dt <= 0) throw Error('Invalid learning tick');
+        const t = f.training;
+        for (let i = 0; i < MARKET_BATCH && t.steps < t.totalUpdates; i++, t.steps++) {
+          const sample = t.training[t.steps % t.training.length];
+          const row = (t.candidate[sample.key] ||= [...this.row(f, sample.key)]);
+          row[sample.action] += 0.12 * (sample.reward - row[sample.action]);
+        }
+        t.remaining = Math.ceil((t.totalUpdates - t.steps) / MARKET_BATCH) * 0.2;
+        if (t.steps >= t.totalUpdates) {
+          const loss = (q) =>
+            t.selection.reduce((sum, x) => sum + (this.row(f, x.key, q)[x.action] - x.reward) ** 2, 0) /
+            t.selection.length;
+          const before = loss(f.q),
+            after = loss(t.candidate),
+            adopted = after < before - 1e-9;
           if (adopted) {
             f.q = t.candidate;
             f.version++;
           }
           f.report = {
-            adopted,
-            before: t.before,
-            after: t.after,
+            ...learningReport({
+              useCase: 'market',
+              version: t.baseVersion,
+              before,
+              after,
+              samples: t.samples,
+              updates: t.steps,
+              adopted,
+              model: MALE_CNS.graphSha256,
+              metric: 'chronological selection reward-prediction MSE; not held-out PnL',
+            }),
             trainingSamples: t.samples,
-            selectionSamples: t.selection,
-            metric: 'selection reward-prediction MSE; not held-out PnL',
+            selectionSamples: t.selection.length,
           };
           f.state = 'watching';
           f.training = null;

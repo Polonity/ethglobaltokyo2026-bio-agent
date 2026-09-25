@@ -2,7 +2,7 @@ import argparse
 import json
 from pathlib import Path
 
-from packages.bio_agent import MODEL_VERSION, step
+from packages.bio_agent import MODEL_VERSION, GRAPH_SHA256, step
 from packages.shared import Stimulus
 
 
@@ -20,7 +20,9 @@ def train() -> dict:
     return {
         'schema_version': 1,
         'base_model_version': MODEL_VERSION,
-        'dataset': 'synthetic-demo-v1',
+        'dataset': 'male-cns:v1.0',
+        'graph_sha256': GRAPH_SHA256,
+        'labels': 'synthetic calibration labels',
         'threshold': threshold,
         'training_accuracy': accuracy,
         'sample_count': len(samples),

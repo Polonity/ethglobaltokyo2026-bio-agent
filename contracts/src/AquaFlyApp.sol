@@ -27,6 +27,7 @@ contract AquaFlyApp {
         uint256 revision;
         uint256 spreadBps;
         bytes32 modelHash;
+        bytes32 policyHash; // Off-chain learning artifact reference; not an execution proof.
     }
     event Filled(
         address indexed maker,

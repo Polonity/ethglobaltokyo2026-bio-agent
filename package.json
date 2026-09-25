@@ -9,7 +9,7 @@
     "test:arena": "node --test tests/arena.test.mjs",
     "test:browser": "node scripts/check-arena-browser.mjs",
     "deploy": "npm run build && node scripts/cloudflare.mjs deploy",
-    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\" \"packages/bio_agent/runtime/*.js\" \"services/backend/adapters/*.mjs\" \"packages/shared/types/*.ts\" \"packages/shared/examples/*.ts\" \"packages/bio_agent/connectome/*.js\"",
+    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\" \"packages/bio_agent/runtime/*.js\" \"services/backend/adapters/*.mjs\" \"packages/shared/types/*.ts\" \"packages/shared/examples/*.ts\" \"packages/bio_agent/connectome/*.js\" \"packages/training/browser/*.js\"",
     "local:up": "node scripts/local-up.mjs",
     "test:local": "node scripts/check-local-chain.mjs",
     "test:i18n": "node --test tests/i18n.test.mjs && node scripts/check-i18n.mjs",
@@ -27,7 +27,11 @@
     "test:circuit:browser": "node scripts/check-circuit-browser.mjs",
     "local:aqua": "node scripts/setup-local-aqua.mjs",
     "test:aqua": "node --test tests/aqua.test.mjs",
-    "test:aqua:browser": "node scripts/check-aqua-browser.mjs"
+    "test:aqua:browser": "node scripts/check-aqua-browser.mjs",
+    "test:male-learning": "node --test tests/male-learning.test.mjs",
+    "benchmark:male-learning": "node scripts/benchmark-malecns.mjs",
+    "local:foraging": "node scripts/setup-local-foraging.mjs",
+    "test:male-learning:browser": "node scripts/check-male-learning-browser.mjs"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

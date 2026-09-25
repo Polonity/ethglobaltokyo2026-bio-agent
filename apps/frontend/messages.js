@@ -34,8 +34,8 @@ export const messages = {
   '紙約定にTXはありません。引用するTXは入力元のSwapです。':
     'Paper fills have no transaction. Referenced transactions are source swaps.',
   この実験の仕様と限界: 'Experiment design and limits',
-  '生物回路ではなく合成モデルです。勢い・逆張り・慎重という初期方策に、実際の経験による報酬予測の学習を加えています。取引注文は次のSwap以降に評価し、プールの数量別quoteを使います。全個体は同じ観測を受けますが、仮想売買はプールを変化させません。':
-    'This is a synthetic model, not a biological circuit. Momentum, contrarian and cautious priors learn reward estimates from experience. Orders are evaluated at a later Swap using size-specific pool quotes. All flies share observations; paper trades do not change the pool.',
+  'MaleCNSの実測7神経・19接続が価格変化・保有・身体状態を特徴へ変換し、行動の報酬予測を学習します。接続は固定で、感覚変換と動力学は人工設計です。取引は次のSwap以降のquoteを使うペーパートレードです。':
+    'Seven measured MaleCNS neurons and nineteen connections encode price, holdings and body state. An action readout learns reward estimates. Topology is fixed; sensory mappings and dynamics are engineered. Paper fills use quotes from a later Swap.',
   '利益による食事はゲーム上の比喩です。身体・学習・台帳はブラウザー内で動作し、ページを再読込すると新しい競争が始まります。':
     'Profit-triggered feeding is a game metaphor. Body, learning and ledger run in this browser; reloading starts a new competition.',
   'Swapログを監視中。価格を動かして反応を見よう。': 'Watching Swap logs. Move the price to see reactions.',
@@ -130,8 +130,8 @@ export const messages = {
     'Replay experience and train a candidate. Adopt it only if its validation score improves.',
   '/ 行動と学習の記録': '/ Actions & learning',
   '実験データを保存 ↓': 'Export experiment ↓',
-  '吹き出しはQ学習の状態表現 / MaleCNS 回路は未接続':
-    'Bubbles show Q-learning states / MaleCNS circuit not connected',
+  'MaleCNS実測7神経・19接続 / 学習するのは行動選択':
+    'MaleCNS: 7 measured neurons / 19 connections · learned action readout',
   取引詳細を閉じる: 'Close transaction details',
   この刺激の取引証明: 'Proof of this stimulus',
   'ローカルAnvilからreceiptを取得します。この取引は公開Etherscanには掲載されません。':
@@ -144,8 +144,8 @@ export const messages = {
   '学習に使わない固定3コースで新旧方策を比較し、改善した候補のみ採用。復帰時の体力回復は学習効果とは別です。検証スコアは蜜の数ではなく報酬の合計です。':
     'Compare old and candidate policies on three fixed validation courses not used for training. Only improved candidates are adopted. Energy recovery on return is separate from learning. Validation scores measure reward, not nectar count.',
   'これはブラウザー内で動く適応モデルです。': 'This adaptive model runs in your browser.',
-  'MaleCNSの神経回路やブロックチェーンとはまだ接続していません。タブごとに独立した実験で、再読込するとリセットされます。実験データは保存ボタンから取得できます。':
-    'It is not connected to a MaleCNS circuit or blockchain in this mode. Each tab runs its own experiment, reset on reload. Use Export to save experiment data.',
+  'MaleCNSの実測部分回路を判断に使用します。動力学と身体は人工設計で、全脳の再現ではありません。実験データを保存できます。':
+    'Measured MaleCNS partial connectivity drives decisions. Dynamics and body are engineered; this is not a whole brain. Export experiment evidence below.',
   '観察をはじめる ↗': 'Start watching ↗',
   状態: 'Status',
   'Anvilに問い合わせ中…': 'Querying Anvil…',
@@ -216,8 +216,8 @@ export const messages = {
   コントラクトに刺激を送信: 'Send stimulus onchain',
   'この子に刺激を届けよう。': 'Send this little one a stimulus.',
   '選択した個体の入力を Anvil に記録します。': 'Record the selected fly’s input on Anvil.',
-  'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はブラウザー内の Q学習モデルです。MaleCNS 回路ではありません。':
-    'In this local version, three flies registered on Anvil (31337) receive IBioAgent StatusUpdated logs as individual inputs. The runtime is an in-browser Q-learning model, not a MaleCNS circuit.',
+  'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はMaleCNSの実測7神経・19接続を特徴計算に使い、行動選択を学習します。身体と動力学は人工設計です。':
+    'In this local version, three flies registered on Anvil (31337) receive IBioAgent StatusUpdated logs as individual inputs. The runtime uses seven measured MaleCNS neurons and nineteen connections to encode observations, then learns an action readout. Body and neural dynamics are engineered.',
   'Anvil の登録情報を読み込み中': 'Loading registrations from Anvil',
   'モデル manifest が登録内容と一致しません': 'Model manifest does not match the registration',
   '3匹の登録が必要です': 'Three registered flies are required',

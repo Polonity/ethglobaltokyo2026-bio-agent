@@ -58,6 +58,10 @@ try {
   await writeFile(dir + '/deployment.json', JSON.stringify(d, null, 2) + '\n');
   const config = JSON.parse(await readFile(dir + '/wrangler.json'));
   config.vars.AQUA_CONFIG = JSON.stringify(d.aqua);
+  config.kv_namespaces = [
+    ...(config.kv_namespaces || []).filter((k) => k.binding !== 'AQUA_LEARNING'),
+    { binding: 'AQUA_LEARNING', id: 'b10a6e17000000000000000000000001' },
+  ];
   await writeFile(dir + '/wrangler.json', JSON.stringify(config, null, 2) + '\n');
   console.log(JSON.stringify(d.aqua, null, 2));
 } finally {

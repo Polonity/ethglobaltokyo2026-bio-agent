@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "modelId": "foraging-embodied-q-v2",
-  "modelType": "adaptive-demo",
+  "modelId": "foraging-malecns-q-v3",
+  "modelType": "connectome-derived",
   "runtime": "browser",
-  "description": "Tabular Q-learning foraging agent; not a MaleCNS neural circuit",
+  "description": "Required MaleCNS v1.0 measured topology encoder with trained tabular action readout; artificial sensory/body dynamics",
   "inputs": {
     "activity": [
       "Rest",
@@ -28,7 +28,10 @@
       90001,
       90019,
       90103
-    ]
+    ],
+    "budgetUpdates": 960,
+    "batchUpdates": 96,
+    "adoption": "selection improvement; next decision, no fixed waiting period"
   },
   "body": {
     "model": "synthetic-metabolism-v1",
@@ -44,5 +47,42 @@
     "schema": "bioagent.arena-checkpoint.v1",
     "prng": "mulberry32",
     "fixedTickSeconds": 0.2
-  }
+  },
+  "connectome": {
+    "dataset": "male-cns:v1.0",
+    "neurons": 7,
+    "edges": 19,
+    "graphSha256": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+    "license": "CC-BY-4.0",
+    "attribution": "MaleCNS: FlyEM / HHMI Janelia, University of Cambridge, MRC LMB and Google Research. https://male-cns.janelia.org/",
+    "required": true,
+    "refs": {
+      "graph": {
+        "uri": "/models/male-cns/male-cns-slice.json",
+        "sha256": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987"
+      },
+      "dynamics": {
+        "uri": "/models/male-cns/circuit.js",
+        "sha256": "0x08f0653357e939a4a845d2775bcecd300a16410e161a9f5df05cce6a798e3e65"
+      },
+      "encoder": {
+        "uri": "/models/male-cns/male-cns.js",
+        "sha256": "0x352f924bed3285b86e731af7e97da213312500d61fb8a9fd57607519ff0ceec0"
+      },
+      "learner": {
+        "uri": "/models/male-cns/learning.js",
+        "sha256": "0x424d48edb15f4c2801f3597907e71e7e1de5b06d4c497c9eeb37aa5bb51a0efc"
+      },
+      "readout": {
+        "uri": "/models/male-cns/readout.js",
+        "sha256": "0x5f9183e3aaffacef8426887fec9b7a16828c7af7b2e83fcd64d4bf89280459dc"
+      },
+      "runtime": {
+        "uri": "/models/male-cns/foraging-runtime.js",
+        "sha256": "0xff8f1aaf3bd93db7cd60044f0cb54712ce78c996cf651fceefdb70adfec28525"
+      }
+    }
+  },
+  "biologicalValidation": false,
+  "learningTopology": "frozen measured edges; train action readout only"
 }

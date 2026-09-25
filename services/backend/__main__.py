@@ -27,6 +27,12 @@ def make_handler(store: Store):
 
         def do_GET(self):
             path = urlsplit(self.path).path
+            if path == '/api/config':
+                return self.reply(200, {'mode': 'browser'})
+            if path.startswith('/models/'):
+                asset = (FRONTEND / path.lstrip('/')).resolve()
+                if asset.is_relative_to(FRONTEND.resolve()) and asset.is_file() and asset.suffix in ('.json', '.js', '.py'):
+                    return self.reply(200, asset.read_bytes(), 'application/json' if asset.suffix == '.json' else 'text/plain')
             if path == '/api/health':
                 return self.reply(200, {'status': 'ok', 'mode': 'mock'})
             if path == '/api/runs':

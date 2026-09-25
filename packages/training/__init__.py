@@ -1,1 +1,1 @@
-"""Training-job scaffold, using synthetic labels only."""
+"""MaleCNS training: browser/Worker learners and Python reference calibration."""

@@ -24,7 +24,7 @@ test('same environment with different body has different actual policy observati
 });
 test('checkpoint resumes racing and active training bit-for-bit', () => {
   const a = new Arena(42, { agentCount: 3 });
-  for (let i = 0; i < 110; i++) a.tick();
+  for (let i = 0; i < 94; i++) a.tick();
   assert.ok(a.flies.some((f) => f.state === 'learning'));
   const checkpoint = a.checkpoint();
   const b = Arena.restore(checkpoint);

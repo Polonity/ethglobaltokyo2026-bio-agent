@@ -64,7 +64,7 @@ class PipelineTests(unittest.TestCase):
                     self.assertEqual(run['stimulus']['source'], 'mock')
                     self.assertIsNone(run['stimulus']['chain_id'])
                 runs = json.loads(fetch('/api/runs')[1])['runs']
-                self.assertEqual([run['state']['action'] for run in runs], ['explore', 'rest'])
+                self.assertEqual([run['state']['action'] for run in runs], ['explore', 'explore'])
                 with self.assertRaises(HTTPError) as caught:
                     fetch('/missing')
                 self.assertEqual(caught.exception.code, 404)

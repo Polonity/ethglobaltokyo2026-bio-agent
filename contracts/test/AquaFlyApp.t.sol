@@ -38,7 +38,7 @@ contract AquaFlyAppTest is Test {
     }
 
     function ship(uint256 id) internal returns (bytes memory s) {
-        s = abi.encode(id, uint256(1), uint256(30), MODEL);
+        s = abi.encode(id, uint256(1), uint256(30), MODEL, bytes32(0));
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = 100 ether;
         amounts[1] = 100 ether;
