@@ -18,3 +18,7 @@ Canvasで個体の競争・判定・学習を観察するHTML/CSS/JavaScriptア�
 - `?test=1` はブラウザーテスト用に `window.__arena` / `window.__chain` を公開します。通常の操作に不要です。
 
 [画面・デモ操作](../../docs/design/demo-experience.md) / [API](../../docs/reference/local-api.md) / [モデル](../../docs/design/fly-arena.md) / [検証](../../docs/development.md)
+
+## 表示言語
+
+ヘッダーからシステム（既定）・English・日本語を選べます。レースを止めずに切り替え、選択をブラウザーに保存します。[仕様・翻訳追加・検証](../../docs/i18n.md)を参照してください。

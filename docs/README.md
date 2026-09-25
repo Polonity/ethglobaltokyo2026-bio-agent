@@ -8,6 +8,7 @@
 | --- | --- |
 | まず3匹を動かす | [Anvil + ローカル Workers](deployment/local-anvil.md) |
 | 全体構成と保存先を理解する | [アーキテクチャ](architecture.md) |
+| 表示言語を切り替える・翻訳を追加する | [i18n](i18n.md) |
 | デモを説明・操作する | [GUIデモガイド](design/demo-experience.md) |
 | デモ動画を見る・再収録する | [動画と再収録](demo-video.md) |
 | GUIとWorkerをつなぐ | [ローカルAPIリファレンス](reference/local-api.md) |
