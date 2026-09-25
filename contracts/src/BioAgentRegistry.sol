@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.30;
 
+import {IBioAgentWallet} from "./interfaces/IBioAgentWallet.sol";
+
 import {IBioAgentRegistry} from "./interfaces/IBioAgentRegistry.sol";
 
 /// @notice Immutable agent definitions and owner-controlled input status.
 /// @dev No proxy, admin, external calls, or automatic runtime execution.
-contract BioAgentRegistry is IBioAgentRegistry {
+contract BioAgentRegistry is IBioAgentRegistry, IBioAgentWallet {
     uint256 public constant MAX_METADATA_BYTES = 512;
     uint16 public constant MAX_INPUT = 10_000;
     uint256 public nextAgentId = 1;
+
+    mapping(uint256 agentId => address) private _wallets;
 
     mapping(uint256 agentId => BioAgentDefinition) private _agents;
     mapping(uint256 agentId => BioAgentStatus) private _statuses;
@@ -65,6 +69,21 @@ contract BioAgentRegistry is IBioAgentRegistry {
         uint64 timestamp = uint64(block.timestamp);
         _statuses[agentId] = BioAgentStatus(activity, energy, stimulus, revision, timestamp);
         emit BioAgentStatusUpdated(agentId, revision, msg.sender, activity, energy, stimulus, timestamp);
+    }
+
+    /// @notice Optional same-chain wallet reference. Zero means not configured.
+    /// @dev No wallet deployment, verification, approval, or delegation takes place here.
+    function getAgentWallet(uint256 agentId) external view override returns (address) {
+        _requireAgent(agentId);
+        return _wallets[agentId];
+    }
+
+    function setAgentWallet(uint256 agentId, address smartWallet) external override {
+        _requireAgent(agentId);
+        if (msg.sender != _agents[agentId].owner) revert UnauthorizedWriter(agentId, msg.sender);
+        address previous = _wallets[agentId];
+        _wallets[agentId] = smartWallet;
+        emit BioAgentWalletUpdated(agentId, previous, smartWallet);
     }
 
     function _requireAgent(uint256 agentId) private view {
