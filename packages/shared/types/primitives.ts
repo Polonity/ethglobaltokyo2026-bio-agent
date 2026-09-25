@@ -8,19 +8,21 @@ export type UnitInterval = number & { readonly [brand]: 'unit-interval' };
 export type InputLevel = number & { readonly [brand]: 'input-0-10000' };
 export type Milliseconds = number & { readonly [brand]: 'milliseconds' };
 export function uint(value: string): UInt {
-  if (!/^(0|[1-9]\d*)$/.test(value)) throw new Error('Canonical unsigned decimal required');
+  if (typeof value !== 'string' || !/^(0|[1-9]\d*)$/.test(value))
+    throw new Error('Canonical unsigned decimal required');
   return value as UInt;
 }
 export function int(value: string): Int {
-  if (!/^(0|-?[1-9]\d*)$/.test(value)) throw new Error('Canonical signed decimal required');
+  if (typeof value !== 'string' || !/^(0|-?[1-9]\d*)$/.test(value))
+    throw new Error('Canonical signed decimal required');
   return value as Int;
 }
 export function address(value: string): Address {
-  if (!/^0x[0-9a-f]{40}$/i.test(value)) throw new Error('EVM address required');
+  if (typeof value !== 'string' || !/^0x[0-9a-f]{40}$/i.test(value)) throw new Error('EVM address required');
   return value.toLowerCase() as Address;
 }
 export function bytes32(value: string): Bytes32 {
-  if (!/^0x[0-9a-f]{64}$/i.test(value)) throw new Error('32-byte hex required');
+  if (typeof value !== 'string' || !/^0x[0-9a-f]{64}$/i.test(value)) throw new Error('32-byte hex required');
   return value.toLowerCase() as Bytes32;
 }
 export function unit(value: number): UnitInterval {

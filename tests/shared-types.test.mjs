@@ -14,9 +14,10 @@ import { legacyConditions, legacyBody, legacyAction } from '../packages/shared/t
 test('decimal strings preserve token precision and reject ambiguous representations', () => {
   const amount = '1234567890123456789012345678901234567890';
   assert.equal(JSON.parse(JSON.stringify({ amount: uint(amount) })).amount, amount);
-  for (const bad of ['-1', '01', '+1', '1.5', '1e18', ' 1']) assert.throws(() => uint(bad));
+  for (const bad of ['-1', '01', '+1', '1.5', '1e18', ' 1', 1, 1n, { toString: () => '1' }])
+    assert.throws(() => uint(bad));
   assert.equal(int('-42'), '-42');
-  for (const bad of ['-0', '+2', '02']) assert.throws(() => int(bad));
+  for (const bad of ['-0', '+2', '02', 1, -1, 1n]) assert.throws(() => int(bad));
 });
 test('bounded physical inputs, clocks and identifiers reject malformed values', () => {
   for (const bad of [NaN, Infinity, -0.1, 1.01]) assert.throws(() => unit(bad));
