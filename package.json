@@ -9,7 +9,7 @@
     "test:arena": "node --test tests/arena.test.mjs",
     "test:browser": "node scripts/check-arena-browser.mjs",
     "deploy": "npm run build && node scripts/cloudflare.mjs deploy",
-    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\" \"packages/bio_agent/runtime/*.js\" \"services/backend/adapters/*.mjs\" \"packages/shared/types/*.ts\" \"packages/shared/examples/*.ts\"",
+    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\" \"packages/bio_agent/runtime/*.js\" \"services/backend/adapters/*.mjs\" \"packages/shared/types/*.ts\" \"packages/shared/examples/*.ts\" \"packages/bio_agent/connectome/*.js\"",
     "local:up": "node scripts/local-up.mjs",
     "test:local": "node scripts/check-local-chain.mjs",
     "test:i18n": "node --test tests/i18n.test.mjs && node scripts/check-i18n.mjs",
@@ -21,7 +21,10 @@
     "test:body": "node --test tests/body-checkpoint.test.mjs",
     "local:market": "node scripts/setup-local-market.mjs",
     "test:paper": "node --test tests/paper-arena.test.mjs",
-    "test:market": "node scripts/check-market-browser.mjs"
+    "test:market": "node scripts/check-market-browser.mjs",
+    "local:circuit": "node scripts/setup-local-circuit.mjs",
+    "test:circuit": "node scripts/build-circuit.mjs && node --test tests/circuit.test.mjs",
+    "test:circuit:browser": "node scripts/check-circuit-browser.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

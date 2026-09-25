@@ -103,10 +103,24 @@ async function logs(env, from, to) {
       Number(BigInt(a.logIndex) - BigInt(b.logIndex)),
   );
 }
-export default {
+const localWorker = {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (!loopback(url.hostname)) return json({ error: 'Local access only' }, 403);
+    if (url.pathname.startsWith('/api/circuit/')) {
+      if (!env.CIRCUIT_REGISTRY) return json({ error: 'Run npm run local:circuit first' }, 503);
+      const suffix = url.pathname.slice('/api/circuit/'.length);
+      if (!['config', 'snapshot', 'events', 'status', 'receipt'].includes(suffix))
+        return json({ error: 'not_found' }, 404);
+      url.pathname = suffix === 'config' ? '/api/config' : '/api/chain/' + suffix;
+      return localWorker.fetch(new Request(url, request), {
+        ...env,
+        REGISTRY_ADDRESS: env.CIRCUIT_REGISTRY,
+        LOCAL_MODEL_HASH: env.CIRCUIT_MODEL_HASH,
+        DEPLOYMENT_BLOCK: env.CIRCUIT_DEPLOYMENT_BLOCK,
+        DEPLOYMENT_BLOCK_HASH: env.CIRCUIT_DEPLOYMENT_BLOCK_HASH,
+      });
+    }
     if (url.pathname === '/api/config') {
       return json({
         mode: 'anvil',
@@ -235,3 +249,5 @@ export default {
     }
   },
 };
+
+export default localWorker;

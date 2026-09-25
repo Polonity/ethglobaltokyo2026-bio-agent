@@ -65,3 +65,14 @@ for (const [i, name] of ['MOMO', 'SORA', 'KIKI'].entries())
       profile: 'market-paper.v1',
     }),
   );
+
+await import('./build-circuit.mjs');
+await build({
+  entryPoints: ['apps/frontend/circuit.js'],
+  bundle: true,
+  minify: true,
+  format: 'esm',
+  target: 'es2022',
+  outfile: 'dist/circuit.js',
+});
+await copyFile('apps/frontend/circuit.html', 'dist/circuit.html');

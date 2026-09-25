@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BioAgent · Circuit evidence</title>
+    <link rel="stylesheet" href="/market.css" />
+    <style>
+      .facts code,
+      #tx,
+      pre {
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+      .lab-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 20px;
+      }
+      .panel {
+        background: #fffcf5;
+        border: 1px solid #e3e1d7;
+        border-radius: 22px;
+        padding: 22px;
+        margin: 20px 0;
+      }
+      canvas {
+        width: 100%;
+        height: auto;
+        background: #f1f3e6;
+        border-radius: 18px;
+      }
+      .controls {
+        flex-wrap: wrap;
+      }
+      #runs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      #runs article {
+        background: #f1f3e6;
+        border-radius: 16px;
+        padding: 16px;
+      }
+      progress {
+        width: 100%;
+        accent-color: #86a586;
+      }
+      pre {
+        max-height: 240px;
+        overflow: auto;
+        font-size: 11px;
+      }
+      @media (max-width: 750px) {
+        .lab-grid {
+          display: block;
+        }
+        #runs {
+          grid-template-columns: 1fr;
+        }
+        header {
+          flex-wrap: wrap;
+        }
+        nav {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">♡ FLY LAB</a>
+      <nav>
+        <a href="/" data-key="foraging">Foraging</a><a href="/market" data-key="market">Market</a
+        ><strong data-key="lab">Circuit evidence</strong>
+      </nav>
+      <label
+        ><span data-key="language">Language</span>
+        <select id="language">
+          <option value="system">System</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+        </select></label
+      >
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <small>CONNECTOME PROFILE / EVIDENCE LAB</small>
+          <h1 data-key="title">From a real connection to an action.</h1>
+          <p data-key="intro">7 measured neurons. 19 connections. Every assumption visible.</p>
+        </div>
+        <div class="badge">
+          MaleCNS v1.0<br /><b>TOPOLOGY-DERIVED</b>
+          <p data-key="boundary">Artificial dynamics and readout. No biological validation.</p>
+        </div>
+      </section>
+      <section class="connection">
+        <strong id="status" role="status">Connecting…</strong>
+        <div class="facts">
+          ANVIL 31337 · REGISTRY <code id="registry">—</code><br />DESCRIPTOR SHA-256
+          <code id="descriptor">—</code>
+        </div>
+        <p data-key="copies">
+          Three registered simulation instances of one slice, not three biological specimens. Both game arenas
+          remain synthetic.
+        </p>
+      </section>
+      <div class="controls">
+        <label
+          ><span data-key="agent">Agent</span>
+          <select id="agent">
+            <option value="1">MOMO #1</option>
+            <option value="2">SORA #2</option>
+            <option value="3">KIKI #3</option>
+          </select></label
+        ><label
+          ><span data-key="stimulus">Stimulus</span>
+          <input id="stimulus" type="range" min="0" max="100" value="100" />
+          <output id="amount">100%</output></label
+        ><button id="send" data-key="send" disabled>Send onchain stimulus</button
+        ><button id="export" data-key="export" disabled>Export evidence</button>
+      </div>
+      <p data-key="trial">
+        Each confirmed input starts a 32-tick trial from zero. This circuit is frozen: it does not learn.
+        Activity and energy fields are not used.
+      </p>
+      <div class="lab-grid">
+        <section class="panel">
+          <h2 data-key="graph">Measured structure, artificial activity</h2>
+          <canvas id="graph" width="760" height="410" aria-label="Seven-neuron circuit and activity"></canvas>
+          <p data-key="color">
+            Color shows simulated activity; arrow width uses original synapse counts. This is not recorded
+            neural activity.
+          </p>
+        </section>
+        <section class="panel">
+          <h2 data-key="comparison">Does the connection matter?</h2>
+          <p data-key="contrast">Same stimulus and dynamics, with all graph edges removed as a control.</p>
+          <p>
+            <span data-key="intact">Measured topology</span>: <b id="response">—</b> → <b id="action">—</b>
+          </p>
+          <progress id="activity" max="1" value="0"></progress>
+          <p><span data-key="removed">Edges removed</span>: <b id="ablated">—</b></p>
+          <p data-key="interpretation">
+            A difference shows dependency on these connections. It does not establish an advantage over random
+            graphs or biological fidelity.
+          </p>
+          <p>TX <a id="tx" href="#" aria-label="Source transaction">—</a></p>
+          <p>BLOCK <b id="block">—</b> · REVISION <b id="revision">—</b></p>
+        </section>
+      </div>
+      <section class="panel">
+        <h2 data-key="agents">Three onchain inputs, three responses</h2>
+        <canvas id="flies" width="1000" height="160"></canvas>
+        <div id="runs"></div>
+      </section>
+      <details class="panel">
+        <summary data-key="provenance">Source, transformations and limitations</summary>
+        <p>
+          <a href="https://male-cns.janelia.org/download/" target="_blank" rel="noreferrer"
+            >MaleCNS official dataset</a
+          >
+          ·
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer"
+            >CC BY 4.0</a
+          >
+          · <a href="/models/circuit/descriptor.json">descriptor.json</a>
+        </p>
+        <p id="credit"></p>
+        <p data-key="assumptions">
+          Only a selected neighborhood is retained. All connections are treated as excitatory; signs and
+          neural dynamics are not inferred. Input targets a descending neuron directly. The action decoder is
+          engineered.
+        </p>
+        <pre id="source"></pre>
+      </details>
+    </main>
+    <dialog id="receipt">
+      <button id="close" data-key="close">Close</button>
+      <h2>Anvil receipt</h2>
+      <pre id="receipt-data"></pre>
+    </dialog>
+    <script type="module" src="/circuit.js"></script>
+  </body>
+</html>
