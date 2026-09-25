@@ -115,7 +115,14 @@ try {
   );
   await page.getByRole('button', { name: '一時停止', exact: true }).click();
   const restDecisions = await page.evaluate(() => window.__arena.flies[0].decisionCounts);
-  assert.ok(forageDecisions.move > forageDecisions.rest, JSON.stringify(forageDecisions));
+  // Fullness can favor rest even in forage mode. Verify movement and the
+  // response to rest input instead of requiring a context-free majority.
+  assert.ok(forageDecisions.move > 0, JSON.stringify(forageDecisions));
+  const restShare = (counts) => counts.rest / (counts.rest + counts.move);
+  assert.ok(
+    restShare(restDecisions) > restShare(forageDecisions),
+    JSON.stringify({ forageDecisions, restDecisions }),
+  );
   assert.ok(restDecisions.rest > restDecisions.move, JSON.stringify(restDecisions));
   results.reaction = { forageTx, restTx, forageDecisions, restDecisions };
   // Duplicate log delivery must not reapply a status.
