@@ -88,7 +88,7 @@ BioAgent semantic core
 4. 完全checkpointから再実行し、宣言した数値精度内で比較する。
 5. 生物回路を使った場合はdataset→graph→実行モデルまでの出典を示す。
 
-この実験ができれば、GUIのかわいさが仕様の説明になる。膨らんだお腹は身体入力、停止と「？」は学習lifecycle、TXリンクは刺激の出典を表す。現在、synthetic採餌モデルで身体を変える対照実験と、学習中を含むローカルcheckpoint再開を検証済み。MaleCNS実行、異なる実装間のcheckpoint互換、学習効果の独立held-out評価は未完了。詳細は[身体モデル](../design/embodied-foraging.md)を参照。
+この実験ができれば、GUIのかわいさが仕様の説明になる。膨らんだお腹は身体入力、停止と「？」は学習lifecycle、TXリンクは刺激の出典を表す。現在、synthetic採餌モデルで身体を変える対照実験と、学習中を含むローカルcheckpoint再開を検証済み。別のCircuit LabではMaleCNSの7神経・19接続を人工動力学で実行し、接続除去対照と独立Python計算を照合済み。生理モデル、異なるアプリ間のcheckpoint互換、学習効果の独立held-out評価は未完了。詳細は[身体モデル](../design/embodied-foraging.md)を参照。
 
 ## 8. 設計ゲートと到達点
 

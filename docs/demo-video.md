@@ -1,3 +1,7 @@
+# 追加: 回路の証拠を示す英語動画（2026-09-26）
+
+`artifacts/circuit-browser/bioagent-circuit-evidence-en.mp4`は、実測MaleCNS部分グラフの刺激→計算→行動と、接続除去対照、Anvil receiptを示す補足映像です。[再収録・境界](design/circuit-evidence.md)と[達成状況監査](submission/goal-audit.md)を参照してください。下記の2アプリ本編は両ゲームがsyntheticであることを説明したまま保存しています。
+
 # 最新版: 2アプリの英語デモ（2026-09-26）
 
 提出用の最新版は `artifacts/two-app-demo/bioagent-two-apps-english.mp4`。英語GUI・英語字幕、音声なし、1600×1100のH.264動画です。採餌への実TX、食事と身体入力、ローカル実Uniswap V3の価格変化、紙約定・PnL、source receipt、学習結果を約53秒で紹介します。

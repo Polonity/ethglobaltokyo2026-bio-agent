@@ -2,7 +2,7 @@
 
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。判定・学習はブラウザー内の Q-learning モデルです。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。MaleCNS 回路・Sepolia 接続は未実装で、コントラクトは Foundry によるデプロイ準備まで完了しています。
+現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。判定・学習はブラウザー内の Q-learning モデルです。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
@@ -24,6 +24,10 @@ npm run local:market
 ```
 
 [採餌モデル v2](docs/design/embodied-foraging.md) / [市場アプリの仕様・制約](docs/design/local-market-app.md)。この更新はローカル検証済みで、公開Workersの旧デモへの再デプロイはまだ行っていません。
+
+## 思想と実装の監査
+
+[達成状況・不足・主張の境界](docs/submission/goal-audit.md)。[Circuit Lab](docs/design/circuit-evidence.md)では実測接続が行動計算に入ることを、実TXと接続除去対照で確認できます。`npm run local:circuit`で専用3個体を登録し、`/circuit`を開いてください。元データの再取得は通常の起動には不要です。
 
 ## 構成
 
@@ -110,7 +114,7 @@ make contracts-dry-run contracts-check-deployment
 
 [Male CNS Connectome](https://male-cns.janelia.org/) は雄ショウジョウバエの中枢神経系コネクトームの公開プロジェクトです。接続データを神経回路モデル構築の参照元とし、Agent の実装・実行エンジンは本プロジェクトで用意します。公開データそのものが動作する Agent ではありません。
 
-データ取込前にリリース、抽出条件、帰属・ライセンスを記録します。詳細は [データ出典方針](docs/data-sources.md) を参照してください。
+Circuit Labではv1.0の7神経・19接続を抽出し、元データ・抽出コードのhash、帰属・変更点を記録済みです。詳細は [データ出典方針](docs/data-sources.md) を参照してください。
 
 ## 開発
 

@@ -8,6 +8,8 @@
 
 [BioAgentの思想・設計方針](standards/bioagent-design-direction.md) → [既存ERCとの差分調査](standards/prior-art-and-bioagent.md) → [身体・学習profile案](standards/embodied-learning-profile.md) → [提出説明案](submission/bioagent-thesis.md)。NFT/SBTは派生構造の比喩であり、機能追加要件ではありません。実装では通常のRegistryと任意の刺激拡張を用います。
 
+[最新の達成状況監査](submission/goal-audit.md) / [MaleCNS部分グラフのCircuit Lab](design/circuit-evidence.md)。
+
 ## 2アプリの型
 
 [採餌・市場アプリの型定義と単位](standards/application-types.md): 共通coreと用途別profileをTypeScript化。型検査と基本値検証を実装し、両GUIのViewへ接続済み。完全な共通Runtimeへの移行は未完了。
@@ -56,7 +58,7 @@
 | 採餌の身体状態・checkpoint復元 | ローカル再開と学習中の再現を検証済み |
 | 実V3 Pool・市場GUI・ペーパートレード | Anvilで実装・ブラウザー検証済み |
 | サーバー共有Runtime・SSE・互換checkpoint | 設計案 |
-| MaleCNS回路実行 | 未実装 |
+| MaleCNS部分グラフ実行 | Circuit Labで7神経・19接続を人工動力学で計算。生物学的検証・2ゲームへの統合は未実装 |
 
 「ローカル版の完了」と「最終プロダクトの完成」は別です。検証記録は各手順の実行日付き記録を参照し、過去の結果を現在の稼働保証として扱わないでください。
 

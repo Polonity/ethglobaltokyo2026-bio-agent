@@ -12,7 +12,7 @@ Onchain records give independent participants a shared reference for the source 
 
 This is an extension profile, not a replacement for general agent identity, communication or wallets. Body state and learning are also useful to ordinary AI agents. The stronger rationale is the source-to-circuit correspondence and the ability to distinguish measured structure, artificial sensory/motor mappings and learned components. Independent ERC status requires further interoperability evidence.
 
-See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). Connectome execution remains a future milestone; our synthetic demos do not establish biological fidelity or a performance advantage.
+See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). A separate [Circuit Lab](../design/circuit-evidence.md) now executes a measured seven-neuron MaleCNS topology with explicitly artificial dynamics and readout. The two games remain synthetic; no biological fidelity or performance advantage is established. See the [goal audit](goal-audit.md) for remaining work.
 
 ## What we built
 
@@ -21,6 +21,12 @@ In Fly Lab, a user sends an onchain stimulus to one of three registered agents. 
 In Market Meadow, price controls execute test-token swaps against locally deployed Uniswap V3 core. Three registered flies see the same Swap events but use different initial policies and seeded exploration. Paper orders fill only on later blocks using size-specific pool quotes. The leaderboard includes pool fees, price impact and an explicit assumed gas cost. A learning fly stops deciding while its holdings remain exposed.
 
 Both apps share typed identity, body, input and runtime-view concepts. Their profiles specialize the action space and outcome: food and movement versus paper trades and PnL. The UI exposes source transactions, live connection state, model references, actual encoded observations and learning outcomes.
+
+## Evidence for the biological-source claim
+
+Circuit Lab binds a common descriptor to three onchain simulation instances. It preserves seven original MaleCNS neuron IDs and 19 connection counts, verifies local artifact hashes against the registered descriptor, and shows a real status transaction driving the graph-based calculation and an advance/wait action. A graph-removal control isolates dependence on the connections. An independent Python implementation matches the exported traces within 1e-12 absolute tolerance.
+
+This is a topology-derived engineering model, with artificial excitatory dynamics and an engineered decoder. It has no learning or body simulation, and is not a whole-brain or biologically validated fly model. The two game arenas retain their synthetic policies.
 
 ## Why a BioAgent profile?
 
@@ -51,6 +57,8 @@ See [prior-art research](../standards/prior-art-and-bioagent.md), [design direct
 | Learning | Show stationary fly, question bubble, candidate selection and return. |
 | Close | “Synthetic models today; biological provenance and portable learning are the specification's direction.” |
 
+Supplement: [Circuit Lab recording and checks](../design/circuit-evidence.md).
+
 Video and reproducible recording: [English two-app demo](../demo-video.md). Local output: `artifacts/two-app-demo/bioagent-two-apps-english.mp4`, with `evidence.json`.
 
 ## Evidence and reproduction
@@ -69,11 +77,11 @@ Start with [local Anvil/Workers](../deployment/local-anvil.md), then [Market Mea
 | Build / formatting | `npm run build`, `npm run format:check` |
 | Video integrity | Full ffmpeg decode, representative frames and Chrome MP4 playback |
 
-The combined arena, agent, swap, body, paper and translation unit suite passes 22 tests, in addition to the 3 shared-type runtime tests and 23 Foundry tests. Browser scripts write fresh evidence when run; generated artifacts are not committed.
+The combined arena, agent, swap, body, paper, circuit, explorer and translation unit suite passes 27 tests, in addition to the 3 shared-type runtime tests and 23 Foundry tests. Browser scripts write fresh evidence when run; generated artifacts are not committed.
 
 ## Honest boundaries
 
-- The current models are **synthetic**, not MaleCNS neural-circuit execution or biologically validated physiology.
+- The two games are **synthetic**. Circuit Lab uses a small measured MaleCNS topology with artificial dynamics; none of these models establishes biologically validated physiology.
 - Learning candidate selection is visible and reproducible locally; it does not establish out-of-sample improvement, trading skill or profitability.
 - Market balances and orders are paper-only. The real onchain swaps use local test tokens.
 - Foraging checkpoint restore is a trusted local format. Cross-implementation replay, portable learning attestations and persistent reorg rollback are not implemented.
@@ -89,4 +97,6 @@ The combined arena, agent, swap, body, paper and translation unit suite passes 2
 - [x] Body-state input, procedural belly and local deterministic checkpoint evidence.
 - [x] Real local Uniswap pool and three-agent paper competition.
 - [x] English demo recording, reproducible checks and submission narrative.
+- [x] Minimal measured-connectivity example, source/artifact binding and independent scalar replay check.
+- [ ] Full connectome integration into both games, biological validation and cross-application portability.
 - [ ] External submission form, team metadata and final hosted URL: fill in when the actual submission destination is selected.

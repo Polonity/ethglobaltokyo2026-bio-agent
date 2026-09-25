@@ -100,9 +100,9 @@ ERC-4906/7496 integrations are optional display/export layers, not the biologica
 
 | Scenario | Required observable evidence | Current repo |
 | --- | --- | --- |
-| Model origin | Trace declared class to used artifact, reject missing connectome provenance | Q manifest correctly declares synthetic; no descriptor validator |
+| Model origin | Trace declared class to used artifact, reject missing connectome provenance | Synthetic games plus measured MaleCNS slice; registered descriptor/artifact integrity checker for this fixed bundle; no general validator |
 | Same stimulus, different body | Same policy/input, controlled body change alters the declared observation; show action outcomes even if unchanged | Synthetic foraging body/observation/action controlled test passes |
-| Replay | Same complete checkpoint+tape+runtime reproduces within declared tolerance | Foraging local checkpoint restores racing/training exactly; no cross-runtime portability |
+| Replay | Same complete checkpoint+tape+runtime reproduces within declared tolerance | Foraging local checkpoint restores racing/training exactly; circuit JS/Python traces match within 1e-12; full profile portability absent |
 | Learning | Distinct candidate/adoption, held-out/frozen comparisons | Candidate selection exists in both apps; independent held-out evidence and full portable record absent |
 | Authority boundary (if supported) | Old commands invalidated; state continuity or explicit unavailability | Controller change is not part of the current base Registry |
 | Fork | New identity + parent checkpoint; independent subsequent history | Not implemented |
