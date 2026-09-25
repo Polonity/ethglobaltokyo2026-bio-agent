@@ -12,6 +12,12 @@
 
 **[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
 
+## Aqua Connectome — 共有流動性の箱庭
+
+**Powered by Aqua — © Degensoft Ltd 2025.** 実測7神経・19接続の人工rate modelを公式Aqua SDKへ接続。3個体が同じウォレットから仮想残高を提示し、人工刺激に応じて縮小・撤回します。実Aqua本体と独自AquaAppをAnvilに配置し、実TX・テストトークン交換を確認できます。固定回路で学習なし、全脳・ガスレス撤回・クロスチェーンではありません。
+
+起動済みのローカル環境で `npm run local:aqua` → `/aqua`。独自のstate directoryを使う場合は同じ `LOCAL_STATE_DIR` を渡してください。[設計・調査結果・起動手順](docs/design/aqua-connectome.md)。
+
 ## ローカルの2アプリ
 
 採餌は身体入力・可変のお腹・checkpoint再開に対応。市場は実Uniswap V3コアをAnvilに配置し、Swap→3匹の判断→ペーパートレード→PnLを表示します。

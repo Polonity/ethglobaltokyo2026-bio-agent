@@ -191,20 +191,39 @@ function render() {
     $('flies').append(el);
   }
   $('provenance').textContent = JSON.stringify(
-    { descriptorHash: state.config.modelHash, descriptor, config: state.config, maker: state.maker },
+    {
+      descriptorHash: state.config.modelHash,
+      descriptor,
+      biologicalSource: {
+        dataset: graph.dataset,
+        attribution: graph.attribution,
+        license: graph.license,
+        changes: graph.changes,
+        sources: graph.sources,
+      },
+      config: state.config,
+      maker: state.maker,
+    },
     null,
     2,
   );
   const log = [...transactions];
+  for (const a of state.agents) {
+    if (!log.some((t) => t.transactionHash === a.source.transactionHash))
+      log.push({ operation: 'stimulus', ...a.source });
+  }
   for (const s of state.strategies) {
     if (!log.some((t) => t.transactionHash === s.transactionHash))
       log.push({ operation: 'ship', transactionHash: s.transactionHash, blockNumber: s.blockNumber });
     if (s.dockTransactionHash && !log.some((t) => t.transactionHash === s.dockTransactionHash))
-      log.push({ operation: 'dock', transactionHash: s.dockTransactionHash });
+      log.push({ operation: 'dock', transactionHash: s.dockTransactionHash, blockNumber: s.dockBlockNumber });
   }
   $('transactions').replaceChildren();
   if (!log.length) $('transactions').textContent = tr('empty');
-  for (const t of log.slice().reverse().slice(0, 30)) {
+  for (const t of log
+    .slice()
+    .sort((a, b) => (b.blockNumber || 0) - (a.blockNumber || 0))
+    .slice(0, 30)) {
     const row = document.createElement('div');
     row.className = 'tx';
     const tag = document.createElement('strong');

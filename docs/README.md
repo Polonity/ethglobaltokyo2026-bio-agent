@@ -12,6 +12,10 @@
 
 [最新の達成状況監査](submission/goal-audit.md) / [MaleCNS部分グラフのCircuit Lab](design/circuit-evidence.md)。
 
+## Aqua Connectome
+
+[実Aquaと実測接続を使う第3の箱庭](design/aqua-connectome.md)。共有ウォレット・刺激→判断→ship/dock・実テスト交換。専用アプリ形式であり、既存2アプリの共通型への完全統合は今後の課題です。
+
 ## 2アプリの型
 
 [採餌・市場アプリの型定義と単位](standards/application-types.md): 共通coreと用途別profileをTypeScript化。型検査と基本値検証を実装し、両GUIのViewへ接続済み。完全な共通Runtimeへの移行は未完了。

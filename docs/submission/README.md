@@ -22,6 +22,12 @@ This is an extension profile, not a replacement for general agent identity, comm
 
 See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). A separate [Circuit Lab](../design/circuit-evidence.md) now executes a measured seven-neuron MaleCNS topology with explicitly artificial dynamics and readout. The two games remain synthetic; no biological fidelity or performance advantage is established. See the [goal audit](goal-audit.md) for remaining work.
 
+## Aqua Connectome: additional local experiment
+
+**Powered by Aqua — © Degensoft Ltd 2025.** Three registered simulation instances use a seven-neuron measured topology with artificial dynamics to control shared liquidity. Confirmed synthetic risk stimuli drive a smaller offer or withdrawal through `@1inch/aqua-sdk@0.3.4`. The upstream Aqua contract runs on Anvil, alongside a custom test-token AquaApp. Inspect real ship/dock receipts and execute a test fill while the maker retains custody until settlement. This is a frozen controller with engineered risk mapping, not a full brain, live MEV detector, learned portfolio, gasless withdrawal, or cross-chain router.
+
+See [architecture, corrections to the proposal and reproduction](../design/aqua-connectome.md). The existing integrated demo video predates this addition and does not show Aqua.
+
 ## What we built
 
 In Fly Lab, a user sends an onchain stimulus to one of three registered agents. The browser consumes its event and the agent responds. Eating changes fullness and energy reserves; the changing belly visualizes state that actually enters the policy observation. Lower-performing flies pause with a question bubble, train a candidate and return after evaluation.

@@ -72,6 +72,7 @@ export async function aquaRoute(request, env, rpc) {
       if (s) {
         s.active = false;
         s.dockTransactionHash = l.transactionHash;
+        s.dockBlockNumber = Number(BigInt(l.blockNumber));
       }
     }
   }
@@ -116,6 +117,7 @@ export async function aquaRoute(request, env, rpc) {
         transactionHash: source.transactionHash,
         blockHash: source.blockHash,
         logIndex: source.logIndex,
+        blockNumber: Number(BigInt(source.blockNumber)),
       },
       revision: String(status.revision),
       stimulus: Number(status.stimulus),

@@ -29,7 +29,11 @@ contract AquaFlyApp {
         bytes32 modelHash;
     }
     event Filled(
-        address indexed maker, bytes32 indexed strategyHash, address indexed taker, uint256 amountIn, uint256 amountOut
+        address indexed maker,
+        bytes32 indexed strategyHash,
+        address indexed taker,
+        uint256 amountIn,
+        uint256 amountOut
     );
 
     constructor(Aqua aqua_, ERC20 token0_, ERC20 token1_, BioAgentRegistry registry_) {
@@ -49,10 +53,12 @@ contract AquaFlyApp {
         entered = true;
         Strategy memory s = abi.decode(strategy, (Strategy));
         require(
-            s.agentId > 0 && s.agentId <= 3 && s.spreadBps <= 1000 && amountIn > 0 && amountIn <= 100 ether, "invalid"
+            s.agentId > 0 && s.agentId <= 3 && s.spreadBps <= 1000 && amountIn > 0 && amountIn <= 100 ether,
+            "invalid"
         );
         require(
-            registry.getAgent(s.agentId).owner == maker && registry.getAgent(s.agentId).modelHash == s.modelHash,
+            registry.getAgent(s.agentId).owner == maker
+                && registry.getAgent(s.agentId).modelHash == s.modelHash,
             "identity"
         );
         require(registry.getStatus(s.agentId).revision == s.revision, "stale stimulus");
