@@ -12,3 +12,6 @@ data/*
 contracts/out/
 contracts/cache/
 contracts/broadcast/
+
+# Forge failure cache when a command is invoked from the repository root.
+/cache/
