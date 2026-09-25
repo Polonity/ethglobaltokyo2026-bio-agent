@@ -65,3 +65,7 @@
 ## 採餌モデル v2
 
 [身体入力・可変なお腹・学習中の再開検証](design/embodied-foraging.md)を実装。新manifestを登録した独立Anvil/WorkersでGUI検証済み。満腹度・蓄えは実際の観測に入ります。
+
+## 実Uniswapの市場アプリ
+
+[Market Meadowの起動・仕組み・検証](design/local-market-app.md)。ローカルの実V3 Pool、登録済み3匹、紙約定・PnL・学習・receiptをGUIで確認できます。

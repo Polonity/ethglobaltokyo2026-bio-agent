@@ -1,6 +1,6 @@
 # Paper Trading Arena — トークンを観察し、タイミングを学ぶハエ
 
-状態: **第2ゲームの設計案 / 売買・PnL・GUIは未実装**（2026-09-26）。[Swapイベント入力の初期実装](swap-event-game.md)と[BioAgent共通仕様の方針案](../standards/bioagent-design-direction.md)を追加しました。既存の採餌ゲームは維持します。実資金の売買・署名・承認・送金を行わず、ハエごとの仮想資産で競います。
+状態: **ローカルの実Uniswap V3版・紙売買・PnL・GUIを実装済み**（2026-09-26）。現在の確定した実装条件は[Market Meadow](local-market-app.md)を参照。以下のトレンドtoken取得などは将来案です。[Swapイベント入力の初期実装](swap-event-game.md)と[BioAgent共通仕様の方針案](../standards/bioagent-design-direction.md)を追加しました。既存の採餌ゲームは維持します。実資金の売買・署名・承認・送金を行わず、ハエごとの仮想資産で競います。
 
 ## 体験
 

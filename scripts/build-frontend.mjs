@@ -34,3 +34,34 @@ await writeFile(
     uri: '/models/synthetic-metabolism-v1.js',
   }),
 );
+
+await build({
+  entryPoints: ['apps/frontend/market.js'],
+  bundle: true,
+  minify: true,
+  format: 'esm',
+  target: 'es2022',
+  outfile: 'dist/market.js',
+});
+for (const file of ['market.html', 'market.css']) await copyFile(`apps/frontend/${file}`, `dist/${file}`);
+const paperSource = await readFile('packages/bio_agent/runtime/paper-arena.js');
+await writeFile('dist/models/paper-arena.js', paperSource);
+await writeFile(
+  'dist/models/paper-reference.json',
+  JSON.stringify({
+    digest: { algorithm: 'sha256', value: `0x${createHash('sha256').update(paperSource).digest('hex')}` },
+    uri: '/models/paper-arena.js',
+  }),
+);
+
+await copyFile('packages/bio_agent/runtime/paper-manifest.json', 'dist/models/market-paper-reward-v1.json');
+for (const [i, name] of ['MOMO', 'SORA', 'KIKI'].entries())
+  await writeFile(
+    `dist/models/market-agent-${i + 1}.json`,
+    JSON.stringify({
+      name,
+      modelId: 'market-paper-reward-v1',
+      manifest: '/models/market-paper-reward-v1.json',
+      profile: 'market-paper.v1',
+    }),
+  );

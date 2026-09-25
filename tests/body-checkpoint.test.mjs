@@ -35,3 +35,17 @@ test('checkpoint resumes racing and active training bit-for-bit', () => {
   assert.deepEqual(a.checkpoint(), b.checkpoint());
   assert.throws(() => Arena.restore({ ...checkpoint, model: 'old-model' }));
 });
+
+test('a fixed policy chooses different actions with controlled fullness', () => {
+  const hungry = new Arena(42, { agentCount: 1 });
+  hungry.autoLearn = false;
+  hungry.world.stimulus = 0;
+  hungry.flies[0].exploration = 0;
+  hungry.flies[0].satiety = 0.05;
+  const full = Arena.restore(hungry.checkpoint());
+  full.flies[0].satiety = 0.95;
+  hungry.tick();
+  full.tick();
+  assert.notEqual(hungry.flies[0].lastTransition.action, 8);
+  assert.equal(full.flies[0].lastTransition.action, 8);
+});

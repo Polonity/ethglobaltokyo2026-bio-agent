@@ -1,6 +1,62 @@
 // Japanese source messages, translated only at the presentation boundary.
 // Technical identifiers (hashes, event names, agent names) remain unchanged.
 export const messages = {
+  ローカルでおやつを置く: 'Place a local treat',
+  モデルmanifestが登録内容と一致しません: 'Model manifest does not match the registered model',
+  '市場の設定が変わりました。再読込してください。': 'Market configuration changed. Please reload.',
+  採餌アプリ: 'Foraging',
+  市場アプリ: 'Market meadow',
+  '値動きに、羽が動く。': 'Little wings. Market moves.',
+  '同じ市場、違う経験。3匹のハエが売買タイミングを学ぶ。':
+    'One market, different experiences. Three flies explore trading timing.',
+  'テストトークンの実Swap、仮想資産の競争。': 'Real test-token swaps. Virtual portfolios.',
+  '接続中…': 'Connecting…',
+  市場の入力を待っています: 'Waiting for market input',
+  '価格は実プール、売買はペーパートレード。Mainnet価格ではありません。':
+    'Real local pool prices. Paper trades. Not mainnet prices.',
+  '価格を上げる ↗': 'Move price up ↗',
+  '価格を下げる ↘': 'Move price down ↘',
+  デモ相場を再生: 'Play demo market',
+  実験記録を保存: 'Export experiment',
+  '値動きボタンはローカルAnvilのテスト用スワップを実行します。実資金は使いません。':
+    'Price controls execute test-token swaps on local Anvil. No real funds.',
+  トークンの花畑: 'The token meadow',
+  純PnLランキング: 'Net PnL leaderboard',
+  '初期資金: 100 token1 / 手数料・想定清算費用込み':
+    'Starting equity: 100 token1 / fees and estimated liquidation costs included',
+  直近のブロックチェーン入力: 'Latest blockchain input',
+  クリックして実際のSwapレシートを確認: 'Click to inspect the actual Swap receipt',
+  実際に判断へ渡した入力: 'Actual policy inputs',
+  学び直し: 'Learning again',
+  '選択用データで報酬予測誤差を比較。将来利益や独立評価の証明ではありません。':
+    'Reward prediction is compared on selection data. This does not prove future profit or held-out performance.',
+  紙の売買台帳: 'Paper trade ledger',
+  '紙約定にTXはありません。引用するTXは入力元のSwapです。':
+    'Paper fills have no transaction. Referenced transactions are source swaps.',
+  この実験の仕様と限界: 'Experiment design and limits',
+  '生物回路ではなく合成モデルです。勢い・逆張り・慎重という初期方策に、実際の経験による報酬予測の学習を加えています。取引注文は次のSwap以降に評価し、プールの数量別quoteを使います。全個体は同じ観測を受けますが、仮想売買はプールを変化させません。':
+    'This is a synthetic model, not a biological circuit. Momentum, contrarian and cautious priors learn reward estimates from experience. Orders are evaluated at a later Swap using size-specific pool quotes. All flies share observations; paper trades do not change the pool.',
+  '利益による食事はゲーム上の比喩です。身体・学習・台帳はブラウザー内で動作し、ページを再読込すると新しい競争が始まります。':
+    'Profit-triggered feeding is a game metaphor. Body, learning and ledger run in this browser; reloading starts a new competition.',
+  'Swapログを監視中。価格を動かして反応を見よう。': 'Watching Swap logs. Move the price to see reactions.',
+  'チェーンの巻戻りを検出。再読込で新しい競争を開始してください。':
+    'Chain rollback detected. Reload to start a new competition.',
+  'スワップ送信済み。ログの反映を待っています。': 'Swap submitted. Waiting for the log.',
+  'Anvil接続済み · 実Uniswap V3プール': 'Anvil connected · Actual Uniswap V3 pool',
+  接続を確認してください: 'Check the connection',
+  '？ 考えなおし中': '? Thinking again…',
+  買うタイミングを待つ: 'Waiting to buy',
+  売るタイミングを待つ: 'Waiting to sell',
+  じっと保有中: 'Holding patiently',
+  今は見送ろう: 'Let’s wait',
+  現金: 'Cash',
+  保有: 'Position',
+  学び直し中: 'Relearning',
+  候補を採用: 'Candidate adopted',
+  既存方策を維持: 'Previous policy retained',
+  経験を蓄積中: 'Collecting experience',
+  判断: 'Decision',
+  評価: 'Valuation',
   満腹度: 'Fullness',
   蓄え: 'Reserves',
   体格: 'Body size',

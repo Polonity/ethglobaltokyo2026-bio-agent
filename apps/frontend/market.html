@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fly Lab · Market meadow</title>
+    <link rel="stylesheet" href="/market.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/">♡ FLY LAB</a>
+      <nav><a href="/">採餌アプリ</a><strong>市場アプリ</strong></nav>
+      <label
+        >表示言語
+        <select id="language">
+          <option value="system">システム</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+        </select></label
+      >
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <small>BIO AGENT EXPERIMENT / 02</small>
+          <h1>値動きに、羽が動く。</h1>
+          <p>同じ市場、違う経験。3匹のハエが売買タイミングを学ぶ。</p>
+        </div>
+        <div class="badge">
+          ANVIL · UNISWAP V3<br /><b>PAPER TRADING</b>
+          <p>テストトークンの実Swap、仮想資産の競争。</p>
+        </div>
+      </section>
+      <section class="connection">
+        <strong id="connection">接続中…</strong>
+        <p id="status">市場の入力を待っています</p>
+        <div class="facts">
+          <span>AGENT REGISTRY <code id="market-registry">—</code></span>
+          <span>POOL <code id="pool">—</code></span
+          ><span>BLOCK <b id="block">—</b></span
+          ><span>PRICE <b id="price">—</b> token1 / token0</span>
+        </div>
+        <p class="small">価格は実プール、売買はペーパートレード。Mainnet価格ではありません。</p>
+      </section>
+      <div class="controls">
+        <button id="up">価格を上げる ↗</button><button id="down">価格を下げる ↘</button
+        ><button id="sequence">デモ相場を再生</button><button id="pause">一時停止</button
+        ><button id="export">実験記録を保存</button>
+      </div>
+      <p class="small">値動きボタンはローカルAnvilのテスト用スワップを実行します。実資金は使いません。</p>
+      <div class="grid">
+        <section class="panel">
+          <h2>トークンの花畑</h2>
+          <canvas id="field" width="1000" height="440" aria-label="Market fly arena"></canvas>
+          <div id="cards" class="cards"></div>
+        </section>
+        <aside class="panel">
+          <h2>純PnLランキング</h2>
+          <p class="small">初期資金: 100 token1 / 手数料・想定清算費用込み</p>
+          <div id="ranking"></div>
+          <h3>直近のブロックチェーン入力</h3>
+          <a id="source-tx">—</a>
+          <p class="small">クリックして実際のSwapレシートを確認</p>
+          <h3>実際に判断へ渡した入力</h3>
+          <pre id="observation">—</pre>
+        </aside>
+      </div>
+      <div class="grid">
+        <section class="panel">
+          <h2>学び直し</h2>
+          <div id="learning"></div>
+          <p class="small">選択用データで報酬予測誤差を比較。将来利益や独立評価の証明ではありません。</p>
+        </section>
+        <section class="panel">
+          <h2>紙の売買台帳</h2>
+          <div id="ledger"></div>
+          <p class="small">紙約定にTXはありません。引用するTXは入力元のSwapです。</p>
+        </section>
+      </div>
+      <details class="panel">
+        <summary>この実験の仕様と限界</summary>
+        <p>
+          生物回路ではなく合成モデルです。勢い・逆張り・慎重という初期方策に、実際の経験による報酬予測の学習を加えています。取引注文は次のSwap以降に評価し、プールの数量別quoteを使います。全個体は同じ観測を受けますが、仮想売買はプールを変化させません。
+        </p>
+        <p>
+          利益による食事はゲーム上の比喩です。身体・学習・台帳はブラウザー内で動作し、ページを再読込すると新しい競争が始まります。
+        </p>
+      </details>
+    </main>
+    <dialog id="receipt">
+      <button id="close-receipt">閉じる</button>
+      <h2>Swap receipt · Anvil</h2>
+      <pre id="receipt-data"></pre>
+    </dialog>
+    <script type="module" src="/market.js"></script>
+  </body>
+</html>

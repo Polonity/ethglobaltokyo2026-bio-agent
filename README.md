@@ -10,6 +10,19 @@
 
 **[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
 
+## ローカルの2アプリ
+
+採餌は身体入力・可変のお腹・checkpoint再開に対応。市場は実Uniswap V3コアをAnvilに配置し、Swap→3匹の判断→ペーパートレード→PnLを表示します。
+
+```sh
+npm run local:up
+# 別ターミナル:
+npm run local:market
+# / は採餌、/market は市場
+```
+
+[採餌モデル v2](docs/design/embodied-foraging.md) / [市場アプリの仕様・制約](docs/design/local-market-app.md)。この更新はローカル検証済みで、公開Workersの旧デモへの再デプロイはまだ行っていません。
+
 ## 構成
 
 | パス | 役割 |

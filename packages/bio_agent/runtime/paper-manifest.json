@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "modelId": "market-paper-reward-v1",
+  "modelType": "synthetic-demo",
+  "profile": "market-paper.v1",
+  "source": "local Uniswap V3 core Swap events and block-pinned eth_call quotes",
+  "bodyModel": "synthetic-metabolism-v1",
+  "bodyClock": "one 0.2-second synthetic body tick per market observation",
+  "learning": "tabular immediate reward prediction from chronological 70/30 training/selection split",
+  "evaluation": "selection reward prediction MSE; not held-out profitability",
+  "initialCapitalToken1": "100000000000000000000",
+  "orderSizeToken1": "10000000000000000000",
+  "gasAssumptionToken1": "1000000000000000",
+  "execution": "paper-only; next-block-or-later size-specific quote; no virtual price impact across agents",
+  "biologicalValidation": false
+}

@@ -1,6 +1,6 @@
 # 2アプリの型定義 v1 — 採餌と市場ペーパートレード
 
-2026-09-26。**TypeScript型・例・基本値の検証・旧採餌型変換を実装済み。ランタイム移行、Solidity ABIの変更、全JSON schema検証は未実施。** 前提は[設計方針](bioagent-design-direction.md)と[Embodied Learning Profile](embodied-learning-profile.md)。NFT/SBTを基底・派生の要件にしない。
+2026-09-26。**TypeScript型・例・基本値の検証・旧採餌型変換を実装済み。共有Viewは採餌・市場GUIへ接続済み。完全なruntime interface移行、Solidity ABIの再定義、全JSON schema検証は未実施。** 前提は[設計方針](bioagent-design-direction.md)と[Embodied Learning Profile](embodied-learning-profile.md)。NFT/SBTを基底・派生の要件にしない。
 
 ## 型の配置
 

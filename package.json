@@ -18,10 +18,14 @@
     "test:swaps": "node --test tests/swap-agents.test.mjs",
     "demo:swaps": "node scripts/demo-swap-agents.mjs",
     "test:types": "tsc -p packages/shared/tsconfig.json && node --experimental-strip-types --test tests/shared-types.test.mjs",
-    "test:body": "node --test tests/body-checkpoint.test.mjs"
+    "test:body": "node --test tests/body-checkpoint.test.mjs",
+    "local:market": "node scripts/setup-local-market.mjs",
+    "test:paper": "node --test tests/paper-arena.test.mjs",
+    "test:market": "node scripts/check-market-browser.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
+    "@uniswap/v3-core": "1.0.1",
     "esbuild": "0.28.2",
     "prettier": "3.9.9",
     "typescript": "5.9.3",
