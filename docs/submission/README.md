@@ -44,7 +44,7 @@ See [prior-art research](../standards/prior-art-and-bioagent.md), [design direct
 - **Frontend / hosting:** original procedural fly drawings, continuously parameterized bellies, emotional bubbles, English/Japanese/system language, local Cloudflare Workers.
 - **Common types:** strict TypeScript views and domain profiles, explicit units and string-encoded token amounts. Full cross-runtime protocol migration is still future work.
 
-## Demo script (about one minute)
+## Demo script (two apps + circuit evidence)
 
 | Scene | Say / show |
 | --- | --- |
@@ -55,11 +55,14 @@ See [prior-art research](../standards/prior-art-and-bioagent.md), [design direct
 | Run price sequence | Show independent buy/hold/sell decisions and paper PnL. |
 | Open source TX | Distinguish the real pool Swap from the simulated paper fill. |
 | Learning | Show stationary fly, question bubble, candidate selection and return. |
-| Close | “Synthetic models today; biological provenance and portable learning are the specification's direction.” |
+| Open Circuit Lab | “A measured MaleCNS topology: seven neurons, nineteen connections, with artificial dynamics.” |
+| Send 0% then 100% | Show real transactions and wait→advance, compared with an edge-removal control. |
+| Inspect source | Show registered descriptor, provenance and engineered assumptions. |
+| Close | “Two synthetic games and one topology-derived experiment; biological validation and full portability remain future work.” |
 
 Supplement: [Circuit Lab recording and checks](../design/circuit-evidence.md).
 
-Video and reproducible recording: [English two-app demo](../demo-video.md). Local output: `artifacts/two-app-demo/bioagent-two-apps-english.mp4`, with `evidence.json`.
+Latest integrated video and reproduction: [English submission demo](../demo-video.md). Local output: `artifacts/submission-demo/bioagent-submission-english.mp4`, with `evidence.json` and exported circuit traces.
 
 ## Evidence and reproduction
 

@@ -1,14 +1,50 @@
-# 追加: 回路の証拠を示す英語動画（2026-09-26）
+# 最新版: 2アプリ + Circuit Lab 統合デモ（英語）
+
+提出用の統合版は `artifacts/submission-demo/bioagent-submission-english.mp4`。英語GUI・英語字幕、音声なし、約1分30秒、1600×1100 H.264 / faststart。
+
+## 構成
+
+1. 採餌: 登録個体へ実TXで刺激を送り、身体状態が方策の入力になることを紹介。
+2. 市場: 実Uniswap V3のローカルSwap、紙約定・PnL、source receipt、学習結果。
+3. Circuit Lab: 登録descriptorを持つ実測7神経・19接続へ0%→100%を実TXで入力。
+4. 同じ刺激で接続を除去した対照と比較し、回路への依存を表示。
+5. 出典・抽出・動力学・mappingの参照と、現在の実装境界を説明。
+
+採餌・市場はsynthetic、Circuit Labは実測構造を使った人工動力学という違いを字幕で明示します。生物学的な再現や、標準全体の相互運用を実装したとは説明しません。
+
+## 再収録
+
+[ローカル起動](deployment/local-anvil.md)、[市場設定](design/local-market-app.md)、[回路設定](design/circuit-evidence.md)が完了した環境で実行します。既に動く環境ではlocal:market / local:circuitの再配置は不要です。
+
+```sh
+LOCAL_GUI_URL=http://127.0.0.1:8799 node scripts/record-submission-demo.mjs
+node scripts/verify-submission-video.mjs
+```
+
+必要なものはnpm依存、Chrome、ffmpeg、Python 3（標準ライブラリのみ）。実際のGUI経由でローカルTXを送るため、同じチェーンに対するテストや録画を同時実行しないでください。
+
+出力:
+- `bioagent-submission-english.mp4`: 統合動画。
+- `evidence.json`: 章の時刻、採餌TX、身体入力、市場状態、回路の無刺激/強刺激と除去対照、ブラウザー例外。
+- `circuit-evidence.json`: GUIからexportした回路trace。Python参照実装でも照合します。
+- `circuit-comparison.png`、`final.png`、`raw/`: 確認画像と元WebM。
+- `verification.json`、`playback-*.png`: 全フレームのデコード、Chromeでの再生・シーク、記録された実行結果の検証。
+
+同じ統合版出力先への再実行は上書きします。以前の2アプリ本編・回路補足動画は別フォルダに保存したままです。字幕追加とスクロールは収録用の表示操作であり、Agentの計算結果は注入しません。
+
+---
+
+# 旧補足版: 回路の証拠を示す英語動画（2026-09-26）
 
 `artifacts/circuit-browser/bioagent-circuit-evidence-en.mp4`は、実測MaleCNS部分グラフの刺激→計算→行動と、接続除去対照、Anvil receiptを示す補足映像です。[再収録・境界](design/circuit-evidence.md)と[達成状況監査](submission/goal-audit.md)を参照してください。下記の2アプリ本編は両ゲームがsyntheticであることを説明したまま保存しています。
 
-# 最新版: 2アプリの英語デモ（2026-09-26）
+# 旧版: 2アプリの英語デモ（2026-09-26）
 
-提出用の最新版は `artifacts/two-app-demo/bioagent-two-apps-english.mp4`。英語GUI・英語字幕、音声なし、1600×1100のH.264動画です。採餌への実TX、食事と身体入力、ローカル実Uniswap V3の価格変化、紙約定・PnL、source receipt、学習結果を約53秒で紹介します。
+以前の2アプリ版は `artifacts/two-app-demo/bioagent-two-apps-english.mp4`。英語GUI・英語字幕、音声なし、1600×1100のH.264動画です。採餌への実TX、食事と身体入力、ローカル実Uniswap V3の価格変化、紙約定・PnL、source receipt、学習結果を約53秒で紹介します。
 
 `evidence.json`には字幕時刻、実際の入力TX、身体状態、市場snapshot、ブラウザー例外を記録しています。映像内の字幕は説明用であり、結果を注入するものではありません。成果物はGit管理対象外です。
 
-## 最新版の再収録
+## 旧2アプリ版の再収録
 
 [市場アプリの起動](design/local-market-app.md)に従いAnvilとWorkersを起動します。以下は検証に使用した別ポート構成です。
 
