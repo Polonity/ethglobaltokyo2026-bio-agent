@@ -52,3 +52,5 @@ Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/
 ## Experimental NFT / SBT profiles
 
 Run `npm ci` at repository root before Foundry builds (OpenZeppelin 5.4.0 is pinned). `BioAgentNFT` adds ERC-721 identity and `IBioAgentStimulus`; `BioAgentSBT` adds permanent ERC-5192 locking. See [specification](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the original Registry; these profiles require explicit new deployments and have not been deployed to Sepolia.
+
+**Design review update (2026-09-26):** NFT/SBT support was an interpretation error, not a requested feature. These experimental contracts remain unchanged during the design discussion and are not the future BioAgent requirements. See [design direction](../docs/standards/bioagent-design-direction.md).

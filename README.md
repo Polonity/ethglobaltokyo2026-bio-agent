@@ -6,6 +6,8 @@
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
+**提出物の設計軸:** 生物モデルの出典、身体状態を含む個体、刺激から反応・学習への変化を共通形式で追う。[思想と設計方針](docs/standards/bioagent-design-direction.md) / [既存ERC調査](docs/standards/prior-art-and-bioagent.md) / [審査員向け説明案](docs/submission/bioagent-thesis.md)。NFT/SBT機能追加は要件ではなく、採餌と市場観測を用途別profileとして整理しています。新profileは設計段階です。
+
 **[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
 
 ## 構成
@@ -103,6 +105,6 @@ make contracts-dry-run contracts-check-deployment
 - 現在の動作確認は Anvil。次の対象は Ethereum Sepolia。イベントの型は `contracts/src/interfaces/`、現在の学習目的・評価条件は [Fly Lab設計](docs/design/fly-arena.md) を参照。
 - スポンサー固有の統合・スマートコントラクトは選定後に追加します。
 
-### Experimental agent profiles and market inputs
+### Experimental market inputs
 
-[ERC-style working draft](docs/standards/bio-agent-draft.md): ERC-721 identity, ERC-5192 soulbound variant, and schema-tagged stimuli. [Swap event milestone](docs/design/swap-event-game.md): `npm run demo:swaps` verifies three agents using synthetic V3-shaped events on a separate Anvil. This is not a live Uniswap integration or a completed trading game.
+[Swap event milestone](docs/design/swap-event-game.md): `npm run demo:swaps` verifies three agents using synthetic V3-shaped events on a separate Anvil. This is not a live Uniswap integration or a completed trading game. The existing demo currently uses the earlier experimental NFT contract; tokenization is not a requirement and its implementation cleanup is deferred until the design review is settled.

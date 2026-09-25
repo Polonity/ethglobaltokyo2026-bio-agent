@@ -1,6 +1,8 @@
-# Bio Agent Stimulus Interface — preliminary ERC proposal
+# Bio Agent Stimulus Interface — earlier experimental draft
 
-Working draft, 2026-09-26. **Unsubmitted; no EIP number assigned.** This is a reviewable specification and reference implementation, not an accepted Ethereum standard or audited contract. Before submission, authors must supply their identity, discussion URL and required EIP front matter. Proposed category: Standards Track / ERC. License: CC0 for this document; reference code remains MIT.
+**設計方針は改訂中。まず[BioAgentの思想・方針](bioagent-design-direction.md)と[既存ERC調査](prior-art-and-bioagent.md)を参照してください。** NFT/SBTは派生構造の例であり、機能追加要望ではありませんでした。この文書のNFT/SBT部分は先行実装の記録であり、今後の要件として採用しません。共通化する対象は[生物モデル・身体・学習のprofile](embodied-learning-profile.md)。このレビューでは契約の追加・削除やABI変更を行っていません。
+
+Earlier working draft, 2026-09-26. **Unsubmitted; no EIP number assigned.** This is a reviewable specification and reference implementation, not an accepted Ethereum standard or audited contract. Before submission, authors must supply their identity, discussion URL and required EIP front matter. Proposed category: Standards Track / ERC. License: CC0 for this document; reference code remains MIT.
 
 ## Abstract
 

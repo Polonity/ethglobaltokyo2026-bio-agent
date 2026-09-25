@@ -1,6 +1,6 @@
 # Paper Trading Arena — トークンを観察し、タイミングを学ぶハエ
 
-状態: **第2ゲームの設計案 / 売買・PnL・GUIは未実装**（2026-09-26）。[Swapイベント入力の初期実装](swap-event-game.md)と[NFT/SBT仕様草案](../standards/bio-agent-draft.md)を追加しました。既存の採餌ゲームは維持します。実資金の売買・署名・承認・送金を行わず、ハエごとの仮想資産で競います。
+状態: **第2ゲームの設計案 / 売買・PnL・GUIは未実装**（2026-09-26）。[Swapイベント入力の初期実装](swap-event-game.md)と[BioAgent共通仕様の方針案](../standards/bioagent-design-direction.md)を追加しました。既存の採餌ゲームは維持します。実資金の売買・署名・承認・送金を行わず、ハエごとの仮想資産で競います。
 
 ## 体験
 

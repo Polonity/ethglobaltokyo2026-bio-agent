@@ -65,6 +65,8 @@ Status を入力として扱う方針はユーザー確認済み。それ以外�
 
 Anvil 上の実コントラクトからGUIの3匹へ入力する構成は [ローカル接続ガイド](../deployment/local-anvil.md) を参照。
 
-## NFT・SBTと刺激インターフェース（2026-09-26）
+## 先行実験の記録（2026-09-26、方針再検討中）
 
-[ERC形式の草案](../standards/bio-agent-draft.md)とNFT/SBT参照実装を追加しました。未提出・番号未付与で、従来のRegistryとGUIはそのままです。一般化する軸は刺激の入力契約、所有権はERC-721、譲渡不可派生はERC-5192です。ERC-8004準拠や実行証明は主張しません。
+[ERC形式の草案](../standards/bio-agent-draft.md)とNFT/SBT参照実装を追加しました。未提出・番号未付与で、従来のRegistryとGUIはそのままです。NFT/SBT追加は意図の取り違えによる先行実装で、今後の要件として採用しません。ERC-8004準拠や実行証明は主張しません。
+
+最新の仕様検討は[思想と設計方針](../standards/bioagent-design-direction.md)を参照。既存の採餌用ABIと、新しく検討するBioAgent共通profileを区別します。
