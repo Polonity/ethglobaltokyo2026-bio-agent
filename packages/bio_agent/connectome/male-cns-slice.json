@@ -1,0 +1,175 @@
+{
+  "schema": "bioagent.male-cns-slice.v1",
+  "dataset": "male-cns:v1.0",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "MaleCNS: FlyEM / HHMI Janelia, University of Cambridge, MRC LMB and Google Research. https://male-cns.janelia.org/",
+  "changes": "Selected body 10001 and its six strongest annotated outgoing neighbors, retained only induced edges; original IDs/counts preserved. Dynamics and action mappings are artificial.",
+  "sources": [
+    {
+      "uri": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+      "sha256": "0x2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2"
+    },
+    {
+      "uri": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+      "sha256": "0xe35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+    }
+  ],
+  "extractionSha256": "0xfc5db62ef97a55ce10ff84eb06ca7e4fd04769c860701162c85aa67ea4bf88b7",
+  "selection": {
+    "rootBodyId": "10001",
+    "outgoingNeighbors": 6,
+    "sort": "weight descending, body_post ascending",
+    "edges": "induced, all positive counts, including self edges"
+  },
+  "nodes": [
+    {
+      "id": "10001",
+      "type": "DNp01",
+      "instance": "DNp01(GF)_R",
+      "superclass": "descending_neuron"
+    },
+    {
+      "id": "800146",
+      "type": "TTMn",
+      "instance": "TTMn_R",
+      "superclass": "vnc_motor"
+    },
+    {
+      "id": "800178",
+      "type": "IN11A001",
+      "instance": "IN11A001_R",
+      "superclass": "vnc_intrinsic"
+    },
+    {
+      "id": "801805",
+      "type": "IN08B003",
+      "instance": "IN08B003_R",
+      "superclass": "vnc_intrinsic"
+    },
+    {
+      "id": "802471",
+      "type": "IN18B031",
+      "instance": "IN18B031_R",
+      "superclass": "vnc_intrinsic"
+    },
+    {
+      "id": "804856",
+      "type": "IN18B034",
+      "instance": "IN18B034_R",
+      "superclass": "vnc_intrinsic"
+    },
+    {
+      "id": "11391",
+      "type": "SAD109",
+      "instance": "SAD109_M",
+      "superclass": "cb_intrinsic"
+    }
+  ],
+  "edges": [
+    {
+      "pre": "10001",
+      "post": "11391",
+      "count": 23
+    },
+    {
+      "pre": "10001",
+      "post": "800146",
+      "count": 70
+    },
+    {
+      "pre": "10001",
+      "post": "800178",
+      "count": 32
+    },
+    {
+      "pre": "10001",
+      "post": "801805",
+      "count": 26
+    },
+    {
+      "pre": "10001",
+      "post": "802471",
+      "count": 26
+    },
+    {
+      "pre": "10001",
+      "post": "804856",
+      "count": 24
+    },
+    {
+      "pre": "11391",
+      "post": "10001",
+      "count": 179
+    },
+    {
+      "pre": "800146",
+      "post": "10001",
+      "count": 2
+    },
+    {
+      "pre": "800178",
+      "post": "10001",
+      "count": 10
+    },
+    {
+      "pre": "800178",
+      "post": "801805",
+      "count": 2
+    },
+    {
+      "pre": "801805",
+      "post": "10001",
+      "count": 1
+    },
+    {
+      "pre": "801805",
+      "post": "800178",
+      "count": 5
+    },
+    {
+      "pre": "802471",
+      "post": "10001",
+      "count": 1
+    },
+    {
+      "pre": "802471",
+      "post": "804856",
+      "count": 4
+    },
+    {
+      "pre": "804856",
+      "post": "10001",
+      "count": 2
+    },
+    {
+      "pre": "804856",
+      "post": "800146",
+      "count": 2
+    },
+    {
+      "pre": "804856",
+      "post": "800178",
+      "count": 4
+    },
+    {
+      "pre": "804856",
+      "post": "801805",
+      "count": 1
+    },
+    {
+      "pre": "804856",
+      "post": "802471",
+      "count": 4
+    }
+  ],
+  "inputNode": "10001",
+  "readoutNodes": [
+    "800146",
+    "800178",
+    "801805",
+    "802471",
+    "804856",
+    "11391"
+  ]
+}

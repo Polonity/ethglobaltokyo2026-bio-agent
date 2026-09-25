@@ -1,0 +1,10 @@
+{
+  "schema": "bioagent.circuit-sensory.v1",
+  "input": "IBioAgent BioAgentStatusUpdated.status.stimulus",
+  "normalization": "integer 0..10000 divided by 10000",
+  "targetBodyId": "10001",
+  "trial": "32 synchronous ticks from zero activity for each confirmed status",
+  "clock": "one abstract model tick; no biological milliseconds",
+  "ignoredStatusFields": ["activity", "energy"],
+  "assumption": "Engineered direct drive of a descending neuron, not a native sensory or financial signal."
+}

@@ -1,0 +1,7 @@
+{
+  "schema": "bioagent.circuit-motor.v1",
+  "readout": "arithmetic mean of activity of all six non-input nodes",
+  "action": {"advance": "response >= 0.1", "wait": "response < 0.1"},
+  "displayDistance": "200 * response canvas units per trial",
+  "assumption": "Artificial readout into a game action. No muscle mapping, escape behavior or biological validation is claimed."
+}
