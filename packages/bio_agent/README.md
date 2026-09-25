@@ -1,6 +1,26 @@
 # Bio Agent 本体
 
-- `browser/arena.js`: Fly Lab の競争・判定・自己学習 Runtime。Q-learning によるブラウザー内の適応モデル。モデルと観測・報酬・検証条件は [Fly Lab 設計](../../docs/design/fly-arena.md) を参照。
-- `__init__.py`: 元の API ひな型用 `step(Stimulus) -> AgentState`。閾値で rest / explore を選ぶ独立した模擬モデル。
+| 実装 | 役割 |
+| --- | --- |
+| `browser/arena.js` | 現在のGUIの行動判定、競争、経験記録、Q学習 |
+| `__init__.py` | Python APIひな型用の独立した閾値モデル |
 
-どちらも MaleCNS の神経回路シミュレーションではない。実データ取込・回路モデルの接続は今後実装する。
+## ブラウザーRuntime
+
+モデルIDは `foraging-q-v1`。Arenaが個体の位置・体力・得点・Q値・経験を保持し、5Hzで進めます。受信したStatusは `applyAgentStatus` で対象個体へ適用されます。RPCやHTTPの取得はこのモジュールの責務ではありません。
+
+- 入力: rest / explore / forage、energy供給、stimulus。契約の0..10000を0..1へ変換。
+- 観測: 蜜の方向、危険・境界方向、低体力かどうか。
+- 行動: 8方向への移動または休息。
+- 学習: 直近の経験と練習環境を使用。候補を検証し、改善時のみ採用。
+- 出力: 個体状態と競争・学習イベント。自動オンチェーン書戻しはしない。
+
+個体数はAnvilモード3匹、ブラウザーモード12匹。タブごとに独立して動作します。学習と次ラウンドの詳細は [Fly Lab設計](../../docs/design/fly-arena.md) を参照してください。
+
+## Pythonモデル
+
+`step(Stimulus) -> AgentState` は閾値でrest / exploreを選ぶ模擬モデルです。ブラウザーのQ学習とは別で、Pythonの学習成果物も自動適用しません。
+
+いずれもMaleCNS神経回路シミュレーションではありません。将来のモデル差し替えでは、入力・出力対応、モデルmanifest、評価条件を合わせて更新します。
+
+検証: ルートで `npm run test:arena`、Pythonは `make test`。
