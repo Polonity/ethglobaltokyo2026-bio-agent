@@ -1,6 +1,6 @@
 # BioAgent Embodied Learning Profile v0.1
 
-**Proposed semantic profile; not implemented by the current runtime.** 2026-09-26. This document specifies what future conforming producers/consumers must mean by biological origin, embodiment and learning continuity. It does not add deployed Solidity interfaces or claim compliance with an assigned ERC. MUST/SHOULD/MAY are normative only for implementations claiming this proposed profile.
+**Proposed semantic profile; not implemented by the current runtime.** [Application type definitions](application-types.md) now exist with compile-time examples; they are not full runtime conformance. 2026-09-26. This document specifies what future conforming producers/consumers must mean by biological origin, embodiment and learning continuity. It does not add deployed Solidity interfaces or claim compliance with an assigned ERC. MUST/SHOULD/MAY are normative only for implementations claiming this proposed profile.
 
 ## 1. Scope and identity
 

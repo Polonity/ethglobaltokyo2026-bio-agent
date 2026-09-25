@@ -6,6 +6,10 @@
 
 [BioAgentの思想・設計方針](standards/bioagent-design-direction.md) → [既存ERCとの差分調査](standards/prior-art-and-bioagent.md) → [身体・学習profile案](standards/embodied-learning-profile.md) → [提出説明案](submission/bioagent-thesis.md)。NFT/SBTは派生構造の比喩であり、機能追加要件ではありません。先行実験コードは設計方針の根拠にせず、ABI変更は保留します。
 
+## 2アプリの型
+
+[採餌・市場アプリの型定義と単位](standards/application-types.md): 共通coreと用途別profileをTypeScript化。型検査と基本値検証を実装、runtime/ABI移行は未実施。
+
 ## 目的から読む
 
 | やりたいこと | 読む文書 |

@@ -100,3 +100,7 @@ BioAgent semantic core
 ## 判断の基準
 
 interfaceが増えたかではなく、第三者が「この個体は何に由来し、何を受け取り、どの状態で判断し、何を学んだか」を同じ意味で読み取れるかで判断する。
+
+## 型策定の進捗
+
+[2アプリの型定義 v1](application-types.md)をTypeScriptとして追加。共通概念と用途別型、変換例、型エラー検査まで実装しました。完全なJSON検証・artifact encoding・runtime移行・Solidity ABIはまだ未確定です。
