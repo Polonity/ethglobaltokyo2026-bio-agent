@@ -1,10 +1,86 @@
 import { Arena, WIDTH, HEIGHT, MODEL, random } from '../../packages/bio_agent/browser/arena.js';
 import { ChainSession } from './chain.js';
+import { transactionLink } from './explorer.js';
 const $ = (id) => document.getElementById(id);
 const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
 const chainMode = config.mode === 'anvil';
 const arena = new Arena(2026, { agentCount: chainMode ? 3 : 12 });
 let chain = null;
+let receiptRequest = 0;
+function bindTransactionLink(element, hash, event) {
+  const link = transactionLink(config.chainId, hash);
+  element.textContent = hash || '—';
+  element.onclick = null;
+  if (!link) {
+    element.removeAttribute('href');
+    return;
+  }
+  element.href = link.href;
+  element.title = link.label;
+  element.setAttribute('aria-label', `${link.label} ${hash}`);
+  element.target = '_blank';
+  element.rel = 'noopener noreferrer';
+  if (link.local)
+    element.onclick = async (e) => {
+      e.preventDefault();
+      const requestId = ++receiptRequest;
+      const dialog = $('transaction-dialog');
+      const display = (entries) => {
+        $('transaction-data').replaceChildren(
+          ...entries.flatMap(([key, value]) => {
+            const dt = document.createElement('dt'),
+              dd = document.createElement('dd');
+            dt.textContent = key;
+            dd.textContent = value;
+            return [dt, dd];
+          }),
+        );
+      };
+      display([
+        ['Tx hash', hash],
+        ['状態', 'Anvilに問い合わせ中…'],
+      ]);
+      $('transaction-raw').href = link.href;
+      if (!dialog.open) dialog.showModal();
+      try {
+        const response = await fetch(link.href);
+        const receipt = await response.json();
+        if (!response.ok) throw new Error(receipt.error || 'receiptを取得できません');
+        if (requestId !== receiptRequest) return;
+        const entries = [
+          ['ネットワーク', 'Anvil / 31337（ローカル）'],
+          ['Tx hash', hash],
+          [
+            '現在のreceipt',
+            {
+              pending: '未採掘、または現在のチェーンに存在しません',
+              mined: '採掘成功',
+              reverted: '失敗（revert）',
+            }[receipt.stage] || receipt.stage,
+          ],
+          ['Block', receipt.blockNumber || '—'],
+        ];
+        if (event && receipt.stage === 'mined' && receipt.blockNumber === event.blockNumber)
+          entries.push(
+            ['対象', `Agent #${event.agentId}`],
+            ['イベント', `${event.name} / log ${event.logIndex}`],
+            [
+              '入力',
+              `revision ${event.status.revision} / 刺激 ${event.status.stimulus / 100}% / 供給 ${event.status.energy / 100}%`,
+            ],
+            ['送信者', event.writer],
+            ['Registry', event.registryAddress],
+          );
+        display(entries);
+      } catch (error) {
+        if (requestId === receiptRequest)
+          display([
+            ['Tx hash', hash],
+            ['取得エラー', error.message],
+          ]);
+      }
+    };
+}
 function selectFly(id) {
   arena.selected = id;
   const input = arena.flies[id].input;
@@ -339,11 +415,30 @@ function renderUI() {
       ? `${f.name} の登録入力 · rev ${f.chain.revision} · ${{ rest: '休息', explore: '探索', forage: '採餌' }[f.input.mode]} · 刺激 ${f.chain.status.stimulus / 100}% · 供給 ${f.chain.status.energy / 100}%`
       : '3匹の登録を確認しています';
     // Evidence always belongs to the selected agent, not a different last sender.
-    $('chain-tx').textContent = f.chain?.cause.transactionHash || '—';
+    bindTransactionLink($('chain-tx'), f.chain?.cause.transactionHash, f.chain?.cause);
     $('chain-block').textContent = f.chain
       ? `Block ${f.chain.cause.blockNumber} / log ${f.chain.cause.logIndex} / 適用tick ${(f.chain.appliedAt / 0.2).toFixed(0)}`
       : '—';
     const tx = chain.lastTx;
+    $('tx-card').hidden = !tx && !chain.busy;
+    $('tx-card-title').textContent = tx
+      ? `${arena.flies[Number(tx.agentId) - 1].name} への刺激`
+      : '取引を送信中…';
+    $('tx-card-status').textContent = tx?.applied
+      ? '✓ イベント受信 → ハエに反映済み'
+      : chain.stage === 'error'
+        ? '反映未確認。取引詳細を確認してください。'
+        : tx
+          ? 'ブロックへの記録・イベント反映を確認中'
+          : 'Tx hashの発行を待っています';
+    bindTransactionLink($('tx-card-hash'), tx?.transactionHash, tx?.event);
+    $('tx-card-proof').textContent = tx?.event
+      ? `Block ${tx.event.blockNumber} · rev ${tx.event.status.revision} · BioAgentStatusUpdated`
+      : '送信しただけでは、ハエの入力は変わりません。';
+    $('tx-card-network').textContent =
+      String(config.chainId) === '31337'
+        ? '↗ hashをクリックしてAnvilの取引詳細へ（公開Etherscanには未掲載）'
+        : '↗ hashをクリックしてEtherscanで検証';
     const progress = tx?.applied ? 4 : chain.stage === 'mined' ? 2 : chain.stage === 'submitted' ? 1 : 0;
     document.querySelectorAll('.tx-journey li').forEach((el, i) => {
       el.classList.toggle('done', i < progress);
@@ -494,6 +589,10 @@ $('next-round').onclick = () => {
   $('pause').innerHTML = 'Ⅱ <span>Pause</span>';
   $('pause').setAttribute('aria-label', '一時停止');
   renderUI();
+};
+$('close-transaction').onclick = () => {
+  receiptRequest++;
+  $('transaction-dialog').close();
 };
 $('about').onclick = () => $('about-dialog').showModal();
 $('close-about').onclick = $('about-ok').onclick = () => $('about-dialog').close();

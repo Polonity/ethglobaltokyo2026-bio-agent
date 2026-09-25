@@ -62,7 +62,8 @@
         <details>
           <summary>チェーンの証拠を見る</summary>
           <div class="chain-details">
-            <span>Registry <code id="chain-registry"></code></span><span>Tx <code id="chain-tx">—</code></span
+            <span>Registry <code id="chain-registry"></code></span
+            ><span>Tx <a id="chain-tx" class="transaction-link">—</a></span
             ><span id="chain-block">—</span>
           </div>
         </details>
@@ -156,6 +157,14 @@
             <span class="source-dot"></span
             ><span id="input-source-label">ブラウザー内の入力 · Sepolia 未接続</span>
           </p>
+          <section id="tx-card" class="tx-card" hidden aria-label="送信した刺激の取引">
+            <p class="eyebrow">この刺激はブロックチェーンへ</p>
+            <h3 id="tx-card-title">送信準備中</h3>
+            <p id="tx-card-status" role="status" aria-live="polite"></p>
+            <a id="tx-card-hash" class="transaction-link"></a>
+            <p id="tx-card-proof"></p>
+            <p id="tx-card-network"></p>
+          </section>
           <p id="input-feedback" class="input-feedback" role="status" aria-live="polite"></p>
         </article>
         <article class="agent-panel">
@@ -215,6 +224,16 @@
         <span>吹き出しはQ学習の状態表現 / MaleCNS 回路は未接続</span>
       </footer>
     </main>
+    <dialog id="transaction-dialog" aria-labelledby="transaction-title">
+      <button id="close-transaction" class="dialog-close" aria-label="取引詳細を閉じる">×</button>
+      <p class="eyebrow">ONCHAIN RECEIPT / ANVIL 31337</p>
+      <h2 id="transaction-title">この刺激の取引証明</h2>
+      <p>ローカルAnvilからreceiptを取得します。この取引は公開Etherscanには掲載されません。</p>
+      <dl id="transaction-data"></dl>
+      <a id="transaction-raw" class="transaction-link" target="_blank" rel="noopener noreferrer"
+        >元のreceipt JSONを見る ↗</a
+      >
+    </dialog>
     <dialog id="about-dialog">
       <button class="dialog-close" id="close-about" aria-label="閉じる">×</button>
       <p class="eyebrow">ABOUT THE EXPERIMENT</p>

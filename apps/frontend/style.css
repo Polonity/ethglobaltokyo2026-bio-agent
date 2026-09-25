@@ -1626,3 +1626,47 @@ dialog > p:not(.eyebrow) {
 .chain-mode .intro-note > p {
   margin: 8px 0;
 }
+.tx-card {
+  margin-top: 16px;
+  padding: 14px;
+  background: #eef5ef;
+  border: 1px solid #bfd5c2;
+  border-radius: 14px;
+}
+.tx-card[hidden] {
+  display: none;
+}
+.tx-card h3 {
+  font-size: 15px;
+  margin: 10px 0;
+}
+.tx-card p {
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 7px 0;
+}
+.transaction-link {
+  display: inline-block;
+  color: #325f73;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 12px;
+  max-width: 100%;
+}
+.transaction-link[href]:hover {
+  color: #b6533c;
+}
+#transaction-data {
+  font-size: 13px;
+  line-height: 1.8;
+}
+#transaction-data dt {
+  color: #766e7b;
+  margin-top: 10px;
+}
+#transaction-data dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
