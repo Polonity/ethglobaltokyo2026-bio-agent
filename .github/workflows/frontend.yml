@@ -19,5 +19,6 @@ jobs:
       - run: npm run test:arena
       - run: npm run test:agents
       - run: npm run test:swaps
+      - run: npm run test:types
       - run: node --test tests/i18n.test.mjs tests/explorer.test.mjs
       - run: make test

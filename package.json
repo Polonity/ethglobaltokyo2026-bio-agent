@@ -9,19 +9,21 @@
     "test:arena": "node --test tests/arena.test.mjs",
     "test:browser": "node scripts/check-arena-browser.mjs",
     "deploy": "npm run build && node scripts/cloudflare.mjs deploy",
-    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\" \"packages/bio_agent/runtime/*.js\" \"services/backend/adapters/*.mjs\"",
+    "format:check": "prettier --check \"apps/frontend/*.{js,css,html}\" \"packages/bio_agent/browser/*.js\" \"services/worker/*.js\" \"scripts/*.mjs\" \"tests/*.mjs\" \"packages/bio_agent/runtime/*.js\" \"services/backend/adapters/*.mjs\" \"packages/shared/types/*.ts\" \"packages/shared/examples/*.ts\"",
     "local:up": "node scripts/local-up.mjs",
     "test:local": "node scripts/check-local-chain.mjs",
     "test:i18n": "node --test tests/i18n.test.mjs && node scripts/check-i18n.mjs",
     "test:agents": "node --test tests/agent-types.test.mjs",
     "demo:agents": "node scripts/demo-agent-types.mjs",
     "test:swaps": "node --test tests/swap-agents.test.mjs",
-    "demo:swaps": "node scripts/demo-swap-agents.mjs"
+    "demo:swaps": "node scripts/demo-swap-agents.mjs",
+    "test:types": "tsc -p packages/shared/tsconfig.json && node --experimental-strip-types --test tests/shared-types.test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "esbuild": "0.28.2",
     "prettier": "3.9.9",
+    "typescript": "5.9.3",
     "wrangler": "4.140.0"
   },
   "dependencies": {
