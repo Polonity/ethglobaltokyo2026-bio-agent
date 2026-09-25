@@ -2,11 +2,27 @@
 
 2026-09-26更新。提出用の思想と説明文。[調査根拠と標準化の判断](../standards/why-bioagent.md)を併読する。
 
-## 一文
+## デモの入口 — 刺激の箱庭
+
+**オンチェーンに刺激の箱庭をつくり、ハエたちの行動を観察する。**
+
+「トランザクションを送ったら、ハエはどう動く？」から始める。観客が刺激を送り、個体が反応し、食べたり、立ち止まって学び直したりする。その出来事をTX・イベント・入力・反応へとたどれる、小さな実験場として見せる。
+
+今回のオンチェーン部分は個体登録と入力条件・刺激の記録であり、神経計算や身体・学習のシミュレーションはブラウザーで動く。「箱庭」はこの一連の体験を表す。全シミュレーションがチェーン上で実行されるという意味には使わない。採餌・市場のsyntheticモデルと、実測接続を使うCircuit Labの区別も表示・説明する。
+
+見せ方の順序は、**刺激を送る → ハエを観察する → TXを開く → 回路と仮定を確かめる → 共通仕様の意義を伝える**。面白い実験を先に体験してもらい、その後に検証できる実装と仕様を示す。
+
+語り口は大胆な問いを短く、証拠は具体的に。ハエの吹き出しは状態・計算の可視化として扱い、意識や本当の感情を測定したという説明にはしない。標準化は、この箱庭で得たモデルと入力の記述を、別のアプリでも読めるようにする取り組みとして紹介する。
+
+English demo hook: **An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.** Stimuli are recorded onchain; agents run in the browser. The two games use synthetic models; Circuit Lab separately explores measured connectivity with engineered dynamics.
+
+## 仕様を説明する一文
 
 **BioAgentは、オンチェーンの出来事を生物のコネクトームに由来するモデルの入力へつなぎ、刺激・身体・行動・学習を共通の意味で扱うための仕様を提案する。**
 
 ## 日本語ピッチ
+
+私たちは、オンチェーンに刺激の箱庭をつくりました。トランザクションを送って、ハエたちがどう反応するかを観察します。この小さな実験から、生物の仕組みを使うAgentの共通仕様を探っています。
 
 鮫肌の微細な溝は航空機の摩擦を減らすフィルムへ、植物の実の鉤は面ファスナーへ。生物の仕組みを製品へ取り入れる発想は、すでに実用化されています。**私たちは、その発想を神経回路から行動を生むAgentへ広げます。** [製品事例・理由・検証方針](biomimicry-positioning.md)
 
@@ -27,6 +43,8 @@ AI Agentが自律的に行動する世界では、判断の根拠となったデ
 - オンチェーンに書かれた外部情報の正しさにはoracle等の信頼条件が残る。「この記録がある」と「この情報が真で、この行動が正しい」は分ける。[公式解説](https://ethereum.org/developers/docs/oracles/)
 
 ## English pitch
+
+We built an onchain stimulus playground. Send a transaction and watch the flies react. Through this small experiment, we explore a shared specification for agents that draw on biological mechanisms.
 
 Sharkskin inspired aircraft surfaces that reduce drag. Burrs inspired hook-and-loop fasteners. We bring this engineering idea to agents: learning how to generate actions from the structure of biological circuits. [Examples and evaluation rationale](biomimicry-positioning.md)
 

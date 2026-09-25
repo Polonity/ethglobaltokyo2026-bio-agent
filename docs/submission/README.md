@@ -2,6 +2,12 @@
 
 Prepared 2026-09-26. This is a local prototype and a specification proposal, not an assigned EIP. The text below is ready to adapt to the submission form. No external form has been submitted.
 
+## Demo hook
+
+**An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.**
+
+Visitors change recorded stimuli and observe simulated individuals. The chain holds registrations and input records; the browser runs behavior, body state and learning. Present the playful experiment first, then inspect its transactions and model assumptions, and explain why these descriptions should travel across applications. The two games use synthetic agents; the separate Circuit Lab uses measured connectivity with engineered dynamics.
+
 ## Short description
 
 **From verifiable events to biologically grounded action.** BioAgent proposes a profile for agents that use connectome-derived structure to generate actions. It connects onchain input provenance with model origin, sensory mappings, body state and learning history. Two synthetic demos — foraging and paper trading — illustrate the proposed interaction model.
