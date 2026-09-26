@@ -1,3 +1,4 @@
+import { enableTxFood, addTxFood, consumeFood } from '../../packages/bio_agent/browser/tx-food.js';
 import { createWorld, random, DIRECTIONS, WIDTH, HEIGHT } from '../../packages/bio_agent/browser/arena.js';
 import { bodyStep, ensureBody } from '../../packages/bio_agent/browser/body.js';
 // Same arena dimensions, rewards and synthetic body as the existing browser game.
@@ -5,10 +6,11 @@ import { bodyStep, ensureBody } from '../../packages/bio_agent/browser/body.js';
 const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 export class ForagingEnvironment {
-  constructor(seed = 2026) {
+  constructor(seed = 2026, { txFood = false } = {}) {
     this.seed = seed;
     this.rng = random(seed);
     this.world = createWorld(this.rng);
+    if (txFood) enableTxFood(this.world);
     this.tick = 0;
     this.flies = Array.from({ length: 2 }, (_, id) => ({
       id,
@@ -23,10 +25,15 @@ export class ForagingEnvironment {
     }));
     this.flies.forEach(ensureBody);
   }
+  addStimulus(event) {
+    addTxFood(this.world, event);
+  }
   observe() {
     return this.flies.map((f) => {
-      const target = this.world.foods.reduce((a, b) => (distance(f, a) < distance(f, b) ? a : b));
-      const direction = (Math.round(Math.atan2(target.y - f.y, target.x - f.x) / (Math.PI / 4)) + 8) % 8;
+      const target = this.world.foods.reduce((a, b) => (!a || distance(f, b) < distance(f, a) ? b : a), null);
+      const direction = target
+        ? (Math.round(Math.atan2(target.y - f.y, target.x - f.x) / (Math.PI / 4)) + 8) % 8
+        : 0;
       let mask = 0;
       DIRECTIONS.slice(0, 8).forEach(([dx, dy], i) => {
         const p = { x: f.x + dx, y: f.y + dy };
@@ -53,7 +60,7 @@ export class ForagingEnvironment {
       return {
         x: f.x,
         y: f.y,
-        target: { ...target },
+        target: target ? { ...target } : null,
         direction,
         mask,
         energy: f.energy,
@@ -66,10 +73,10 @@ export class ForagingEnvironment {
           f.reserves,
           this.world.stimulus,
           this.world.energy,
-          Math.min(1, distance(f, target) / 30),
+          target ? Math.min(1, distance(f, target) / 30) : 0,
           1,
         ],
-        allowed: f.energy < 0.08 ? [8] : [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        allowed: f.energy < 0.08 || !target ? [8] : [0, 1, 2, 3, 4, 5, 6, 7, 8],
       };
     });
   }
@@ -78,9 +85,9 @@ export class ForagingEnvironment {
     for (const [i, f] of this.flies.entries()) {
       // Re-observe for each actor: the earlier actor may have relocated collected food.
       const before = this.observe()[i],
-        target = this.world.foods.find((t) => t.id === before.target.id);
-      const oldDistance = distance(f, target),
-        action = actions[i];
+        target = this.world.foods.find((t) => t.id === before.target?.id);
+      const oldDistance = target ? distance(f, target) : 0,
+        action = target ? actions[i] : 8;
       if (!before.allowed.includes(action)) throw Error('Foraging action is not allowed');
       const [dx, dy] = DIRECTIONS[action],
         speed = f.energy < 0.12 ? 0.45 : 0.9;
@@ -88,7 +95,7 @@ export class ForagingEnvironment {
       f.y = clamp(f.y + dy * speed, 0.7, HEIGHT - 0.7);
       if (action < 8) f.heading = (action * Math.PI) / 4;
       const hit = this.world.hazards.some((h) => distance(f, h) < h.radius);
-      let reward = (oldDistance - distance(f, target)) * 0.3 - 0.03;
+      let reward = (target ? oldDistance - distance(f, target) : 0) * 0.3 - 0.03;
       if (hit) reward -= 1.2 + this.world.stimulus;
       f.energy = clamp(
         f.energy +
@@ -96,12 +103,11 @@ export class ForagingEnvironment {
           (hit ? 0.014 : 0),
       );
       if (f.energy < 0.15 && action === 8) reward += 0.18;
-      const collected = distance(f, target) < 1.1;
+      const collected = Boolean(target && distance(f, target) < 1.1);
       if (collected) {
         reward += 5 * (1 - f.satiety * 0.8);
         f.energy = Math.min(1, f.energy + 0.22);
-        target.x = 2 + this.rng() * (WIDTH - 4);
-        target.y = 2 + this.rng() * (HEIGHT - 4);
+        consumeFood(this.world, target, this.rng);
       }
       bodyStep(f, { fed: collected, resting: action === 8 });
       f.score += Number(collected);

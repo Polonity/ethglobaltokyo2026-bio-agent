@@ -1,3 +1,4 @@
+import { registryRead } from './registry-read.js';
 import { aquaRoute } from './aqua.js';
 import { marketRoute } from './market.js';
 // Local-only application API. This entrypoint is never used by wrangler.jsonc (public hosting).
@@ -5,7 +6,6 @@ import { Interface } from 'ethers/abi';
 import abi from '../../contracts/abi/BioAgentRegistry.json';
 import hosting from './index.js';
 const contract = new Interface(abi);
-const decimal = (value) => value.toString();
 const hex = (value) => `0x${BigInt(value).toString(16)}`;
 const json = (value, status = 200) =>
   Response.json(value, { status, headers: { 'Cache-Control': 'no-store' } });
@@ -51,59 +51,6 @@ async function call(env, name, args, block = 'latest') {
     await rpc(env, 'eth_call', [{ to: env.REGISTRY_ADDRESS, data }, block]),
   );
 }
-function statusJSON(status) {
-  return {
-    activity: Number(status.activity),
-    energy: Number(status.energy),
-    stimulus: Number(status.stimulus),
-    revision: decimal(status.revision),
-    updatedAt: decimal(status.updatedAt),
-  };
-}
-function decode(log, env) {
-  const event = contract.parseLog(log);
-  if (!event) return null;
-  const common = {
-    schemaVersion: 1,
-    chainId: '31337',
-    registryAddress: env.REGISTRY_ADDRESS,
-    blockNumber: decimal(BigInt(log.blockNumber)),
-    blockHash: log.blockHash,
-    transactionHash: log.transactionHash,
-    transactionIndex: decimal(BigInt(log.transactionIndex)),
-    logIndex: decimal(BigInt(log.logIndex)),
-    name: event.name,
-    agentId: decimal(event.args.agentId),
-  };
-  common.eventId = `31337:${env.REGISTRY_ADDRESS.toLowerCase()}:${log.blockHash}:${log.transactionHash}:${common.logIndex}`;
-  if (event.name === 'BioAgentStatusUpdated')
-    return { ...common, writer: event.args.writer, status: statusJSON(event.args) };
-  if (event.name === 'BioAgentRegistered')
-    return {
-      ...common,
-      owner: event.args.owner,
-      modelHash: event.args.modelHash,
-      metadataURI: event.args.metadataURI,
-    };
-  return null;
-}
-async function logs(env, from, to) {
-  if (from > to) return [];
-  const output = [];
-  for (let start = from; start <= to; start += 1000n) {
-    const end = start + 999n > to ? to : start + 999n;
-    const result = await rpc(env, 'eth_getLogs', [
-      { address: env.REGISTRY_ADDRESS, fromBlock: hex(start), toBlock: hex(end) },
-    ]);
-    output.push(...result.map((log) => decode(log, env)).filter(Boolean));
-  }
-  return output.sort(
-    (a, b) =>
-      Number(BigInt(a.blockNumber) - BigInt(b.blockNumber)) ||
-      Number(BigInt(a.transactionIndex) - BigInt(b.transactionIndex)) ||
-      Number(BigInt(a.logIndex) - BigInt(b.logIndex)),
-  );
-}
 const localWorker = {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -125,6 +72,10 @@ const localWorker = {
     if (url.pathname === '/api/config') {
       return json({
         mode: 'anvil',
+        networkName: 'Anvil',
+        walletMode: 'local',
+        pollIntervalMs: 600,
+        localApps: true,
         chainId: '31337',
         registryAddress: env.REGISTRY_ADDRESS,
         deployBlock: env.DEPLOYMENT_BLOCK,
@@ -151,47 +102,18 @@ const localWorker = {
           chainConnected: true,
           registryAddress: env.REGISTRY_ADDRESS,
         });
-      if (url.pathname === '/api/chain/snapshot' && request.method === 'GET') {
-        const tip = await rpc(env, 'eth_getBlockByNumber', ['latest', false]);
-        const height = BigInt(tip.number);
-        const events = await logs(env, BigInt(env.DEPLOYMENT_BLOCK), height);
-        const agents = await Promise.all(
-          ['1', '2', '3'].map(async (agentId) => {
-            const [[agent], [status]] = await Promise.all([
-              call(env, 'getAgent', [agentId], tip.number),
-              call(env, 'getStatus', [agentId], tip.number),
-            ]);
-            if (agent.modelHash !== env.LOCAL_MODEL_HASH) throw new ApiError('Model hash mismatch', 409);
-            const cause = events.findLast(
-              (e) =>
-                e.name === 'BioAgentStatusUpdated' &&
-                e.agentId === agentId &&
-                e.status.revision === decimal(status.revision),
-            );
-            if (!cause) throw new ApiError('Status event missing', 409);
-            return {
-              agentId,
-              owner: agent.owner,
-              modelHash: agent.modelHash,
-              metadataURI: agent.metadataURI,
-              status: statusJSON(status),
-              cause,
-            };
-          }),
-        );
-        return json({ blockNumber: decimal(height), blockHash: tip.hash, agents });
-      }
-      if (url.pathname === '/api/chain/events' && request.method === 'GET') {
-        const after = url.searchParams.get('after');
-        const hash = url.searchParams.get('hash');
-        if (!/^\d+$/.test(after || '') || !/^0x[0-9a-f]{64}$/i.test(hash || ''))
-          throw new ApiError('Cursor and block hash required');
-        const base = await rpc(env, 'eth_getBlockByNumber', [hex(after), false]);
-        if (!base || base.hash !== hash) return json({ error: 'reorg', reset: true }, 409);
-        const tip = await rpc(env, 'eth_getBlockByNumber', ['latest', false]);
-        const events = await logs(env, BigInt(after) + 1n, BigInt(tip.number));
-        return json({ blockNumber: decimal(BigInt(tip.number)), blockHash: tip.hash, events });
-      }
+      const shared = await registryRead(
+        request,
+        {
+          chainId: '31337',
+          registryAddress: env.REGISTRY_ADDRESS,
+          deployBlock: env.DEPLOYMENT_BLOCK,
+          modelHash: env.LOCAL_MODEL_HASH,
+          agentIds: ['1', '2', '3'],
+        },
+        (m, p) => rpc(env, m, p),
+      );
+      if (shared) return shared;
       if (url.pathname === '/api/chain/status' && request.method === 'POST') {
         if (
           request.headers.get('Origin') !== url.origin ||
@@ -229,19 +151,6 @@ const localWorker = {
           { ...tx, gas: hex((BigInt(gas) * 12n) / 10n) },
         ]);
         return json({ transactionHash, agentId: body.agentId, stage: 'submitted' }, 202);
-      }
-      if (url.pathname === '/api/chain/receipt' && request.method === 'GET') {
-        const hash = url.searchParams.get('hash');
-        if (!/^0x[0-9a-f]{64}$/i.test(hash || '')) throw new ApiError('Invalid transaction hash');
-        const receipt = await rpc(env, 'eth_getTransactionReceipt', [hash]);
-        if (!receipt) return json({ stage: 'pending' });
-        if (receipt.to?.toLowerCase() !== env.REGISTRY_ADDRESS.toLowerCase())
-          throw new ApiError('Not a Registry transaction');
-        return json({
-          stage: receipt.status === '0x1' ? 'mined' : 'reverted',
-          blockNumber: decimal(BigInt(receipt.blockNumber)),
-          transactionHash: hash,
-        });
       }
       return json({ error: 'not_found' }, 404);
     } catch (error) {

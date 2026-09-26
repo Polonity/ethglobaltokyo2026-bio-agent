@@ -55,6 +55,7 @@ try {
     window.__arena.duration = 300;
   });
   await page.getByRole('button', { name: '一時停止', exact: true }).click();
+  const foodBefore = await page.evaluate(() => window.__arena.world.foods.length);
   // Hold the transaction in Anvil's mempool: the UI must not apply it optimistically.
   await rpc('evm_setAutomine', [false]);
   await page.locator('[data-mode="forage"]').click();
@@ -70,9 +71,11 @@ try {
   );
   assert.equal(await page.evaluate(() => window.__chain.lastTx.applied), false);
   assert.equal(await rpc('eth_getTransactionReceipt', [forageTx]), null);
+  assert.equal(await page.evaluate(() => window.__arena.world.foods.length), foodBefore);
   await rpc('evm_mine');
   await rpc('evm_setAutomine', [true]);
   await page.waitForFunction(() => window.__chain.lastTx?.applied && !window.__chain.busy);
+  assert.equal(await page.evaluate(() => window.__arena.world.foods.length), foodBefore + 1);
   const updated = await snapshot();
   assert.equal(updated.agents[0].status.stimulus, 9500);
   assert.equal(updated.agents[0].status.activity, 2);

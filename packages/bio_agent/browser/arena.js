@@ -1,3 +1,4 @@
+import { consumeFood, enableTxFood, addTxFood, statusFoodEvent } from './tx-food.js';
 import { MALE_CNS, forageChannels } from '../connectome/male-cns.js';
 import { learningReport, FORAGE_UPDATES, FORAGE_BATCH } from '../../training/browser/learning.js';
 import { bodyStep, bodyObservation, ensureBody } from './body.js';
@@ -67,8 +68,8 @@ export function createWorld(rng) {
 }
 export function observe(fly, world) {
   ensureBody(fly);
-  const target = world.foods.reduce((a, b) => (distance(fly, a) < distance(fly, b) ? a : b));
-  const direction = bearing(target.x - fly.x, target.y - fly.y);
+  const target = world.foods.reduce((a, b) => (!a || distance(fly, b) < distance(fly, a) ? b : a), null);
+  const direction = target ? bearing(target.x - fly.x, target.y - fly.y) : 0;
   let mask = 0;
   DIRECTIONS.slice(0, 8).forEach(([dx, dy], a) => {
     const p = { x: fly.x + dx, y: fly.y + dy };
@@ -120,14 +121,14 @@ function choose(q, observation, rng, epsilon) {
 }
 export function transition(fly, world, action, rng) {
   const before = observe(fly, world);
-  const oldDistance = distance(fly, before.target);
+  const oldDistance = before.target ? distance(fly, before.target) : 0;
   const [dx, dy] = DIRECTIONS[action];
   const speed = fly.energy < 0.12 ? 0.45 : 0.9;
   fly.x = clamp(fly.x + dx * speed, 0.7, WIDTH - 0.7);
   fly.y = clamp(fly.y + dy * speed, 0.7, HEIGHT - 0.7);
   if (action < 8) fly.heading = (action * Math.PI) / 4;
   const hit = world.hazards.some((h) => distance(fly, h) < h.radius);
-  let reward = (oldDistance - distance(fly, before.target)) * 0.3 - 0.03;
+  let reward = (before.target ? oldDistance - distance(fly, before.target) : 0) * 0.3 - 0.03;
   if (hit) reward -= 1.2 + world.stimulus;
   fly.energy = clamp(
     fly.energy +
@@ -138,12 +139,11 @@ export function transition(fly, world, action, rng) {
   );
   if (fly.energy < 0.15 && action === 8) reward += 0.18;
   let collected = false;
-  if (distance(fly, before.target) < 1.1) {
+  if (before.target && distance(fly, before.target) < 1.1) {
     collected = true;
     reward += 5 * (1 - fly.satiety * 0.8);
     fly.energy = Math.min(1, fly.energy + 0.22);
-    before.target.x = 2 + rng() * (WIDTH - 4);
-    before.target.y = 2 + rng() * (HEIGHT - 4);
+    consumeFood(world, before.target, rng);
   }
   bodyStep(fly, { fed: collected, resting: action === 8 });
   const after = observe(fly, world);
@@ -180,10 +180,11 @@ export function evaluate(q) {
   return total / 3;
 }
 export class Arena {
-  constructor(seed = 2026, { agentCount = 12 } = {}) {
+  constructor(seed = 2026, { agentCount = 12, txFood = false } = {}) {
     this.seed = seed;
     this.rng = random(seed);
     this.world = createWorld(this.rng);
+    if (txFood) enableTxFood(this.world);
     this.time = 0;
     this.duration = 90;
     this.round = 1;
@@ -258,6 +259,7 @@ export class Arena {
       cause,
       appliedAt: this.time,
     };
+    if (this.world.foodMode === 'confirmed-tx') addTxFood(this.world, statusFoodEvent(cause, status));
     this.log(
       'input',
       `${fly.name} / ONCHAIN INPUT`,
@@ -267,6 +269,7 @@ export class Arena {
     return true;
   }
   addFood(x, y) {
+    if (this.world.foodMode === 'confirmed-tx') throw Error('Food requires a confirmed stimulus transaction');
     const oldest = this.world.foods.shift();
     this.world.foods.push({ ...oldest, x: clamp(x, 1, WIDTH - 1), y: clamp(y, 1, HEIGHT - 1) });
     this.log('input', 'NECTAR PLACED', 'クリック位置に蜜を配置。ハエが匂いに反応');
@@ -355,7 +358,7 @@ export class Arena {
       const world = fly.input ? { ...this.world, ...fly.input } : this.world;
       const obs = observe(fly, world);
       let action = choose(fly.q, obs, this.rng, fly.exploration + world.stimulus * 0.09);
-      if (fly.energy < 0.08) action = 8;
+      if (fly.energy < 0.08 || !world.foods.length) action = 8;
       const result = transition(fly, world, action, this.rng);
       fly.memory.push({ state: result.state, action, reward: result.reward, next: result.next });
       if (fly.memory.length > 300) fly.memory.shift();

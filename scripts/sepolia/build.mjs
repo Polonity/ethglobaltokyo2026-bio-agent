@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { build } from 'esbuild';
+import { execFileSync } from 'node:child_process';
 import { MALE_CNS } from '../../packages/bio_agent/connectome/male-cns.js';
 import { deploymentPath, sha256 } from './common.mjs';
 
@@ -13,38 +13,16 @@ export async function buildDemo({ output = 'dist/sepolia-demo', deployment } = {
       if (e.code !== 'ENOENT') throw e;
     }
   }
+  execFileSync(process.execPath, ['scripts/build-frontend.mjs'], { stdio: 'inherit' });
+  await fs.rm(output, { recursive: true, force: true });
   await fs.mkdir(output, { recursive: true });
-  for (const file of ['index.html', 'app.js', 'style.css'])
-    await fs.copyFile(`apps/sepolia-lab/${file}`, path.join(output, file));
-  await build({
-    entryPoints: ['apps/sepolia-lab/chain.js'],
-    bundle: true,
-    format: 'esm',
-    platform: 'browser',
-    target: 'es2022',
-    minify: true,
-    outfile: path.join(output, 'chain.js'),
-  });
-  // Preserve import.meta.url and graph byte identity; only ship this explicit allowlist.
-  const directories = [
-    'packages/bioagent-framework/src',
-    'packages/bio_agent/browser',
-    'packages/bio_agent/runtime',
-    'packages/bio_agent/connectome',
-    'packages/bio_agent/research',
-    'packages/training/browser',
-  ];
+  for (const file of ['index.html', 'style.css', 'app.js'])
+    await fs.copyFile(`dist/${file}`, path.join(output, file));
+  for (const directory of ['models', 'guides'])
+    await fs.cp(`dist/${directory}`, path.join(output, directory), { recursive: true });
   const files = {};
-  for (const directory of directories) {
-    await fs.mkdir(path.join(output, directory), { recursive: true });
-    for (const file of await fs.readdir(directory)) {
-      if (!/\.(js|json)$/.test(file)) continue;
-      const source = path.join(directory, file),
-        bytes = await fs.readFile(source);
-      await fs.writeFile(path.join(output, source), bytes);
-      files[source] = sha256(bytes);
-    }
-  }
+  for (const file of ['index.html', 'style.css', 'app.js'])
+    files[file] = sha256(await fs.readFile(path.join(output, file)));
   const config = {
     chainId: 11155111,
     registryAddress: null,
@@ -64,7 +42,7 @@ export async function buildDemo({ output = 'dist/sepolia-demo', deployment } = {
     modelHashScope: 'SHA-256 of exact male-cns-slice.json bytes; runtime files separately listed below',
     neurons: MALE_CNS.neurons,
     edges: MALE_CNS.edges,
-    learning: 'Three readout weights; measured topology is frozen',
+    learning: 'Shared Anvil/Sepolia Arena Q-learning; measured topology is frozen',
     limitations:
       'Selected subgraph, not a compressed full brain. Engineered dynamics and body; no biological cognition, trading or energy-efficiency claim.',
     license: graph.license,

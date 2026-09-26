@@ -73,8 +73,8 @@ const apps = {
       row(
         '葉に乗った金色の結晶＝蜜',
         'Golden crystals on leaves = nectar',
-        'ローカルで生成するゲーム内の食べ物。近づいて取ると得点・満腹度・活動エネルギーが増え、蜜は別の場所に現れます。トークンやNFTではありません。',
-        'Locally generated food. Collecting it increases food score, fullness and activity energy, then relocates it. It is not a token or NFT.',
+        'チェーン接続時は、正の刺激の確定TXごとに1個出現します。食べると消え、自動補充しません。位置と消費はローカル計算です。オフラインの比較実験は合成の餌を使います。',
+        'With a chain connection, each confirmed positive stimulus adds one food. Eating removes it without refill. Position and consumption are local calculations. Offline comparison experiments use synthetic food.',
       ),
       row(
         '赤い点線の輪＝危険地帯',
@@ -143,16 +143,16 @@ const apps = {
     ),
     browser: {
       flowStart: t(
-        '刺激を送信すると個体のStatusがチェーンに記録され、そのログを受けた個体の入力に反映します。ローカルだけの蜜や障害物はチェーンに記録しません。',
-        'Submitting a stimulus records the individual’s Status; its event updates that individual’s input. Local food and hazards are not stored onchain.',
+        '刺激TXのreceiptとイベントを確認して個体の入力へ反映します。正の刺激1件につき蜜を1個追加。食べた蜜は自動補充せず、同じTXを再受信しても増えません。座標・消費・障害物はオフチェーンです。',
+        'A verified receipt and event update the individual’s input. Each positive stimulus adds one food, with no refill or duplicate addition. Coordinates, consumption and hazards remain offchain.',
       ),
       learning: t(
         '従来版は経験からQ値を更新し、別の採餌評価で改善した個体を復帰させます。？の個体はその場で停止して学び直します。全神経版の共通readout学習とは別の実装です。',
         'The original app updates Q values from experience and returns improved individuals after a separate foraging evaluation. A ? fly pauses in place to learn. This differs from the full-app shared readout learner.',
       ),
       tryIt: t(
-        '刺激送信と、蜜を置く操作を比べてみてください。前者はTXの証拠があり、後者はローカルの環境変更です。個体を選ぶと状態・判断・学習の詳細を追えます。',
-        'Compare submitting a stimulus with placing food: the first has a TX witness; the second changes the local environment. Select an individual to inspect its state, decisions and learning.',
+        '個体を選び、刺激を送信してTX確定後の変化と餌のTX履歴を確認します。AnvilとSepoliaは同じ画面です。Sepoliaは所有者ウォレットまたは1時間ごとの自動送信で刺激を追加します。',
+        'Select an individual, send a stimulus, and inspect the confirmed change and food transaction history. Anvil and Sepolia share this UI. Sepolia stimuli come from the owner wallet or the hourly scheduler.',
       ),
     },
   },
@@ -555,8 +555,8 @@ const browserManuals = {
         'Choose forage, explore or rest, adjust stimulus and energy supply, then apply.',
       ),
       t(
-        '蜜を取ったときの♡、危険の！、休息、学び直しの？を観察します。おやつを置く操作はローカルの操作です。',
-        'Look for hearts after food, danger marks, rest and learning question marks. Placing a snack is a local action.',
+        '蜜を取ったときの♡、危険の！、休息、学び直しの？を観察します。チェーン接続時のおやつボタンも刺激TXを送ります。餌がないときは次のTXを待ちます。',
+        'Look for hearts after food, danger marks, rest and learning question marks. With a chain connection, the snack button also sends a stimulus TX. No food means waiting for the next TX.',
       ),
       t(
         '「学習室へ」で学び直しを試し、ラウンド終了後は学習を引き継いで次へ進みます。',
@@ -626,8 +626,8 @@ apps.foraging.browser.legend = [
   row(
     '花＝みつ',
     'Flowers = nectar',
-    '従来版の花はローカルの食べ物です。',
-    'Flowers in the original app are local food.',
+    '花の位置と消費はオフチェーンです。チェーン接続時は、正の刺激の確定TXごとに1個だけ追加します。',
+    'Flowers are offchain food whose creation requires a confirmed positive stimulus TX in chain mode.',
   ),
   row('危険領域', 'Hazards', '囲まれた危険領域への接触で減点します。', 'Hazard contact costs reward.'),
   apps.foraging.legend[2],

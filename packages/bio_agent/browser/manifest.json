@@ -79,7 +79,7 @@
       },
       "runtime": {
         "uri": "/models/male-cns/foraging-runtime.js",
-        "sha256": "0xff8f1aaf3bd93db7cd60044f0cb54712ce78c996cf651fceefdb70adfec28525"
+        "sha256": "0x94c385c0375f5d0320cf4137e4cf8c84dc5dff74eeaa7c01eac1a661d15502c3"
       }
     }
   },

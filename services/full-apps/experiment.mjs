@@ -18,7 +18,7 @@ export async function rollout({
   const session = `${app}-${variant}-${phase}-${seed}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   const env =
     app === 'foraging'
-      ? new ForagingEnvironment(seed)
+      ? new ForagingEnvironment(seed, { txFood: Boolean(chain) })
       : app === 'market'
         ? new MarketEnvironment(chain, tape.slice(offset))
         : new AquaEnvironment(chain, tape.slice(offset), variant);
@@ -27,7 +27,10 @@ export async function rollout({
   if (chain && app === 'foraging')
     for (let agent = 0; agent < 2; agent++)
       initialStatus.push(await chain.stimulus(app, variant, agent, env.world.stimulus));
-  if (initialStatus.length) env.world.stimulus = initialStatus[0].stimulus / 10000;
+  if (initialStatus.length) {
+    env.world.stimulus = initialStatus[0].stimulus / 10000;
+    for (const event of initialStatus) env.addStimulus(event);
+  }
   const rewards = [0, 0],
     ids = [[], []];
   let neuralMs = 0,

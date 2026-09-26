@@ -6,4 +6,8 @@
   "workers_dev": true,
   "assets": { "directory": "./dist/sepolia-demo", "binding": "ASSETS", "run_worker_first": true },
   "observability": { "enabled": true },
+  "vars": { "STIMULUS_ENABLED": "true" },
+  "triggers": { "crons": ["0 * * * *"] },
+  "durable_objects": { "bindings": [{ "name": "STIMULUS_SENDER", "class_name": "StimulusScheduler" }] },
+  "migrations": [{ "tag": "v1-stimulus-scheduler", "new_sqlite_classes": ["StimulusScheduler"] }],
 }

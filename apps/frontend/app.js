@@ -8,11 +8,13 @@ import { ChainSession } from './chain.js';
 import { transactionLink } from './explorer.js';
 import { translate, translateDOM, getPreference, setPreference } from './i18n.js';
 const $ = (id) => document.getElementById(id);
+const urlLanguage = new URLSearchParams(location.search).get('lang');
+if (['ja', 'en'].includes(urlLanguage)) setPreference(urlLanguage);
 $('language').value = getPreference();
 translateDOM();
 const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
 const bodyModel = await fetch('/models/body-reference.json').then((r) => r.json());
-const chainMode = config.mode === 'anvil';
+const chainMode = ['anvil', 'sepolia'].includes(config.mode);
 let modelError = '';
 try {
   await verifyMaleAssets(await fetch(`/models/${MODEL}.json`).then((r) => r.json()));
@@ -20,7 +22,7 @@ try {
   modelError = e.message;
   document.getElementById('intro-agent-count').textContent = e.message;
 }
-const arena = new Arena(2026, { agentCount: chainMode ? 3 : 12 });
+const arena = new Arena(2026, { agentCount: chainMode ? config.agentIds.length : 12, txFood: chainMode });
 if (modelError) arena.paused = true;
 let savedPolicies = null;
 try {
@@ -253,7 +255,7 @@ function draw(time) {
   for (const food of arena.world.foods) {
     const x = food.x * sx,
       y = food.y * sy,
-      pulse = (Math.sin(time * 0.002 + food.id) + 1) / 2;
+      pulse = (Math.sin(time * 0.002 + food.x + food.y) + 1) / 2;
     ctx.strokeStyle = '#b69b4770';
     ctx.lineWidth = 0.8;
     ctx.beginPath();
@@ -316,6 +318,21 @@ function draw(time) {
   });
 }
 function renderUI() {
+  chain?.persistFood();
+  if (chain) {
+    document.body.dataset.ready = String(chain.ready);
+    document.body.dataset.foodCount = String(arena.world.foods.length);
+    document.body.dataset.foodEvents = String(arena.world.foodEvents.length);
+    $('food-provenance').replaceChildren();
+    for (const event of arena.world.foodEvents.slice(-8).reverse()) {
+      const row = document.createElement('p'),
+        link = document.createElement('a');
+      bindTransactionLink(link, event.source.transactionHash);
+      link.textContent = `#${event.source.agentId} · ${event.source.transactionHash.slice(0, 12)}…`;
+      row.append(link, document.createTextNode(event.consumed ? ' · collected' : ' · 1 food'));
+      $('food-provenance').append(row);
+    }
+  }
   if (!modelError && (!chain || chain.ready)) arena.flies.forEach((f) => savedPolicies?.save(f));
   const learners = arena.flies.filter((f) => f.state === 'learning');
   const leader = arena.ranking()[0];
@@ -340,7 +357,7 @@ function renderUI() {
             ? 'その場で立ち止まって経験から練習中。評価を終えたら動き出します。'
             : `${leader.name} が ${leader.score} 個でリード。好きな子を選んで、刺激を届けよう。`;
   $('session-badge').textContent = chain
-    ? `Anvil ${chain.ready ? '接続中' : '未接続'} · ローカル / 31337`
+    ? `${config.networkName} ${chain.ready ? '接続中' : '未接続'} / ${config.chainId}`
     : 'チェーン未接続 · ブラウザーデモ';
   const remaining = Math.ceil(arena.duration - arena.time);
   $('timer').textContent =
@@ -523,7 +540,10 @@ field.addEventListener('click', (e) => {
     y = ((e.clientY - rect.top) / rect.height) * HEIGHT;
   const fly = arena.flies.find((f) => Math.hypot(f.x - x, f.y - y) < 1.2);
   if (fly) selectFly(fly.id);
-  else arena.addFood(x, y);
+  else if (chain) {
+    $('input-feedback').textContent =
+      '餌は刺激TXの採掘後に追加されます。刺激を0より大きくして送信してください。';
+  } else arena.addFood(x, y);
   renderUI();
 });
 $('pause').onclick = () => {
@@ -602,6 +622,7 @@ $('export').onclick = () => {
   const result = {
     model: MODEL,
     connectome: MALE_CNS,
+    foodEvents: arena.world.foodEvents || [],
     seed: arena.seed,
     round: arena.round,
     time: arena.time,
@@ -658,18 +679,45 @@ if (chainMode) {
     '3匹が蜜・危険・エネルギーから行動を選びます。18秒ごとに下位1匹が学習室に入り、経験を再生して方策を更新します。入力は選択した個体のコントラクト Status に記録されます。';
   $('chain-panel').hidden = false;
   $('chain-registry').textContent = config.registryAddress;
-  $('input-source-label').textContent = 'ANVIL 31337 · 選択中の1匹に送信';
+  $('input-source-label').textContent = `${config.networkName} ${config.chainId}`;
+  $('network-label').textContent = `${config.networkName} / ${config.chainId}`;
   $('apply').innerHTML = 'コントラクトに刺激を送信 <span>↗</span>';
   $('intro-agent-count').textContent = '蜜を探す3つの個体。';
   $('world-input-title').textContent = 'この子に刺激を届けよう。';
-  $('world-input-help').textContent = '選択した個体の入力を Anvil に記録します。';
+  $('world-input-help').textContent =
+    `${config.networkName} · ${translate('刺激TXで餌を1個追加。自動補充なし。')}`;
   $('about-chain').parentElement.textContent =
-    'このローカル版では Anvil (31337) に登録した3匹が、IBioAgent の StatusUpdated ログを受信して個体別の入力を更新します。Runtime はMaleCNSの実測7神経・19接続を特徴計算に使い、行動選択を学習します。身体と動力学は人工設計です。';
+    `${config.networkName} / ${config.chainId} · ${translate('実測7神経・19接続。刺激TXで餌を追加し、行動選択を学習します。身体と動力学は人工設計です。')}`;
   chain = new ChainSession(arena, config, renderUI);
   if (new URLSearchParams(location.search).has('test')) window.__chain = chain;
   await chain.sync();
   if (chain.ready) selectFly(0);
-  setInterval(() => chain.sync(), 600);
+  setInterval(() => chain.sync(), config.pollIntervalMs || 12000);
+  $('food-source-panel').hidden = false;
+  document.querySelector('.field-corner').textContent = translate('刺激TXで餌を1個追加。自動補充なし。');
+  $('feed-selected').textContent = translate('刺激TXで餌を追加');
+  if (config.walletMode === 'browser') {
+    $('connect-wallet').hidden = false;
+    $('connect-wallet').onclick = async () => {
+      try {
+        const w = await chain.connectWallet();
+        $('connect-wallet').textContent = w.address.slice(0, 8) + '…';
+      } catch (e) {
+        chain.message = e.message;
+        renderUI();
+      }
+    };
+    window.ethereum?.on?.('accountsChanged', () => {
+      chain.wallet = null;
+    });
+    window.ethereum?.on?.('chainChanged', () => {
+      chain.wallet = null;
+    });
+  }
+  if (!config.localApps)
+    document
+      .querySelectorAll('nav a[href="/market"],nav a[href="/circuit"],nav a[href="/aqua"]')
+      .forEach((a) => (a.hidden = true));
 }
 $('language').onchange = () => {
   setPreference($('language').value);
@@ -687,12 +735,27 @@ window.addEventListener('storage', (event) => {
 });
 $('field').setAttribute(
   'aria-label',
-  `蜜を競って集める${arena.flies.length}匹のハエ。クリックするとその場所に蜜を置けます。`,
+  chainMode
+    ? translate('刺激TXで餌を1個追加。自動補充なし。')
+    : `蜜を競って集める${arena.flies.length}匹のハエ。クリックするとその場所に蜜を置けます。`,
 );
 renderUI();
 requestAnimationFrame(frame);
 
-$('feed-selected').onclick = () => {
+$('feed-selected').onclick = async () => {
   const f = arena.flies[arena.selected];
-  arena.addFood(f.x, f.y);
+  if (!chain) {
+    arena.addFood(f.x, f.y);
+    return;
+  }
+  try {
+    await chain.send(String(f.id + 1), {
+      activity: 2,
+      energy: Math.round((f.input?.energy || 0.7) * 10000),
+      stimulus: Math.round((f.input?.stimulus || 0.55) * 10000),
+    });
+  } catch (e) {
+    chain.message = e.message;
+    renderUI();
+  }
 };

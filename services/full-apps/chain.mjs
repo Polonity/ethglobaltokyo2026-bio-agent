@@ -223,6 +223,14 @@ export class FullChain {
     if (!event) throw Error('Confirmed stimulus event missing');
     return {
       kind: 'confirmed-bioagent-status',
+      chainId: Number((await this.provider.getNetwork()).chainId),
+      logIndex: receipt.logs.find((l) => {
+        try {
+          return registry.interface.parseLog(l)?.name === 'BioAgentStatusUpdated';
+        } catch {
+          return false;
+        }
+      }).index,
       registry: await registry.getAddress(),
       agentId: agent + 1,
       revision: String(event.args.revision),

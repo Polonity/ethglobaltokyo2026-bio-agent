@@ -66,6 +66,12 @@
         </div>
         <p id="chain-summary" role="status" aria-live="polite">コントラクトを確認中</p>
         <p id="chain-status">—</p>
+        <button id="connect-wallet" hidden>ウォレット接続</button>
+        <details id="food-source-panel" hidden>
+          <summary>餌の追加元TX</summary>
+          <p>刺激強度0より大の成功TXで餌を1個追加。食べた点は消えます。過去のTXも再生します。</p>
+          <div id="food-provenance"></div>
+        </details>
         <ol class="tx-journey" aria-label="直近の送信状況">
           <li>1 刺激を送信</li>
           <li>2 ブロックに記録</li>

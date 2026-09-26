@@ -1,4 +1,7 @@
-import { verifyMaleAssets } from '../../packages/bio_agent/connectome/male-cns.js';
+import { BrowserProvider, Contract } from 'ethers';
+import abi from '../../contracts/abi/BioAgentRegistry.json';
+import { addTxFood, statusFoodEvent } from '../../packages/bio_agent/browser/tx-food.js';
+import { MALE_CNS, verifyMaleAssets } from '../../packages/bio_agent/connectome/male-cns.js';
 import { Arena, MODEL } from '../../packages/bio_agent/browser/arena.js';
 async function request(path, options) {
   const response = await fetch(path, options);
@@ -19,10 +22,21 @@ export class ChainSession {
     this.busy = false;
     this.cursor = null;
     this.seen = new Set();
+    this.foodStorageKey = `tx-food-consumed:${config.chainId}:${config.registryAddress.toLowerCase()}`;
+    this.consumedFood = new Set(JSON.parse(localStorage.getItem(this.foodStorageKey) || '[]'));
     this.lastTx = null;
-    this.message = 'Anvil の登録情報を読み込み中';
+    this.message = `${config.networkName} · Loading registered agents`;
     this.stage = 'connecting';
     this.syncing = false;
+  }
+  persistFood() {
+    for (const event of this.arena.world.foodEvents || [])
+      if (event.consumed) this.consumedFood.add(event.id);
+    localStorage.setItem(this.foodStorageKey, JSON.stringify([...this.consumedFood]));
+  }
+  restoreFood() {
+    for (const e of this.arena.world.foodEvents || []) if (this.consumedFood.has(e.id)) e.consumed = true;
+    this.arena.world.foods = this.arena.world.foods.filter((f) => !this.consumedFood.has(f.id));
   }
   async initialize(reset = false) {
     const manifestResponse = await fetch(`/models/${MODEL}.json`);
@@ -33,12 +47,17 @@ export class ChainSession {
       [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
         .map((v) => v.toString(16).padStart(2, '0'))
         .join('');
-    if (digest !== this.config.modelHash) throw new Error('モデル manifest が登録内容と一致しません');
+    if (digest !== this.config.modelHash && this.config.modelHash !== MALE_CNS.graphSha256)
+      throw new Error('モデル manifest が登録内容と一致しません');
     const snapshot = await request('/api/chain/snapshot');
-    if (snapshot.agents.length !== 3) throw new Error('3匹の登録が必要です');
+    if (snapshot.agents.length !== this.config.agentIds.length)
+      throw new Error('Registered agent count mismatch');
     if (reset) {
       const paused = this.arena.paused;
-      Object.assign(this.arena, new Arena(this.arena.seed, { agentCount: 3 }));
+      Object.assign(
+        this.arena,
+        new Arena(this.arena.seed, { agentCount: this.config.agentIds.length, txFood: true }),
+      );
       this.arena.paused = paused;
       this.seen.clear();
       this.lastTx = null;
@@ -49,15 +68,18 @@ export class ChainSession {
       this.arena.applyAgentStatus(agent.agentId, agent.status, agent.cause);
       this.seen.add(agent.cause.eventId);
     }
+    for (const event of snapshot.events || [])
+      addTxFood(this.arena.world, statusFoodEvent(event), this.consumedFood);
+    this.restoreFood();
     this.cursor = { blockNumber: snapshot.blockNumber, blockHash: snapshot.blockHash };
     this.ready = true;
     this.stage = 'connected';
-    this.message = 'Anvil 接続済み · 3匹の登録を確認';
+    this.message = `${this.config.networkName} · ${snapshot.agents.length} registered agents connected`;
     this.notify();
   }
   checkEvent(event) {
     if (
-      event.chainId !== '31337' ||
+      String(event.chainId) !== String(this.config.chainId) ||
       event.registryAddress.toLowerCase() !== this.config.registryAddress.toLowerCase() ||
       !this.config.agentIds.includes(event.agentId)
     )
@@ -71,7 +93,13 @@ export class ChainSession {
       const fly = this.arena.flies[Number(event.agentId) - 1];
       if (fly.chain && BigInt(event.status.revision) !== BigInt(fly.chain.revision) + 1n)
         throw Object.assign(new Error('revision の欠番を検知'), { reset: true });
+      const before = this.arena.world.foods.length;
       this.arena.applyAgentStatus(event.agentId, event.status, event);
+      if (this.arena.finished && this.arena.world.foods.length > before) {
+        const paused = this.arena.paused;
+        this.arena.nextRound();
+        this.arena.paused = paused;
+      }
       this.seen.add(event.eventId);
       if (this.lastTx?.transactionHash === event.transactionHash) {
         this.lastTx.applied = true;
@@ -93,7 +121,7 @@ export class ChainSession {
         this.ready = true;
         if (!this.busy && this.stage === 'offline') {
           this.stage = 'connected';
-          this.message = 'Anvil に再接続しました';
+          this.message = `${this.config.networkName} · Reconnected`;
         }
       }
     } catch (error) {
@@ -112,6 +140,18 @@ export class ChainSession {
       this.notify();
     }
   }
+  async connectWallet() {
+    if (!window.ethereum?.request)
+      throw new Error('Browser wallet required / ブラウザーウォレットが必要です');
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const chainId = '0x' + BigInt(this.config.chainId).toString(16);
+    if (BigInt(await window.ethereum.request({ method: 'eth_chainId' })) !== BigInt(chainId))
+      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
+    const provider = new BrowserProvider(window.ethereum, 'any'),
+      signer = await provider.getSigner();
+    this.wallet = { provider, signer, address: await signer.getAddress() };
+    return this.wallet;
+  }
   async send(agentId, status) {
     if (!this.ready || this.busy) throw new Error('接続または送信完了を待ってください');
     const fly = this.arena.flies[Number(agentId) - 1];
@@ -121,11 +161,27 @@ export class ChainSession {
     this.message = `Agent #${agentId} のトランザクションを送信中`;
     this.notify();
     try {
-      const sent = await request('/api/chain/status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agentId, expectedRevision: fly.chain.revision, ...status }),
-      });
+      let sent;
+      if (this.config.walletMode === 'browser') {
+        await this.connectWallet();
+        if (this.wallet.address.toLowerCase() !== fly.chain.cause.writer.toLowerCase())
+          throw new Error('Only the agent owner can send; scheduled stimuli remain available to watch.');
+        const registry = new Contract(this.config.registryAddress, abi, this.wallet.signer);
+        const tx = await registry.updateStatus(
+          agentId,
+          fly.chain.revision,
+          status.activity,
+          status.energy,
+          status.stimulus,
+        );
+        sent = { transactionHash: tx.hash, agentId, stage: 'submitted' };
+      } else {
+        sent = await request('/api/chain/status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ agentId, expectedRevision: fly.chain.revision, ...status }),
+        });
+      }
       this.lastTx = { ...sent, applied: false };
       if (fly.chain?.cause.transactionHash === sent.transactionHash) {
         this.lastTx.applied = true;
@@ -134,7 +190,7 @@ export class ChainSession {
       this.stage = 'submitted';
       this.message = `送信済み ${sent.transactionHash}`;
       this.notify();
-      for (let i = 0; i < 80; i++) {
+      for (let i = 0; i < 180; i++) {
         const receipt = await request(`/api/chain/receipt?hash=${sent.transactionHash}`);
         if (receipt.stage === 'reverted') throw new Error('トランザクションが revert しました');
         if (receipt.stage === 'mined') {
@@ -148,7 +204,7 @@ export class ChainSession {
           }
         }
         this.notify();
-        await new Promise((r) => setTimeout(r, 250));
+        await new Promise((r) => setTimeout(r, this.config.walletMode === 'browser' ? 1000 : 250));
       }
       throw new Error('適用待ちです。Tx とイベントの記録を確認してください（自動再送はしません）');
     } catch (error) {

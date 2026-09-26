@@ -1,6 +1,15 @@
 // Japanese source messages, translated only at the presentation boundary.
 // Technical identifiers (hashes, event names, agent names) remain unchanged.
 export const messages = {
+  ウォレット接続: 'Connect wallet',
+  餌の追加元TX: 'Food source transactions',
+  刺激TXで餌を追加: 'Add food with a stimulus TX',
+  '刺激TXで餌を1個追加。自動補充なし。': 'One food per stimulus TX. No automatic refill.',
+  '刺激強度0より大の成功TXで餌を1個追加。食べた点は消えます。過去のTXも再生します。':
+    'Each successful positive-stimulus TX adds one food. Collected food disappears. Past TXs are replayed too.',
+  '実測7神経・19接続。刺激TXで餌を追加し、行動選択を学習します。身体と動力学は人工設計です。':
+    'Seven measured neurons and nineteen edges. Stimulus TXs add food; action choices are learned. Body and dynamics are engineered.',
+
   ローカルでおやつを置く: 'Place a local treat',
   モデルmanifestが登録内容と一致しません: 'Model manifest does not match the registered model',
   '市場の設定が変わりました。再読込してください。': 'Market configuration changed. Please reload.',
