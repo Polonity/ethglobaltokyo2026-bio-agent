@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BioAgent Framework / Research Lab</title>
+    <link rel="stylesheet" href="/apps/research-lab/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="eyebrow">BIOAGENT FRAMEWORK · EXPERIMENTAL</div>
+      <button id="language" class="subtle">English</button>
+      <h1 id="title"></h1>
+      <p id="intro"></p>
+    </header>
+    <main>
+      <section class="panel wide">
+        <div class="row">
+          <div>
+            <div class="eyebrow" id="task-label"></div>
+            <h2 id="task-title"></h2>
+          </div>
+          <select id="task">
+            <option value="foraging">Foraging / 採餌</option>
+            <option value="aqua">Aqua / 校正</option>
+          </select>
+        </div>
+        <div class="lab">
+          <canvas
+            id="field"
+            width="720"
+            height="440"
+            aria-label="Foraging environment or Aqua circuit response"
+          ></canvas>
+          <div class="controls">
+            <p id="scope"></p>
+            <label id="stimulus-label" for="stimulus"></label
+            ><input id="stimulus" type="range" min="0" max="10000" value="5500" /><output
+              id="stimulus-value"
+            ></output
+            ><button id="step"></button><button id="run"></button>
+            <div class="metrics" id="metrics"></div>
+            <p id="decision"></p>
+          </div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="eyebrow">SHARED LIFECYCLE</div>
+        <h2 id="learning-title"></h2>
+        <p id="learning-copy"></p>
+        <div class="buttons">
+          <button id="train"></button><button id="evaluate" disabled></button
+          ><button id="adopt" disabled></button><button id="save"></button
+          ><button id="restore" disabled></button>
+        </div>
+        <div id="phase" role="status" aria-live="polite"></div>
+        <pre id="comparison"></pre>
+      </section>
+      <section class="panel">
+        <div class="eyebrow">MEASURED EVIDENCE</div>
+        <h2 id="evidence-title"></h2>
+        <div id="evidence"></div>
+        <p id="limit"></p>
+        <a href="/artifacts/bioagent-adaptation-20260926/summary.json">Raw results (JSON)</a
+        ><a href="/artifacts/bioagent-adaptation-20260926/chain.json">EVM evidence (JSON)</a
+        ><a href="/packages/bioagent-framework/docs/layers.png">Architecture</a>
+      </section>
+      <section class="panel wide">
+        <div class="eyebrow">CHAIN INPUT → DECISION</div>
+        <h2 id="chain-title"></h2>
+        <p id="chain-copy"></p>
+        <button id="replay"></button>
+        <pre id="chain-result"></pre>
+      </section>
+    </main>
+    <footer>
+      MaleCNS: measured 7-neuron slice / engineered dynamics / frozen topology. Research data: 2026-09-26.
+    </footer>
+    <script type="module" src="/apps/research-lab/lab.js"></script>
+  </body>
+</html>

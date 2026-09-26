@@ -53,7 +53,12 @@
     "submission:aqua": "node scripts/submission/aqua-fork-up.mjs",
     "test:submission:aqua": "node --test tests/aqua-fork.test.mjs && node scripts/submission/verify-aqua-fork.mjs",
     "shared:dev": "node services/shared-market/server.mjs",
-    "test:shared": "forge test --root contracts --match-path test/SharedFlyMarket.t.sol && node scripts/full/check-shared-market.mjs && node scripts/full/audit-shared-market.mjs"
+    "test:shared": "forge test --root contracts --match-path test/SharedFlyMarket.t.sol && node scripts/full/check-shared-market.mjs && node scripts/full/audit-shared-market.mjs",
+    "test:framework": "node --test packages/bioagent-framework/test/*.test.mjs",
+    "test:framework:chain": "node scripts/research/bioagent-adaptation/check-chain.mjs",
+    "test:framework:browser": "node scripts/research/bioagent-adaptation/check-browser.mjs",
+    "framework:lab": "node scripts/research/bioagent-adaptation/serve.mjs",
+    "research:adaptation": "node scripts/research/bioagent-adaptation/experiment.mjs && node scripts/research/bioagent-adaptation/summarize.mjs"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",
