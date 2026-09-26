@@ -1,0 +1,10 @@
+{
+  "name": "@bioagent/framework",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Experimental monorepo framework for chain inputs, connectome decisions and evaluated readouts",
+  "exports": { ".": "./src/index.js", "./evm": "./src/evm-source.js", "./adapters": "./src/adapters.js" },
+  "scripts": { "test": "node --test test/*.test.mjs" },
+  "peerDependencies": { "ethers": "^6.17.0" }
+}
