@@ -18,7 +18,7 @@ const publicURL = urlIndex >= 0 ? process.argv[urlIndex + 1] : null;
 const broadcast = process.argv.includes('--broadcast');
 if (broadcast && publicURL !== 'https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/')
   throw Error('Public write check requires the exact approved demo URL');
-const out = `artifacts/sepolia/${publicURL ? 'public' : 'local'}-browser`;
+const out = `artifacts/sepolia/${publicURL ? (broadcast ? 'public' : 'public-readonly') : 'local'}-browser`;
 await fs.mkdir(out, { recursive: true });
 const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'bioagent-sepolia-browser-'));
 let anvil, server, p, wallet, config, browser, page;
