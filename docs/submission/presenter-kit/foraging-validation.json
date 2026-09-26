@@ -1,0 +1,2013 @@
+{
+  "schema": "bioagent.foraging-behavior-validation.v1",
+  "createdAt": "2026-09-26T12:54:29.836Z",
+  "trainingWorlds": 12,
+  "selectionWorlds": 6,
+  "testWorlds": 12,
+  "agents": 2,
+  "stepsPerTestWorld": 80,
+  "availableFood": 24,
+  "candidates": [
+    "0x74200b784f3b59ca18d5ec8d3d6133cf7ee1f56d8f95ec17043525fa0e6f7cf2",
+    "0x8d30388bcbab4c70e66eedcac2f120589cab8a3efe89a4cd8fc97c61704c1bd3"
+  ],
+  "models": {
+    "neural": {
+      "collected": 24,
+      "hazardSteps": 7,
+      "toward": 577,
+      "moves": 628,
+      "towardFraction": 0.9187898089171974,
+      "reward": 135.90355093477297,
+      "maxHazardStepsPerWorld": 6
+    },
+    "random": {
+      "collected": 4,
+      "hazardSteps": 29,
+      "toward": 793,
+      "moves": 1675,
+      "towardFraction": 0.4734328358208955,
+      "reward": -103.51502448794163,
+      "maxHazardStepsPerWorld": 16
+    },
+    "direct": {
+      "collected": 23,
+      "hazardSteps": 23,
+      "toward": 670,
+      "moves": 777,
+      "towardFraction": 0.8622908622908623,
+      "reward": 106.43379189860109,
+      "maxHazardStepsPerWorld": 8
+    }
+  },
+  "acceptance": {
+    "food": true,
+    "toward": true,
+    "hazard": false,
+    "beatsRandom": true
+  },
+  "allCriteriaMet": false,
+  "limitations": [
+    "One training run and twelve paired held-out layouts, not independent training replications.",
+    "Direct sensory ridge control also learns; no general biological superiority or power advantage established.",
+    "Strict hazard criterion was frozen before testing and remains unmet; approach/collection improved but safe navigation is unfinished.",
+    "Engineered directional sensory encoding; only the action readout is trained, not connectome synapses.",
+    "All environment inputs are confirmed local Anvil transactions; learned policy execution is off-chain."
+  ],
+  "adopted": [
+    true,
+    true
+  ],
+  "protocol": {
+    "schema": "bioagent.foraging-validation.v1",
+    "training": [
+      610001,
+      610138,
+      610275,
+      610412,
+      610549,
+      610686,
+      610823,
+      610960,
+      611097,
+      611234,
+      611371,
+      611508
+    ],
+    "selection": [
+      720001,
+      720140,
+      720279,
+      720418,
+      720557,
+      720696
+    ],
+    "test": [
+      830001,
+      830150,
+      830299,
+      830448,
+      830597,
+      830746,
+      830895,
+      831044,
+      831193,
+      831342,
+      831491,
+      831640
+    ],
+    "collectionSteps": 64,
+    "evaluationSteps": 80,
+    "acceptance": {
+      "minimumFoodFraction": 0.75,
+      "minimumTowardFraction": 0.65,
+      "maximumHazardStepsPerEpisode": 1,
+      "requiresBeatingRandom": true
+    },
+    "scope": "Two-agent shared worlds; local TX inputs. Final tests are not used to tune or select candidates."
+  },
+  "selection": [
+    {
+      "seed": 720001,
+      "before": [
+        {
+          "toward": 33,
+          "away": 39,
+          "stationary": 1,
+          "moves": 73,
+          "progress": -3.403351610816383,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 7
+        },
+        {
+          "toward": 38,
+          "away": 33,
+          "stationary": 0,
+          "moves": 71,
+          "progress": 4.011742388253276,
+          "collected": 0,
+          "hazardSteps": 13,
+          "rest": 9
+        }
+      ],
+      "after": [
+        {
+          "toward": 25,
+          "away": 2,
+          "stationary": 0,
+          "moves": 27,
+          "progress": 14.601758010928158,
+          "collected": 2,
+          "hazardSteps": 0,
+          "rest": 53
+        },
+        {
+          "toward": 6,
+          "away": 3,
+          "stationary": 0,
+          "moves": 9,
+          "progress": 2.319779180311741,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 71
+        }
+      ]
+    },
+    {
+      "seed": 720140,
+      "before": [
+        {
+          "toward": 38,
+          "away": 33,
+          "stationary": 0,
+          "moves": 71,
+          "progress": 2.323845551085135,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 9
+        },
+        {
+          "toward": 34,
+          "away": 36,
+          "stationary": 0,
+          "moves": 70,
+          "progress": -1.0319069316229879,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 10
+        }
+      ],
+      "after": [
+        {
+          "toward": 34,
+          "away": 3,
+          "stationary": 0,
+          "moves": 37,
+          "progress": 20.56464057583343,
+          "collected": 1,
+          "hazardSteps": 0,
+          "rest": 43
+        },
+        {
+          "toward": 35,
+          "away": 2,
+          "stationary": 0,
+          "moves": 37,
+          "progress": 23.05789133194572,
+          "collected": 1,
+          "hazardSteps": 0,
+          "rest": 43
+        }
+      ]
+    },
+    {
+      "seed": 720279,
+      "before": [
+        {
+          "toward": 27,
+          "away": 49,
+          "stationary": 1,
+          "moves": 77,
+          "progress": -12.679707380974902,
+          "collected": 0,
+          "hazardSteps": 13,
+          "rest": 3
+        },
+        {
+          "toward": 39,
+          "away": 32,
+          "stationary": 0,
+          "moves": 71,
+          "progress": 9.235871857898736,
+          "collected": 0,
+          "hazardSteps": 1,
+          "rest": 9
+        }
+      ],
+      "after": [
+        {
+          "toward": 35,
+          "away": 4,
+          "stationary": 0,
+          "moves": 39,
+          "progress": 25.207205523135922,
+          "collected": 1,
+          "hazardSteps": 2,
+          "rest": 41
+        },
+        {
+          "toward": 38,
+          "away": 0,
+          "stationary": 0,
+          "moves": 38,
+          "progress": 26.26430974813533,
+          "collected": 1,
+          "hazardSteps": 0,
+          "rest": 42
+        }
+      ]
+    },
+    {
+      "seed": 720418,
+      "before": [
+        {
+          "toward": 30,
+          "away": 39,
+          "stationary": 0,
+          "moves": 69,
+          "progress": -4.586047694101309,
+          "collected": 0,
+          "hazardSteps": 16,
+          "rest": 11
+        },
+        {
+          "toward": 33,
+          "away": 35,
+          "stationary": 1,
+          "moves": 69,
+          "progress": -0.5003016029910254,
+          "collected": 0,
+          "hazardSteps": 2,
+          "rest": 11
+        }
+      ],
+      "after": [
+        {
+          "toward": 34,
+          "away": 2,
+          "stationary": 0,
+          "moves": 36,
+          "progress": 24.967031402687734,
+          "collected": 2,
+          "hazardSteps": 0,
+          "rest": 44
+        },
+        {
+          "toward": 0,
+          "away": 2,
+          "stationary": 0,
+          "moves": 2,
+          "progress": -1.658854966899879,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 78
+        }
+      ]
+    },
+    {
+      "seed": 720557,
+      "before": [
+        {
+          "toward": 37,
+          "away": 34,
+          "stationary": 0,
+          "moves": 71,
+          "progress": 1.0778538249826655,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 9
+        },
+        {
+          "toward": 34,
+          "away": 37,
+          "stationary": 0,
+          "moves": 71,
+          "progress": -0.2880886554429374,
+          "collected": 0,
+          "hazardSteps": 1,
+          "rest": 9
+        }
+      ],
+      "after": [
+        {
+          "toward": 21,
+          "away": 4,
+          "stationary": 0,
+          "moves": 25,
+          "progress": 14.226563086972543,
+          "collected": 2,
+          "hazardSteps": 0,
+          "rest": 55
+        },
+        {
+          "toward": 23,
+          "away": 1,
+          "stationary": 0,
+          "moves": 24,
+          "progress": 11.099532110193419,
+          "collected": 0,
+          "hazardSteps": 4,
+          "rest": 56
+        }
+      ]
+    },
+    {
+      "seed": 720696,
+      "before": [
+        {
+          "toward": 39,
+          "away": 32,
+          "stationary": 0,
+          "moves": 71,
+          "progress": 1.9541675485033032,
+          "collected": 0,
+          "hazardSteps": 0,
+          "rest": 9
+        },
+        {
+          "toward": 50,
+          "away": 23,
+          "stationary": 0,
+          "moves": 73,
+          "progress": 12.458056028450493,
+          "collected": 1,
+          "hazardSteps": 1,
+          "rest": 7
+        }
+      ],
+      "after": [
+        {
+          "toward": 11,
+          "away": 1,
+          "stationary": 0,
+          "moves": 12,
+          "progress": 8.011657084964412,
+          "collected": 1,
+          "hazardSteps": 0,
+          "rest": 68
+        },
+        {
+          "toward": 9,
+          "away": 1,
+          "stationary": 0,
+          "moves": 10,
+          "progress": 5.392141758265384,
+          "collected": 1,
+          "hazardSteps": 0,
+          "rest": 70
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "seed": 830001,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "19",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830001,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x78acaf150bac1cf8a80a056ea5b4792110dd1d63e5de23b79155d7281b6a3a48",
+        "blockHash": "0x109782ff18c0331ad73c923c8355e0641e8fd5ab2cf70f49fa9904264f4caf45",
+        "blockNumber": "99",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "20",
+          "transactionHash": "0x892291727aa0c0afa98db2645f3b6d79302556f1a35f2fabfdf5a459a2c2c9b2",
+          "blockHash": "0x893b59c4048a17a082d68cd02aee855df700291d4dc0348b608c5060f9681e74",
+          "blockNumber": 100,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "20",
+          "transactionHash": "0x9cc5810dbf6e3a15a0efd8566a4fdfe432f2a1b80fef8482cc452b176b8ea8ff",
+          "blockHash": "0x5b65098780d224b66f667a7e03f1d2840621164adfe70847a5a807106eeaf5d4",
+          "blockNumber": 101,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 45,
+              "moves": 46,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 34
+            },
+            {
+              "toward": 14,
+              "moves": 14,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 66
+            }
+          ],
+          "rewards": [
+            9.811301942456641,
+            5.740946639643682
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 37,
+              "moves": 73,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 7
+            },
+            {
+              "toward": 32,
+              "moves": 73,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 7
+            }
+          ],
+          "rewards": [
+            -2.343341877383972,
+            -3.753407513963906
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 49,
+              "moves": 80,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 0
+            },
+            {
+              "toward": 47,
+              "moves": 80,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 0
+            }
+          ],
+          "rewards": [
+            0.9962808837338809,
+            4.468437196040718
+          ]
+        }
+      }
+    },
+    {
+      "seed": 830150,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "20",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830150,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x27149df4c2a027d1e1d2b1d6fee0900677c4a142474c6b32be0531f72efa5bf4",
+        "blockHash": "0x1879bd9688323bb774323057a34a4a49e37bc44eb34794eb6310738f42e69c9b",
+        "blockNumber": "102",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "21",
+          "transactionHash": "0x9f70b64024298430214757cbb109c352cf4a660ff60ac4a8687315bbbda2fb75",
+          "blockHash": "0x2d004ca59a065518fe055d173bf2793aeb9b688b2c3f1eeab97fa40bd0b67756",
+          "blockNumber": 103,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "21",
+          "transactionHash": "0x2f516b7e2f4e2495aefec54374f3d1c880b7ba0f46d8bf881975825d7f56be5b",
+          "blockHash": "0x1d751dc2c2f05f7543fc592039e015bad94335970e0e0703ae1f8f0638070a74",
+          "blockNumber": 104,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 35,
+              "moves": 36,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 44
+            },
+            {
+              "toward": 32,
+              "moves": 34,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 46
+            }
+          ],
+          "rewards": [
+            9.637165393275222,
+            7.386172122400372
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 37,
+              "moves": 72,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 8
+            },
+            {
+              "toward": 28,
+              "moves": 70,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 10
+            }
+          ],
+          "rewards": [
+            -1.5540420562099282,
+            -5.073621495973202
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 33,
+              "moves": 33,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 47
+            },
+            {
+              "toward": 31,
+              "moves": 32,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 48
+            }
+          ],
+          "rewards": [
+            9.615559198797794,
+            7.319921603189402
+          ]
+        }
+      }
+    },
+    {
+      "seed": 830299,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "21",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830299,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x89a1ef61e093e1971a7708aeb9713f6df3bf6f90c17f48f1f3f757a8c2e7eced",
+        "blockHash": "0x1c2c51d26417cf818bc6cd2ddabeeb790dca78fb0509dbd36267751ee09941bf",
+        "blockNumber": "105",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "22",
+          "transactionHash": "0x10168db81d5d70d7b32dd4a80d3d9c947d451244592095e98cecbc50df6cad09",
+          "blockHash": "0xbf28458045593d026966c704020b823e768e89b067a3f5b976758d9916872fee",
+          "blockNumber": 106,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "22",
+          "transactionHash": "0xa7f82d2c4c8909d8646b8e8b22e8ab08504fda67664ae515f2034cafb5a9f89e",
+          "blockHash": "0x0a60589d39bf5f374a7fc5ab86d78b9b151f66bff021aa3082d21e06a87d3080",
+          "blockNumber": 107,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 18,
+              "moves": 18,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 62
+            },
+            {
+              "toward": 11,
+              "moves": 17,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 63
+            }
+          ],
+          "rewards": [
+            5.163717964627642,
+            2.411173437676147
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 24,
+              "moves": 61,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 19
+            },
+            {
+              "toward": 32,
+              "moves": 59,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 21
+            }
+          ],
+          "rewards": [
+            -4.191996268819132,
+            7.252339742468786
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 12,
+              "moves": 12,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 68
+            },
+            {
+              "toward": 11,
+              "moves": 12,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 68
+            }
+          ],
+          "rewards": [
+            0.21418379740206556,
+            5.390952883745811
+          ]
+        }
+      }
+    },
+    {
+      "seed": 830448,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "22",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830448,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x031bbd4f291c46267b4f6c92bba94ac484f6195f1f8e811b32ee7f81a8c20b24",
+        "blockHash": "0x5fd273f3c755fceaaf0d35682dc611e0740e9b68e7603bfe8df621c5e4aa4230",
+        "blockNumber": "108",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "23",
+          "transactionHash": "0xff0f24b8f4972cabcb741ddddc2591781ce8d4a46aa59af166561f16bcd471c7",
+          "blockHash": "0xe03ed404b68057c114249637f24ae2739c52b84f98b38460bf1be2a7379ee968",
+          "blockNumber": 109,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "23",
+          "transactionHash": "0xf7a0eb3d56e7b2d388800a11b9e12790bd16dde0d0b65c5dd099251d7c741d6a",
+          "blockHash": "0x0080dc23d94e46c838722fc8dc729838e49154f88936dd2efdfc4c144e7220a8",
+          "blockNumber": 110,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 7,
+              "moves": 7,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 73
+            },
+            {
+              "toward": 4,
+              "moves": 7,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 73
+            }
+          ],
+          "rewards": [
+            3.0270459261978426,
+            1.5566865049371164
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 36,
+              "moves": 67,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 13
+            },
+            {
+              "toward": 32,
+              "moves": 69,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 11
+            }
+          ],
+          "rewards": [
+            -1.5995666461163576,
+            1.1967142259217047
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 7,
+              "moves": 7,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 73
+            },
+            {
+              "toward": 4,
+              "moves": 6,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 74
+            }
+          ],
+          "rewards": [
+            3.0270459261978426,
+            1.4757071638746355
+          ]
+        }
+      }
+    },
+    {
+      "seed": 830597,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "23",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830597,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0xd9e0e6b1358c603f7435c761b09f9dfc05c9acee480aa4f1eff90c2060a8aee7",
+        "blockHash": "0xa4a85d8b473d9e300f3d5a13d3f31876d9e45bf868ce1ea7519061d7e4a41d03",
+        "blockNumber": "111",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "24",
+          "transactionHash": "0x90692a1603d168255de4a022f1c7493ee6018054226eb130ccf61444821f37e9",
+          "blockHash": "0xe23ebf565857ca86dd823ec10e4a87d5c303ea963f7f2fcb33601631b3ca0fe5",
+          "blockNumber": 112,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "24",
+          "transactionHash": "0xd339d78462c774e5c77bad698e6d8cc4d34f5e81a7e32d984a9501c8bf581907",
+          "blockHash": "0x9d37bcced82db9e48c3bac5a93c2a78cefa0bff10528324b0a3695113f78b4d8",
+          "blockNumber": 113,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 32,
+              "moves": 32,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 48
+            },
+            {
+              "toward": 4,
+              "moves": 6,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 74
+            }
+          ],
+          "rewards": [
+            11.487477656806076,
+            -1.463876089903834
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 29,
+              "moves": 72,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 8
+            },
+            {
+              "toward": 37,
+              "moves": 69,
+              "collected": 0,
+              "hazardSteps": 13,
+              "rest": 11
+            }
+          ],
+          "rewards": [
+            -3.4084857418408987,
+            -25.344855339887427
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 13,
+              "moves": 13,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 67
+            },
+            {
+              "toward": 11,
+              "moves": 13,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 67
+            }
+          ],
+          "rewards": [
+            4.57137532596665,
+            3.728102473154184
+          ]
+        }
+      }
+    },
+    {
+      "seed": 830746,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "24",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830746,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x16e96d6ef83e88b6870e40b7ec0b139e69d26657c48047ae9ad170834c880a19",
+        "blockHash": "0xab743b8c89b771ee447744842f038707c41518b73682c89e7d99773a1378c13f",
+        "blockNumber": "114",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "25",
+          "transactionHash": "0x0989da9e3fc9bc4692fc8355d1e3a53414cb75cd0c84ed448205d676a36f53c8",
+          "blockHash": "0x7056db8879d42ed2ae8584587a206e005995cdc007dbe9589d7f2f6fc2dd2a54",
+          "blockNumber": 115,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "25",
+          "transactionHash": "0x50584b5778b69c9f12eaadbea69c9e9f3cb6c9bc45635d462db55aee8dff2332",
+          "blockHash": "0x634dcc32777525f3a314a347c8e7296ebe6af286cc84a54f4b1260355336c7a1",
+          "blockNumber": 116,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 35,
+              "moves": 35,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 45
+            },
+            {
+              "toward": 34,
+              "moves": 35,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 45
+            }
+          ],
+          "rewards": [
+            8.652064609922693,
+            9.393572315021315
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 35,
+              "moves": 76,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 4
+            },
+            {
+              "toward": 33,
+              "moves": 72,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 8
+            }
+          ],
+          "rewards": [
+            -3.174350561679283,
+            -2.829291882233936
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 45,
+              "moves": 47,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 33
+            },
+            {
+              "toward": 39,
+              "moves": 47,
+              "collected": 1,
+              "hazardSteps": 4,
+              "rest": 33
+            }
+          ],
+          "rewards": [
+            8.275465750634963,
+            3.1233087245226985
+          ]
+        }
+      }
+    },
+    {
+      "seed": 830895,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "25",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 830895,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0xa9023648bc9a119e1bc29d73353cbc9c4ead7f9d8d3c2bae1a63e1c5aceb5b59",
+        "blockHash": "0xd7f27fec7ad0c4e597bf39077b9ea6204d6f47bcea017b4c0a71396ac63fa876",
+        "blockNumber": "117",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "26",
+          "transactionHash": "0xd7b7dcecc33002ab70e62d56e9f2a0062563865c1cf123e16079a99a9bddd651",
+          "blockHash": "0xba1b35cb40aaa10042c37cb356f35702201233c485a4e9fcb21c99fca394a89c",
+          "blockNumber": 118,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "26",
+          "transactionHash": "0x0613ad6b707d7784648e3b96b30647cf968d43ba717208a5a8e27db6f6708a95",
+          "blockHash": "0x53a44eaa1367f070e45597d38c251c873c79c07a2a540e32bb37edbdc2029390",
+          "blockNumber": 119,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 19,
+              "moves": 20,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 60
+            },
+            {
+              "toward": 19,
+              "moves": 20,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 60
+            }
+          ],
+          "rewards": [
+            5.3029270958980455,
+            5.779403230009713
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 39,
+              "moves": 73,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 7
+            },
+            {
+              "toward": 22,
+              "moves": 70,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 10
+            }
+          ],
+          "rewards": [
+            -1.5860173213135882,
+            -7.63501504847643
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 20,
+              "moves": 24,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 56
+            },
+            {
+              "toward": 24,
+              "moves": 24,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 56
+            }
+          ],
+          "rewards": [
+            5.282145338169615,
+            5.784605998656542
+          ]
+        }
+      }
+    },
+    {
+      "seed": 831044,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "26",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 831044,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x3e7c9cbea253367300426425b92312d9e4dd294d35666fb5d5928256513cfdd8",
+        "blockHash": "0x7bcf8c86013cce5b4ec011588eb18a502edccb8292f4d67da50e4ed955bb6b17",
+        "blockNumber": "120",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "27",
+          "transactionHash": "0x9e03ac58ebe0e4c91e52d46d6befccfd21ab4d304bbab4cb054415b4c97ff8ec",
+          "blockHash": "0x0c2da47bc12e64e7f356e36c2a1423848c1dfd6d289e0e3e475bee3db59dea65",
+          "blockNumber": 121,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "27",
+          "transactionHash": "0xdf738874248117c23e6653612c57db4eea49dcdafd4de3cbe23b6fc4f2391b83",
+          "blockHash": "0x66b0ff6d501c4a80ef5fbf818147e366225fa49b3137245441c05c5dac6d15b6",
+          "blockNumber": 122,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 13,
+              "moves": 13,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 67
+            },
+            {
+              "toward": 12,
+              "moves": 13,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 67
+            }
+          ],
+          "rewards": [
+            0.6460077590676923,
+            5.458592690989728
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 38,
+              "moves": 72,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 8
+            },
+            {
+              "toward": 39,
+              "moves": 73,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 7
+            }
+          ],
+          "rewards": [
+            -1.539903967574735,
+            2.5065797285210447
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 10,
+              "moves": 17,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 63
+            },
+            {
+              "toward": 17,
+              "moves": 17,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 63
+            }
+          ],
+          "rewards": [
+            -1.708094857220855,
+            6.112844683573594
+          ]
+        }
+      }
+    },
+    {
+      "seed": 831193,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "27",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 831193,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0xac9b53785a8c00e4b4b55a96362a3c9e9e7fe954f1b30e81543e0c6cda571344",
+        "blockHash": "0x2c0bd7f9af43dfb6e164591cfa9cf38b8f7b236a651373a630822e904cc62c6d",
+        "blockNumber": "123",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "28",
+          "transactionHash": "0xf068d0a4644c00d4d63fdb3f7ca5f1a72a25fc2285187d2129f4413463b94340",
+          "blockHash": "0xb7f035d2042177e7a4504ef0f5e5b7e4c5c63cd5089c66c20b585655b626ed6f",
+          "blockNumber": 124,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "28",
+          "transactionHash": "0x6f356d205eb106bb8fcdad15dc3f579d38799b241e9a4b90ba66e078d9017e4f",
+          "blockHash": "0xab4a052d234cccff61ffd59a50745eb1f8c6279b80ead70933be5f2eb2cd77cd",
+          "blockNumber": 125,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 26,
+              "moves": 26,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 54
+            },
+            {
+              "toward": 22,
+              "moves": 33,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 47
+            }
+          ],
+          "rewards": [
+            7.438942791828748,
+            3.3983762706172995
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 30,
+              "moves": 67,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 13
+            },
+            {
+              "toward": 29,
+              "moves": 70,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 10
+            }
+          ],
+          "rewards": [
+            -3.5863056228269747,
+            -3.306729363249655
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 31,
+              "moves": 31,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 49
+            },
+            {
+              "toward": 30,
+              "moves": 32,
+              "collected": 1,
+              "hazardSteps": 8,
+              "rest": 48
+            }
+          ],
+          "rewards": [
+            7.105014161087098,
+            -6.8584057128612885
+          ]
+        }
+      }
+    },
+    {
+      "seed": 831342,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "28",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 831342,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0x3cbc6e988392f528337974feb9cce62b77b79364ebaad0b4bc04ff7299eefb02",
+        "blockHash": "0xc31c8f7352e893b6b8f5960e69cba27965ec10992d2e57dc3a1e21a181b7d49a",
+        "blockNumber": "126",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "29",
+          "transactionHash": "0x2020f8628420d597960f206305621b6a8bc72c8ccd49d0e735f8afd60bf19b36",
+          "blockHash": "0x0363561e1caf683a118ab7df3d60e69facf848ebcfe26fcf0d7d98f92e26b704",
+          "blockNumber": 127,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "29",
+          "transactionHash": "0xcd7f5ff3498ddee5fa016d2d7ffc7429810a433612c0931d2a02bb866f08ba32",
+          "blockHash": "0xb0511d438c9dc50305ed209e562aff1757c096a896bf8819ab803440a2249048",
+          "blockNumber": 128,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 38,
+              "moves": 39,
+              "collected": 1,
+              "hazardSteps": 6,
+              "rest": 41
+            },
+            {
+              "toward": 38,
+              "moves": 39,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 41
+            }
+          ],
+          "rewards": [
+            -0.6876362211513204,
+            9.760275308165708
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 35,
+              "moves": 71,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 9
+            },
+            {
+              "toward": 29,
+              "moves": 69,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 11
+            }
+          ],
+          "rewards": [
+            -3.0811055424314437,
+            -4.484082525741367
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 39,
+              "moves": 40,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 40
+            },
+            {
+              "toward": 34,
+              "moves": 40,
+              "collected": 1,
+              "hazardSteps": 4,
+              "rest": 40
+            }
+          ],
+          "rewards": [
+            10.562585571753667,
+            2.5111421698790153
+          ]
+        }
+      }
+    },
+    {
+      "seed": 831491,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "29",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 831491,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0xdce8f8ed225f41e3010064fe567a86b76ba29bfe8b1786627c45f24ed4ec3424",
+        "blockHash": "0x29ebfff50fda5bc04d50bd5209a96efdeecc83bb6bb93564fbc98ad2cbedb229",
+        "blockNumber": "129",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "30",
+          "transactionHash": "0xaa8bb440593b57686c7e27030dfec6bf610a9d96dea7ccca9b653e939cb0b1c7",
+          "blockHash": "0xee1c648857759d50f0514e43e18d0c5f62ebd65c954b513e9470b50bfd33cf24",
+          "blockNumber": 130,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "30",
+          "transactionHash": "0xb1b080e78f6bd765d5bdac97daf5d51ecb71309ff260f633a013f41d7987e0d0",
+          "blockHash": "0xf2e9e69bf60c194df9aa86da0b46e8744808bb4104d1ec0bd04d7d49aaf7db89",
+          "blockNumber": 131,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 29,
+              "moves": 34,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 46
+            },
+            {
+              "toward": 24,
+              "moves": 31,
+              "collected": 0,
+              "hazardSteps": 1,
+              "rest": 49
+            }
+          ],
+          "rewards": [
+            10.169180969555747,
+            -0.18317144152870138
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 35,
+              "moves": 71,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 9
+            },
+            {
+              "toward": 28,
+              "moves": 67,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 13
+            }
+          ],
+          "rewards": [
+            -3.484119966569561,
+            -3.008586663818921
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 23,
+              "moves": 25,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 55
+            },
+            {
+              "toward": 25,
+              "moves": 25,
+              "collected": 1,
+              "hazardSteps": 2,
+              "rest": 55
+            }
+          ],
+          "rewards": [
+            5.416508595520541,
+            4.276581566951143
+          ]
+        }
+      }
+    },
+    {
+      "seed": 831640,
+      "environment": {
+        "name": "BioAgentStimulusAccepted",
+        "chainId": "31337",
+        "registryAddress": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+        "agentId": "1",
+        "nonce": "30",
+        "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+        "configuration": {
+          "schema": "bioagent.foraging-world.v1",
+          "seed": 831640,
+          "width": 36,
+          "height": 22,
+          "foodMargin": 2,
+          "hazards": [
+            {
+              "x": 12,
+              "y": 8,
+              "radius": 2.2
+            },
+            {
+              "x": 25,
+              "y": 15,
+              "radius": 2.4
+            }
+          ]
+        },
+        "transactionHash": "0xdfc64f4f2499778b800ca2325fb8d2920b25e0a4a165320b75fafdb44b07c842",
+        "blockHash": "0x1f27545354d7e59a8dd3c8fefd63223bc4a77db2af96ee02903e41ccf94d63af",
+        "blockNumber": "132",
+        "logIndex": "0",
+        "receiptVerified": true
+      },
+      "stimuli": [
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 1,
+          "revision": "31",
+          "transactionHash": "0x6f0d22369cb47d209ef5dc79a45a73126d75ebb2bf49af439b669509e7ca91c3",
+          "blockHash": "0xbce2c9d4fb99fda45f43becc079606f195fc5e1534f27aeb404f1bd9ae55af8f",
+          "blockNumber": 133,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        },
+        {
+          "kind": "confirmed-bioagent-status",
+          "chainId": 31337,
+          "logIndex": 0,
+          "registry": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+          "agentId": 2,
+          "revision": "31",
+          "transactionHash": "0xa71b0e4b3f16b7fd8f1ac18470985ad7fe68c5437e1cc71535ef5af9b3343edc",
+          "blockHash": "0x2a7e37340c46dccd7732f14b43b8a85f775c24edcfe430bd2f43a48392ef38e8",
+          "blockNumber": 134,
+          "stimulus": 5500,
+          "energy": 7000,
+          "activity": 2
+        }
+      ],
+      "results": {
+        "neural": {
+          "behavior": [
+            {
+              "toward": 48,
+              "moves": 48,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 32
+            },
+            {
+              "toward": 18,
+              "moves": 25,
+              "collected": 1,
+              "hazardSteps": 0,
+              "rest": 55
+            }
+          ],
+          "rewards": [
+            12.844966461401121,
+            3.1722375968582748
+          ]
+        },
+        "random": {
+          "behavior": [
+            {
+              "toward": 41,
+              "moves": 73,
+              "collected": 0,
+              "hazardSteps": 0,
+              "rest": 7
+            },
+            {
+              "toward": 36,
+              "moves": 66,
+              "collected": 0,
+              "hazardSteps": 16,
+              "rest": 14
+            }
+          ],
+          "rewards": [
+            0.20933725445064927,
+            -29.695170033193094
+          ]
+        },
+        "direct": {
+          "behavior": [
+            {
+              "toward": 55,
+              "moves": 60,
+              "collected": 0,
+              "hazardSteps": 5,
+              "rest": 20
+            },
+            {
+              "toward": 60,
+              "moves": 60,
+              "collected": 2,
+              "hazardSteps": 0,
+              "rest": 20
+            }
+          ],
+          "rewards": [
+            -0.5506911136174653,
+            16.29321456944881
+          ]
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "protocol.json": {
+      "path": "artifacts/foraging-validation-v1/protocol.json",
+      "sha256": "c2842d7f57d7c5335cae48ac688e3178f67c68f31303fb08f5b66ba843733eed"
+    },
+    "selection.json": {
+      "path": "artifacts/foraging-validation-v1/selection.json",
+      "sha256": "3b6e13319e2b121ab138a23f5cb45290a5ce3beeedead727fa0be38d667adfd1"
+    },
+    "test.json": {
+      "path": "artifacts/foraging-validation-v1/test.json",
+      "sha256": "7e74f529dcf45054c5481f4b4c2cdf5bb75338a50871c38b0be4170094e5c3d5"
+    },
+    "direct-control.json": {
+      "path": "artifacts/foraging-validation-v1/direct-control.json",
+      "sha256": "fa6ac826f768c16c03e808059f518631bc1f500a9413ff4d1d3d821f5da15c9a"
+    },
+    "frozen-test.json": {
+      "path": "artifacts/foraging-validation-v1/frozen-test.json",
+      "sha256": "fdc088b9dfc43c9ec0684549354a4db3a6cbb90fe9bf6cc0bc4cacac17ca42fd"
+    }
+  }
+}
