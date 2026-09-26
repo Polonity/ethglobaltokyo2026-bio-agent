@@ -1,19 +1,19 @@
 # Biological Agent Protocol — English spoken demo script
 
-This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:25 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
+This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:40 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
 
 Read one short line at a time and leave room for the GUI. MOMO: MOH-moh. SORA: SOH-rah. Use a calm conversational voice for explanations and a brighter sports-commentary voice for the approach and collection. Do not rush to imitate a professional race caller.
 
 ## 0:00–0:25 · What if this fly ran on onchain data?
 
-When I saw this model of a fly's neural circuitry, I had a thought.
+When I saw MaleCNS version one point zero—a map of a male fruit fly's neural connections—I had a thought.
 
 What if we turned it into an agent driven by onchain data?
 
 So we built an application.
 Meet MOMO—and SORA.
 
-What will these two do when we send them stimuli through transactions?
+How will they respond to onchain stimuli?
 
 ## 0:25–0:50 · First, a failed attempt
 
@@ -32,7 +32,7 @@ MOMO, are you just going to keep going?
 It moved, but it didn't approach food.
 We found that when actions had identical scores, the selection code kept choosing right.
 
-## 0:50–1:30 · The Biological Agent Protocol
+## 0:50–1:45 · The Biological Agent Protocol
 
 [Environment GUI and transaction receipt]
 
@@ -50,10 +50,13 @@ Neural computation and movement run off-chain.
 
 [Previously completed learning evaluation]
 
-We fixed the directional bias and collected experience across multiple layouts.
+We fixed the directional bias.
+On Anvil, a local blockchain, we collected experience across twelve food-and-hazard layouts.
+Using rewards from those actions, we trained the output layer to score actions.
+The neural connections stayed fixed.
 Let's try it again.
 
-## 1:30–2:10 · MOMO and SORA try again
+## 1:45–2:25 · MOMO and SORA try again
 
 [Normal speed; speak after the movement appears]
 
@@ -80,7 +83,7 @@ One food item each.
 Recorded stimuli reached the model, and its decisions became actions in the application.
 The sensory encoding and action readout are engineered.
 
-## 2:10–2:35 · What worked—and what remains unresolved
+## 2:25–2:50 · What worked—and what remains unresolved
 
 [Recorded validation results]
 
@@ -92,7 +95,7 @@ Our hazard-avoidance criterion was not met either.
 
 Running the experiment revealed both working behavior and unresolved problems.
 
-## 2:35–3:00 · Beyond the terrarium
+## 2:50–3:15 · Beyond the terrarium
 
 [Separate verified market recording]
 
@@ -104,7 +107,7 @@ Decisions lead to asset operations, with actual token transfers we can inspect.
 These are local test transactions.
 They do not demonstrate profitability.
 
-## 3:00–3:25 · Our proposal
+## 3:15–3:40 · Our proposal
 
 [Return to the foraging GUI]
 
@@ -115,6 +118,12 @@ Deliver a stimulus. Turn the response into a decision. Execute an action in an a
 
 We propose the Biological Agent Protocol as a shared interface for using biologically derived models in applications.
 
+## Model attribution on screen (not spoken)
+
+Pronunciation: MaleCNS = “male C-N-S.” This is connectome data used by our runtime, not a validated behavioral model supplied by the dataset authors.
+
+Show `Connectome data: MaleCNS v1.0 · male-cns.janelia.org` during the opening. Display the full credit in [video-credits.md](video-credits.md) over the closing GUI for at least 10 seconds, above the spoken captions. Credits must be burned into the final video; a description link alone is insufficient.
+
 ## Editorial notes
 
 - MOMO collects before SORA in the saved run; confirm visible counter changes before placing each line.
@@ -123,3 +132,5 @@ We propose the Biological Agent Protocol as a shared interface for using biologi
 - Model responses do not establish thoughts, feelings, biological realism, or general superiority.
 - The market uses EOA signers. Describe it as a wallet integration, not an implemented smart-wallet authorization system.
 - The narrative order is editorial, not a claim about when the protocol was first implemented.
+
+- The learning explanation refers to the recorded Anvil foraging experiment, not live training during this shot or the reduced Sepolia demo. The output layer predicts action rewards from neural features; the connectome itself is fixed.
