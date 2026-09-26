@@ -151,7 +151,7 @@ contract FlyV3RouterTest is Test {
         assertEq(router.token1().balanceOf(trader), output + quoted);
     }
 
-    function testFailedMinimumRollsBackBothTokens() public {
+    function testUnmetMinimumRollsBackBothTokens() public {
         uint256 input = router.token0().balanceOf(trader);
         uint256 output = router.token1().balanceOf(trader);
         vm.expectRevert("partial/slippage");
