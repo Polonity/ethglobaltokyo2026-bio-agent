@@ -43,3 +43,11 @@ node scripts/submission/check-documentary.mjs
 英語原稿を361語から238語へ短縮。3分56秒のまま、約60語/分（表記上の語数。製品番号を読む音節分は増える）を目安に、図や動きを見る間を確保。専門名とリッジ回帰の採用理由を残し、文法と一般表現を簡略化した。
 
 CPU名の読み上げは削除。神経活動・行動・報酬の記録と、リッジ回帰で各行動の報酬を予測する学習を短文で説明する。動画の長さとあいさつの余白は維持。
+
+## 本人録音を重ねた版
+
+`artifacts/documentary/bioagent-documentary-narrated-en.mp4` が英語字幕＋本人音声版。`bioagent-documentary-narrated-ja.mp4` は日本語字幕＋同じ本人音声の確認版。
+
+動画を再生しながら録音したという本人の説明に基づき、先頭位置を合わせて重ねる。録音は約237.525秒のため、元動画の最終画面を約1.525秒延ばす。声の速度・音量・間は変更しない。既存字幕のタイミングを維持し、単語単位の強制アライメントは行わない。元の無音確認版も保持する。
+
+再生成：`node scripts/submission/add-presenter-audio.mjs <録音ファイルのパス>`。音声付き動画の長さと音声保持の証拠は `artifacts/documentary/narration-production.json`。元AACパケットのハッシュ一致で音声の切断・変更がないことを検証し、映像と音声を全編デコードする。
