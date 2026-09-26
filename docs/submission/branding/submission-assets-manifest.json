@@ -1,0 +1,106 @@
+{
+  "createdAt": "2026-09-26T16:04:43.790Z",
+  "branding": [
+    "logo.png",
+    "cover.png"
+  ],
+  "screenshots": [
+    {
+      "file": "screenshots/01-foraging.png",
+      "title": "Onchain-stimulus foraging: MOMO and SORA",
+      "source": "live GUI screenshot",
+      "url": "http://127.0.0.1:8858/foraging"
+    },
+    {
+      "file": "screenshots/02-learning.png",
+      "title": "Learning results and model comparison",
+      "source": "live GUI screenshot",
+      "url": "http://127.0.0.1:8858/foraging"
+    },
+    {
+      "file": "screenshots/03-onchain-inputs.png",
+      "title": "Onchain environment inputs and transaction evidence",
+      "source": "live GUI screenshot",
+      "url": "http://127.0.0.1:8858/foraging"
+    },
+    {
+      "file": "screenshots/04-shared-market.png",
+      "title": "Shared market: biological agents and smart wallets",
+      "source": "frame from recorded GUI",
+      "recording": "artifacts/submission-presenter-rerecord/raw/page@5396d79765582ca24c4432a2a6f3f41f.webm",
+      "seconds": 153
+    },
+    {
+      "file": "screenshots/05-aqua-settlement.png",
+      "title": "1inch Aqua settlement transaction",
+      "source": "frame from recorded GUI",
+      "recording": "artifacts/submission-presenter-rerecord/raw/page@5396d79765582ca24c4432a2a6f3f41f.webm",
+      "seconds": 227
+    },
+    {
+      "file": "screenshots/06-uniswap-settlement.png",
+      "title": "Uniswap settlement transaction",
+      "source": "frame from recorded GUI",
+      "recording": "artifacts/submission-presenter-rerecord/raw/page@5396d79765582ca24c4432a2a6f3f41f.webm",
+      "seconds": 234
+    }
+  ],
+  "files": [
+    {
+      "file": "logo.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1152242,
+      "sha256": "975432a0266e48ceddafcfd14a92eb42bbbeae95a28d5e14b4acf344ed81747e"
+    },
+    {
+      "file": "cover.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1641704,
+      "sha256": "085aeb94a29d8996603048da0be3c54661fddb409373696435949e5ce83ade5f"
+    },
+    {
+      "file": "screenshots/01-foraging.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 2939864,
+      "sha256": "8b293f287e3770ab71a01eea70501f411308ce1e6438cc795bddde7cbd2ea452"
+    },
+    {
+      "file": "screenshots/02-learning.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 464730,
+      "sha256": "606c33fa4c4ad3028fb64f9a73c86dade6845ef3f330e22ba930e9b413cf79fc"
+    },
+    {
+      "file": "screenshots/03-onchain-inputs.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 474206,
+      "sha256": "a3889bb7998da14e65625dc0793c944a864c3b2aa61f4f9bfe6479ff4d2c2fb7"
+    },
+    {
+      "file": "screenshots/04-shared-market.png",
+      "width": 1920,
+      "height": 960,
+      "bytes": 1986667,
+      "sha256": "64bf2e815e7eb9db7ba861953ef41a153a7058c3396974ce0bb8456eecd72226"
+    },
+    {
+      "file": "screenshots/05-aqua-settlement.png",
+      "width": 1920,
+      "height": 960,
+      "bytes": 658004,
+      "sha256": "a8550e54ff423c19b57df5ff839414be1a63c271d3871f7f6723a851c6172b7d"
+    },
+    {
+      "file": "screenshots/06-uniswap-settlement.png",
+      "width": 1920,
+      "height": 960,
+      "bytes": 646241,
+      "sha256": "fa682566d12178f9f6e7b9908ce92e545179aa533f8aa606e3abf9f765c56886"
+    }
+  ]
+}
