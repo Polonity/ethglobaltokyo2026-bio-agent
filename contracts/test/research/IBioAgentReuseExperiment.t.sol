@@ -52,7 +52,9 @@ contract IBioAgentReuseExperiment is Test {
     }
 
     function secondStrategy(uint256 agent) internal view returns (bytes memory) {
-        return abi.encode(SharedAquaFlyApp.Strategy(agent, 1, 30, 1 ether, block.timestamp + 300, MODEL, bytes32(0)));
+        return abi.encode(
+            SharedAquaFlyApp.Strategy(agent, 1, 30, 1 ether, block.timestamp + 300, MODEL, bytes32(0))
+        );
     }
 
     function revise(uint256 agent) internal {
