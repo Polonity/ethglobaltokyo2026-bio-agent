@@ -1,6 +1,6 @@
 # One-minute sponsor pitches
 
-> **履歴資料 / Historical snapshot.** 現行実装の説明には[最新の日英スライド・実演手順・Q&A](../submission/presenter-kit/README.md)を使用してください。このディレクトリの旧スライドは作成時点の保存資料で、Sepolia配置前の記述や未実装の提案を含みます。Use the current presenter kit; these older proposals are not a current implementation guide.
+> **Historical snapshot.** Use the [current presenter kit](../submission/presenter-kit/README.md) for implementation explanations. These older slides retain pre-Sepolia statements and unimplemented proposals.
 
 The user's latest direction is concise material that conveys the message in about one minute. These were the sponsor-discussion materials at that stage. The current presenter kit above supersedes them for implementation explanations.
 

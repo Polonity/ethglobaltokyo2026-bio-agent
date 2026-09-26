@@ -1,69 +1,46 @@
-# BioAgentの必要性と既存ERCとの境界
+# BioAgent and existing ERC boundaries
 
-調査日: 2026-09-26。一次資料の公開仕様を対象にした設計レビュー。網羅的な先行技術調査や新規性の証明ではありません。Draft仕様は変更され得ます。以下の「不足」は当該仕様の目的外という意味で、他プロジェクトに実装が存在しないという主張ではありません。
+Research snapshot:2026-09-26. This is a primary-source design review, not exhaustive prior-art or novelty proof. Drafts may change; out of scope for a cited specification does not mean absent from all projects. See [additional rationale](why-bioagent.md).
 
-追加調査: [オンチェーン入力・ERC-8004の活動・コネクトーム研究からの設計根拠](why-bioagent.md)。一般Agentと共有する基盤と、生物由来モデルを解釈する拡張profileを分ける。
+## Position
 
-## 結論
+Propose an interoperable profile relating measured structure, body state, and experience to provenance-bearing stimuli and reviewable histories. Identity/ownership and wallet execution authority remain separate. Learning/state/replay are general AI needs; the additional semantics concern biological origin, sensory/motor mappings, body feedback, and plasticity location.
 
-提出物の中心は **生物由来の構造・身体状態・経験で変化する個体を、出典付きの刺激と再検証可能な履歴で扱う相互運用プロファイル** とする。
-
-NFT/SBTはユーザーが挙げた「基底仕様と用途別派生」の例であり、今回追加すべき機能ではない。ウォレットの資産操作権限も別の責務とする。その上でBioAgentは「どの生物データから、どんな仮定でモデルを作り、どの身体状態の個体へ何を入力し、どこが変わったか」を明示する。ハエの絵、可変な腹回り、hash付きモデル、刺激イベントのどれか一つだけを新規性とはしない。
-
-学習・内部状態・再現性は一般のAIにも必要で、生物Agentだけの性質ではない。本プロジェクトの技術的な差分候補は、それらを**生物の構造的出典、感覚・運動の対応、身体との閉ループ、可塑性の位置**に結び付ける具体的な意味付けにある。独立ERC化する価値は実装間の相互運用で検証する。
-
-## 既存仕様の調査と採用判断
-
-| 一次資料 | 扱っているもの | BioAgentでの判断 |
+| Specification | Subject | Project treatment |
 | --- | --- | --- |
-| [ERC-721](https://eips.ethereum.org/EIPS/eip-721)、[ERC-165](https://eips.ethereum.org/EIPS/eip-165) | 個体の所有・譲渡、interface discovery | 識別・discoveryを検討する際の先行例。ERC-721の実装をBioAgentの要件にしない |
-| [ERC-5192](https://eips.ethereum.org/EIPS/eip-5192) | NFTのロック状態 | 基底と拡張の関係の先行例。BioAgentの必須/推奨拡張にはしない |
-| [ERC-5484](https://eips.ethereum.org/EIPS/eip-5484) | 受領同意・変更不能なburn権限を含むSBT | 同意を含む派生仕様の調査対象。資格発行やSBTは今回の対象外 |
-| [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) | NFTに結び付くアカウント | 資産操作とAgentの判断を分ける参考。現在のwallet参照だけでは準拠しない |
-| [ERC-8004](https://eips.ethereum.org/EIPS/eip-8004)（Draft） | Agent識別・評判・検証のregistry | Agent識別の統合候補。新しいidentity registryを提出の独自性にしない。現契約は準拠していない |
-| [ERC-7857](https://eips.ethereum.org/EIPS/eip-7857) | AI Agentの非公開メタデータと検証付きデータ移転 | モデルや記憶の移転は既存テーマ。将来の非公開checkpointの受け渡しに検討。現NFTの譲渡はデータ配送を保証しない |
-| [ERC-8350](https://eips.ethereum.org/EIPS/eip-8350)（Draft） | 認可されたAgent記憶状態の連続的なcommitment | 生の記憶を公開せず履歴を結ぶ候補。汎用履歴registryを再発明せず、BioAgentの意味付けを解釈profileとして接続する方向。未接続 |
-| [ERC-7007](https://eips.ethereum.org/EIPS/eip-7007) | AI生成物と入力・モデルの関係を検証するinterface | 出力検証の既存テーマ。生成物の証明と、生物回路・身体状態・学習過程の妥当性は区別する。未実装 |
-| [ERC-4906](https://eips.ethereum.org/EIPS/eip-4906) | NFTメタデータの更新通知 | 将来の確定した外見snapshot更新に再利用。毎フレームの描画通知には使わない |
-| [ERC-7496](https://eips.ethereum.org/EIPS/eip-7496)（Draft） | オンチェーンの動的trait | 腹回りの保存先候補だが、それだけでは身体モデルにならない。値変更は明示的オンチェーン操作を要するため、時間経過だけで変わる空腹値をそのまま準拠traitとはしない |
-| [ERC-8001](https://eips.ethereum.org/EIPS/eip-8001) | 複数Agentのintentと承認による協調 | 複数個体の契約行為が必要になった段階の任意拡張。感覚刺激の受信は売買intentへの承認と別 |
+| [ERC-721](https://eips.ethereum.org/EIPS/eip-721), [ERC-165](https://eips.ethereum.org/EIPS/eip-165) | Ownership/transfer; interface discovery | Prior art, not mandatory tokenization |
+| [ERC-5192](https://eips.ethereum.org/EIPS/eip-5192) | NFT lock state | Extension example, not required BioAgent functionality |
+| [ERC-5484](https://eips.ethereum.org/EIPS/eip-5484) | Consent and immutable burn authorization | Credential/SBT issuance outside scope |
+| [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) | NFT-bound accounts | Separate assets from decisions; a wallet reference is not compliance |
+| [ERC-8004](https://eips.ethereum.org/EIPS/eip-8004) | Identity/reputation/validation registries (Draft at review) | Candidate identity integration; current contracts do not conform |
+| [ERC-7857](https://eips.ethereum.org/EIPS/eip-7857) | Private metadata and verified data transfer | Possible private-checkpoint transfer; token transfer alone does not deliver state |
+| [ERC-8350](https://eips.ethereum.org/EIPS/eip-8350) | Authorized memory-state commitments (Draft at review) | Possible history binding, not implemented |
+| [ERC-7007](https://eips.ethereum.org/EIPS/eip-7007) | Generated-output/input/model verification | Output proof differs from biological/learning validity; not implemented |
+| [ERC-4906](https://eips.ethereum.org/EIPS/eip-4906) | Metadata-update notification | Possible committed appearance snapshots, not frame updates |
+| [ERC-7496](https://eips.ethereum.org/EIPS/eip-7496) | Dynamic onchain traits (Draft at review) | A stored belly trait alone is not a body model; time-varying hunger is not automatically an onchain update |
+| [ERC-8001](https://eips.ethereum.org/EIPS/eip-8001) | Multi-agent intents/approval | Optional future coordination; sensory input is not consent to trade |
 
-既存規格への「接続候補」は準拠や実装済みを意味しない。対応契約・署名・権限・データ形式の適合を別途検証する。
+Candidates require separate contract/signature/authority/data-format conformance checks.
 
-## BioAgentとして必要な6つの契約
+## Six semantic responsibilities
 
-| 要件 | なぜ必要か | 最小の記録 | 不足すると起こること |
-| --- | --- | --- | --- |
-| 生物的出典とモデル仮定 | 同じハエでもdataset版・部分回路・数理モデルで意味が違う | dataset release/digest、抽出条件、回路digest、dynamics設定、ライセンス、適用範囲付き主張 | Q学習をMaleCNS実行と誤表示する |
-| 感覚・運動マッピング | 市場価格はハエ本来の感覚ではない | 入力adapter版、単位、正規化、対象channel/cell、出力decoder版 | 「価格上昇＝買う」という外付けルールを神経回路の判断と呼ぶ |
-| 身体と環境の閉ループ | 空腹・消化・疲労などが次の判断を変える | body model版、状態、環境版、更新順序 | 腹回りが見た目だけで判断に入らない |
-| 時間と再実行 | chain時刻とシミュレーション時刻は一致しない | tick、dt、PRNG状態、入力順序、pause/stale/欠測方針 | 加速再生や停止中に競技条件が変わる |
-| 可塑性と個体の連続性 | 何を学んだか・同じ個体かを区別する | 凍結/更新対象、親checkpoint、候補/採用policy、経験範囲、fork由来 | モデル差替えやコピーを学習・同一個体と混同する |
-| 条件を揃えた評価 | 行動変化だけでは改善を示せない | 同一入力tape、学習なしbaseline、held-out分割、費用、反復、評価時の身体状態 | 単発PnLや「？」演出を学習成功の証拠にする |
+| Responsibility | Minimum record | Failure avoided |
+| --- | --- | --- |
+| Biological provenance/assumptions | Dataset/digest, extraction, graph, dynamics, license, scoped claims | Calling synthetic Q-learning MaleCNS execution |
+| Sensory/motor mapping | Adapter version, units, normalization, channels/cells, decoder | Calling an external price→buy rule a neural decision |
+| Body/environment loop | Body/environment versions, state, update order | Cosmetic body changes with no decision input |
+| Time/replay | Tick, dt, PRNG, order, pause/stale/missing policy | Changing conditions during pause/acceleration |
+| Plasticity/continuity | Frozen/trainable components, parent checkpoint, candidate/adopted policy, experience/fork lineage | Confusing replacement/copying with learning or identity |
+| Matched evaluation | Shared tape, frozen baseline, held-out split, costs, repetitions, body state | Treating one profit or animation as learning evidence |
 
-[MaleCNS公式](https://male-cns.janelia.org/)は接続データの出典であり、本ゲームの売買判断・身体モデル・学習則の妥当性を保証する資料ではない。サイト参照だけではconnectome-derivedと名乗らない。抽出して実行する成果物まで追跡する。
+[MaleCNS](https://male-cns.janelia.org/) supplies connectivity, not validation of this game's trading/body/learning rules. Trace the actual extracted executable artifacts, not merely a website citation.
 
-## 生物モデルの主張を分類する
+Classify synthetic-demo, bio-inspired, and connectome-derived separately. Validation is an independent scoped claim with conditions/evidence/reviewer, not a global biological-validity boolean. Action-derived bubbles are not neural activity measurements.
 
-これは優劣を示すランキングではなく、混同を防ぐ宣言。
+## Profile inheritance and standardization
 
-- `synthetic-demo`: 生物データを使わない実装。**現行Q-learningはここ**。
-- `bio-inspired`: 生物の考え方を取り入れたモデル。実測接続グラフ使用とは別。
-- `connectome-derived`: datasetからの抽出・変換を追跡でき、その構造を実行モデルが利用する。
-- `validation`: 上記と別のフィールド。対象行動・実験条件・証拠・検証者を示す。「生物として正しい」という一括booleanを置かない。
+Share model/transition meaning; task profiles add channels, units, and actions, not separate ownership schemes. Future control changes must preserve explicit state lineage; forks should identify parent checkpoints/new branches. Portable persistent forks were not implemented in this review.
 
-神経活動の表示と、行動ラベルから作る感情吹き出しも区別する。現行の吹き出しは後者。
+The mistakenly introduced BioAgentNFT/BioAgentSBT experiments were removed; stimulus transport moved to an ordinary registry. Prioritize [Embodied Learning Profile](embodied-learning-profile.md) semantics and conformance. Existing ownership/signature/memory mechanisms can be composed; a mailbox alone is not a biological invention.
 
-## 「共通仕様と派生」の正しい意味
-
-基底は生物モデルと状態遷移の意味を共有する。採餌用profile、市場観測用profileなどが、必要な入力channel・単位・行動を追加する。派生ごとに所有権方式を作ることではない。
-
-個体の管理主体と経験の連続性は別の概念。将来、管理主体が変わる場合も、学習済みstateを黙って消すことや、履歴の異なるコピーを同一個体として扱うことを避ける。forkは親checkpointを参照する新しい個体/branchとして設計する。現行には完全checkpoint永続化・fork機構がない。
-
-先行して追加した`BioAgentNFT`/`BioAgentSBT`は要望の誤解に基づく実験コードであり、**今後の仕様の根拠・提出の主軸にはしない**。その後の実装で撤去し、刺激拡張だけを通常のRegistryへ移した。
-
-## 標準化の最小範囲
-
-最優先は[Embodied Learning Profile](embodied-learning-profile.md)の意味付けとconformance項目。所有権、署名、記憶の保存・認可、検証機構は既存規格を組み合わせる。既存`IBioAgentStimulus`は輸送用の実験mailboxであり、その存在だけをBioAgent固有の発明としない。
-
-[設計方針](bioagent-design-direction.md)を起点とし、当面はERC-8004等で識別されるAgentにも添付できるoff-chain profileとして育てる。独立ERCにするか、既存仕様の拡張profileとして提案するかは、2つの独立実装で同じ記録を読めることを確認して判断する。標準数・interface数を増やすことを成果指標にしない。
+Start with an offchain profile attachable to existing agent identities. Decide standalone ERC versus extension only after independent implementations read the same records consistently.

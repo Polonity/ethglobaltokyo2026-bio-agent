@@ -1,69 +1,44 @@
-# Market Meadow — 実Uniswap入力とペーパートレード
+# Market Meadow — real Uniswap inputs, paper trades
 
-> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+Historical local Anvil/Workers implementation, 2026-09-26. [MaleCNS learning integration](malecns-learning.md) supersedes earlier synthetic/fixed-circuit descriptions below. This is distinct from the later [shared market with actual agent trades](../apps/shared-market/README.md).
 
-2026-09-26。ローカルAnvil + Workersで実装・ブラウザー検証済み。`/market`から開く。
+## Start
 
-## 起動
-
-```bash
+```sh
 npm ci
 npm run local:up
-# 別ターミナル、同じworkspaceで:
 npm run local:market
 # http://127.0.0.1:8798/market
 ```
 
-forge/anvilがPATHにない場合、`FORGE`/`ANVIL`で絶対パスを指定。別ポートで起動した場合は両コマンドに同じ`LOCAL_STATE_DIR`を渡す。検証環境は`.local/embodied`、Anvil 18546、GUI 8799。`local:market`は**新しいテスト市場を作る**操作で、既存市場の継続ではない。実行中の市場画面は設定変更を検知して再読込を要求する。
+Use absolute FORGE/ANVIL if needed and the same LOCAL_STATE_DIR for both commands. Recorded environment: `.local/embodied`, Anvil18546, GUI8799. `local:market` creates a **new test market**, not a continuation. An open GUI detects changed configuration and requires reload.
 
-## 実際にチェーン上で動くもの
+## Onchain execution
 
-- npmの固定版`@uniswap/v3-core@1.0.1`に含まれる公式Factory bytecodeをAnvilへデプロイ。
-- ローカル専用テストtoken2種類、実V3 Pool（fee 3000）、全範囲に近い流動性を用意。
-- `LocalMarket`はMint/Swap callbackを処理する**テスト専用harness**。chainId 31337に限定。一般向けERC20や本番routerではない。
-- `BioAgentStimulusRegistry`に市場用manifest hashと3個体を登録。Workerが登録owner/modelHashを確認し、GUIがmanifest hashを照合する。
-- 価格ボタンはowner限定harnessで実際の50 tokenスワップを実行。GUIがPoolのSwapログを読み、全3匹へ同じ入力を渡す。
-- GUIのソースTXリンクは実際のAnvil receipt。紙約定用の架空TXは作らない。
+Deploy pinned official `@uniswap/v3-core@1.0.1` Factory bytecode, two test tokens, a fee-3000 V3 pool, and near-full-range liquidity. LocalMarket handles mint/swap callbacks as a chain-31337-only test harness, not a production router. Register three agents with the market manifest; Worker verifies owner/hash and GUI verifies artifacts.
 
-これは合成SwapEventFixtureとは異なる**実Uniswapコアのローカルpool**。Mainnet/Sepoliaの市場や流行tokenではない。Factory検証はこのローカルに配置したFactoryとの一致であり、本番canonical deployment認証を意味しない。Uniswap Trading APIはこの経路では使用しない。
+Price controls execute real 50-token swaps. All three agents consume the same pool logs; TX links identify actual local receipts, never fictitious paper-fill transactions. This is real local V3 core, not SwapEventFixture, public mainnet/Sepolia, or the Trading API. Factory verification concerns the local deployment. Dependency licenses remain those of the distributed core, not the project's MIT license.
 
-コアartifactのライセンスはインストールされた`@uniswap/v3-core/LICENSE`等の配布物に従う。本プロジェクトのMIT表記で依存コアのライセンスを置き換えない。
+## Decisions and body
 
-## Agentの判断
+The original PaperArena predicts immediate rewards from price direction, holdings, and fullness bins. MOMO momentum, SORA contrarian, and KIKI cautious biases are engineered initial priors with seeded exploration, not learned knowledge or instincts. Attention does not force trading. Positive rewards affect synthetic fullness; the shared body function advances 0.2 simulation seconds per observation. The historical eight-second learning timer is superseded by the newer chunked learner.
 
-`PaperArena`はsynthetic reward-prediction model。市場変化の方向、保有の有無、満腹度のbinを実際の観測keyにする。MOMOは勢い、SORAは逆張り、KIKIは慎重という**工学的な初期prior**から始め、seed付き探索を行う。これらを学習済み知識や生物の本能とは呼ばない。
+## Fills and PnL
 
-価格変化は注目度にも反映するが、注目度が高くてもhold/skipが可能。利益に相当する正の報酬で満腹度を増やすのはゲーム上の比喩。身体モデルは採餌と同じ関数で、市場では1観測につき0.2秒相当の身体更新を行う。学習表示の8秒は別の実行タイマーである。
+Start with 100 virtual token1. Buy spends 10 token1; sell liquidates all held token0. Wait for a Swap observation after the decision block. A block-hash-checked eth_call to Pool.swap derives exact output through callback revert without submitting the virtual order.
 
-## 約定とPnL
+Quotes include pool fees and size impact. Additional assumed cost is 0.001 token1 per fill. Mark holdings using a liquidation quote and assumed liquidation cost; PnL is cash + liquidation value − initial equity. Continue marking positions during learning. Agents' paper orders do not consume shared liquidity. This omits real concurrent-order effects, MEV, and execution guarantees.
 
-初期仮想資金100 token1。買い注文は10 token1、売りは保有token0全量。注文は判断したブロックより後のSwap観測まで待つ。quoteは指定blockHashを確認した上で、そのブロックに対する`eth_call`で実Pool.swapを実行し、callback revertから正確な入力数量の出力量を得る。チェーンに仮想注文を送信しない。
+Test tokens have 18 decimals; amounts use BigInt and shared types use decimal strings. Only display converts to fractions. On quote failure, reject the whole observation update, preserving balances/RNG, and retry the same cursor after recovery. Reorg stops the round and requires a new one rather than erasing losses and continuing.
 
-quoteにはpool feeとサイズによる価格影響が含まれる。追加費用は明示した仮定の0.001 token1/約定。保有の評価にも売却側quoteと想定清算費用を用いる。表示はcash + liquidation value - initial equityで、実現/未実現を共通MarketViewでも区別する。学習中も保有資産の時価評価は続く。
+## Historical learning and GUI
 
-各ハエの仮想注文は互いにpoolの流動性を消費しない。現実の同時発注・MEV・約定保証・価格予測を再現するものではない。tokenは18 decimalsのローカルテストtokenに限定。金額計算はBigInt、共有型へ渡す値は十進文字列。画面表示だけ小数へ変換する。
+The original learner reconsidered a lower-ranked agent every six observations, canceled pending orders but retained positions, fit on chronological 70%, and selected lower prediction MSE on 30%. This selection slice was not held-out future-market evaluation; improved MSE does not establish improved PnL. [Current lightweight learning](malecns-learning.md) documents the updated schedule.
 
-quote失敗時はその観測の全個体更新を採用せず、未評価表示で停止する。残高や乱数を一部だけ進めない。通信復帰時に同じcursorから再試行する。Reorg時は競争を停止して新ラウンド開始を要求し、過去損失を消して継続したとは扱わない。
+Shared MarketView/ForagingView display actual body/input/account state, token-position movement, learning pause, cash/holdings/PnL/ledger, receipts, export, languages, and mobile layout. Brain/ledger/learning run in the browser; reload begins a new competition.
 
-## 学習
+## Checks and limits
 
-6観測ごとに成績下位の対象が8秒間その場で考え直す。履歴を時系列70/30に分け、前半で行動別の即時報酬予測を更新、後半の予測MSEが下がる場合だけ候補を採用する。保有は継続し、未約定注文は取り消す。
+`npm run test:paper` covers later-block fills, fees, deduplication, atomic quote failure, learning-time valuation, order/quote agreement. `LOCAL_GUI_URL=http://127.0.0.1:8799 npm run test:market` generates 12 real swaps and checks paper fills, PnL, learning, shared types, receipts, languages/mobile. Evidence: `artifacts/market-browser/`.
 
-後半は候補選択用であり、未使用のheld-out将来相場ではない。on-policyの将来PnL改善や収益性は主張しない。学習結果の採否・予測誤差・サンプル数を保存する。
-
-## GUIと型
-
-- 共通`MarketView`で身体・入力・PnLを表示。採餌は同じ基底の`ForagingView`を使用。
-- 3匹の動き、保有tokenへの移動、学習中の停止と「？」、現金・保有・PnL・台帳を表示。
-- 英語/日本語/システム言語、モバイル表示、receipt dialog、JSON実験記録export。
-- 市場Agentには実際のregistry参照を付ける。脳・台帳・学習の実行場所はブラウザーで、再読込は新しい競争。
-
-## 検証
-
-`npm run test:paper`: 次ブロック約定、費用、重複排除、quote失敗時の原子性、学習中の保有評価、順序とquote不一致を検証。
-
-`LOCAL_GUI_URL=http://127.0.0.1:8799 npm run test:market`: 実Swapを12回生成し、紙約定・PnL・学習結果・共有型・receipt・英日切替・mobileをブラウザーで検証。証跡は`artifacts/market-browser/`。
-
-## 範囲外・次の拡張
-
-本番のトレンドtoken取得、Sepolia配置、継続稼働する共有backend、完全なartifact import、cross-runtime checkpoint、独立held-out評価、MaleCNS実行は未実装。現在のlive readerはSwap主体で、任意のMint/Burn等まで含む一般市場oracleではない。既存`SwapEventFixture`のテストは小さな入力経路テストとして残す。
+Trend-token acquisition, public deployment for this mode, persistent shared backend, portable full checkpoints, and independent held-out profitability are separate work. The reader is Swap-focused, not a general Mint/Burn oracle. Small SwapEventFixture tests remain input-path checks.

@@ -1,8 +1,8 @@
-# 開発・検証ガイド
+# Development and verification
 
-## 最初の確認
+## Setup
 
-Node.js 22以上、npm、Foundryのforge / anvilを準備します。Pythonひな型のテストはPython 3.11以上、ブラウザーテストはGoogle Chrome、録画はffmpegも使用します。
+Use Node.js22+, npm, Foundry forge/anvil, Python3.11+ for scaffold tests, Google Chrome for browser checks, and ffmpeg for recordings. Unless stated otherwise, run from the repository root.
 
 ```sh
 npm ci
@@ -10,74 +10,60 @@ git submodule update --init --recursive
 npm run local:up
 ```
 
-全コマンドは特記がなければリポジトリルートで実行します。ツールの場所、ポート変更、停止手順は [ローカル起動](deployment/local-anvil.md) を参照してください。
+[Local setup](deployment/local-anvil.md) covers tools, ports, and shutdown.
 
-## 変更箇所の見つけ方
-
-| 変更したいもの | 主な場所 | 確認 |
+| Change | Main location | Check |
 | --- | --- | --- |
-| Solidityの型・権限・状態 | `contracts/src/` | Foundryテスト、ABI生成、local E2E |
-| ローカルRPC・API | `services/worker/local.js` | local E2E |
-| イベント適用・再接続 | `apps/frontend/chain.js` | local E2E、再読込・reorg |
-| 判定・報酬・学習 | `packages/bio_agent/browser/arena.js` | arenaテスト、実ブラウザー |
-| 画面・操作 | `apps/frontend/` | build、対象モードの実ブラウザー |
-| 模擬履歴の保存 | `services/backend/` | Pythonテスト |
+| Solidity types/authority/state | contracts/src/ | Foundry, ABI generation, local E2E |
+| Local RPC/API | services/worker/local.js | Local E2E |
+| Event application/reconnect | apps/frontend/chain.js | E2E, reload/reorg |
+| Decisions/rewards/learning | packages/bio_agent/browser/arena.js | Arena tests, real browser |
+| GUI | apps/frontend/ | Build and relevant browser mode |
+| Mock history persistence | services/backend/ | Python tests |
 
-コントラクト変更後は `make contracts-abi` で公開ABIを更新します。ローカル配置済みコードは自動更新されません。`local:up` を終了し、再配置して新しい設定で確認します。
+After contract changes run `make contracts-abi`. Existing deployed code does not update automatically; restart/redeploy the selected local instance and verify new configuration.
 
-## 検証コマンドと副作用
+## Commands and side effects
 
-| コマンド | 何を確認するか | 前提・副作用 |
+| Command | Scope | Side effects |
 | --- | --- | --- |
-| `npm run build` | アセット・manifest生成 | distを書き換える |
-| `npm run format:check` | JS・CSS・HTML等の整形 | 読取のみ |
-| `npm run test:arena` | 競争・学習・再現性等 | ネットワーク不要 |
-| `make contracts-build contracts-test contracts-fmt` | Solidityビルド・テスト・整形 | 公開Txを送らない |
-| `make contracts-dry-run` | オフライン配置シミュレーション | Sepoliaへの送信なし |
-| `make contracts-check-deployment` | 配置スクリプトの検証 | 専用ローカルAnvilを使用 |
-| `make test` | Pythonモデル・保存 | 一時データで検証 |
-| `npm run test:local` | GUI→Tx→ログ→反応・再同期 | 起動中のAnvilを書き換える |
-| `npm run test:browser` | 共通GUIの実TX反映 | `test:local`と同じ。起動中のAnvilを使用 |
-| `node scripts/record-demo.mjs` | 3匹モードの操作を録画 | Status更新、artifacts上書き |
+| npm run build | Assets/manifests | Rewrites dist |
+| npm run format:check | JS/CSS/HTML formatting | Read-only |
+| npm run test:arena | Behavior/learning/reproducibility | No network |
+| make contracts-build contracts-test contracts-fmt | Solidity | No public transactions |
+| make contracts-dry-run | Offline deployment simulation | No Sepolia writes |
+| make contracts-check-deployment | Deployment script | Dedicated temporary Anvil |
+| make test | Python models/storage | Temporary data |
+| npm run test:local | GUI→TX→logs→behavior/resync | Changes running Anvil |
+| npm run test:browser | Shared GUI real-TX path | Same local-chain scope |
+| node scripts/record-demo.mjs | Three-agent recording | Status writes; artifact replacement |
 
-ブラウザーテストは `CHROME_PATH` でChromeを指定できます。`test:local` は `.local/deployment.json` を読み、公開URLでは動作しません。automine切替やsnapshot/revertを含むため、発表・録画中には同時実行しないでください。
+Browser tests accept CHROME_PATH. Local tests read `.local/deployment.json`, reject public URLs, and use automine/snapshot/revert; do not run during presentations/recordings. `npm run dev` starts the same Anvil-connected demo as local:up. `npm run test:sepolia:public` reads the public site without chain writes.
 
-`npm run dev`は`local:up`と同じAnvil接続デモを起動します。公開版の確認には`npm run test:sepolia:public`を使い、Sepoliaへの書き込みは行いません。
+Health proves connectivity only; verify actual input application/behavior separately. Record both check results and their scope.
 
-healthの成功はチェーン接続の確認です。個体が入力を反映して動くことは実ブラウザーで別に確認します。コマンドの成功と、どの範囲を検証したかをセットで記録します。
+## Configuration and outputs
 
-## 設定と生成ファイル
-
-| 場所 | 役割 |
+| Path | Purpose |
 | --- | --- |
-| `.local/deployment.json` | 起動中AnvilのRegistry・配置ブロック・owner・モデルhash |
-| `.local/wrangler.json` | ローカル専用Worker設定 |
-| `.local/forge.log` | 配置処理のログ |
-| `wrangler.sepolia.jsonc` | 公開用Worker設定。ローカル書込APIとは別 |
-| `contracts/.env` | Sepolia等の契約開発用設定。手順書に従う |
-| `artifacts/` | 画面・動画・検証JSON。Git対象外 |
-| `data/` | PythonのDB・学習成果物。Git対象外 |
+| .local/deployment.json | Running registry/deployment block/owner/model hash |
+| .local/wrangler.json | Local Worker configuration |
+| .local/forge.log | Deployment log |
+| wrangler.sepolia.jsonc | Public Worker configuration, separate from local writes |
+| contracts/.env | Contract deployment configuration |
+| artifacts/ | Git-ignored screenshots/videos/evidence |
+| data/ | Git-ignored Python DB/training artifacts |
 
-ルート `.env` のCloudflare情報はAnvil起動に不要です。資格情報の値や秘密鍵をドキュメント・スクリーンショット・コミットへ含めないでください。
+Root Cloudflare credentials are unnecessary for local startup. Never put keys or credential values in docs, captures, or commits.
 
-## 変更を引き継ぐ
+## Handoff
 
-1. 変更するモードと保存先を決める。
-2. 実装と該当文書を同時に更新する。
-3. 影響するテストと実操作を確認する。
-4. `git diff --check` と差分を確認する。
-5. 動作のまとまりごとに小さくコミットする。
+Choose the affected mode/storage, update code and relevant docs together, run appropriate tests and real interactions, inspect `git diff --check`/diff, and commit coherent small changes. ABI/manifest updates affect both contracts and clients. A changed exact-byte manifest hash will not match old registrations.
 
-ABI・manifestの変更はコントラクトとフロントの双方に影響します。modelHashはmanifestの正確なバイト列を対象とするため、manifest変更後に古い登録を使うと照合で止まります。
+Default documentation is English; keep intentional Japanese/bilingual editions explicitly named. `npm run docs:apps` must regenerate English default guides.
 
-## 今後の実装と完了条件
+## Evidence for broader milestones
 
-| 次の段階 | 完了を判断する証拠 |
-| --- | --- |
-| Sepolia接続 | 署名→receipt→ログ→個体入力が同じTxで追える。拒否・競合も確認 |
-| 永続Runtime | ブラウザーを閉じても実行し、プロセス再起動後に保存した入力・checkpointから復旧 |
-| 共有観察 | 複数ブラウザーが同じsession・同じ状態を表示 |
-| MaleCNSモデル | 出典・回路・入出力変換・モデル版を固定し、実際の計算を再現 |
-| 学習評価 | 選別用の固定3コースと別の評価条件で、新旧の差を記録 |
+Sepolia integration needs a traceable signature→receipt→log→input path including conflicts/rejection. Persistent runtimes need execution without a browser and restart recovery from saved inputs/checkpoints. Shared observation needs matching sessions/state in multiple browsers. Model claims need pinned provenance/mappings and reproducible computation. Learning claims need evaluations outside candidate-selection courses.
 
-これらは現在の実装完了を示す項目ではありません。公開デプロイは開発テストに含めず、[Workers](deployment/workers.md) / [Sepolia](deployment/sepolia.md) の手順で別に扱います。
+These are evidence criteria, not assertions that every milestone is complete. Public deployment is separate from development tests; follow [Workers](deployment/workers.md) and [Sepolia](deployment/sepolia.md).

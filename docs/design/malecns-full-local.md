@@ -1,55 +1,49 @@
-# MaleCNS全神経のローカル実験
+# Full MaleCNS local experiments
 
-2026-09-26。ブラウザー用の軽量デモを維持し、ローカルでは全規模を試してから削減の必要性を判断する、という方針を実装した。
+Recorded 2026-09-26. Keep the lightweight browser demo while evaluating the full model locally before deciding whether reduction is necessary. [Acceptance record](../submission/full-local-acceptance.md): two full-neuron agents, mid-run input changes, stop/restore, and approximately 30 fps rendering checked in a real browser.
 
-**[直近の目標の達成記録](../submission/full-local-acceptance.md)**: 2個体の全神経計算、刺激の途中変更、停止と状態復元、約30fpsの描画を実ブラウザーで確認済み。
+## Why the earlier slice had seven neurons
 
-## なぜ以前は7神経だったのか
+The slice selected DNp01 body 10001 and six strongly connected outputs, retaining 19 edges. It was a minimal browser-friendly provenance/TX/response/artifact demonstration. It was **not** selected after proving all other neurons unnecessary, nor validated as a behavior-preserving reduction. It remains useful for the public demo but does not constrain local research.
 
-以前の抽出は、body 10001（DNp01）と、その出力先で接続数が多い6個を選び、7神経間の19接続だけを残した。目的は、ブラウザーで軽く動く最小構成で、出典の照合・刺激TX・反応・学習成果物の反映を検証することだった。
+## Definition of full
 
-**全体を動かして「残りは不要」と確認した結果ではない。** 部位の機能に基づく回路選定でも、行動性能を保存することを確かめたモデル削減でもなかった。したがって、この最小構成を生物モデルとして十分とする根拠はない。ブラウザー用の説明デモとしては維持するが、ローカル研究の規模を制限する理由にはしない。
+FlyWire's female adult brain count (139,255) is distinct from this project’s MaleCNS brain-and-ventral-nerve-cord dataset. [FlyWire](https://home.flywire.ai/) · [MaleCNS](https://male-cns.janelia.org/) · [Download specification](https://male-cns.janelia.org/download/).
 
-## 「全神経」の対象を固定する
+For `male-cns:v1.0`, use **all 166,700 annotation rows with non-null superclass**, from 211,577 rows. No extra filtering by region, cell type, status, degree, weight, or behavior; no Traced-only filter.
 
-約14万という数字は、FlyWireの雌成虫脳139,255神経と対応する。[FlyWire公式](https://home.flywire.ai/)。本プロジェクトはMaleCNSを使い続ける。MaleCNSは脳と腹側神経索を含む。[MaleCNS公式](https://male-cns.janelia.org/) / [公式ダウンロード仕様](https://male-cns.janelia.org/download/)。
-
-固定した `male-cns:v1.0` の注釈ファイルには211,577行あり、`superclass != null` の **166,700行すべて**を使う。部位、細胞型、status、次数、接続強度、行動への寄与で追加選別しない。`status=Traced` のみというフィルターも付けない。
-
-| 対象 | 実測 |
+| Item | Count |
 | --- | ---: |
-| 計算する分類付き神経 | 166,700 |
-| その神経同士の接続ペア | 25,582,938 |
-| 保持した接続のsynapse count合計 | 124,177,617 |
-| 元の全セグメント接続ファイルの行数 | 151,856,684 |
-| 分類がない注釈行 | 44,877 |
-| 一方だけが対象神経である境界接続行 | 117,436,340 |
+| Classified neurons | 166,700 |
+| Internal connection pairs | 25,582,938 |
+| Retained synapse counts | 124,177,617 |
+| All-segment source connection rows | 151,856,684 |
+| Unclassified annotation rows | 44,877 |
+| Boundary rows with one included endpoint | 117,436,340 |
 
-元ファイルは未分類の断片やその他のセグメントも含む。そのため、全セグメント151,856,684接続行を「全神経」として一律に計算することはしない。分類がない行やグリア等を追加の同定済み神経とは数えない。対象外に片端でも出る接続は除外し、数と重みをmanifestへ記録する。**全分類付き神経の誘導グラフであり、全セグメンテーショングラフではない。** upstreamのsynapse confidence 0.5も既存のデータ条件として残る。
+This is the induced graph of classified neurons, **not the full segmentation graph**. Unclassified fragments/glia are not counted as additional identified neurons. Excluded boundary counts/weights are recorded in the manifest; upstream confidence 0.5 remains. Boundary effects are unmeasured, not evidence that excluded fragments are biologically irrelevant.
 
-この境界自体の影響は未評価であり、分類がない断片の接続を生物学的に不要と証明したわけではない。より完全な境界入力や断片の扱いは、今後の比較項目とする。
+## Implementation and assumptions
 
-## 実装
+- `scripts/full/prepare.py`: verify official source hashes and build the sparse graph, retaining all included IDs, isolated nodes, self-edges, and counts.
+- `packages/bio_agent/full/model.py`: CPU NumPy/SciPy float64; shared CSR `W[post, pre]` with independent 166,700-element state per agent (1–3 agents). Every neuron updates each step.
+- `packages/bio_agent/full/__main__.py`: dedicated loopback API/GUI, independent of Anvil/Workers.
+- `scripts/full/benchmark.py`: full stimulus, zero/ablated controls, complete restore, and seven-neuron comparison.
 
-- `scripts/full/prepare.py`: 公式注釈と接続のSHA-256を検査し、全分類付き神経の疎行列を生成。全body ID、孤立ノード、内部自己接続、接続数を保持する。
-- `packages/bio_agent/full/model.py`: CPU / NumPy / SciPy、float64。`W[post, pre]` のCSR疎行列を1〜3個体で共有し、各個体は166,700要素の独立した状態を持つ。ゼロ値の神経も毎step更新する。
-- `packages/bio_agent/full/__main__.py`: loopback限定の専用APIとGUI。既存のAnvil / Workersとは独立したプロセス。
-- `scripts/full/benchmark.py`: 全規模の刺激試験、接続除去、ゼロ刺激、完全な状態復元、7神経版との比較。
-
-実測count自体は変更せず、疎行列積の後で入力を正規化する。デフォルトは各受け手の総入力countで除す `incoming`。比較用に全体の最大countで除す `global-max` も用意する。
+Counts remain unchanged. Default incoming normalization divides each receiver's summed drive by its total incoming count; global-max is a comparison option.
 
 ```text
 drive = (W @ activity) / divisor + external_input
 activity_next = 0.75 * activity + 0.25 * tanh(drive)
 ```
 
-全接続を正として扱う人工rate dynamicsであり、神経伝達物質の符号、遅延、発火電位、実測時定数は実装していない。stepを生物学的なミリ秒とは呼ばない。DNp01のbody 10001、または `ol_sensory` / `cb_sensory` / `vnc_sensory` 全集団へ人工的な均一driveを入れる。後者は感覚器や受容野の再現ではない。集団平均は観測値であり、ハエの思考・感情・運動の検証済みdecoderではない。
+All-positive rate dynamics omit neurotransmitter signs, delays, spikes, and measured time constants. A step is not biological milliseconds. Inputs drive DNp01 or whole ol_sensory/cb_sensory/vnc_sensory populations uniformly; this does not reproduce receptors/receptive fields. Population means are observations, not validated thought/emotion/motor decoders.
 
-## 起動・再現
+## Setup
 
-リポジトリ直下から実行。既存の `.local/connectome-tools` がある場合、venv作成は不要。
+Run from the root; reuse an existing venv if present.
 
-```bash
+```sh
 python3 -m venv .local/connectome-tools
 .local/connectome-tools/bin/python -m pip install -r packages/bio_agent/full/requirements.txt
 npm run full:prepare
@@ -58,59 +52,54 @@ npm run full:benchmark
 npm run full:dev
 ```
 
-- GUI: http://127.0.0.1:8810/
-- 既存の軽量デモ: http://127.0.0.1:8800/ 、 `/market` 、 `/aqua`
-- `full:prepare` は不足する公式ファイルだけを取得（約1.1GB）、hash確認後に生成。既存ソースの不一致は上書きせず停止する。
-- 生成先 `.local/malecns-full/`。元データと生成バイナリはGitへ含めない。生成中の作業メモリは実行時より多く必要で、64GBホストで確認した。最小必要RAMは未測定。
-- `npm run full:dev -- --port 8811 --normalization global-max` でポートと人工正規化を変更できる。
-- `Ctrl-C` で専用サーバーを停止できる。既存Anvil / Workersを停止する必要はない。
+GUI: http://127.0.0.1:8810/. Older lightweight apps: port 8800, `/market`, `/aqua`.
 
-デフォルトは2個体。`npm run full:dev -- --agents 1` または `--agents 3` で変更する。GUIで各個体の刺激強度と入力集団を選び「刺激を与える」。起動した個体それぞれの全神経を計算し、計算時間・集団別活動・運動群平均を表示する。描画は集約しているが、計算対象は166,700神経のまま。状態はリクエスト間で継続する。刺激種類を変えてゼロ状態から比較したい場合はリセットする。保存・復元は全状態を対象とし、graph manifest、runtimeファイルhash、正規化、個体数が一致しないものを拒否する。再prepareでmanifestが変わると旧checkpointは使えない。
+Prepare downloads missing sources (~1.1 GB), verifies hashes, and refuses to overwrite mismatched sources. Generated data lives in `.local/malecns-full/`, outside Git. Preparation needs more RAM than inference; verified on a 64 GB host, with no measured minimum.
 
-これはローカル全規模の計算実験であり、この画面からTXは送らない。既存3アプリの登録モデル、学習結果、コントラクトを自動で差し替えない。
+Options: `npm run full:dev -- --port 8811 --normalization global-max`, `--agents 1` or `--agents 3`; default is two. Ctrl-C stops this dedicated server only.
 
-## 実測と削減判断
+Select stimulus strength/population per agent. Rendering aggregates neurons but computation retains all 166,700. State persists across requests; reset for zero-state comparisons. Checkpoints contain full state and reject mismatched graph manifest, runtime-file hash, normalization, or agent count. Re-preparing a changed manifest invalidates old checkpoints.
 
-`artifacts/malecns-full/benchmark.json` に環境、元データと生成物hash、計算量、反応を保存する。2026-09-26の初回測定（このホスト、float64、CPU）:
+This dedicated screen sends no TXs and does not replace the three applications' registrations, policies, or contracts.
 
-| 項目 | 結果 |
+## Initial measurements and reduction decision
+
+`artifacts/malecns-full/benchmark.json`, 2026-09-26, this host, CPU float64:
+
+| Measurement | Result |
 | --- | ---: |
-| CSR行列本体 | 293.41 MiB |
-| benchmarkプロセスのpeak RSS | 約443 MiB |
-| 全グラフの読込・検査 | 約0.80秒 |
-| 3個体 × 32step、DNp01入力 | 約2.00秒 |
-| 3個体 × 32step、感覚集団入力 | 約1.91〜1.93秒 |
-| 32stepあたり更新する神経状態 | 16,003,200要素分 |
-| 保存→再開と連続実行の最大誤差 | 0 |
+| CSR matrix | 293.41 MiB |
+| Benchmark peak RSS | ~443 MiB |
+| Graph load/verification | ~0.80 s |
+| 3 agents × 32 steps, DNp01 | ~2.00 s |
+| 3 agents × 32 steps, sensory population | ~1.91–1.93 s |
+| Updated state elements | 16,003,200 |
+| Continuous versus save/resume maximum error | 0 |
 
-行列共有は個体間の状態共有ではない。3個体にはそれぞれ0.2 / 0.5 / 1.0の刺激を与えている。32stepの一括計算は約2秒なので、GUIからの対話的な試験には使える。一方、32stepを1判断とする5Hzのゲームをそのまま動かせるとまでは言えない。まず測定済みのCPU実装を基準にし、必要なら疎行列計算や学習時のバッチ処理を最適化する。
+Agents share the matrix, not activity; stimuli were 0.2/0.5/1.0. Two-second 32-step batches enable interactive experiments but do not establish a 5 Hz game with 32 steps per action.
 
-全体と7神経版の比較では、同じDNp01入力、同じ32step、同じ6個のreadout、**同じ全体由来の正規化係数**を使う。元の7神経版独自の正規化にすり替えず、省略した経路の影響を調べる。刺激1.0での6readout平均は、`incoming` では約0.010002対0.009562、`global-max` では約0.011033対0.009848だった。小さい回路にはない経路によって値が変わっている。
+Full/slice comparison uses the same DNp01 input, 32 steps, six readout neurons, and **full-derived normalization**. At stimulus 1.0, full versus slice mean readout was ~0.010002 vs 0.009562 for incoming, and ~0.011033 vs 0.009848 for global-max. Omitted paths affect responses; this alone establishes neither neuron importance nor learning superiority.
 
-**現段階で、ローカル版を7神経へ戻す理由はない。** メモリに収まり、全規模の応答を測定できたため、これを比較の基準として残す。小さな回路で十分かどうかは、対象行動・学習成績・未知条件への対応・反応誤差・計算予算を定めた追加実験で判断する。今回の数値差だけで各神経の重要性や全規模の学習優位性を主張しない。
+The full model fits memory and remains the local reference. Reduction should be justified by task performance, unseen conditions, response error, and compute budget, not assumed necessary.
 
-## 2個体と連続描画
+## Continuous rendering and scaling
 
-個体数は要件ではなく計算予算に応じて選ぶ。1〜3個体を比較する `npm run full:scaling` を追加した。元のCSR多列積では2個体でも3個体と同程度の約57ms/stepだったため、単に個体数を減らすだけでは30更新/秒にならなかった。
+`npm run full:scaling` compares 1–3 agents. Original CSR multicolumn computation took ~57 ms/step even for two agents. A sequential per-agent vector kernel retained all neurons/edges and float64, with maximum state difference 0.
 
-全神経・全内部接続・float64を維持し、同じCSR行列で個体ごとのベクトル積を順に計算する `per-agent` kernelへ変更した。多列積との全神経状態の最大誤差も記録する。追加の神経削減、接続間引き、float32化はしていない。結果は `artifacts/malecns-full/agent-scaling.json`。
+`artifacts/malecns-full/agent-scaling.json`; medians of three 16-step runs:
 
-このホストで16step×3回の中央値から算出した最適化後の速度:
-
-| 個体数 | 数値計算step/秒 | ms/step |
+| Agents | Neural steps/s | ms/step |
 | --- | ---: | ---: |
 | 1 | 62.9 | 15.9 |
-| 2（初期設定） | 30.6 | 32.7 |
+| 2 (default) | 30.6 | 32.7 |
 | 3 | 20.4 | 49.0 |
 
-比較した全神経状態の最大誤差は0。上表はHTTP応答・集団統計・GUI描画の負荷を除くため、実際の連続操作での更新数は画面の実測値を見る。CPU負荷やホストによって変化する。
+These exclude HTTP/statistics/rendering. Continuous mode batches four fully computed steps per request and permits no overlapping compute requests. Input changes apply at the next request, with corresponding four-step latency.
 
-GUIの「連続実行」は4stepを1リクエストにまとめる。全神経の更新は各stepで実行し、同時に複数の計算要求を積まない。入力変更は次のリクエストで反映するため、4step分の計算時間に相当する操作遅延がある。通信と統計集計の頻度を減らすことで、神経数・接続数・数値精度を維持したまま実効速度を改善する。描画更新は別のrequestAnimationFrameループで30fpsを目標にし、画面に `neural steps/s` と `render fps` を別表示する。前者はAPI往復と集計を含む壁時計での更新数、後者はアニメーション更新コールバックの実測回数であり、GPUの実paintを測った値ではない。4step配信へ変更後の実ブラウザーの観測例では、2個体の神経更新25.5step/秒、描画更新30.1fpsだった（変更前の観測例は19.9〜21.2step/秒）。生物学的な時間スケールも未校正。描画と数値計算の1stepを同じものとは扱わない。
+Rendering uses a separate requestAnimationFrame loop targeting 30 fps. Neural steps/s includes API/statistics wall time; render fps counts animation callbacks, not GPU paints. A browser sample showed 25.5 neural steps/s and 30.1 render fps for two agents, versus 19.9–21.2 before batching. Biological time remains uncalibrated.
 
-## 検証と学習の境界
+## Validation and learning boundary
 
-- 独立したscalar計算との一致、3個体の分離、接続除去、ゼロ刺激、checkpoint再現、異なるモデルの拒否、入力値検査、artifact改変拒否、疎行列kernel間の一致、4step配信でも更新結果が同じであることを7テストで確認。
-- 実ブラウザーから166,700神経×2個体を計算。刺激強度に応じた応答、保存復元後の完全一致、英語・日本語・システム言語、モバイル幅、API拒否経路を確認。`npm run test:full:browser`（8810でデフォルト2個体の専用サーバーとChromeが必要）。
-- `artifacts/malecns-full/full-local-en.png`、`full-local-ja-mobile.png`、`browser-evidence.json` を生成。
+Seven tests cover scalar agreement, agent isolation, ablation, zero input, checkpoint replay/model mismatch, invalid inputs, tampering, kernel equivalence, and batch equivalence. `npm run test:full:browser` requires Chrome and the default two-agent server on 8810; it checks response, exact restore, English/Japanese/System, mobile, and API rejection. Outputs: `full-local-en.png`, `full-local-ja-mobile.png`, `browser-evidence.json` under `artifacts/malecns-full/`.
 
-既存の[3用途の学習・即時反映](malecns-learning.md)は軽量モデルのまま維持する。今回の全規模ランタイムは固定接続の状態更新基盤であり、3用途の全規模学習が完了したという意味ではない。全規模への次の統合では、全神経からの観測生成と小さなreadoutの学習を分離し、graph・正規化・runtime・状態履歴を含む成果物識別で軽量モデルとの誤混用を防ぐ。状態が継続するため、旧デモの「ゼロ状態からの32step応答キャッシュ」を無条件には流用しない。
+This milestone established full fixed-graph state updates, not all task learning. See [lightweight learning](malecns-learning.md), [full-app integration](full-app-learning.md), and [acceptance](../submission/full-apps-acceptance.md). Continuous full state cannot blindly reuse the older zero-state 32-step response cache.

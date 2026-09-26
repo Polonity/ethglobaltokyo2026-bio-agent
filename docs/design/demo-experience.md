@@ -1,78 +1,35 @@
-# GUIデモガイド
+# GUI demonstration guide
 
-対象: Anvil + ローカルWorkersで動く3匹版。全体は [アーキテクチャ](../architecture.md)、準備は [ローカル起動](../deployment/local-anvil.md) を参照してください。
+For the chain-connected three-agent Fly Lab, see [architecture](../architecture.md), [local setup](../deployment/local-anvil.md), and [Sepolia](../deployment/sepolia.md). Older recordings capture earlier UI/model milestones; use current [application guides](../apps/README.md) for labels.
 
-## 伝えること
+## Message and controls
 
-「チェーン上のStatusは、ハエへの入力です。イベントを受け取ったハエが行動を判定し、競争します。成績下位の個体は学習し、評価後に復帰します。」
+Onchain Status supplies inputs. Agents receive verified events, compute actions, and learn from experience. Candidate evaluation may keep the old policy; rejection is a valid outcome.
 
-現在のAgentはQ-learningモデルです。MaleCNS神経回路実行、Sepolia、サーバー常駐実行はまだ接続していません。
-
-## 画面の読み方
-
-| 領域 | 観察するもの |
+| Area | Observe |
 | --- | --- |
-| ANVILパネル | 接続状態、選択個体の入力revision、Tx・block・log |
-| THE FORAGING FIELD | 個体の移動、共有の蜜、危険領域、選択状態 |
-| Leaderboard | 蜜の獲得数、順位、残り時間 |
-| WORLD INPUT | 選択中の1匹へ与える活動モード・刺激・エネルギー供給 |
-| AGENT INSPECTOR | 現在の体力、判定、経験、得点、policy version |
-| LEARNING LAB | 学習進捗、候補評価、採用または既存方策の保持 |
-| Field notes | オンチェーン入力、学習開始、復帰等の最近の記録 |
+| Chain panel | Connection, selected input revision, TX/block/log |
+| Foraging field | Movement, shared food, hazards, selection |
+| Leaderboard | Food, rank, time |
+| World input | Selected agent's activity, stimulus, energy supply |
+| Inspector | Body energy, decisions, experience, score, policy version |
+| Learning | Progress, candidate comparison, adoption/rejection |
+| Field notes | Input and learning events |
 
-ANVILパネルは、直近の送信先と4段階の進捗を明示します。「チェーンの証拠を見る」のTx・block・logは選択中の個体の入力に統一しています。選択を切り替えても送信先と観察対象を混同しない表示です。
+The latest-submission card retains its target even if selection changes. Selected-agent evidence follows the selected agent; do not confuse these two scopes.
 
-## 発表用の操作例（約1分）
+## One-minute demonstration
 
-1. 接続済みと3匹の名前を示す。新規起動なら全員Rest / energy 5000 / stimulus 0 / revision 1。
-2. MOMOを選び「採餌・刺激95%・供給90%」を送信する。
-3. Tx・revisionと適用済み表示を示し、蜜に向かう様子を見る。
-4. MOMOを「休息・刺激0%・供給40%」にして、休息判断が増える様子を見る。
-5. SORAに「探索・刺激80%・供給85%」を送る。個体別入力を示す。
-6. AUTOで下位個体が学習へ移り、評価後に復帰する様子を見る。
-7. 改善した候補だけ採用すること、現在はQ学習デモであることを説明する。
+Show connection and names, then submit Forage / 95% stimulus / 90% supply to MOMO. Follow TX → revision → applied input and behavior. Try Rest / 0% stimulus / 40% supply, then Explore / 80% / 85% for SORA to show independent inputs. Demonstrate learning and explain adoption only after evaluation. Rest need not mean complete immobility, and scores vary by run.
 
-休息入力でも完全停止するとは限りません。得点・学習結果は実行条件で変わります。学習候補が不採用でも、検証して元の方策を守る正常な結果です。
+Editing controls does not send a TX. Sending stimulus updates Status; positive confirmed events add food. World/hazard changes also require TXs. Speed/pause, learning, and JSON export are offchain operations. Training copies do not add visible food. Pause does not stop event intake; pending transactions never affect the agent early.
 
-## 操作とチェーンの関係
+## Troubleshooting and evidence
 
-| 操作 | オンチェーン更新 |
-| --- | --- |
-| モードやスライダーを編集 | まだ送らない |
-| 「コントラクトに刺激を送信」 | 選択個体のStatusを更新 |
-| 蜜を置く、速度変更、一時停止 | しない |
-| 自動学習、手動学習、次ラウンド | しない |
-| JSON保存 | しない。現在のブラウザー状態を書き出す |
+Check Anvil/Wrangler/configuration when waiting for connection. For revision conflicts, receive the latest state before retrying. Inspect receipts before resending. Stationary agents may be paused, resting, low-energy, or learning. Reload restores chain inputs, not an exact previous trajectory. See [storage boundaries](../architecture.md).
 
-停止中もログ受信は続きます。採掘前の入力で先に動かすことはしません。学習の8秒はシミュレーション時間で、再生速度を変えると実時間も変わります。
+[Recording](../demo-video.md) produces real GUI footage plus TX/event/decision/learning evidence; subtitles do not inject model state. Shared persistent-runtime checkpoint recovery, SSE, and cross-browser body synchronization are separate from this browser path.
 
-## 詰まったとき
+Mascots and bubbles summarize implemented state, not measured emotions. Learning holds position; rest, hazard, and food messages reflect current decisions. The narrator summarizes waiting, pause, learning, competition, and completion.
 
-- 接続待ち: AnvilとWranglerの起動状態を確認。新しい配置ならGUIも再読込する。
-- revision競合: 別タブ等の更新を受信してから送り直す。
-- 適用待ち: Tx・receiptを確認し、同じ入力を連打しない。
-- 動かない個体: 一時停止、休息、低体力、学習中を確認する。
-- 学習が始まらない: AUTO、残り時間、直近学習からの待ち時間を確認。手動学習も利用できるが、説明では手動と明示する。
-- リロード: チェーン入力は復元するが、競争・Q値・経験は初期化する。
-
-## 動画と証拠
-
-[録画手順](../demo-video.md)では実操作のMP4と、Tx・イベント・判定回数・学習評価を含むJSONを生成します。字幕を追加してもモデル状態は注入しません。
-
-今回の受入条件は3匹の登録、個体別入力、採掘後の反映、移動と休息の変化、学習からの復帰です。共有Runtimeのcheckpoint復旧、SSE再接続、24体表示、ウォレット署名は今後の構成に対する検討事項です。
-
-## マスコットと実況（2026-09-25更新）
-
-丸い体・小さな羽・ほっぺを持つオリジナルのCanvasキャラクターです。草原では学習中も座標を変えずに残り、「？ どうしよう…」の吹き出しを表示します。学習終了後に移動を再開します。休息は「すやすや…」、危険判定は「！ あぶない」、蜜獲得は「♡ やった！」、通常の探索は「おやつ、どこ？」です。
-
-吹き出しは現在のQ学習モデルのstate / lastDecisionに連動する演出で、コネクトームの思考や実在する感情の測定ではありません。3匹版では全員、12匹版では選択個体と学習中の個体に表示します。上部の実況は接続待ち・一時停止・学習・競争・終了を説明します。
-
-## 刺激から取引証明へ
-
-刺激の送信後、操作パネル直下のカードに対象のハエ・完全なTx hash・反映状態を表示します。イベント反映後はblock・revision・イベント名も表示します。これは「直近に送った刺激」のカードであり、観察対象を切り替えても送信先は変わりません。
-
-hashをクリックするとAnvilのreceipt APIを再取得し、ダイアログで採掘状況を確認できます。選択中個体の「チェーンの証拠を見る」にあるhashも同じ機能を持ちます。未採掘やチェーンから消えた取引、取得エラーを成功表示しません。Anvilを再起動すると過去の取引は参照できなくなります。
-
-`apps/frontend/explorer.js` はchain IDに応じたリンクを生成します。31337はローカルreceipt、11155111は `https://sepolia.etherscan.io/tx/{hash}`、1は `https://etherscan.io/tx/{hash}`。未対応チェーンや不正hashにはリンクを生成しません。Sepoliaのリンク生成は準備済みですが、Sepoliaへの送信・Runtime接続は未実装です。
-
-リンクの分岐は `node --test tests/explorer.test.mjs` で検証できます。
+Clicking a TX retrieves its receipt; pending, removed, and failed transactions are not shown as successes. Local history disappears when Anvil resets. `apps/frontend/explorer.js` uses local receipts for chain 31337, Sepolia Etherscan for 11155111, and Ethereum Etherscan for 1; invalid hashes/unknown chains get no link. Verify routing with `node --test tests/explorer.test.mjs`.

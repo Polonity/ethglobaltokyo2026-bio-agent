@@ -1,50 +1,38 @@
-# 全アプリの全神経・経験学習・改善ループ
+# Full-neuron experience and learning across applications
 
-## 完了条件
+## Acceptance goal
 
-目標は「MaleCNSのフルの神経を使ってbioAgentを動かし、動作からのデータ取得→学習→改善のループを全アプリで回し、省略版の性能と比較する」こと。全神経実験画面の達成だけでは、この目標の達成としない。
+Run foraging, paper-market, and Aqua with full MaleCNS, collect actual experience, train readouts, evaluate candidates, persist accepted policies, and compare the reduced model. A standalone full-neuron visualization is insufficient.
 
-対象は採餌、市場ペーパートレード、Aquaの3アプリ。各アプリで次を実動作と保存記録から検証する。
+Each application must verify: all 166,700 classified neurons/25,582,938 internal edges are used without silent fallback; observations/features/actions/policies/outcomes/rewards/provenance are linked; training uses actual outcomes; fresh selection runs gate adoption; subsequent actions use the adopted version; persistence rejects mismatched identity/task/model; full/reduced comparisons use matched action budgets and report neural steps/time separately; GUI exposes collection/training/evaluation/adoption.
 
-1. 全分類付き166,700神経と25,582,938内部接続を判断に使う。省略版との切替を明示し、欠損時に小モデルへ自動退避しない。
-2. 観測、神経特徴、行動、使用方策、行動結果、報酬、チェーン由来の根拠を関連付けて保存する。
-3. 人工教師曲線ではなく、実際の動作から取得した経験でreadoutを学習する。
-4. 学習に使わない新しい行動評価で改善を確認した候補だけを採用し、その後の動作で新バージョンの使用を確認する。改善しない候補の棄却も残す。
-5. 学習結果を永続化し、再起動後も同じ個体・用途・モデルに復元する。別モデルとの混用を拒否する。
-6. 同じ行動回数で環境・入力列を揃え、神経step数と計算時間を記録して省略版と比較する。学習前後の報酬、最終の別評価、計算時間を分ける。
-7. 3アプリのGUIから操作し、計算・収集・学習・評価・採用の現在の状態を確認できる。
+## Shared infrastructure
 
-## 共通基盤
+`packages/bio_agent/full_apps/brain.py` shares the graph while separating task/session/agent activity. Sixteen engineered inputs drive sensory populations partitioned by sorted body ID. Every decision computes four steps. Input-population, motor-population, and superclass means feed readouts. Measured connectivity is combined with engineered encoding, all-positive rate dynamics, and output interpretation.
 
-`packages/bio_agent/full_apps/brain.py` は全グラフを共有し、用途・セッション・個体ごとの全神経状態を分離する。16本の人工入力を、全感覚神経をbody ID順に分けた集団へ与える。各判断で4stepを実計算する。readoutには入力集団平均、運動集団平均、全superclassの平均を渡す。出典は実測だが、入力符号化・全興奮性のrate dynamics・出力の使い方は人工モデルである。
+`learning.py` stores decisions/outcomes separately in SQLite, rejecting missing decisions and duplicate outcomes. Ridge regression predicts action rewards; market also compares a small decision tree using reserved prediction data. Training reuses saved neural features; it does not rerun inference repeatedly or modify wiring.
 
-`learning.py` はSQLiteへdecisionとoutcomeを別々に保存し、decisionにない結果や同じ結果の二重登録を拒否する。各行動の報酬予測をridge回帰で学習する。市場は小さな決定木も比較し、収集データの予約区間で予測誤差が低い方式を選ぶ。学習時は保存した全神経特徴を再利用し、全神経推論を何度もやり直さない。全接続は固定し、学習対象はreadoutとする。
+Fit uses the first 70% of experience; the last 30% provides reference prediction error. A separate selection run compares actual old/candidate rewards and verifies before/after against stored outcomes. Selection/test data never enters fit. A single seed does not prove generalization.
 
-経験の先頭70%をfit、後半30%を予測誤差の参考評価に使う。さらに新しい`selection`の実行で旧方策と候補の報酬を比較する。採用時のbefore/afterは保存済みoutcomeの平均と照合する。`selection`と最終`test`の経験はfitに混ぜない。単一seedの比較を一般化の証明とは呼ばない。
+`__main__.py` and `scripts/full/brain-client.mjs` connect Node.js to Python via JSON Lines. `.local/full-apps/experience.sqlite3` separates policies by task, full/legacy mode, individual, and brain hash.
 
-`__main__.py` と `scripts/full/brain-client.mjs` がNodeのアプリ層とPythonの神経計算・学習層をJSON-linesで接続する。データと方策は `.local/full-apps/experience.sqlite3`。方策は用途、full/legacy、個体、brain hashごとに分離する。
+## Initial foraging pilot
 
-## 採餌の最初の実測
+`services/full-apps/foraging.mjs` adapts the field, food, hazards, progress rewards, feeding/rest, and body updates. The pilot began as CLI; the GUI on 8812 later connected Status TXs to the same lifecycle.
 
-`services/full-apps/foraging.mjs` は既存ゲームのフィールド寸法、食物、障害物、進行報酬、摂食・休息・身体更新を使う全神経用の環境アダプター。最初のpilotはCLI実行。現在は8812のGUIからStatus TXを送り、同じ学習・採用・保存経路を動かせる。
-
-```bash
+```sh
 OPENBLAS_NUM_THREADS=1 .local/connectome-tools/bin/python -m unittest discover -s tests/full_apps -v
 node scripts/full/pilot-foraging.mjs
 ```
 
-2個体それぞれ240回の動作を収集し、別seedの96stepで候補を評価。全神経版ではMOMOの評価報酬が -1.3745 → 11.3984となりv2を採用、その後の別seedの実行でもv2の使用を確認した。SORAは0.6299 → -4.2786で悪化したためv1を維持した。これは棄却を含む学習ループの実行証拠であり、すべての個体・環境で改善するという主張ではない。
+Collect 240 actions per agent, then evaluate 96 steps on another seed. MOMO improved −1.3745 → 11.3984 and adopted v2, later used on a different seed. SORA worsened 0.6299 → −4.2786 and retained v1. This proves the acceptance/rejection loop, not universal improvement.
 
-同じ環境・新しい共通readout学習器に7神経の旧式スカラーencoderを使った比較も実行した。最終の別seedのMOMO報酬はfull 11.9469 / legacy 1.6336、2個体の1判断あたり神経計算は約138.4ms / 0.176ms。単一試行なので優位性は結論づけない。詳細は `artifacts/full-apps/foraging-pilot.json`。
+With the same environment and new learner, the older seven-neuron scalar encoder gave a final MOMO reward of 1.6336 versus full 11.9469. Two-agent neural time per decision was ~0.176 ms versus ~138.4 ms. This single trial also changes mappings, continuity, and steps per decision; it is neither a neuron-count-only ablation nor a comparison against the original browser Q learner. Evidence: `artifacts/full-apps/foraging-pilot.json`.
 
-この比較には入力mapping・状態継続・判断あたりの神経step数の差も含む。既存ブラウザーのQ学習器そのものの比較と、神経数だけを変えた対照は別に必要。全神経版が必ず良いという結論へ寄せない。
+## Integration
 
-## 3アプリへの統合
+Market uses actual Swap/block-pinned quotes for paper fills and rewards. Aqua executes SDK ship/dock and actual test-token swaps, then uses a proxy price valuation of balance changes as reward; it does not train against the older synthetic risk-target curve.
 
-市場は実Swapとブロック固定quoteからペーパー約定・値洗い・報酬を取得する。Aquaは全神経の判断でSDKのship/dockを実行し、テストトークンの実約定・残高変化を価格代理指標で評価して報酬へ戻す。人工risk-target教材は新しい学習の教師には使わない。
+The applications share GUI lifecycle, persistence, policy hashes, and evaluation-case checks. Explicit full mode never falls back to the slice. See [acceptance and reproduction](../submission/full-apps-acceptance.md). Older Q-learning and synthetic Aqua calibration remain distinct baselines with different objectives.
 
-GUI、採用結果の永続化、方策ハッシュと評価ケースの照合を共通化した。APIから全神経モードを指定した場合、小モデルに自動退避しない。3用途の全神経版と7神経encoder版を実ブラウザーから実行し、比較する。
-
-[受入証拠・再現手順・比較の解釈](../submission/full-apps-acceptance.md)を現在の検証結果の入口とする。元のブラウザーQ学習・Aqua教材学習は比較基準として残し、その異なる目的関数を新方式のPnLと混同しない。
-
-学習は固定グラフの出力readoutが対象である。全神経接続の可塑性や生理的動態の同定は、このプロトタイプで達成したものには含めない。
+Learning changes readouts, not full-connectome plasticity or identified physiological dynamics.
