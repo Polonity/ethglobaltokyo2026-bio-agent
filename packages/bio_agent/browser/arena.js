@@ -118,7 +118,7 @@ function choose(q, observation, rng, epsilon) {
   if (rng() < epsilon) return Math.floor(rng() * 9);
   return row.indexOf(Math.max(...row));
 }
-function transition(fly, world, action, rng) {
+export function transition(fly, world, action, rng) {
   const before = observe(fly, world);
   const oldDistance = distance(fly, before.target);
   const [dx, dy] = DIRECTIONS[action];
