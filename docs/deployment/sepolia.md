@@ -8,6 +8,8 @@
 - [公開配置記録](../../contracts/deployments/sepolia.json) / [実TX・ブラウザー検証結果](../submission/sepolia-evidence.json)
 - [Sourcifyでcreation/runtimeとも完全一致](https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa)。外部Explorerでの検証状態とは区別します。
 
+[審査員向けの実動作レビュー](../submission/judge-demo-review.md)：学習効果と体力のトレードオフ、別20シナリオの対照比較、公開ページの確認結果をまとめています。
+
 ## 1分の確認手順
 
 1. ページを開く。ウォレット不要で、Sepoliaのブロック・revision・入力と、動く個体を確認できます。

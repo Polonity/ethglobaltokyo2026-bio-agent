@@ -1,0 +1,1274 @@
+{
+  "schema": "bioagent.judge-demo-review.v1",
+  "scope": "Live public Cloudflare Workers application, real Sepolia input, read-only browser learning audit, plus two owner-authorized Sepolia input writes via an EIP-1193 bridge.",
+  "completedAt": "2026-09-26T08:28:41.431Z",
+  "sourceCommit": "5818486",
+  "cloudflareVersionId": "6cb795d0-aaef-4e20-afbe-358c42422bb8",
+  "beforeFix": {
+    "learningButtonPosition": {
+      "x": 103.625,
+      "y": 1557.59375,
+      "width": 256.90625,
+      "height": 41
+    },
+    "viewportHeight": 768,
+    "invalidAgent": {
+      "live": "CONNECTING",
+      "action": "S",
+      "food": "0",
+      "body-energy": "69%",
+      "policy": "v2",
+      "revision": "6",
+      "block": "11,785,009",
+      "notice": "Could not complete: execution reverted (unknown custom error)"
+    },
+    "recoveredFromStale": {
+      "live": "LIVE · SEPOLIA",
+      "action": "S",
+      "food": "1",
+      "body-energy": "90%",
+      "policy": "v2",
+      "revision": "6",
+      "block": "11,785,009",
+      "notice": "Could not complete: Fresh chain input required"
+    }
+  },
+  "afterFix": {
+    "testedAt": "2026-09-26T08:25:35.552Z",
+    "url": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en",
+    "writes": [],
+    "errors": [],
+    "browser": "149.0.7827.200",
+    "firstReadyMs": 1447.270521,
+    "initial": {
+      "live": "LIVE · SEPOLIA",
+      "action": "S",
+      "food": "0",
+      "body-energy": "69%",
+      "policy": "v1",
+      "revision": "6",
+      "block": "11,785,032",
+      "notice": "Live Sepolia state received. The connectome is running in your browser."
+    },
+    "learningButtonPosition": {
+      "x": 103.625,
+      "y": 1614.59375,
+      "width": 256.90625,
+      "height": 41
+    },
+    "viewportHeight": 768,
+    "startLinkPosition": {
+      "x": 77.625,
+      "y": 352.96875,
+      "width": 278.015625,
+      "height": 37
+    },
+    "baseline": {
+      "live": "LIVE · SEPOLIA",
+      "action": "Rest",
+      "food": "2",
+      "body-energy": "100%",
+      "policy": "v1",
+      "revision": "6",
+      "block": "11,785,032",
+      "notice": "Live Sepolia state received. The connectome is running in your browser."
+    },
+    "trainingInteractionMs": 244.25345300000026,
+    "trainedEvidence": {
+      "deployment": {
+        "chainId": 11155111,
+        "registryAddress": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+        "demoAgentId": "1",
+        "schema": "bioagent.sepolia-deployment.v1",
+        "deployer": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+        "deploymentTransaction": "0xc4a174f73f8d4dc3cc5900c70b111fa0b53414d6b3d6d7eb840abc760644f695",
+        "blockNumber": 11784549,
+        "blockHash": "0x06566cb2bdc84f3cc05594dd9e74e6f35f853cf745aa9b88b9b71d684632a69f",
+        "deployedAt": "2026-09-26T06:48:36.000Z",
+        "sourceCommit": "9333a4350dfd76892a81bbe08804a6eed5f3acb8",
+        "compiler": {
+          "version": "0.8.30",
+          "evmVersion": "cancun",
+          "optimizerRuns": 200
+        },
+        "runtimeBytecodeHash": "0x7ab1d11195a2a839f474412469080d1bbe48d142f2a4320884d7aea259e7f6ab",
+        "abiSha256": "0x80c2c30eb454dce349e566a6c4bcd980d56cc0fb418111ceb175e521f13a7e7b",
+        "modelHash": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+        "neurons": 7,
+        "edges": 19,
+        "registrationTransaction": "0x6d4569b951fa6663e0725f9bbb46747e4099b6e02550e1da4aba183d8ef26b73",
+        "initialStatusTransaction": "0xfc30ece997bfedf28569f11b767b935fdf21afdbf589b2c7ce22a2f3387b8339",
+        "metadataURI": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/model.json",
+        "explorer": "https://sepolia.etherscan.io/address/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+        "verification": "runtime-bytecode-matched; sourcify-creation-and-runtime-exact-match",
+        "sourceVerification": {
+          "url": "https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+          "api": "https://sourcify.dev/server/v2/contract/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+          "creationMatch": "exact_match",
+          "runtimeMatch": "exact_match",
+          "verifiedAt": "2026-09-26T07:00:44Z"
+        }
+      },
+      "decision": {
+        "schema": "bioagent.framework-decision.v1",
+        "identity": {
+          "id": "1",
+          "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+          "smartWallet": null
+        },
+        "input": {
+          "source": "evm-rpc-state",
+          "chainId": 11155111,
+          "registry": "0x4c063705afd2d42627693e1c358f30db9e5ba0aa",
+          "agentId": "1",
+          "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+          "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+          "block": {
+            "number": 11785032,
+            "hash": "0x567ac1180f07642ba482a15dd9e4c5770e0c25beee6b20a35509e82f9962ee9e",
+            "timestamp": 1790411124,
+            "confirmations": 0
+          },
+          "status": {
+            "activity": 2,
+            "energy": 7000,
+            "stimulus": 5500,
+            "revision": "6",
+            "updatedAt": 1790410704
+          }
+        },
+        "binding": {
+          "task": "foraging",
+          "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+          "encoder": "malecns-forage-channels-v1",
+          "dynamics": "arena-transition-v3",
+          "readout": "adaptive-forager-readout-v1",
+          "actionSpace": "8-directions-rest-v1"
+        },
+        "policy": {
+          "version": 2,
+          "sha256": "0x1d48022458f0096105bed55b99bfbf4e8d5e03f49bd27429e66f118a1d70aba8"
+        },
+        "decision": {
+          "action": 3,
+          "reward": 0.08523581081506382,
+          "hit": false,
+          "collected": false,
+          "policyVersion": 2
+        },
+        "execution": "decision-only",
+        "trust": "trusted-rpc-observation; not a state proof"
+      },
+      "policy": {
+        "schema": "bioagent.framework-policy.v1",
+        "identity": {
+          "id": "1",
+          "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+          "smartWallet": null
+        },
+        "binding": {
+          "task": "foraging",
+          "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+          "encoder": "malecns-forage-channels-v1",
+          "dynamics": "arena-transition-v3",
+          "readout": "adaptive-forager-readout-v1",
+          "actionSpace": "8-directions-rest-v1"
+        },
+        "version": 2,
+        "policy": {
+          "encoder": "malecns",
+          "weights": [
+            -0.5844288831576705,
+            0.3420525329420343,
+            0.0030145573429763315
+          ]
+        },
+        "sha256": "0x1d48022458f0096105bed55b99bfbf4e8d5e03f49bd27429e66f118a1d70aba8"
+      },
+      "learning": {
+        "accepted": true,
+        "previousVersion": 1,
+        "before": [
+          {
+            "profile": "current-chain-profile",
+            "metrics": {
+              "reward": 3.8930111794323596,
+              "food": 6.25,
+              "contacts": 9,
+              "rests": 177.75,
+              "finalEnergy": 0.5915999999999995,
+              "finalReserves": 0.5403750000000148
+            },
+            "episodes": [
+              {
+                "seed": 201,
+                "reward": 28.246199584032095,
+                "food": 9,
+                "contacts": 0,
+                "rests": 253,
+                "finalEnergy": 1,
+                "finalReserves": 0.8195000000000209
+              },
+              {
+                "seed": 202,
+                "reward": 8.772936126771192,
+                "food": 4,
+                "contacts": 0,
+                "rests": 128,
+                "finalEnergy": 0.18089999999999892,
+                "finalReserves": 0.3520000000000106
+              },
+              {
+                "seed": 203,
+                "reward": -24.967792752178042,
+                "food": 9,
+                "contacts": 36,
+                "rests": 225,
+                "finalEnergy": 1,
+                "finalReserves": 0.7775000000000194
+              },
+              {
+                "seed": 204,
+                "reward": 3.5207017591041967,
+                "food": 3,
+                "contacts": 0,
+                "rests": 105,
+                "finalEnergy": 0.1854999999999989,
+                "finalReserves": 0.2125000000000083
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "profile": "current-chain-profile",
+            "metrics": {
+              "reward": 33.80955833155666,
+              "food": 12.5,
+              "contacts": 0.25,
+              "rests": 12,
+              "finalEnergy": 0.32584999999999903,
+              "finalReserves": 0.17660000000000384
+            },
+            "episodes": [
+              {
+                "seed": 201,
+                "reward": 26.826153740909398,
+                "food": 11,
+                "contacts": 0,
+                "rests": 14,
+                "finalEnergy": 0.13859999999999884,
+                "finalReserves": 0.1334000000000034
+              },
+              {
+                "seed": 202,
+                "reward": 26.706334948569637,
+                "food": 11,
+                "contacts": 0,
+                "rests": 13,
+                "finalEnergy": 0.08869999999999884,
+                "finalReserves": 0.14030000000000348
+              },
+              {
+                "seed": 203,
+                "reward": 76.03725716747985,
+                "food": 25,
+                "contacts": 1,
+                "rests": 2,
+                "finalEnergy": 0.9453999999999998,
+                "finalReserves": 0.42620000000000613
+              },
+              {
+                "seed": 204,
+                "reward": 5.66848746926774,
+                "food": 3,
+                "contacts": 0,
+                "rests": 19,
+                "finalEnergy": 0.1306999999999988,
+                "finalReserves": 0.006500000000002255
+              }
+            ]
+          }
+        ],
+        "gate": {
+          "passed": true,
+          "rule": "reward increases; food and contacts do not worsen in every selection profile; optional final energy floor",
+          "checks": [
+            {
+              "profile": "current-chain-profile",
+              "passed": true,
+              "minimumFinalEnergy": null,
+              "candidateFinalEnergy": 0.32584999999999903,
+              "rewardDelta": 29.9165471521243,
+              "contactDelta": -8.75
+            }
+          ]
+        },
+        "scenarios": {
+          "seeds": [
+            201,
+            202,
+            203,
+            204
+          ],
+          "profiles": [
+            {
+              "name": "current-chain-profile",
+              "energy": 0.7,
+              "stimulus": 0.55,
+              "mode": "forage"
+            }
+          ],
+          "ticks": 300
+        },
+        "baseGeneration": 0,
+        "version": 2
+      },
+      "exportedAt": "2026-09-26T08:25:43.419Z"
+    },
+    "trained": {
+      "live": "LIVE · SEPOLIA",
+      "action": "SW",
+      "food": "2",
+      "body-energy": "98%",
+      "policy": "v2",
+      "revision": "6",
+      "block": "11,785,032",
+      "notice": "Training and comparison complete. Review the result and energy tradeoff."
+    },
+    "progress": [
+      {
+        "live": "LIVE · SEPOLIA",
+        "action": "S",
+        "food": "5",
+        "body-energy": "97%",
+        "policy": "v2",
+        "revision": "6",
+        "block": "11,785,032",
+        "notice": "Training and comparison complete. Review the result and energy tradeoff."
+      },
+      {
+        "live": "LIVE · SEPOLIA",
+        "action": "N",
+        "food": "7",
+        "body-energy": "98%",
+        "policy": "v2",
+        "revision": "6",
+        "block": "11,785,033",
+        "notice": "Training and comparison complete. Review the result and energy tradeoff."
+      },
+      {
+        "live": "LIVE · SEPOLIA",
+        "action": "E",
+        "food": "11",
+        "body-energy": "94%",
+        "policy": "v2",
+        "revision": "6",
+        "block": "11,785,033",
+        "notice": "Training and comparison complete. Review the result and energy tradeoff."
+      },
+      {
+        "live": "LIVE · SEPOLIA",
+        "action": "E",
+        "food": "16",
+        "body-energy": "95%",
+        "policy": "v2",
+        "revision": "6",
+        "block": "11,785,034",
+        "notice": "Training and comparison complete. Review the result and energy tradeoff."
+      },
+      {
+        "live": "LIVE · SEPOLIA",
+        "action": "SW",
+        "food": "18",
+        "body-energy": "95%",
+        "policy": "v2",
+        "revision": "6",
+        "block": "11,785,034",
+        "notice": "Training and comparison complete. Review the result and energy tradeoff."
+      },
+      {
+        "live": "LIVE · SEPOLIA",
+        "action": "NE",
+        "food": "23",
+        "body-energy": "98%",
+        "policy": "v2",
+        "revision": "6",
+        "block": "11,785,035",
+        "notice": "Training and comparison complete. Review the result and energy tradeoff."
+      }
+    ],
+    "repeatLearning": "Criteria failed: current policy retained.\n\n4 selection scenarios\tBefore\tCandidate\nReward\t33.81\t33.81\nFood\t12.50\t12.50\nContacts\t0.25\t0.25\nFinal energy\t32.6%\t32.6%\n\nSynthetic selection results, not independent generalization evidence or proof of a biological advantage.",
+    "restored": {
+      "live": "LIVE · SEPOLIA",
+      "action": "S",
+      "food": "0",
+      "body-energy": "69%",
+      "policy": "v2",
+      "revision": "6",
+      "block": "11,785,035",
+      "notice": "Live Sepolia state received. The connectome is running in your browser."
+    },
+    "restoredEvidence": {
+      "deployment": {
+        "chainId": 11155111,
+        "registryAddress": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+        "demoAgentId": "1",
+        "schema": "bioagent.sepolia-deployment.v1",
+        "deployer": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+        "deploymentTransaction": "0xc4a174f73f8d4dc3cc5900c70b111fa0b53414d6b3d6d7eb840abc760644f695",
+        "blockNumber": 11784549,
+        "blockHash": "0x06566cb2bdc84f3cc05594dd9e74e6f35f853cf745aa9b88b9b71d684632a69f",
+        "deployedAt": "2026-09-26T06:48:36.000Z",
+        "sourceCommit": "9333a4350dfd76892a81bbe08804a6eed5f3acb8",
+        "compiler": {
+          "version": "0.8.30",
+          "evmVersion": "cancun",
+          "optimizerRuns": 200
+        },
+        "runtimeBytecodeHash": "0x7ab1d11195a2a839f474412469080d1bbe48d142f2a4320884d7aea259e7f6ab",
+        "abiSha256": "0x80c2c30eb454dce349e566a6c4bcd980d56cc0fb418111ceb175e521f13a7e7b",
+        "modelHash": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+        "neurons": 7,
+        "edges": 19,
+        "registrationTransaction": "0x6d4569b951fa6663e0725f9bbb46747e4099b6e02550e1da4aba183d8ef26b73",
+        "initialStatusTransaction": "0xfc30ece997bfedf28569f11b767b935fdf21afdbf589b2c7ce22a2f3387b8339",
+        "metadataURI": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/model.json",
+        "explorer": "https://sepolia.etherscan.io/address/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+        "verification": "runtime-bytecode-matched; sourcify-creation-and-runtime-exact-match",
+        "sourceVerification": {
+          "url": "https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+          "api": "https://sourcify.dev/server/v2/contract/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+          "creationMatch": "exact_match",
+          "runtimeMatch": "exact_match",
+          "verifiedAt": "2026-09-26T07:00:44Z"
+        }
+      },
+      "decision": {
+        "schema": "bioagent.framework-decision.v1",
+        "identity": {
+          "id": "1",
+          "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+          "smartWallet": null
+        },
+        "input": {
+          "source": "evm-rpc-state",
+          "chainId": 11155111,
+          "registry": "0x4c063705afd2d42627693e1c358f30db9e5ba0aa",
+          "agentId": "1",
+          "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+          "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+          "block": {
+            "number": 11785035,
+            "hash": "0x5eea0c412826149441ec049e767e300900ba7b3b364b4c40c1861ff50453bedf",
+            "timestamp": 1790411160,
+            "confirmations": 0
+          },
+          "status": {
+            "activity": 2,
+            "energy": 7000,
+            "stimulus": 5500,
+            "revision": "6",
+            "updatedAt": 1790410704
+          }
+        },
+        "binding": {
+          "task": "foraging",
+          "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+          "encoder": "malecns-forage-channels-v1",
+          "dynamics": "arena-transition-v3",
+          "readout": "adaptive-forager-readout-v1",
+          "actionSpace": "8-directions-rest-v1"
+        },
+        "policy": {
+          "version": 2,
+          "sha256": "0x1d48022458f0096105bed55b99bfbf4e8d5e03f49bd27429e66f118a1d70aba8"
+        },
+        "decision": {
+          "action": 2,
+          "reward": 0.2361957632374839,
+          "hit": false,
+          "collected": false,
+          "policyVersion": 2
+        },
+        "execution": "decision-only",
+        "trust": "trusted-rpc-observation; not a state proof"
+      },
+      "policy": {
+        "schema": "bioagent.framework-policy.v1",
+        "identity": {
+          "id": "1",
+          "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+          "smartWallet": null
+        },
+        "binding": {
+          "task": "foraging",
+          "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+          "encoder": "malecns-forage-channels-v1",
+          "dynamics": "arena-transition-v3",
+          "readout": "adaptive-forager-readout-v1",
+          "actionSpace": "8-directions-rest-v1"
+        },
+        "version": 2,
+        "policy": {
+          "encoder": "malecns",
+          "weights": [
+            -0.5844288831576705,
+            0.3420525329420343,
+            0.0030145573429763315
+          ]
+        },
+        "sha256": "0x1d48022458f0096105bed55b99bfbf4e8d5e03f49bd27429e66f118a1d70aba8"
+      },
+      "learning": null,
+      "exportedAt": "2026-09-26T08:26:12.198Z"
+    },
+    "noWalletMessage": "Could not complete: A browser wallet is required / ブラウザーウォレットが必要です",
+    "invalidAgent": {
+      "live": "UNAVAILABLE",
+      "action": "—",
+      "food": "—",
+      "body-energy": "—",
+      "policy": "—",
+      "revision": "—",
+      "block": "—",
+      "notice": "Could not complete: Agent ID 999999999 was not found. Load ID 1 to return to the demo."
+    },
+    "recoveredFromInvalidAgent": true,
+    "stalePause": {
+      "live": "PAUSED",
+      "action": "S",
+      "food": "0",
+      "body-energy": "69%",
+      "policy": "v2",
+      "revision": "6",
+      "block": "11,785,035",
+      "notice": "Could not complete: Fresh chain input required"
+    },
+    "recoveredFromStale": {
+      "live": "LIVE · SEPOLIA",
+      "action": "S",
+      "food": "1",
+      "body-energy": "90%",
+      "policy": "v2",
+      "revision": "6",
+      "block": "11,785,035",
+      "notice": "Live Sepolia state received. The connectome is running in your browser."
+    },
+    "holdout": {
+      "scope": "Exploratory synthetic 20-seed check, separate from training and UI selection; no production or biological-superiority claim.",
+      "seeds": [
+        900101,
+        900102,
+        900103,
+        900104,
+        900105,
+        900106,
+        900107,
+        900108,
+        900109,
+        900110,
+        900111,
+        900112,
+        900113,
+        900114,
+        900115,
+        900116,
+        900117,
+        900118,
+        900119,
+        900120
+      ],
+      "ticks": 300,
+      "profile": {
+        "name": "current-chain-profile",
+        "energy": 0.7,
+        "stimulus": 0.55,
+        "mode": "forage"
+      },
+      "policies": {
+        "initial": {
+          "weights": [
+            0,
+            0,
+            0
+          ],
+          "encoder": "malecns"
+        },
+        "trained": {
+          "encoder": "malecns",
+          "weights": [
+            -0.5844288831576705,
+            0.3420525329420343,
+            0.0030145573429763315
+          ]
+        },
+        "directInputTrained": {
+          "encoder": "raw",
+          "weights": [
+            -0.26518049929291004,
+            0.11425201245583594,
+            0.0349010967509821
+          ]
+        }
+      },
+      "rows": {
+        "initial": {
+          "profile": "current-chain-profile",
+          "metrics": {
+            "reward": 21.773389970694733,
+            "food": 7.05,
+            "contacts": 0,
+            "rests": 198.95,
+            "finalEnergy": 0.7423849999999996,
+            "finalReserves": 0.6262850000000164
+          },
+          "episodes": [
+            {
+              "seed": 900101,
+              "reward": -5.233040873831036,
+              "food": 1,
+              "contacts": 0,
+              "rests": 50,
+              "finalEnergy": 0.18689999999999882,
+              "finalReserves": 0
+            },
+            {
+              "seed": 900102,
+              "reward": 31.814986402125,
+              "food": 9,
+              "contacts": 0,
+              "rests": 240,
+              "finalEnergy": 1,
+              "finalReserves": 0.80000000000002
+            },
+            {
+              "seed": 900103,
+              "reward": 32.45662459273761,
+              "food": 9,
+              "contacts": 0,
+              "rests": 238,
+              "finalEnergy": 1,
+              "finalReserves": 0.7970000000000201
+            },
+            {
+              "seed": 900104,
+              "reward": 31.968344722954164,
+              "food": 9,
+              "contacts": 0,
+              "rests": 240,
+              "finalEnergy": 1,
+              "finalReserves": 0.8000000000000201
+            },
+            {
+              "seed": 900105,
+              "reward": 25.151989025377326,
+              "food": 9,
+              "contacts": 0,
+              "rests": 263,
+              "finalEnergy": 1,
+              "finalReserves": 0.8345000000000216
+            },
+            {
+              "seed": 900106,
+              "reward": 35.955340590282475,
+              "food": 9,
+              "contacts": 0,
+              "rests": 225,
+              "finalEnergy": 1,
+              "finalReserves": 0.7775000000000194
+            },
+            {
+              "seed": 900107,
+              "reward": -2.4509348163989584,
+              "food": 1,
+              "contacts": 0,
+              "rests": 40,
+              "finalEnergy": 0.18689999999999882,
+              "finalReserves": 0
+            },
+            {
+              "seed": 900108,
+              "reward": 28.442601299598348,
+              "food": 9,
+              "contacts": 0,
+              "rests": 251,
+              "finalEnergy": 1,
+              "finalReserves": 0.8165000000000209
+            },
+            {
+              "seed": 900109,
+              "reward": 26.665355127697776,
+              "food": 9,
+              "contacts": 0,
+              "rests": 258,
+              "finalEnergy": 1,
+              "finalReserves": 0.8270000000000212
+            },
+            {
+              "seed": 900110,
+              "reward": 27.71121199171167,
+              "food": 9,
+              "contacts": 0,
+              "rests": 254,
+              "finalEnergy": 1,
+              "finalReserves": 0.821000000000021
+            },
+            {
+              "seed": 900111,
+              "reward": 26.554618243004096,
+              "food": 9,
+              "contacts": 0,
+              "rests": 259,
+              "finalEnergy": 1,
+              "finalReserves": 0.8285000000000213
+            },
+            {
+              "seed": 900112,
+              "reward": 6.813904959100697,
+              "food": 3,
+              "contacts": 0,
+              "rests": 93,
+              "finalEnergy": 0.1854999999999989,
+              "finalReserves": 0.1945000000000075
+            },
+            {
+              "seed": 900113,
+              "reward": 32.666500386205286,
+              "food": 9,
+              "contacts": 0,
+              "rests": 236,
+              "finalEnergy": 1,
+              "finalReserves": 0.79400000000002
+            },
+            {
+              "seed": 900114,
+              "reward": 28.977044411147137,
+              "food": 9,
+              "contacts": 0,
+              "rests": 250,
+              "finalEnergy": 1,
+              "finalReserves": 0.8150000000000207
+            },
+            {
+              "seed": 900115,
+              "reward": 4.312970814278332,
+              "food": 3,
+              "contacts": 0,
+              "rests": 80,
+              "finalEnergy": 0.18389999999999887,
+              "finalReserves": 0.12320000000000625
+            },
+            {
+              "seed": 900116,
+              "reward": 7.7332440787331835,
+              "food": 4,
+              "contacts": 0,
+              "rests": 134,
+              "finalEnergy": 0.18089999999999892,
+              "finalReserves": 0.36100000000001103
+            },
+            {
+              "seed": 900117,
+              "reward": 31.694666481914936,
+              "food": 9,
+              "contacts": 0,
+              "rests": 240,
+              "finalEnergy": 1,
+              "finalReserves": 0.8000000000000199
+            },
+            {
+              "seed": 900118,
+              "reward": 14.086169670266075,
+              "food": 6,
+              "contacts": 0,
+              "rests": 174,
+              "finalEnergy": 0.24339999999999898,
+              "finalReserves": 0.5750000000000149
+            },
+            {
+              "seed": 900119,
+              "reward": 29.78725311821205,
+              "food": 8,
+              "contacts": 0,
+              "rests": 236,
+              "finalEnergy": 0.9843999999999999,
+              "finalReserves": 0.7940000000000199
+            },
+            {
+              "seed": 900120,
+              "reward": 20.358949188778496,
+              "food": 7,
+              "contacts": 0,
+              "rests": 218,
+              "finalEnergy": 0.6957999999999989,
+              "finalReserves": 0.767000000000019
+            }
+          ]
+        },
+        "trained": {
+          "profile": "current-chain-profile",
+          "metrics": {
+            "reward": 48.12923442548569,
+            "food": 17.55,
+            "contacts": 0,
+            "rests": 8.35,
+            "finalEnergy": 0.24095499999999906,
+            "finalReserves": 0.2653600000000046
+          },
+          "episodes": [
+            {
+              "seed": 900101,
+              "reward": 35.87125146673465,
+              "food": 14,
+              "contacts": 0,
+              "rests": 11,
+              "finalEnergy": 0.14489999999999886,
+              "finalReserves": 0.21010000000000412
+            },
+            {
+              "seed": 900102,
+              "reward": 60.10080261773664,
+              "food": 20,
+              "contacts": 0,
+              "rests": 4,
+              "finalEnergy": 0.12319999999999892,
+              "finalReserves": 0.37600000000000566
+            },
+            {
+              "seed": 900103,
+              "reward": 72.68451473702383,
+              "food": 28,
+              "contacts": 0,
+              "rests": 1,
+              "finalEnergy": 0.08269999999999894,
+              "finalReserves": 0.4359000000000062
+            },
+            {
+              "seed": 900104,
+              "reward": 29.162371737150217,
+              "food": 9,
+              "contacts": 0,
+              "rests": 13,
+              "finalEnergy": 0.08089999999999883,
+              "finalReserves": 0.13750000000000345
+            },
+            {
+              "seed": 900105,
+              "reward": 44.07664232636361,
+              "food": 19,
+              "contacts": 0,
+              "rests": 9,
+              "finalEnergy": 0.11529999999999888,
+              "finalReserves": 0.24910000000000448
+            },
+            {
+              "seed": 900106,
+              "reward": 42.13127943807326,
+              "food": 12,
+              "contacts": 0,
+              "rests": 7,
+              "finalEnergy": 0.10289999999999916,
+              "finalReserves": 0.3203000000000051
+            },
+            {
+              "seed": 900107,
+              "reward": 1.7159821227878527,
+              "food": 1,
+              "contacts": 0,
+              "rests": 21,
+              "finalEnergy": 0.11929999999999902,
+              "finalReserves": 0
+            },
+            {
+              "seed": 900108,
+              "reward": 120.06302768114432,
+              "food": 43,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.8439999999999994,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900109,
+              "reward": 42.11362966610457,
+              "food": 15,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.17319999999999897,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900110,
+              "reward": 47.81237181422593,
+              "food": 15,
+              "contacts": 0,
+              "rests": 7,
+              "finalEnergy": 0.14349999999999963,
+              "finalReserves": 0.36090000000000527
+            },
+            {
+              "seed": 900111,
+              "reward": 73.41313768077723,
+              "food": 31,
+              "contacts": 0,
+              "rests": 2,
+              "finalEnergy": 0.11699999999999894,
+              "finalReserves": 0.4234000000000061
+            },
+            {
+              "seed": 900112,
+              "reward": 8.766927449098223,
+              "food": 3,
+              "contacts": 0,
+              "rests": 18,
+              "finalEnergy": 0.1431999999999988,
+              "finalReserves": 0.035800000000002496
+            },
+            {
+              "seed": 900113,
+              "reward": 119.74056036257313,
+              "food": 43,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.9609999999999999,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900114,
+              "reward": 66.5046606252811,
+              "food": 23,
+              "contacts": 0,
+              "rests": 2,
+              "finalEnergy": 0.12479999999999894,
+              "finalReserves": 0.42620000000000613
+            },
+            {
+              "seed": 900115,
+              "reward": 7.538293900108607,
+              "food": 3,
+              "contacts": 0,
+              "rests": 18,
+              "finalEnergy": 0.1041999999999988,
+              "finalReserves": 0.021800000000002387
+            },
+            {
+              "seed": 900116,
+              "reward": 7.792574067186024,
+              "food": 4,
+              "contacts": 0,
+              "rests": 18,
+              "finalEnergy": 0.09639999999999879,
+              "finalReserves": 0.019000000000002366
+            },
+            {
+              "seed": 900117,
+              "reward": 59.53273414177176,
+              "food": 23,
+              "contacts": 0,
+              "rests": 5,
+              "finalEnergy": 0.11849999999999891,
+              "finalReserves": 0.3495000000000054
+            },
+            {
+              "seed": 900118,
+              "reward": 12.464139307050988,
+              "food": 6,
+              "contacts": 0,
+              "rests": 17,
+              "finalEnergy": 0.1322999999999988,
+              "finalReserves": 0.05670000000000269
+            },
+            {
+              "seed": 900119,
+              "reward": 23.243511196270294,
+              "food": 8,
+              "contacts": 0,
+              "rests": 14,
+              "finalEnergy": 0.11519999999999883,
+              "finalReserves": 0.12500000000000333
+            },
+            {
+              "seed": 900120,
+              "reward": 87.85627617225153,
+              "food": 31,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.9765999999999999,
+              "finalReserves": 0.4400000000000066
+            }
+          ]
+        },
+        "directInputTrained": {
+          "profile": "current-chain-profile",
+          "metrics": {
+            "reward": 50.82004163428924,
+            "food": 19.15,
+            "contacts": 0,
+            "rests": 7.2,
+            "finalEnergy": 0.25048999999999894,
+            "finalReserves": 0.2849850000000048
+          },
+          "episodes": [
+            {
+              "seed": 900101,
+              "reward": 49.332531654993616,
+              "food": 19,
+              "contacts": 0,
+              "rests": 3,
+              "finalEnergy": 0.1372999999999981,
+              "finalReserves": 0.41930000000000606
+            },
+            {
+              "seed": 900102,
+              "reward": 77.90726162294965,
+              "food": 28,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.3681999999999986,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900103,
+              "reward": 59.55211488572556,
+              "food": 22,
+              "contacts": 0,
+              "rests": 3,
+              "finalEnergy": 0.12789999999999893,
+              "finalReserves": 0.4025000000000059
+            },
+            {
+              "seed": 900104,
+              "reward": 28.881876984145702,
+              "food": 9,
+              "contacts": 0,
+              "rests": 13,
+              "finalEnergy": 0.08869999999999884,
+              "finalReserves": 0.14030000000000348
+            },
+            {
+              "seed": 900105,
+              "reward": 45.32353325756768,
+              "food": 19,
+              "contacts": 0,
+              "rests": 8,
+              "finalEnergy": 0.10439999999999888,
+              "finalReserves": 0.2700000000000047
+            },
+            {
+              "seed": 900106,
+              "reward": 26.707385793308855,
+              "food": 9,
+              "contacts": 0,
+              "rests": 11,
+              "finalEnergy": 0.10589999999999886,
+              "finalReserves": 0.196100000000004
+            },
+            {
+              "seed": 900107,
+              "reward": 1.7159821227878507,
+              "food": 1,
+              "contacts": 0,
+              "rests": 21,
+              "finalEnergy": 0.11929999999999902,
+              "finalReserves": 0
+            },
+            {
+              "seed": 900108,
+              "reward": 115.53900088830893,
+              "food": 43,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.9687999999999999,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900109,
+              "reward": 49.2167039684459,
+              "food": 20,
+              "contacts": 0,
+              "rests": 4,
+              "finalEnergy": 0.13879999999999892,
+              "finalReserves": 0.3816000000000057
+            },
+            {
+              "seed": 900110,
+              "reward": 44.86580441525094,
+              "food": 17,
+              "contacts": 0,
+              "rests": 8,
+              "finalEnergy": 0.09659999999999888,
+              "finalReserves": 0.26720000000000466
+            },
+            {
+              "seed": 900111,
+              "reward": 73.44614854673041,
+              "food": 31,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.23559999999999898,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900112,
+              "reward": 28.59514959411597,
+              "food": 11,
+              "contacts": 0,
+              "rests": 10,
+              "finalEnergy": 0.10279999999999886,
+              "finalReserves": 0.21980000000000421
+            },
+            {
+              "seed": 900113,
+              "reward": 114.85706118271767,
+              "food": 42,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 1,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900114,
+              "reward": 72.47839582126997,
+              "food": 25,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.20439999999999897,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900115,
+              "reward": 12.140389511076986,
+              "food": 5,
+              "contacts": 0,
+              "rests": 16,
+              "finalEnergy": 0.09019999999999881,
+              "finalReserves": 0.06640000000000279
+            },
+            {
+              "seed": 900116,
+              "reward": 8.035165026802565,
+              "food": 4,
+              "contacts": 0,
+              "rests": 18,
+              "finalEnergy": 0.1041999999999988,
+              "finalReserves": 0.021800000000002387
+            },
+            {
+              "seed": 900117,
+              "reward": 73.15350679992498,
+              "food": 28,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.15759999999999896,
+              "finalReserves": 0.4400000000000066
+            },
+            {
+              "seed": 900118,
+              "reward": 12.186815548424438,
+              "food": 6,
+              "contacts": 0,
+              "rests": 17,
+              "finalEnergy": 0.1322999999999988,
+              "finalReserves": 0.05670000000000269
+            },
+            {
+              "seed": 900119,
+              "reward": 28.472926446979034,
+              "food": 10,
+              "contacts": 0,
+              "rests": 12,
+              "finalEnergy": 0.12459999999999885,
+              "finalReserves": 0.17800000000000382
+            },
+            {
+              "seed": 900120,
+              "reward": 93.9930786142583,
+              "food": 34,
+              "contacts": 0,
+              "rests": 0,
+              "finalEnergy": 0.6021999999999985,
+              "finalReserves": 0.4400000000000066
+            }
+          ]
+        }
+      }
+    },
+    "assetHashes": {
+      "app.js": "0xe814b97e7c09debd77fd081439a0f237c15e31f9b3127c3c750fc5f16af93d28",
+      "style.css": "0x47678cf67855bd36a040cda2c31eb3a936691db0e509990d43f3e6b04258197a",
+      "index.html": "0xf87a66d003d8f392f5d59063ad12d01222c75e8ca530797b14c435c113d37a93",
+      "packages/bio_agent/research/adaptive-forager.js": "0x2a6f8428e835db92ef88b58f2e6a6c7c5556f6e1bf0e3a4e10c7404ceb1f5b1e",
+      "packages/bio_agent/connectome/male-cns-slice.json": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987"
+    },
+    "passed": true
+  },
+  "onchain": {
+    "passed": true,
+    "initialRevision": "4",
+    "finalInput": {
+      "source": "evm-rpc-state",
+      "chainId": 11155111,
+      "registry": "0x4c063705afd2d42627693e1c358f30db9e5ba0aa",
+      "agentId": "1",
+      "owner": "0x0d01a92bae0e01754f7102466936397f609d67c3",
+      "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+      "block": {
+        "number": 11784997,
+        "hash": "0x22e4c35368d5738a6fdf548e50f81b2616b093b88a16fec5351349973065eb9e",
+        "timestamp": 1790410704,
+        "confirmations": 0
+      },
+      "status": {
+        "activity": 2,
+        "energy": 7000,
+        "stimulus": 5500,
+        "revision": "6",
+        "updatedAt": 1790410704
+      }
+    },
+    "writes": [
+      {
+        "method": "updateStatus",
+        "hash": "0x52fa0e0064620ef35683c834fe4abf3ef2b537a11dfdc9eaf1c0a53c87bc76df",
+        "block": 11784996,
+        "gasUsed": "34196",
+        "feeWei": "38356429256768"
+      },
+      {
+        "method": "updateStatus",
+        "hash": "0xf2ca702c0326e5d8d6f81ab276d833bab08bb208c35411c68aa976ef48423778",
+        "block": 11784997,
+        "gasUsed": "34208",
+        "feeWei": "36943400815200"
+      }
+    ],
+    "totalFeeSepoliaETH": "0.000075299830071968",
+    "walletBridge": "EIP-1193 browser bridge; signer in Node only, not a MetaMask UI test"
+  },
+  "visualReview": {
+    "reviewed": [
+      "initial-en.jpg",
+      "learning-en.jpg",
+      "mobile-ja.jpg"
+    ],
+    "result": "Start link visible; learning metrics readable; Japanese mobile layout has no clipped controls.",
+    "screenshots": {
+      "initial-en": {
+        "path": "docs/submission/judge-demo-review/initial-en.jpg",
+        "sha256": "e40f480b78f2d56a376189eff6c1595138463b0d66da72e3dff3bab6e10f792c"
+      },
+      "learning-en": {
+        "path": "docs/submission/judge-demo-review/learning-en.jpg",
+        "sha256": "e8d951026ddd0528f2e1543af021fe575cf53b120a97ee399863661231d2ce3c"
+      }
+    }
+  },
+  "limitations": [
+    "Synthetic selection/holdout observations with one environment profile; no biological advantage established.",
+    "Timing is an observed browser interaction duration on this host, not an isolated inference benchmark or SLA.",
+    "Body energy is simulated physiology, not measured electrical power.",
+    "Desktop Chrome with mobile viewport emulation; not a physical mobile or MetaMask extension UI test.",
+    "Public demo does not perform Aqua/Uniswap trades; full-population market integration is a separate Anvil video."
+  ]
+}
