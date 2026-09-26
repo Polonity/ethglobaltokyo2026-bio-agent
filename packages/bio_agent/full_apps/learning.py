@@ -9,6 +9,9 @@ import uuid
 import numpy as np
 
 from .brain import digest, APPS
+from .readout import fit_tree, predict_tree
+from packages.bio_agent.full.model import sha
+from pathlib import Path
 
 ACTIONS={'foraging':9,'market':3,'aqua':3}
 
@@ -53,6 +56,8 @@ class ExperienceStore:
         x=np.asarray(features,dtype=float)
         mean=np.asarray(policy['mean']);scale=np.asarray(policy['scale'])
         if x.shape!=mean.shape or not np.isfinite(x).all(): raise ValueError('Feature/model mismatch')
+        if policy.get('algorithm')=='regression-tree':
+            return np.array([predict_tree(tree,x) for tree in policy['trees']])
         return np.asarray(policy['weights'])@np.r_[1.,np.clip((x-mean)/scale,-20,20)]
 
     def decision(self, app, variant, agent, session, phase, features, action, version, observation, source):
@@ -93,15 +98,28 @@ class ExperienceStore:
             ridge=np.eye(a.shape[1])*.1;ridge[0,0]=.001
             weights[action]=np.linalg.solve(a.T@a+ridge,a.T@target)
         candidate={**previous,'version':previous['version']+1,'mean':mean.tolist(),'scale':scale.tolist(),
-                   'weights':weights.tolist(),'trainingDecisionIds':[r[0] for r in rows[:split]],
+                   'weights':weights.tolist(),'algorithm':'ridge-linear',
+                   'learnerHash':digest({'learner':sha(Path(__file__)),'readout':sha(Path(__file__).with_name('readout.py'))}),
+                   'trainingDecisionIds':[r[0] for r in rows[:split]],
                    'selectionDecisionIds':[r[0] for r in rows[split:]]}
+        # Select the reward readout using only the collection's reserved prediction partition.
+        selection_metrics={}
+        if app=='market':
+            tree_candidate={**candidate,'algorithm':'regression-tree',
+                'trees':[fit_tree(x[:split][actions[:split]==a],y[:split][actions[:split]==a]) for a in range(ACTIONS[app])]}
+            for name,model in [('ridge-linear',candidate),('regression-tree',tree_candidate)]:
+                prediction=np.array([self.scores(model,row)[action] for row,action in zip(x[split:],actions[split:])])
+                selection_metrics[name]=float(np.mean((prediction-y[split:])**2))
+            if selection_metrics['regression-tree']<selection_metrics['ridge-linear']: candidate=tree_candidate
         pred_before=np.array([self.scores(previous,row)[action] for row,action in zip(x[split:],actions[split:])])
         pred_after=np.array([self.scores(candidate,row)[action] for row,action in zip(x[split:],actions[split:])])
         before=float(np.mean((pred_before-y[split:])**2));after=float(np.mean((pred_after-y[split:])**2))
         report={'schema':'bioagent.full-learning-run.v1','app':app,'variant':variant,'agent':agent,
                 'brainHash':self.brain_hash,'baseVersion':previous['version'],'candidateVersion':candidate['version'],
                 'trainingSamples':split,'selectionSamples':len(rows)-split,'actionSamples':counts,
+                'predictionMetric':'held-out immediate reward MSE',
                 'beforeMSE':before,'afterMSE':after,'predictionImproved':after<before,
+                'algorithm':candidate['algorithm'],'predictionSelectionMSE':selection_metrics,
                 'trainingMs':(time.perf_counter()-started)*1000,'adopted':False,
                 'changed':'action-readout only; every classified neuron remains in inference',
                 'adoptionRequires':'fresh behavioral evaluation; prediction MSE alone is insufficient'}
@@ -128,14 +146,21 @@ class ExperienceStore:
         ids=evaluation['evaluationDecisionIds']
         if not isinstance(ids,list) or len(ids)<16 or len(set(ids))!=len(ids): raise ValueError('Fresh evaluation decisions required')
         observed={current['version']:[],candidate['version']:[]}
+        cases={version:[] for version in observed}
         for identifier in ids:
-            entry=self.db.execute('SELECT app,variant,agent,brain_hash,phase,policy_version,session FROM decisions WHERE id=?',(identifier,)).fetchone()
+            entry=self.db.execute('SELECT app,variant,agent,brain_hash,phase,policy_version,source FROM decisions WHERE id=?',(identifier,)).fetchone()
             if entry is None or entry[:5]!=(candidate['app'],candidate['variant'],candidate['agent'],self.brain_hash,'selection') or entry[5] not in observed:
                 raise ValueError('Evaluation provenance mismatch')
+            source=json.loads(entry[6])
+            expected_hash=candidate_hash if entry[5]==candidate['version'] else digest(current)
+            if source.get('policyHash')!=expected_hash or not source.get('evaluationCase'):
+                raise ValueError('Evaluation policy or case identity missing')
+            cases[entry[5]].append(source['evaluationCase'])
             outcome=self.db.execute('SELECT reward FROM outcomes WHERE decision_id=?',(identifier,)).fetchone()
             if outcome is None: raise ValueError('Evaluation outcome missing')
             observed[entry[5]].append(outcome[0])
         a,b=observed[current['version']],observed[candidate['version']]
+        if cases[current['version']]!=cases[candidate['version']]: raise ValueError('Evaluation cases differ')
         if len(a)<8 or len(a)!=len(b): raise ValueError('Paired before/after rollout lengths required')
         if not np.allclose([np.mean(a),np.mean(b)],[evaluation['before'],evaluation['after']],rtol=0,atol=1e-12):
             raise ValueError('Reported improvement does not match observed rewards')

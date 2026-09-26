@@ -42,6 +42,7 @@ class BrainPool:
             'schema':'bioagent.app-brain.v1','dataset':'male-cns:v1.0',
             'fullGraph':self.base.graph_hash,'fullRuntime':self.base.runtime_hash,
             'encoder':sha(Path(__file__)), 'inputs':INPUTS,
+            'applicationAdapters':{app:sha(ROOT/f'services/full-apps/{app}.mjs') for app in APPS},
             'full':{'neurons':len(self.base.ids),'connections':self.base.matrix.nnz,
                     'normalization':self.base.normalization,'stepsPerDecision':4,
                     'state':'persistent per application/session/individual',
@@ -87,7 +88,7 @@ class BrainPool:
             active=(brain.activity>1e-12).sum(axis=0).tolist()
         else:
             # Exactly the previous 1/256 input grid and 32-step zero-state scalar trials.
-            quantized=np.round(x*256)/256
+            quantized=np.floor(x*256+.5)/256
             a=np.zeros((2,INPUTS,7))
             for _ in range(32):
                 drive=a@self.small.T

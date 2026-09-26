@@ -31,9 +31,11 @@ class LearnedReadoutTests(unittest.TestCase):
 
     def evaluation(self,after=2.):
         ids=[]
+        candidate=json.loads(self.store.db.execute('SELECT artifact FROM policies ORDER BY created DESC LIMIT 1').fetchone()[0])
+        before=self.store.policy('market','full',0,3)
         for version,reward in [(1,1.),(2,after)]:
             for i in range(8):
-                identifier=self.store.decision('market','full',0,'selection','selection',[.5,.2,.4],version-1,version,{}, {})
+                identifier=self.store.decision('market','full',0,'selection','selection',[.5,.2,.4],version-1,version,{}, {'policyHash':digest(before if version==1 else candidate),'evaluationCase':str(i)})
                 self.store.outcome(identifier,reward,{}, {})
                 ids.append(identifier)
         return {'before':1.,'after':after,'metric':'observed reward','evaluationDecisionIds':ids}
@@ -80,6 +82,14 @@ class LearnedReadoutTests(unittest.TestCase):
         result=self.store.adopt(report['candidateHash'],self.evaluation(after=-1))
         self.assertFalse(result['adopted'])
         self.assertEqual(self.store.policy('market','full',0,3)['version'],1)
+
+    def test_unmatched_cases_rejected(self):
+        report=self.candidate(); evaluation=self.evaluation()
+        identifier=evaluation['evaluationDecisionIds'][-1]
+        source=json.loads(self.store.db.execute('SELECT source FROM decisions WHERE id=?',(identifier,)).fetchone()[0])
+        source['evaluationCase']='different input sequence'
+        self.store.db.execute('UPDATE decisions SET source=? WHERE id=?',(json.dumps(source),identifier));self.store.db.commit()
+        with self.assertRaisesRegex(ValueError,'cases differ'):self.store.adopt(report['candidateHash'],evaluation)
 
     def test_model_and_use_case_isolation(self):
         report=self.candidate()

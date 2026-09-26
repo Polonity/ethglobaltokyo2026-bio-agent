@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .brain import BrainPool, APPS
+from .brain import BrainPool, APPS, digest
 from .learning import ExperienceStore, ACTIONS
 from packages.bio_agent.full.model import ROOT
 
@@ -54,9 +54,9 @@ def main():
             policy=store.policy(app,variant,agent,len(features),candidate)
             scores=store.scores(policy,features)
             action=int(rng.choice(allowed[agent]) if rng.random()<epsilon else max(allowed[agent],key=lambda a:scores[a]))
-            identifier=store.decision(app,variant,agent,session,phase,features,action,policy['version'],observations[agent],data.get('source',{}))
+            identifier=store.decision(app,variant,agent,session,phase,features,action,policy['version'],observations[agent],{**data.get('source',{}),'policyHash':digest(policy)})
             decisions.append({'id':identifier,'agent':agent,'action':action,'policyVersion':policy['version'],
-                              'candidateHash':candidate,'scores':scores.tolist()})
+                              'candidateHash':candidate,'policyHash':digest(policy),'scores':scores.tolist()})
         return {'neural':neural,'decisions':decisions}
     print(json.dumps({'ready':True,'brainHash':brain.hash}),flush=True)
     for line in sys.stdin:
