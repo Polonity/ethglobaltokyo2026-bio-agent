@@ -1,0 +1,16 @@
+{
+  "schema": "bioagent.benefit-protocol.v1",
+  "scope": "Existing lightweight foraging engine; offline artificial environment; no services or transactions",
+  "trainingSeed": 2026,
+  "collectionTicks": 80,
+  "trainingCalls": 10,
+  "testSeeds": [260926001,260926002,260926003,260926004,260926005,260926006,260926007,260926008,260926009,260926010,260926011,260926012,260926013,260926014,260926015,260926016,260926017,260926018,260926019,260926020,260926021,260926022,260926023,260926024,260926025,260926026,260926027,260926028,260926029,260926030],
+  "testTicks": 300,
+  "primaryMetric": "food collected per episode; higher is better",
+  "secondaryMetrics": ["collisions per episode; lower is better", "cumulative engineered reward; higher is better"],
+  "comparison": "Original untrained policy versus adopted policy; identical starting checkpoints and random states; auto-learning disabled during evaluation",
+  "reuseCheck": "Export and restore the adopted readout into a fresh arena; compare every action, observation and reward with the same policy assigned directly",
+  "successRule": "Primary metric paired mean difference must be positive and its fixed-seed 95% paired bootstrap interval must exclude zero; also disclose collisions and reward",
+  "bootstrap": {"seed": 26092677, "samples": 10000},
+  "limitations": ["One training run; no training-seed replication", "Artificial same-distribution task, not environmental adaptation", "Seven-neuron slice with engineered mappings and Q readout; not the full 166700-neuron model", "No conventional AI or rewired-connectome comparator", "Local readout reuse is not cross-application or full-profile interoperability"]
+}
