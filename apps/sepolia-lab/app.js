@@ -23,7 +23,7 @@ const en = {
   legend:
     'Green: food / Red: obstacles. Body and environment are simulated. Sepolia inputs refresh about every 12 seconds.',
   graphnote:
-    'A subgraph extracted from measured data. Connections stay frozen; learning adjusts just three action readout weights.',
+    'A measured subgraph with frozen connections. Learning adjusts three readout weights. Brightness probes the stimulus alone; it is not the full action state.',
   chain: 'VERIFIED INPUT · ETHEREUM SEPOLIA',
   input: 'On-chain input',
   load: 'Load',
@@ -99,6 +99,9 @@ function translate() {
 $('language').onclick = () => {
   language = language === 'ja' ? 'en' : 'ja';
   localStorage.setItem('sepolia-language', language);
+  const url = new URL(location.href);
+  url.searchParams.set('lang', language);
+  history.replaceState(null, '', url);
   translate();
 };
 function renderButtons() {
