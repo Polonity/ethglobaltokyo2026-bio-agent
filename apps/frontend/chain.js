@@ -1,3 +1,4 @@
+import { WORLD_SCHEMA } from '../../packages/bio_agent/browser/tx-world.js';
 import { BrowserProvider, Contract } from 'ethers';
 import abi from '../../contracts/abi/BioAgentRegistry.json';
 import { addTxFood, statusFoodEvent } from '../../packages/bio_agent/browser/tx-food.js';
@@ -63,13 +64,18 @@ export class ChainSession {
       this.lastTx = null;
       this.arena.log('system', 'CHAIN RESYNC', 'チェーンの巻戻りを検知。現在の入力から新しい競争を開始');
     }
+    if (!snapshot.environment) throw Error('Confirmed environment TX required');
+    this.checkEvent(snapshot.environment);
+    this.arena.applyWorld(snapshot.environment);
+    this.seen.add(snapshot.environment.eventId);
     for (const agent of snapshot.agents) {
       this.checkEvent(agent.cause);
       this.arena.applyAgentStatus(agent.agentId, agent.status, agent.cause);
       this.seen.add(agent.cause.eventId);
     }
     for (const event of snapshot.events || [])
-      addTxFood(this.arena.world, statusFoodEvent(event), this.consumedFood);
+      if (event.name === 'BioAgentStatusUpdated')
+        addTxFood(this.arena.world, statusFoodEvent(event), this.consumedFood);
     this.restoreFood();
     this.cursor = { blockNumber: snapshot.blockNumber, blockHash: snapshot.blockHash };
     this.ready = true;
@@ -87,9 +93,14 @@ export class ChainSession {
   }
   ingest(events) {
     for (const event of events) {
-      if (event.name !== 'BioAgentStatusUpdated') continue;
       this.checkEvent(event);
       if (this.seen.has(event.eventId)) continue;
+      if (event.name === 'BioAgentStimulusAccepted') {
+        if (event.schema === WORLD_SCHEMA && event.agentId === '1') this.arena.applyWorld(event);
+        this.seen.add(event.eventId);
+        continue;
+      }
+      if (event.name !== 'BioAgentStatusUpdated') continue;
       const fly = this.arena.flies[Number(event.agentId) - 1];
       if (fly.chain && BigInt(event.status.revision) !== BigInt(fly.chain.revision) + 1n)
         throw Object.assign(new Error('revision の欠番を検知'), { reset: true });

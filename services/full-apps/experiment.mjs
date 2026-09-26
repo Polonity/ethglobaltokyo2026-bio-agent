@@ -22,13 +22,17 @@ export async function rollout({
       : app === 'market'
         ? new MarketEnvironment(chain, tape.slice(offset))
         : new AquaEnvironment(chain, tape.slice(offset), variant);
-  if (app === 'foraging' && stimulus !== null) env.world.stimulus = stimulus;
+  if (chain && app === 'foraging') env.applyWorld(await chain.configureForaging(variant, seed));
+  const inputStimulus = stimulus ?? 0.55;
+  if (!chain && app === 'foraging') env.world.stimulus = inputStimulus;
   const initialStatus = [];
   if (chain && app === 'foraging')
     for (let agent = 0; agent < 2; agent++)
-      initialStatus.push(await chain.stimulus(app, variant, agent, env.world.stimulus));
+      initialStatus.push(await chain.stimulus(app, variant, agent, inputStimulus));
   if (initialStatus.length) {
     env.world.stimulus = initialStatus[0].stimulus / 10000;
+    env.world.energy = initialStatus[0].energy / 10000;
+    env.world.mode = ['rest', 'explore', 'forage'][initialStatus[0].activity];
     for (const event of initialStatus) env.addStimulus(event);
   }
   const rewards = [0, 0],

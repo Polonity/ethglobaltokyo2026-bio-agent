@@ -101,7 +101,13 @@ try {
     {
       cwd: `${root}/contracts`,
       encoding: 'utf8',
-      env: { ...process.env, DEPLOYER_ADDRESS: owner, LOCAL_MODEL_HASH: modelHash, LOCAL_GUI_URL: guiUrl },
+      env: {
+        ...process.env,
+        DEPLOYER_ADDRESS: owner,
+        LOCAL_MODEL_HASH: modelHash,
+        LOCAL_GUI_URL: guiUrl,
+        LOCAL_WORLD_INPUT: await readFile('packages/bio_agent/browser/foraging-world.json', 'utf8'),
+      },
     },
   );
   await writeFile(path.join(stateDir, 'forge.log'), result.stdout + result.stderr);
@@ -110,13 +116,14 @@ try {
     await readFile('contracts/broadcast/DeployLocalArena.s.sol/31337/run-latest.json', 'utf8'),
   );
   const creation = receipt.transactions.find(
-    (t) => t.transactionType === 'CREATE' && t.contractName === 'BioAgentRegistry',
+    (t) => t.transactionType === 'CREATE' && t.contractName === 'BioAgentStimulusRegistry',
   );
   if (!creation) throw new Error('Registry deployment receipt missing');
   const creationReceipt = await rpc('eth_getTransactionReceipt', [creation.hash]);
   if (creationReceipt.status !== '0x1') throw new Error('Registry deployment reverted');
   const config = {
     chainId: '31337',
+    worldInput: true,
     rpcUrl,
     guiUrl,
     registryAddress: creation.contractAddress,
@@ -127,7 +134,8 @@ try {
     agentIds: ['1', '2', '3'],
     transactionHashes: receipt.transactions.map((t) => t.hash),
   };
-  if (config.transactionHashes.length !== 4) throw new Error('Expected one deploy and three registrations');
+  if (config.transactionHashes.length !== 5)
+    throw new Error('Expected deploy, three registrations and environment input');
   for (const hash of config.transactionHashes)
     if ((await rpc('eth_getTransactionReceipt', [hash])).status !== '0x1')
       throw new Error('Registration failed');
@@ -143,6 +151,7 @@ try {
         assets: { directory: path.join(root, 'dist'), binding: 'ASSETS', run_worker_first: true },
         vars: {
           LOCAL_ANVIL: 'true',
+          WORLD_INPUT: 'true',
           ANVIL_RPC_URL: rpcUrl,
           REGISTRY_ADDRESS: config.registryAddress,
           LOCAL_OWNER: owner,

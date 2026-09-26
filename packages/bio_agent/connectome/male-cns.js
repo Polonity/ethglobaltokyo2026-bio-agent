@@ -78,7 +78,15 @@ export function verifyMaleManifest(manifest) {
 export async function verifyMaleAssets(manifest, fetcher = fetch) {
   verifyMaleManifest(manifest);
   const { sha256 } = await import('./circuit.js');
-  for (const name of ['graph', 'dynamics', 'encoder', 'learner', 'readout', 'runtime']) {
+  for (const name of [
+    'graph',
+    'dynamics',
+    'encoder',
+    'learner',
+    'readout',
+    'runtime',
+    ...(manifest.modelId === 'foraging-malecns-q-v3' ? ['tx-food', 'tx-world'] : []),
+  ]) {
     const ref = manifest.connectome.refs?.[name];
     if (!ref || !/^\/models\/male-cns\/[a-z0-9.-]+$/.test(ref.uri))
       throw Error('Required MaleCNS artifact missing');

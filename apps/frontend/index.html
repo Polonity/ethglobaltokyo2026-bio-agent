@@ -68,8 +68,9 @@
         <p id="chain-status">—</p>
         <button id="connect-wallet" hidden>ウォレット接続</button>
         <details id="food-source-panel" hidden>
-          <summary>餌の追加元TX</summary>
-          <p>刺激強度0より大の成功TXで餌を1個追加。食べた点は消えます。過去のTXも再生します。</p>
+          <summary>環境と餌の入力TX</summary>
+          <p>初期環境・危険エリアは環境TXから構築。正の刺激TXごとに餌を1個追加し、食べた点は消えます。</p>
+          <p><span id="environment-state">環境TXを待っています</span> · <a id="environment-tx"></a></p>
           <div id="food-provenance"></div>
         </details>
         <ol class="tx-journey" aria-label="直近の送信状況">

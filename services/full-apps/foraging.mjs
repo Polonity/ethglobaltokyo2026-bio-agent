@@ -1,5 +1,6 @@
-import { enableTxFood, addTxFood, consumeFood } from '../../packages/bio_agent/browser/tx-food.js';
-import { createWorld, random, DIRECTIONS, WIDTH, HEIGHT } from '../../packages/bio_agent/browser/arena.js';
+import { emptyTxWorld, applyTxWorld } from '../../packages/bio_agent/browser/tx-world.js';
+import { addTxFood, consumeFood } from '../../packages/bio_agent/browser/tx-food.js';
+import { createWorld, random, DIRECTIONS } from '../../packages/bio_agent/browser/arena.js';
 import { bodyStep, ensureBody } from '../../packages/bio_agent/browser/body.js';
 // Same arena dimensions, rewards and synthetic body as the existing browser game.
 // Neural decisions live in BrainClient; this class only observes and applies actions.
@@ -9,8 +10,7 @@ export class ForagingEnvironment {
   constructor(seed = 2026, { txFood = false } = {}) {
     this.seed = seed;
     this.rng = random(seed);
-    this.world = createWorld(this.rng);
-    if (txFood) enableTxFood(this.world);
+    this.world = txFood ? emptyTxWorld() : createWorld(this.rng);
     this.tick = 0;
     this.flies = Array.from({ length: 2 }, (_, id) => ({
       id,
@@ -25,10 +25,22 @@ export class ForagingEnvironment {
     }));
     this.flies.forEach(ensureBody);
   }
+  applyWorld(event) {
+    if (!applyTxWorld(this.world, event)) return false;
+    this.seed = this.world.seed;
+    this.rng = random(this.seed);
+    for (const f of this.flies) {
+      f.x = 2 + this.rng() * (this.world.width - 4);
+      f.y = 2 + this.rng() * (this.world.height - 4);
+    }
+    return true;
+  }
   addStimulus(event) {
     addTxFood(this.world, event);
   }
   observe() {
+    if (this.world.foodMode === 'confirmed-tx' && !this.world.worldSource)
+      throw Error('Confirmed environment required');
     return this.flies.map((f) => {
       const target = this.world.foods.reduce((a, b) => (!a || distance(f, b) < distance(f, a) ? b : a), null);
       const direction = target
@@ -40,9 +52,9 @@ export class ForagingEnvironment {
         if (
           this.world.hazards.some((h) => distance(p, h) < h.radius + 0.4) ||
           p.x < 1 ||
-          p.x > WIDTH - 1 ||
+          p.x > this.world.width - 1 ||
           p.y < 1 ||
-          p.y > HEIGHT - 1
+          p.y > this.world.height - 1
         )
           mask |= 1 << i;
       });
@@ -91,8 +103,8 @@ export class ForagingEnvironment {
       if (!before.allowed.includes(action)) throw Error('Foraging action is not allowed');
       const [dx, dy] = DIRECTIONS[action],
         speed = f.energy < 0.12 ? 0.45 : 0.9;
-      f.x = clamp(f.x + dx * speed, 0.7, WIDTH - 0.7);
-      f.y = clamp(f.y + dy * speed, 0.7, HEIGHT - 0.7);
+      f.x = clamp(f.x + dx * speed, 0.7, this.world.width - 0.7);
+      f.y = clamp(f.y + dy * speed, 0.7, this.world.height - 0.7);
       if (action < 8) f.heading = (action * Math.PI) / 4;
       const hit = this.world.hazards.some((h) => distance(f, h) < h.radius);
       let reward = (target ? oldDistance - distance(f, target) : 0) * 0.3 - 0.03;

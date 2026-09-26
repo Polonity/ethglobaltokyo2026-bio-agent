@@ -32,7 +32,7 @@
       },
       "encoder": {
         "uri": "/models/male-cns/male-cns.js",
-        "sha256": "0x352f924bed3285b86e731af7e97da213312500d61fb8a9fd57607519ff0ceec0"
+        "sha256": "0xd5f181518f45c106696cbefcd40c76880740f52d1e5fd357f0c932a5b61d9f0c"
       },
       "learner": {
         "uri": "/models/male-cns/learning.js",

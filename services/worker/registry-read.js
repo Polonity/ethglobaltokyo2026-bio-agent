@@ -1,5 +1,6 @@
-import { Interface } from 'ethers';
-import abi from '../../contracts/abi/BioAgentRegistry.json' with { type: 'json' };
+import { Interface, toUtf8String, keccak256 } from 'ethers';
+import { WORLD_SCHEMA, validateWorldInput } from '../../packages/bio_agent/browser/tx-world.js';
+import abi from '../../contracts/abi/BioAgentStimulusRegistry.json' with { type: 'json' };
 const contract = new Interface(abi);
 const hex = (n) => '0x' + BigInt(n).toString(16);
 const decimal = (n) => BigInt(n).toString();
@@ -31,13 +32,20 @@ export async function registryRead(request, config, rpc) {
           address,
           fromBlock: hex(n),
           toBlock: hex(end),
-          topics: [contract.getEvent('BioAgentStatusUpdated').topicHash],
+          topics: [
+            [
+              contract.getEvent('BioAgentStatusUpdated').topicHash,
+              ...(config.worldInput ? [contract.getEvent('BioAgentStimulusAccepted').topicHash] : []),
+            ],
+          ],
         },
       ]);
       await Promise.all(
         rows.map(async (l) => {
           if (l.removed || l.address.toLowerCase() !== address) throw Error('Invalid Registry log');
           const e = contract.parseLog(l);
+          if (e.name === 'BioAgentStimulusAccepted' && keccak256(e.args.payload) !== e.args.payloadHash)
+            throw Error('World payload hash mismatch');
           if (!config.agentIds.includes(e.args.agentId.toString())) return;
           const receipt = await rpc('eth_getTransactionReceipt', [l.transactionHash]);
           if (
@@ -68,7 +76,17 @@ export async function registryRead(request, config, rpc) {
             name: e.name,
             agentId: e.args.agentId.toString(),
             writer: e.args.writer,
-            status: state(e.args),
+            ...(e.name === 'BioAgentStatusUpdated'
+              ? { status: state(e.args) }
+              : {
+                  nonce: decimal(e.args.nonce),
+                  schema: e.args.schema,
+                  payloadHash: e.args.payloadHash,
+                  configuration:
+                    e.args.schema === WORLD_SCHEMA && e.args.agentId === 1n
+                      ? validateWorldInput(JSON.parse(toUtf8String(e.args.payload)))
+                      : null,
+                }),
             receiptVerified: true,
           };
           event.eventId = `${event.chainId}:${address}:${event.blockHash}:${event.transactionHash}:${event.logIndex}`;
@@ -129,7 +147,10 @@ export async function registryRead(request, config, rpc) {
       ]);
       if (a.modelHash !== config.modelHash) throw Error('Model hash mismatch');
       const cause = events.findLast(
-        (e) => e.agentId === agentId && e.status.revision === decimal(s.revision),
+        (e) =>
+          e.name === 'BioAgentStatusUpdated' &&
+          e.agentId === agentId &&
+          e.status.revision === decimal(s.revision),
       );
       if (!cause || cause.writer.toLowerCase() !== a.owner.toLowerCase()) throw Error('Status event missing');
       return {
@@ -142,6 +163,10 @@ export async function registryRead(request, config, rpc) {
       };
     }),
   );
+  const environment = events.findLast(
+    (e) => e.name === 'BioAgentStimulusAccepted' && e.agentId === '1' && e.schema === WORLD_SCHEMA,
+  );
+  if (config.worldInput && !environment) throw Error('Confirmed environment input missing');
   await canonical();
-  return json({ ...envelope, agents, events });
+  return json({ ...envelope, agents, events, environment: environment || null });
 }

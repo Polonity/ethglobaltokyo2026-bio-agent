@@ -30,10 +30,21 @@ for (const path of [
   const runtimeBytes = await readFile(runtimePath),
     runtimeName = foraging ? 'foraging-runtime.js' : 'market-runtime.js';
   await writeFile('dist/models/male-cns/' + runtimeName, runtimeBytes);
+  const inputRefs = {};
+  if (foraging)
+    for (const name of ['tx-food', 'tx-world']) {
+      const bytes = await readFile(`packages/bio_agent/browser/${name}.js`);
+      await writeFile(`dist/models/male-cns/${name}.js`, bytes);
+      inputRefs[name] = { uri: `/models/male-cns/${name}.js`, sha256: hash(bytes) };
+    }
   m.connectome = {
     ...MALE_CNS,
     required: true,
-    refs: { ...refs, runtime: { uri: '/models/male-cns/' + runtimeName, sha256: hash(runtimeBytes) } },
+    refs: {
+      ...refs,
+      ...inputRefs,
+      runtime: { uri: '/models/male-cns/' + runtimeName, sha256: hash(runtimeBytes) },
+    },
   };
   m.modelType = 'connectome-derived';
   m.biologicalValidation = false;

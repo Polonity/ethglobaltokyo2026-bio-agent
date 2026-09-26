@@ -1,3 +1,5 @@
+import defaultWorld from '../../packages/bio_agent/browser/foraging-world.json' with { type: 'json' };
+import { WORLD_SCHEMA, validateWorldInput } from '../../packages/bio_agent/browser/tx-world.js';
 // Dedicated Anvil-only experiment. Actual Uniswap V3 and Aqua test-token effects.
 import {
   Contract,
@@ -8,6 +10,8 @@ import {
   parseEther,
   AbiCoder,
   keccak256,
+  toUtf8Bytes,
+  toUtf8String,
 } from 'ethers';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -111,13 +115,17 @@ export class FullChain {
       },
       aqua: aquaAddress,
       officialFork,
+      foragingWorldInput: true,
       registries: {},
       aquaApps: {},
     };
     for (const variant of ['full', 'legacy']) {
       cfg.registries[variant] = {};
       for (const app of ['foraging', 'market', 'aqua']) {
-        const registry = await deploy(null, 'BioAgentRegistry');
+        const registry = await deploy(
+          null,
+          app === 'foraging' ? 'BioAgentStimulusRegistry' : 'BioAgentRegistry',
+        );
         for (let i = 0; i < 2; i++)
           await this.receipt(
             await registry.registerAgent(modelHash, `http://127.0.0.1:8812/models/${variant}/${app}`),
@@ -152,6 +160,25 @@ export class FullChain {
     return cfg;
   }
   async attach() {
+    if (!this.config.foragingWorldInput) {
+      const a = JSON.parse(
+        await readFile('contracts/out/BioAgentStimulusRegistry.sol/BioAgentStimulusRegistry.json'),
+      );
+      for (const variant of ['full', 'legacy']) {
+        const registry = await new ContractFactory(a.abi, a.bytecode.object, this.signer).deploy();
+        await this.receipt(registry.deploymentTransaction());
+        for (let i = 0; i < 2; i++)
+          await this.receipt(
+            await registry.registerAgent(
+              this.config.modelHash,
+              `http://127.0.0.1:8812/models/${variant}/foraging`,
+            ),
+          );
+        this.config.registries[variant].foraging = await registry.getAddress();
+      }
+      this.config.foragingWorldInput = true;
+      await writeFile(`${this.stateDir}/chain.json`, JSON.stringify(this.config, null, 2) + '\n');
+    }
     const artifact = async (file, name) =>
       JSON.parse(await readFile(`contracts/out/${file}.sol/${name}.json`));
     this.harness = new Contract(
@@ -161,7 +188,7 @@ export class FullChain {
     );
     this.registries = {};
     this.apps = {};
-    const regAbi = (await artifact('BioAgentRegistry', 'BioAgentRegistry')).abi;
+    const regAbi = (await artifact('BioAgentStimulusRegistry', 'BioAgentStimulusRegistry')).abi;
     const appAbi = (await artifact('AquaFlyApp', 'AquaFlyApp')).abi;
     const tokenAbi = (await artifact('AquaFlyApp', 'AquaTestToken')).abi;
     for (const variant of ['full', 'legacy']) {
@@ -205,6 +232,37 @@ export class FullChain {
     }
     this.sdk = new AquaProtocolContract(new Address(this.config.aqua));
   }
+  async configureForaging(variant, seed) {
+    const registry = this.registries[variant].foraging;
+    const configuration = { ...defaultWorld, seed };
+    const nonce = await registry.stimulusNonce(1);
+    const receipt = await this.receipt(
+      await registry.submitStimulus(1, nonce, WORLD_SCHEMA, toUtf8Bytes(JSON.stringify(configuration))),
+    );
+    const log = receipt.logs.find((l) => {
+      try {
+        return registry.interface.parseLog(l)?.name === 'BioAgentStimulusAccepted';
+      } catch {
+        return false;
+      }
+    });
+    if (!log) throw Error('Environment event missing');
+    const e = registry.interface.parseLog(log);
+    return {
+      name: e.name,
+      chainId: '31337',
+      registryAddress: await registry.getAddress(),
+      agentId: '1',
+      nonce: e.args.nonce.toString(),
+      schema: e.args.schema,
+      configuration: validateWorldInput(JSON.parse(toUtf8String(e.args.payload))),
+      transactionHash: receipt.hash,
+      blockHash: receipt.blockHash,
+      blockNumber: String(receipt.blockNumber),
+      logIndex: String(log.index),
+      receiptVerified: true,
+    };
+  }
   async stimulus(app, variant, agent, value) {
     const registry = this.registries[variant][app],
       status = await registry.getStatus(agent + 1);
@@ -238,6 +296,8 @@ export class FullChain {
       blockHash: receipt.blockHash,
       blockNumber: receipt.blockNumber,
       stimulus: Number(event.args.stimulus),
+      energy: Number(event.args.energy),
+      activity: Number(event.args.activity),
     };
   }
   async move(zeroForOne, amount = '1') {

@@ -69,7 +69,7 @@ export async function ensureWallet() {
   return wallet;
 }
 export async function artifact() {
-  return JSON.parse(await fs.readFile('contracts/out/BioAgentRegistry.sol/BioAgentRegistry.json', 'utf8'));
+  return JSON.parse(await fs.readFile('contracts/out/BioAgentStimulusRegistry.sol/BioAgentStimulusRegistry.json', 'utf8'));
 }
 export async function json(pathname, value) {
   await fs.mkdir(path.dirname(pathname), { recursive: true });

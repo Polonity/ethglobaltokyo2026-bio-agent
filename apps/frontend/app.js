@@ -12,7 +12,10 @@ const urlLanguage = new URLSearchParams(location.search).get('lang');
 if (['ja', 'en'].includes(urlLanguage)) setPreference(urlLanguage);
 $('language').value = getPreference();
 translateDOM();
-const config = await fetch('/api/config').then((r) => (r.ok ? r.json() : { mode: 'browser' }));
+const config = await fetch('/api/config').then((r) => {
+  if (!r.ok) throw Error('Connection configuration unavailable; no offline fallback');
+  return r.json();
+});
 const bodyModel = await fetch('/models/body-reference.json').then((r) => r.json());
 const chainMode = ['anvil', 'sepolia'].includes(config.mode);
 let modelError = '';
@@ -193,8 +196,11 @@ function draw(time) {
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   ctx.fillStyle = '#edf3dc';
   ctx.fillRect(0, 0, w, h);
-  const sx = w / WIDTH,
-    sy = h / HEIGHT;
+  if (chain && !chain.ready) return;
+  const fieldWidth = arena.world.width,
+    fieldHeight = arena.world.height;
+  const sx = w / fieldWidth,
+    sy = h / fieldHeight;
   // Soft terrain, paths and sparse observation grid.
   for (const [x, y, rx, ry] of [
     [8, 6, 8, 5],
@@ -213,8 +219,8 @@ function draw(time) {
   ctx.bezierCurveTo(w * 0.2, h * 0.6, w * 0.4, h * 0.2, w + 10, h * 0.35);
   ctx.stroke();
   ctx.fillStyle = '#7c8e6550';
-  for (let x = 1; x < WIDTH; x += 2)
-    for (let y = 1; y < HEIGHT; y += 2) {
+  for (let x = 1; x < fieldWidth; x += 2)
+    for (let y = 1; y < fieldHeight; y += 2) {
       ctx.beginPath();
       ctx.arc(x * sx, y * sy, 0.8, 0, Math.PI * 2);
       ctx.fill();
@@ -323,6 +329,14 @@ function renderUI() {
     document.body.dataset.ready = String(chain.ready);
     document.body.dataset.foodCount = String(arena.world.foods.length);
     document.body.dataset.foodEvents = String(arena.world.foodEvents.length);
+    const source = arena.world.worldSource;
+    $('environment-state').textContent = source
+      ? `${arena.world.width} × ${arena.world.height} · ${translate('危険エリア')} ${arena.world.hazards.length} · nonce ${source.nonce}`
+      : translate('環境TXを待っています');
+    if (source) {
+      bindTransactionLink($('environment-tx'), source.transactionHash);
+      $('environment-tx').textContent = source.transactionHash.slice(0, 14) + '…';
+    }
     $('food-provenance').replaceChildren();
     for (const event of arena.world.foodEvents.slice(-8).reverse()) {
       const row = document.createElement('p'),
@@ -536,8 +550,8 @@ function renderUI() {
 field.addEventListener('click', (e) => {
   if (arena.finished) return;
   const rect = field.getBoundingClientRect();
-  const x = ((e.clientX - rect.left) / rect.width) * WIDTH,
-    y = ((e.clientY - rect.top) / rect.height) * HEIGHT;
+  const x = ((e.clientX - rect.left) / rect.width) * arena.world.width,
+    y = ((e.clientY - rect.top) / rect.height) * arena.world.height;
   const fly = arena.flies.find((f) => Math.hypot(f.x - x, f.y - y) < 1.2);
   if (fly) selectFly(fly.id);
   else if (chain) {
@@ -627,7 +641,7 @@ $('export').onclick = () => {
     round: arena.round,
     time: arena.time,
     world: arena.world,
-    source: chain ? 'anvil-31337' : 'browser-local',
+    source: chain ? `${config.mode}-${config.chainId}` : 'browser-local',
     chain: chain
       ? { registryAddress: config.registryAddress, cursor: chain.cursor, lastTx: chain.lastTx }
       : null,

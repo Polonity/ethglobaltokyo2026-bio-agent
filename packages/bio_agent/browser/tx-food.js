@@ -25,6 +25,13 @@ export function addTxFood(world, event, consumed = new Set()) {
     event.stimulus > 10000
   )
     throw Error('Invalid confirmed food event');
+  if (!world.worldSource) throw Error('Confirmed environment required before food');
+  const source = world.worldSource;
+  if (
+    Number(event.blockNumber) < Number(source.blockNumber) ||
+    (Number(event.blockNumber) === Number(source.blockNumber) && event.logIndex <= Number(source.logIndex))
+  )
+    return false;
   if (BigInt(event.revision) === 1n || event.stimulus === 0) return false;
   const id = `${event.chainId}:${event.registry.toLowerCase()}:${event.transactionHash.toLowerCase()}:${event.logIndex}`;
   const previous = world.foodEvents.find((e) => e.id === id);
@@ -33,11 +40,14 @@ export function addTxFood(world, event, consumed = new Set()) {
     return false;
   }
   // A deterministic visualization coordinate, not a coordinate stored in the contract.
-  const n = BigInt(event.transactionHash) + BigInt(event.logIndex);
+  const n = BigInt(event.transactionHash) + BigInt(event.logIndex) + BigInt(world.seed);
+  const margin = world.foodMargin;
+  const spanX = BigInt(Math.floor((world.width - margin * 2) * 1000));
+  const spanY = BigInt(Math.floor((world.height - margin * 2) * 1000));
   let x, y;
   for (let attempt = 0; attempt < 32; attempt++) {
-    x = 2 + Number((n + BigInt(attempt * 7919)) % 32000n) / 1000;
-    y = 2 + Number(((n >> 32n) + BigInt(attempt * 3571)) % 18000n) / 1000;
+    x = margin + Number((n + BigInt(attempt * 7919)) % spanX) / 1000;
+    y = margin + Number(((n >> 32n) + BigInt(attempt * 3571)) % spanY) / 1000;
     if (!world.hazards.some((h) => Math.hypot(x - h.x, y - h.y) < h.radius + 1.5)) break;
   }
   const record = { id, source: structuredClone(event), x, y, consumed: consumed.has(id) };

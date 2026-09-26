@@ -1,3 +1,5 @@
+import defaultWorld from '../../packages/bio_agent/browser/foraging-world.json' with { type: 'json' };
+import { WORLD_SCHEMA } from '../../packages/bio_agent/browser/tx-world.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -6,7 +8,7 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 import { setTimeout as delay } from 'node:timers/promises';
-import { JsonRpcProvider, Wallet, ContractFactory, parseEther } from 'ethers';
+import { JsonRpcProvider, Wallet, ContractFactory, parseEther, toUtf8Bytes } from 'ethers';
 import { StimulusScheduler, LIMITS } from '../../services/sepolia/scheduler.js';
 import { registryRead } from '../../services/worker/registry-read.js';
 import { batchedRpc } from '../../services/worker/rpc-read.js';
@@ -36,7 +38,7 @@ test('scheduler retries one signed TX, survives restart, and shares verified his
     const wallet = Wallet.createRandom().connect(p);
     await p.send('anvil_setBalance', [wallet.address, '0x' + parseEther('0.1').toString(16)]);
     const artifact = JSON.parse(
-      await fs.readFile('contracts/out/BioAgentRegistry.sol/BioAgentRegistry.json', 'utf8'),
+      await fs.readFile('contracts/out/BioAgentStimulusRegistry.sol/BioAgentStimulusRegistry.json', 'utf8'),
     );
     const registry = await new ContractFactory(artifact.abi, artifact.bytecode.object, wallet).deploy();
     const deployed = await registry.deploymentTransaction().wait();
@@ -50,6 +52,14 @@ test('scheduler retries one signed TX, survives restart, and shares verified his
       deployBlock: deployed.blockNumber,
       agentIds: ['1'],
     };
+    config.worldInput = true;
+    await assert.rejects(
+      registryRead(new Request('https://demo/api/chain/snapshot'), config, (m, a) => p.send(m, a)),
+      /Confirmed environment input missing/,
+    );
+    await (
+      await registry.submitStimulus(1, 0, WORLD_SCHEMA, toUtf8Bytes(JSON.stringify(defaultWorld)))
+    ).wait();
     const rows = new Map();
     let failAfterPersist = true;
     const storage = {
@@ -104,8 +114,9 @@ test('scheduler retries one signed TX, survives restart, and shares verified his
     });
     const request = new Request('https://demo/api/chain/snapshot');
     const snapshot = await (await registryRead(request, config, read)).json();
-    assert.equal(snapshot.events.length, 2);
+    assert.equal(snapshot.events.length, 3);
     assert.equal(snapshot.agents[0].status.stimulus, 5500);
+    assert.deepEqual(snapshot.environment.configuration.hazards, defaultWorld.hazards);
     assert.ok(snapshot.events.every((e) => e.receiptVerified));
     assert.ok(calls < 12, `reads were not batched: ${calls}`);
     const reverted = async (method, args) => {

@@ -63,6 +63,7 @@ const localWorker = {
       url.pathname = suffix === 'config' ? '/api/config' : '/api/chain/' + suffix;
       return localWorker.fetch(new Request(url, request), {
         ...env,
+        WORLD_INPUT: 'false',
         REGISTRY_ADDRESS: env.CIRCUIT_REGISTRY,
         LOCAL_MODEL_HASH: env.CIRCUIT_MODEL_HASH,
         DEPLOYMENT_BLOCK: env.CIRCUIT_DEPLOYMENT_BLOCK,
@@ -76,6 +77,7 @@ const localWorker = {
         walletMode: 'local',
         pollIntervalMs: 600,
         localApps: true,
+        worldInput: env.WORLD_INPUT === 'true',
         chainId: '31337',
         registryAddress: env.REGISTRY_ADDRESS,
         deployBlock: env.DEPLOYMENT_BLOCK,
@@ -109,6 +111,7 @@ const localWorker = {
           registryAddress: env.REGISTRY_ADDRESS,
           deployBlock: env.DEPLOYMENT_BLOCK,
           modelHash: env.LOCAL_MODEL_HASH,
+          worldInput: env.WORLD_INPUT === 'true',
           agentIds: ['1', '2', '3'],
         },
         (m, p) => rpc(env, m, p),

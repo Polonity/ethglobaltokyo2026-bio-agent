@@ -67,7 +67,7 @@
       },
       "encoder": {
         "uri": "/models/male-cns/male-cns.js",
-        "sha256": "0x352f924bed3285b86e731af7e97da213312500d61fb8a9fd57607519ff0ceec0"
+        "sha256": "0xd5f181518f45c106696cbefcd40c76880740f52d1e5fd357f0c932a5b61d9f0c"
       },
       "learner": {
         "uri": "/models/male-cns/learning.js",
@@ -77,9 +77,17 @@
         "uri": "/models/male-cns/readout.js",
         "sha256": "0x5f9183e3aaffacef8426887fec9b7a16828c7af7b2e83fcd64d4bf89280459dc"
       },
+      "tx-food": {
+        "uri": "/models/male-cns/tx-food.js",
+        "sha256": "0x8cf57f700bc7200816f0fabce34954b169a2c29f1eae1a4e8c987e5dcb7fd61a"
+      },
+      "tx-world": {
+        "uri": "/models/male-cns/tx-world.js",
+        "sha256": "0xa3fb6dcac17a0d3df555bb78cdb875b51ebb2f2cc6c0b8e95d6ed5d7e638509a"
+      },
       "runtime": {
         "uri": "/models/male-cns/foraging-runtime.js",
-        "sha256": "0x94c385c0375f5d0320cf4137e4cf8c84dc5dff74eeaa7c01eac1a661d15502c3"
+        "sha256": "0x4d97483edb0a49c4eac71199a379672422a95fcf0bf0b425cf7b3d0f59dfa236"
       }
     }
   },

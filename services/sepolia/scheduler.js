@@ -1,5 +1,6 @@
 import { Contract, FetchRequest, JsonRpcProvider, Wallet, keccak256, parseEther, parseUnits } from 'ethers';
 const ABI = [
+  'function stimulusNonce(uint256) view returns (uint256)',
   'function getAgent(uint256) view returns (tuple(address owner,bytes32 modelHash,string metadataURI))',
   'function getStatus(uint256) view returns (tuple(uint8 activity,uint16 energy,uint16 stimulus,uint64 revision,uint64 updatedAt))',
   'function updateStatus(uint256,uint64,uint8,uint16,uint16)',
@@ -71,7 +72,12 @@ export class StimulusScheduler {
       const config = await (
         await this.env.ASSETS.fetch(new Request('https://demo.internal/config.json'))
       ).json();
-      if (config.chainId !== 11155111 || !config.registryAddress || config.demoAgentId !== '1')
+      if (
+        config.chainId !== 11155111 ||
+        !config.registryAddress ||
+        config.demoAgentId !== '1' ||
+        config.worldInput !== true
+      )
         throw Error('Unexpected demo deployment');
       const wallet = new Wallet(this.env.SEPOLIA_SIGNER_KEY);
       const registry = new Contract(config.registryAddress, ABI, p);
@@ -81,6 +87,7 @@ export class StimulusScheduler {
         definition.modelHash !== config.modelHash
       )
         throw Error('Signer/model does not match demo owner');
+      if ((await registry.stimulusNonce(1)) === 0n) throw Error('Confirmed environment input missing');
       const rows = await this.ctx.storage.list({ prefix: 'tx:' });
       const now = Date.now(),
         slot = 'tx:' + Math.floor(now / LIMITS.intervalMs);
@@ -176,6 +183,7 @@ export class StimulusScheduler {
         'Another wallet transaction is pending',
         'Sepolia required',
         'Unexpected demo deployment',
+        'Confirmed environment input missing',
         'Signer/model does not match demo owner',
       ];
       return this.report({

@@ -18,8 +18,19 @@ export async function buildDemo({ output = 'dist/sepolia-demo', deployment } = {
   await fs.mkdir(output, { recursive: true });
   for (const file of ['index.html', 'style.css', 'app.js'])
     await fs.copyFile(`dist/${file}`, path.join(output, file));
-  for (const directory of ['models', 'guides'])
-    await fs.cp(`dist/${directory}`, path.join(output, directory), { recursive: true });
+  const manifest = JSON.parse(await fs.readFile('dist/models/foraging-malecns-q-v3.json', 'utf8'));
+  const models = [
+    'models/foraging-malecns-q-v3.json',
+    'models/body-reference.json',
+    'models/synthetic-metabolism-v1.js',
+    ...Object.values(manifest.connectome.refs).map((r) => r.uri.slice(1)),
+    ...[1, 2, 3].map((i) => `models/agents/${i}.json`),
+  ];
+  for (const file of models) {
+    await fs.mkdir(path.dirname(path.join(output, file)), { recursive: true });
+    await fs.copyFile('dist/' + file, path.join(output, file));
+  }
+  await fs.cp('dist/guides', path.join(output, 'guides'), { recursive: true });
   const files = {};
   for (const file of ['index.html', 'style.css', 'app.js'])
     files[file] = sha256(await fs.readFile(path.join(output, file)));

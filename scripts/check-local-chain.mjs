@@ -1,3 +1,6 @@
+import defaultWorld from '../packages/bio_agent/browser/foraging-world.json' with { type: 'json' };
+import { WORLD_SCHEMA } from '../packages/bio_agent/browser/tx-world.js';
+import { toUtf8Bytes } from 'ethers';
 import { chromium } from '@playwright/test';
 import { Interface } from 'ethers/abi';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
@@ -12,7 +15,9 @@ assert.ok(
 );
 const rpcURL = deployment.rpcUrl;
 assert.equal(new URL(rpcURL).hostname, '127.0.0.1');
-const contract = new Interface(JSON.parse(await readFile('contracts/abi/BioAgentRegistry.json', 'utf8')));
+const contract = new Interface(
+  JSON.parse(await readFile('contracts/abi/BioAgentStimulusRegistry.json', 'utf8')),
+);
 async function rpc(method, params = []) {
   const response = await fetch(rpcURL, {
     method: 'POST',
@@ -55,6 +60,35 @@ try {
     window.__arena.duration = 300;
   });
   await page.getByRole('button', { name: '一時停止', exact: true }).click();
+  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), defaultWorld.hazards);
+  const hazards = [
+    { x: 8, y: 6, radius: 1.4 },
+    { x: 27, y: 14, radius: 2 },
+  ];
+  await rpc('evm_setAutomine', [false]);
+  const environmentTx = await rpc('eth_sendTransaction', [
+    {
+      from: deployment.owner,
+      to: deployment.registryAddress,
+      data: contract.encodeFunctionData('submitStimulus', [
+        1,
+        initial.environment.nonce,
+        WORLD_SCHEMA,
+        toUtf8Bytes(JSON.stringify({ ...defaultWorld, hazards })),
+      ]),
+      gas: '0x493e0',
+    },
+  ]);
+  await page.waitForTimeout(800);
+  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), defaultWorld.hazards);
+  await rpc('evm_mine');
+  await rpc('evm_setAutomine', [true]);
+  await page.waitForFunction(
+    (hash) => window.__arena.world.worldSource?.transactionHash === hash,
+    environmentTx,
+  );
+  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), hazards);
+  results.environment = { transactionHash: environmentTx, hazards, pendingDidNotApply: true };
   const foodBefore = await page.evaluate(() => window.__arena.world.foods.length);
   // Hold the transaction in Anvil's mempool: the UI must not apply it optimistically.
   await rpc('evm_setAutomine', [false]);

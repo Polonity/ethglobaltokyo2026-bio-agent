@@ -982,7 +982,10 @@ function draw(now) {
     snapshot = p?.snapshot;
   if (app === 'foraging') {
     if (!snapshot) return;
-    const xy = (f) => ({ x: b.x + (f.x / 36) * b.w, y: b.y + (f.y / 22) * b.h });
+    const xy = (f) => ({
+      x: b.x + (f.x / (snapshot.world.width || 36)) * b.w,
+      y: b.y + (f.y / (snapshot.world.height || 22)) * b.h,
+    });
     for (const hazard of snapshot.world.hazards) {
       const v = xy(hazard);
       c.fillStyle = '#eeb89818';
@@ -990,7 +993,15 @@ function draw(now) {
       c.lineWidth = 2;
       c.setLineDash([5, 5]);
       c.beginPath();
-      c.ellipse(v.x, v.y, (hazard.radius / 36) * b.w, (hazard.radius / 22) * b.h, 0, 0, Math.PI * 2);
+      c.ellipse(
+        v.x,
+        v.y,
+        (hazard.radius / (snapshot.world.width || 36)) * b.w,
+        (hazard.radius / (snapshot.world.height || 22)) * b.h,
+        0,
+        0,
+        Math.PI * 2,
+      );
       c.fill();
       c.stroke();
       c.setLineDash([]);

@@ -1,0 +1,11 @@
+{
+  "schema": "bioagent.foraging-world.v1",
+  "seed": 2026,
+  "width": 36,
+  "height": 22,
+  "foodMargin": 2,
+  "hazards": [
+    { "x": 12, "y": 8, "radius": 2.2 },
+    { "x": 25, "y": 15, "radius": 2.4 }
+  ]
+}

@@ -1,6 +1,9 @@
 // Japanese source messages, translated only at the presentation boundary.
 // Technical identifiers (hashes, event names, agent names) remain unchanged.
 export const messages = {
+  危険エリア: 'Hazards',
+  環境TXを待っています: 'Waiting for environment TX',
+
   ウォレット接続: 'Connect wallet',
   餌の追加元TX: 'Food source transactions',
   刺激TXで餌を追加: 'Add food with a stimulus TX',

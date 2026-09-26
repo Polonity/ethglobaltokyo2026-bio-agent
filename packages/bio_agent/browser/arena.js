@@ -1,4 +1,6 @@
-import { consumeFood, enableTxFood, addTxFood, statusFoodEvent } from './tx-food.js';
+import defaultWorld from './foraging-world.json' with { type: 'json' };
+import { emptyTxWorld, applyTxWorld } from './tx-world.js';
+import { consumeFood, addTxFood, statusFoodEvent } from './tx-food.js';
 import { MALE_CNS, forageChannels } from '../connectome/male-cns.js';
 import { learningReport, FORAGE_UPDATES, FORAGE_BATCH } from '../../training/browser/learning.js';
 import { bodyStep, bodyObservation, ensureBody } from './body.js';
@@ -57,10 +59,7 @@ function bearing(dx, dy) {
 export function createWorld(rng) {
   return {
     foods: Array.from({ length: 6 }, (_, id) => ({ id, x: 3 + rng() * 30, y: 3 + rng() * 16 })),
-    hazards: [
-      { x: 12, y: 8, radius: 2.2 },
-      { x: 25, y: 15, radius: 2.4 },
-    ],
+    ...structuredClone(defaultWorld),
     stimulus: 0.55,
     energy: 0.7,
     mode: 'forage',
@@ -76,9 +75,9 @@ export function observe(fly, world) {
     if (
       world.hazards.some((h) => distance(p, h) < h.radius + 0.4) ||
       p.x < 1 ||
-      p.x > WIDTH - 1 ||
+      p.x > world.width - 1 ||
       p.y < 1 ||
-      p.y > HEIGHT - 1
+      p.y > world.height - 1
     )
       mask |= 1 << a;
   });
@@ -124,8 +123,8 @@ export function transition(fly, world, action, rng) {
   const oldDistance = before.target ? distance(fly, before.target) : 0;
   const [dx, dy] = DIRECTIONS[action];
   const speed = fly.energy < 0.12 ? 0.45 : 0.9;
-  fly.x = clamp(fly.x + dx * speed, 0.7, WIDTH - 0.7);
-  fly.y = clamp(fly.y + dy * speed, 0.7, HEIGHT - 0.7);
+  fly.x = clamp(fly.x + dx * speed, 0.7, world.width - 0.7);
+  fly.y = clamp(fly.y + dy * speed, 0.7, world.height - 0.7);
   if (action < 8) fly.heading = (action * Math.PI) / 4;
   const hit = world.hazards.some((h) => distance(fly, h) < h.radius);
   let reward = (before.target ? oldDistance - distance(fly, before.target) : 0) * 0.3 - 0.03;
@@ -164,16 +163,16 @@ function clone(q) {
   return JSON.parse(JSON.stringify(q));
 }
 // Same private benchmark seeds for before/after, never used for fitting.
-export function evaluate(q) {
+export function evaluate(q, environment = null) {
   const policy = clone(q);
   let total = 0;
   for (const seed of [90001, 90019, 90103]) {
-    const rng = random(seed);
-    const world = createWorld(rng);
-    const fly = { x: 3 + rng() * 30, y: 3 + rng() * 16, energy: 0.7 };
+    const rng = random((environment?.seed || 0) + seed);
+    const world = environment ? clone(environment) : createWorld(rng);
+    const fly = { x: 2 + rng() * (world.width - 4), y: 2 + rng() * (world.height - 4), energy: 0.7 };
     for (let tick = 0; tick < 100; tick++) {
       const obs = observe(fly, world);
-      const t = transition(fly, world, choose(policy, obs, rng, 0), rng);
+      const t = transition(fly, world, world.foods.length ? choose(policy, obs, rng, 0) : 8, rng);
       total += t.reward;
     }
   }
@@ -183,8 +182,7 @@ export class Arena {
   constructor(seed = 2026, { agentCount = 12, txFood = false } = {}) {
     this.seed = seed;
     this.rng = random(seed);
-    this.world = createWorld(this.rng);
-    if (txFood) enableTxFood(this.world);
+    this.world = txFood ? emptyTxWorld() : createWorld(this.rng);
     this.time = 0;
     this.duration = 90;
     this.round = 1;
@@ -229,7 +227,22 @@ export class Arena {
     this.events.unshift({ id: ++this.revision, time: this.time, kind, title, detail, flyId });
     this.events = this.events.slice(0, 40);
   }
+  applyWorld(event) {
+    if (!applyTxWorld(this.world, event)) return false;
+    this.seed = this.world.seed;
+    this.rng = random(this.seed);
+    for (const f of this.flies) {
+      f.x = 2 + this.rng() * (this.world.width - 4);
+      f.y = 2 + this.rng() * (this.world.height - 4);
+      f.trail = [];
+      f.training = null;
+      f.state = 'racing';
+      f.memory = [];
+    }
+    return true;
+  }
   applyStatus({ stimulus, energy, mode }) {
+    if (this.world.foodMode === 'confirmed-tx') throw Error('Agent input requires a confirmed transaction');
     this.world.stimulus = clamp(stimulus, 0, 1);
     this.world.energy = clamp(energy, 0, 1);
     this.world.mode = ['forage', 'explore', 'rest'].includes(mode) ? mode : 'forage';
@@ -275,7 +288,14 @@ export class Arena {
     this.log('input', 'NECTAR PLACED', 'クリック位置に蜜を配置。ハエが匂いに反応');
   }
   startTraining(fly) {
-    if (fly.state === 'learning' || this.finished) return false;
+    if (
+      fly.state === 'learning' ||
+      this.finished ||
+      (this.world.foodMode === 'confirmed-tx' && !this.world.worldSource)
+    )
+      return false;
+    const sourceWorld =
+      this.world.foodMode === 'confirmed-tx' ? clone({ ...this.world, ...fly.input }) : null;
     const rng = random(this.seed + fly.id * 7109 + (fly.trainingCount + 1) * 101);
     fly.state = 'learning';
     fly.trainingCount++;
@@ -286,12 +306,13 @@ export class Arena {
       episodes: 0,
       error: 0,
       candidate: clone(fly.q),
-      before: evaluate(fly.q),
+      before: evaluate(fly.q, sourceWorld),
+      sourceWorld,
       totalUpdates: FORAGE_UPDATES,
       baseVersion: fly.version,
       rng,
-      world: createWorld(rng),
-      actor: { x: 3 + rng() * 30, y: 3 + rng() * 16, energy: 0.7 },
+      world: sourceWorld ? clone(sourceWorld) : createWorld(rng),
+      actor: { x: fly.x, y: fly.y, energy: fly.energy },
     };
     this.log('learning', `${fly.name} → LEARNING`, `${fly.memory.length}件の経験から方策を更新`, fly.id);
     return true;
@@ -301,18 +322,27 @@ export class Arena {
     t.elapsed += dt;
     for (let i = 0; i < FORAGE_BATCH && t.steps < FORAGE_UPDATES; i++) {
       const obs = observe(t.actor, t.world);
-      const item = transition(t.actor, t.world, choose(t.candidate, obs, t.rng, 0.28), t.rng);
+      const item = transition(
+        t.actor,
+        t.world,
+        t.world.foods.length ? choose(t.candidate, obs, t.rng, 0.28) : 8,
+        t.rng,
+      );
       t.error = learn(t.candidate, item);
       if (fly.memory.length) learn(t.candidate, fly.memory[Math.floor(t.rng() * fly.memory.length)]);
       t.steps++;
       if (t.steps % 100 === 0) {
         t.episodes++;
-        t.world = createWorld(t.rng);
-        t.actor = { x: 2 + t.rng() * 32, y: 2 + t.rng() * 18, energy: 0.7 };
+        t.world = t.sourceWorld ? clone(t.sourceWorld) : createWorld(t.rng);
+        t.actor = {
+          x: 2 + t.rng() * (t.world.width - 4),
+          y: 2 + t.rng() * (t.world.height - 4),
+          energy: 0.7,
+        };
       }
     }
     if (t.steps >= FORAGE_UPDATES) {
-      const after = evaluate(t.candidate);
+      const after = evaluate(t.candidate, t.sourceWorld);
       const accepted = after > t.before + 0.01;
       if (accepted) {
         fly.q = t.candidate;
@@ -328,7 +358,9 @@ export class Arena {
           updates: t.steps,
           adopted: accepted,
           model: MALE_CNS.graphSha256,
-          metric: 'selection-seed reward; not independent generalization',
+          metric: t.sourceWorld
+            ? 'replay of confirmed environment; not independent generalization'
+            : 'selection-seed reward; not independent generalization',
         }),
         accepted,
         steps: t.steps,
@@ -347,7 +379,8 @@ export class Arena {
   }
   tick(dt = 0.2) {
     if (dt !== 0.2) throw new Error('This model requires a fixed 0.2 second tick');
-    if (this.paused || this.finished) return;
+    if (this.paused || this.finished || (this.world.foodMode === 'confirmed-tx' && !this.world.worldSource))
+      return;
     this.time += dt;
     for (const fly of this.flies) {
       if (fly.state === 'learning') {
@@ -456,8 +489,8 @@ export class Arena {
       f.training = null;
       f.lastTraining = -30;
       f.trail = [];
-      f.x = 3 + this.rng() * 30;
-      f.y = 3 + this.rng() * 16;
+      f.x = 2 + this.rng() * (this.world.width - 4);
+      f.y = 2 + this.rng() * (this.world.height - 4);
     });
     this.log('system', 'NEXT ROUND', '学習した方策を引き継いで次の競争へ');
   }

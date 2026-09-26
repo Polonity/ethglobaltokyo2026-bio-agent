@@ -23,6 +23,7 @@ export default {
         walletMode: 'browser',
         pollIntervalMs: 12000,
         localApps: false,
+        worldInput: true,
         chainId: String(deployment.chainId),
         registryAddress: deployment.registryAddress,
         deployBlock: deployment.blockNumber,
