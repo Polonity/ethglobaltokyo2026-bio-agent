@@ -30,3 +30,7 @@ npm run test:guides   # 日英・両GUI・実動作の表示・モバイル・PD
 生成PDFと画面キャプチャは `artifacts/app-guides/`、検証結果は同ディレクトリの `verification.json`。過去の学習性能の受入結果は[既存の受入記録](../submission/full-apps-acceptance.md)として保持し、今回の説明UIの検証とは区別します。
 
 画像原本は `apps/frontend/guides/screens/`。`manifest.json` に取得元URL・セレクター・日時を記録しています。画面構成が変わった場合は画像も再取得してください。
+
+## 吹き出し図鑑
+
+全神経版の学習表示・行動カードと、従来版の吹き出しを、実際の表示文言に合わせた模式図で説明しています。各図には表示条件と状況を併記し、採餌・市場の優先順位、注文待ちと約定の違い、Aquaの判断とTX確定の違いも明示しています。模式図は実測画面や感情計測ではありません。原本は `content.mjs` の `bubbleGuide` / `bubbleSvg`、Markdown用SVGは `docs/apps/bubbles/` へ生成します。

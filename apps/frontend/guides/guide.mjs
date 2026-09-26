@@ -1,4 +1,4 @@
-import { guideFor } from './content.mjs';
+import { guideFor, bubbleGuide, bubbleSvg } from './content.mjs';
 const titles = {
   ja: {
     body: '身体の状態',
@@ -171,6 +171,72 @@ function mount(root, app, lang, mode, sheet = false) {
     legend.append(item);
   }
   root.append(legend);
+  const bubbles = el('section');
+  bubbles.className = 'guide-bubbles';
+  bubbles.append(
+    el('h3', ja ? '吹き出し図鑑：いま、どんな状況？' : 'Bubble field guide: what is happening?'),
+  );
+  bubbles.append(
+    el(
+      'p',
+      ja
+        ? '実際の表示文言に合わせた説明用の模式図です。同時にすべてが出るわけではありません。吹き出しは状態・判断・結果のラベルであり、感情の測定ではありません。'
+        : 'Illustrations use the actual display labels; they are not live screenshots. These labels describe states, decisions and outcomes, not measured emotions.',
+    ),
+  );
+  for (const group of bubbleGuide(app, lang, mode)) {
+    bubbles.append(el('h3', group.title));
+    if (group.id === 'browser' && mode !== 'browser')
+      bubbles.append(
+        el(
+          'p',
+          ja
+            ? '以下は従来版だけの表示です。現在の全神経版には、この感情風の吹き出しは出ません。'
+            : 'The following belong to the original browser app; these expressive captions do not appear in the full app.',
+        ),
+      );
+    const grid = el('div');
+    grid.className = 'bubble-grid';
+    for (const item of group.items) {
+      const figure = el('figure'),
+        img = el('img'),
+        caption = el('figcaption');
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bubbleSvg(item));
+      img.alt = item.label;
+      caption.append(el('strong', item.label), el('p', item.meaning));
+      figure.append(img, caption);
+      grid.append(figure);
+    }
+    bubbles.append(grid);
+    if (group.id === 'browser' && app === 'foraging')
+      bubbles.append(
+        el(
+          'p',
+          ja
+            ? '表示の優先順位：学習 → 危険 → 獲得 → 休息 → 満腹 → 空腹 → 通常。たとえば空腹でも、直近で危険が記録されると「！」が優先されます。'
+            : 'Priority: learning → danger → collection → rest → full → hungry → default. A recent danger record takes priority even when the fly is hungry.',
+        ),
+      );
+    if (group.id === 'browser' && app === 'market')
+      bubbles.append(
+        el(
+          'p',
+          ja
+            ? '表示の優先順位：学習 → 注文待ち → 保有中 → 見送り。買い／売り待ちは、約定完了とは区別します。'
+            : 'Priority: learning → pending order → holding → waiting. Pending buy/sell captions do not mean a completed fill.',
+        ),
+      );
+    if (group.id === 'browser' && app === 'aqua')
+      bubbles.append(
+        el(
+          'p',
+          ja
+            ? '戦略の吹き出しが変わっても、まだ未反映の場合があります。「確認済み」とTXを照合してください。'
+            : 'A changed strategy caption may still be unapplied. Check the confirmation state and TX.',
+        ),
+      );
+  }
+  root.append(bubbles);
   const status = el('details');
   status.open = sheet;
   status.append(el('summary', ja ? '身体・吹き出し・成績の読み方' : 'Body, bubbles and scores'));

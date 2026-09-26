@@ -238,3 +238,44 @@
     padding: 8px;
   }
 }
+
+.bio-guide .guide-bubbles {
+  margin: 24px 0;
+}
+.bio-guide .bubble-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.bio-guide .bubble-grid figure {
+  margin: 0;
+  border: 1px solid #cad9c4;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  break-inside: avoid;
+}
+.bio-guide .bubble-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.bio-guide .bubble-grid figcaption {
+  padding: 8px 4px 0;
+}
+@media (max-width: 550px) {
+  .bio-guide .bubble-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  .bio-guide .bubble-grid {
+    display: block;
+  }
+  .bio-guide .bubble-grid figure {
+    display: inline-block;
+    width: 48%;
+    margin: 0 1% 10px 0;
+    vertical-align: top;
+  }
+}

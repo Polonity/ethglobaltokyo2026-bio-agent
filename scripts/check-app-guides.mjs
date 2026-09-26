@@ -72,7 +72,8 @@ try {
       assert.equal(await page.locator('details[open]').count(), 3);
       await page.waitForFunction(
         () =>
-          [...document.querySelectorAll('main img')].length === 4 &&
+          [...document.querySelectorAll('.guide-visuals img')].length === 4 &&
+          [...document.querySelectorAll('.guide-bubbles img')].length >= 6 &&
           [...document.querySelectorAll('main img')].every((img) => img.complete && img.naturalWidth > 0),
       );
       await page.pdf({

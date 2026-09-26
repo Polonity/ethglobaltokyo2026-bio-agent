@@ -645,3 +645,230 @@ export function guideFor(app, lang = 'en', mode = 'full') {
     app,
   };
 }
+
+// Illustrated legend: display conditions, not inferred animal emotions.
+export function bubbleGuide(app, lang = 'ja', mode = 'full') {
+  const ja = lang === 'ja';
+  const item = (labelJa, labelEn, meaningJa, meaningEn, color = '#fffdf4', card = false) => ({
+    label: ja ? labelJa : labelEn,
+    meaning: ja ? meaningJa : meaningEn,
+    color,
+    card,
+  });
+  const training = item(
+    '？',
+    '?',
+    'readoutを学習しているフェーズ。ハエの移動表示が止まります。収集や評価の全時間に出る印ではなく、学習処理が短いと見逃すこともあります。',
+    'The readout-training phase. Fly movement pauses. This does not cover the entire collection/evaluation job; a short fit may be easy to miss.',
+    '#f1e4ff',
+  );
+  const full = {
+    foraging: [
+      training,
+      item(
+        '方策 v2 · 行動 東へ',
+        'Policy v2 · Action East',
+        '8方向のいずれかへ移動する判断。方策v2は使用したreadoutの版で、賢さの点数ではありません。吹き出し風のカードに表示されます。',
+        'A choice to move in one of eight directions. Policy v2 identifies the readout version, not intelligence. Displayed in a bubble-style card.',
+        '#fff2cf',
+        true,
+      ),
+      item(
+        '方策 v2 · 行動 休息',
+        'Policy v2 · Action Rest',
+        '移動せず休む行動。低エネルギー時には強制休息もあります。採餌の学び直し「？」とは別の状態です。',
+        'Rest without movement. Low energy can force rest. This differs from the training question mark.',
+        '#e5edf9',
+        true,
+      ),
+    ],
+    market: [
+      training,
+      item(
+        '行動 待機',
+        'Action Hold',
+        'この判断では売買しません。保有中でも未保有でも選べるので、待機＝ノーポジションではありません。',
+        'No trade on this decision. Hold can occur with or without a position.',
+        '#fffdf4',
+        true,
+      ),
+      item(
+        '行動 買う',
+        'Action Buy',
+        'ペーパー口座の買い判断。入力を見たブロックより後の観測ブロックのquoteで約定を評価します。',
+        'A paper buy decision. Execution is valued using a quote at a later observed block.',
+        '#fff0be',
+        true,
+      ),
+      item(
+        '行動 売る',
+        'Action Sell',
+        '保有しているペーパーポジションを閉じる判断。実資金を売るTXを送ったという表示ではありません。',
+        'A choice to close a paper position, not a real-money sell transaction.',
+        '#e5edf9',
+        true,
+      ),
+    ],
+    aqua: [
+      training,
+      item(
+        '行動 狭いスプレッド',
+        'Action Tight quote',
+        '30 bpsで流動性を提示する判断。取引が成立したかどうかは約定とTXで別に確認します。',
+        'Offer liquidity at 30 bps. Inspect fills and TXs separately to confirm execution.',
+        '#fff0be',
+        true,
+      ),
+      item(
+        '行動 広いスプレッド',
+        'Action Wide quote',
+        '800 bpsで広く提示する判断。人工的な注文成立ルールにより、提示しても約定しない場合があります。',
+        'Offer at 800 bps. The simulated taker rule may leave the offer unfilled.',
+        '#fff2cf',
+        true,
+      ),
+      item(
+        '行動 撤回',
+        'Action Withdraw',
+        '戦略を取り下げる判断。dockのTXが確定したかも確認します。ハエが恐怖を感じた証拠ではありません。',
+        'Withdraw the strategy; check confirmation of the dock TX. This is not evidence of fear.',
+        '#ffe1d8',
+        true,
+      ),
+    ],
+  }[app];
+  const browser = {
+    foraging: [
+      item(
+        '？ どうしよう…',
+        '? Let me think…',
+        '学習室で学び直し中。個体はその場で停止します。ほかの条件より優先して表示します。',
+        'Relearning in the learning room. The individual stops in place. This takes priority over other captions.',
+        '#f1e4ff',
+      ),
+      item(
+        '！ あぶない',
+        '! Watch out!',
+        '直近の判断記録に「危険」がある状態。危険への接触などの結果を表示しており、未来の危険予知ではありません。',
+        'The latest decision record contains a danger result, such as hazard contact. It is not a forecast.',
+        '#ffe1d8',
+      ),
+      item(
+        '♡ やった！',
+        '♡ Yum!',
+        '直近の判断で蜜を獲得。満腹度の表示より優先されるため、満腹でも♡が出ることがあります。',
+        'Nectar was collected in the latest decision. This takes priority over fullness captions.',
+        '#fff0be',
+      ),
+      item(
+        'すやすや…',
+        'Zzz…',
+        '直近の判断が休息。学び直しではなく、休む行動を見せています。',
+        'The latest decision was rest, not relearning.',
+        '#e5edf9',
+      ),
+      item(
+        'おなかいっぱい…',
+        'So full…',
+        '満腹度が80%より高いとき。学習・危険・獲得・休息の表示が優先されます。',
+        'Fullness is above 80%, unless learning, danger, collection or rest takes priority.',
+        '#fff0be',
+      ),
+      item(
+        'ぐぅ…おなかすいた',
+        'Rumble… hungry!',
+        '満腹度が15%未満。活動エネルギー残量やトークン残高の意味ではありません。',
+        'Fullness is below 15%. This is not remaining activity energy or a token balance.',
+      ),
+      item(
+        'おやつ、どこ？',
+        'Where’s a treat?',
+        '上の条件に当てはまらない通常の表示。食べ物の正確な位置を発見したという意味ではありません。',
+        'The default caption when none of the above applies. It does not mean food has been located.',
+      ),
+    ],
+    market: [
+      item(
+        '？ 考えなおし中',
+        '? Thinking again…',
+        '売買方策を学び直している状態。保有ポジションがある場合、その価格リスクは残ります。',
+        'Relearning the trading policy. An existing position still carries price risk.',
+        '#f1e4ff',
+      ),
+      item(
+        '買うタイミングを待つ',
+        'Waiting to buy',
+        '買い判断を予約し、後のSwap・quoteによるペーパー約定を待っています。まだ購入完了ではありません。',
+        'A buy is pending, awaiting a later Swap/quote for paper execution. It has not filled yet.',
+        '#fff0be',
+      ),
+      item(
+        '売るタイミングを待つ',
+        'Waiting to sell',
+        '売り判断を予約し、後のSwap・quoteによるペーパー約定を待っています。まだ売却完了ではありません。',
+        'A sell is pending, awaiting a later Swap/quote for paper execution. It has not filled yet.',
+        '#e5edf9',
+      ),
+      item(
+        'じっと保有中',
+        'Holding patiently',
+        '予約中の注文がなく、ペーパートークンを保有しています。',
+        'There is no pending order and the fly holds paper tokens.',
+      ),
+      item(
+        '今は見送ろう',
+        'Let’s wait',
+        '学習中でも注文待ちでもなく、トークンを保有していません。',
+        'Not learning, no pending order, and no token position.',
+      ),
+    ],
+    aqua: [
+      item(
+        'ごはん、どうぞ！',
+        'Open for snacks!',
+        'shipの戦略案。学習係数をかけた応答が0.045未満で、強い生の応答もない場合。約定済みの意味ではありません。',
+        'A ship proposal: scaled response below 0.045 and no strong raw response. This does not mean a fill occurred.',
+        '#fff0be',
+        true,
+      ),
+      item(
+        'うーん…少しだけ。',
+        'Hmm… smaller bites.',
+        'cautiousの戦略案。応答が0.045以上で、撤回条件には達していない場合。仮想提示量を小さくします。',
+        'A cautious proposal: response at least 0.045 without triggering withdrawal. Uses a smaller virtual offer.',
+        '#fff2cf',
+        true,
+      ),
+      item(
+        'こわい！ひと休み。',
+        'Too much! Taking shelter.',
+        'dockの判断。生の応答または係数調整後の応答が0.1以上。実際に撤回されたかはTX確定で確認します。',
+        'A dock decision when raw or scaled response reaches 0.1. Confirm the actual withdrawal through its TX.',
+        '#ffe1d8',
+        true,
+      ),
+    ],
+  }[app];
+  const groups = [];
+  if (mode !== 'browser')
+    groups.push({
+      id: 'full',
+      title: ja
+        ? '全神経版・7神経比較モード：状態と行動カード'
+        : 'Full app / reduced comparison: state and action cards',
+      items: full,
+    });
+  groups.push({
+    id: 'browser',
+    title: ja ? '従来のブラウザー版：吹き出し' : 'Original browser app: bubbles',
+    items: browser,
+  });
+  return groups;
+}
+export function bubbleSvg(item) {
+  const escape = (s) =>
+    s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+  const label = escape(item.label);
+  const size = item.label.length > 24 ? 13 : 16;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="340" height="140" viewBox="0 0 340 140"><rect width="340" height="140" rx="14" fill="#f5f8ef"/><rect x="8" y="8" width="324" height="43" rx="${item.card ? 7 : 18}" fill="${item.color}" stroke="#ac9cae"/>${item.card ? '' : '<path d="M162 51l8 10 8-10" fill="' + item.color + '" stroke="#ac9cae"/>'}<text x="170" y="35" text-anchor="middle" font-family="system-ui,sans-serif" font-size="${size}" font-weight="600" fill="#51445a">${label}</text><ellipse cx="143" cy="87" rx="20" ry="10" fill="white" stroke="#b2ccc5"/><ellipse cx="197" cy="87" rx="20" ry="10" fill="white" stroke="#b2ccc5"/><ellipse cx="170" cy="101" rx="28" ry="24" fill="#fff2cf" stroke="#3c5b4d" stroke-width="2"/><ellipse cx="160" cy="98" rx="2" ry="3" fill="#294838"/><ellipse cx="180" cy="98" rx="2" ry="3" fill="#294838"/><path d="M165 107q5 7 10 0" fill="none" stroke="#294838" stroke-width="2"/></svg>`;
+}
