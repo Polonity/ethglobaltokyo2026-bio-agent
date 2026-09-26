@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>BioAgent · Stimulus to action</title>
+<style>body{margin:0;background:#09121e;color:#eff6ff;font:16px system-ui}canvas{display:block;width:min(100vw,1280px);margin:auto}nav{padding:15px;text-align:center}button,input{margin:0 12px}a{color:#71e8c2}</style>
+<canvas id="c" width="1280" height="720"></canvas><nav><button id="play">Pause</button><input id="seek" type="range" min="0" max="35.99" step="0.01" value="0"><button id="lang">日本語</button>36 s · Explanatory animation</nav>
+<script>
+const c=document.querySelector('canvas'),g=c.getContext('2d');let time=0,playing=true,language='en',last=0;
+const steps=[
+ ['Confirmed TX','確定TX','Food + hazard coordinates','餌・危険エリアの座標','Solidity → Node.js'],
+ ['Sensory encoding','感覚入力','16-dimensional input vector','16次元の入力ベクトル','JavaScript · observe()'],
+ ['Neural activity','神経活動','MaleCNS v1.0 · 166,700 neurons','MaleCNS v1.0 · 166,700神経','Python · NumPy / SciPy'],
+ ['Action readout','行動の評価','Ridge Regression · 9 scores','リッジ回帰 · 9行動の予測値','Python · scores()'],
+ ['Execute movement','移動を実行','8 directions + rest → (x, y)','8方向＋休息 → 座標 (x, y)','JavaScript · apply()'],
+ ['Record experience','経験を記録','Features + action + reward','特徴量・行動・報酬','SQLite → Ridge Regression']
+];
+function text(s,x,y,size=22,color='#edf5ff'){g.fillStyle=color;g.font=`${size>=30?'600':'400'} ${size}px sans-serif`;g.fillText(s,x,y)}
+function box(x,y,w,h,color='#132335'){g.fillStyle=color;g.beginPath();g.roundRect(x,y,w,h,14);g.fill()}
+function line(x,y,a,b,color='#34536a',width=3){g.strokeStyle=color;g.lineWidth=width;g.beginPath();g.moveTo(x,y);g.lineTo(a,b);g.stroke()}
+window.renderAt=(t,lang=language)=>{time=t;language=lang;const ja=lang==='ja',i=Math.min(5,Math.floor(t/6)),p=(t%6)/6;g.fillStyle='#09121e';g.fillRect(0,0,1280,720);
+text('BIOLOGICAL AGENT PROTOCOL',40,46,18,'#71e8c2');text(ja?'刺激が、行動になるまで':'From stimulus to action',40,94,38);text(ja?'処理の説明図 · 実測値・実行映像ではありません':'PROCESS EXPLAINER · illustrative values, not a recorded execution',40,126,15,'#a0b4c8');
+steps.forEach((s,j)=>{const x=40+j*202;box(x,166,190,114,j===i?'#20483f':'#132335');text(String(j+1).padStart(2,'0'),x+14,194,18,j<=i?'#71e8c2':'#7890a5');text(s[ja?1:0],x+14,226,ja?20:18);text(j===0?'ON-CHAIN':'OFF-CHAIN',x+14,256,12,'#a0b4c8');if(j<5)text('›',x+191,230,22,'#71e8c2')});
+box(40,305,1200,320);text(steps[i][ja?3:2],65,351,30);text(steps[i][4],65,383,18,'#71e8c2');
+if(i===0){box(78,417,395,162,'#091a29');text('TX receipt: confirmed',100,450,23,'#71e8c2');text('food: (x, y)',100,490);text('hazards: (x, y, radius)',100,529);line(490,490,655,490,'#71e8c2');text('→',622,482,30);text(ja?'環境データを読み取る':'Read environment records',695,492,26);}
+if(i===1){for(let j=0;j<16;j++){const h=(.15+((j*7)%13)/16)*120;box(80+j*41,568-h*p,26,h*p,'#71e8c2')}text(ja?'餌の方向・危険方向':'Food direction / hazard mask',800,446,22);text(ja?'体力・満腹度・距離':'Energy / satiety / distance',800,483,22);text(ja?'個体の状態も入力に含む':'Includes internal body state',800,532,18,'#a0b4c8');}
+if(i===2){for(let j=0;j<28;j++){const x=95+(j%7)*64,y=436+Math.floor(j/7)*43;if(j<21)line(x,y,95+((j+9)%7)*64,436+Math.floor((j+7)/7)*43,'#294b5c',1);g.fillStyle=(j/28<p)?'#71e8c2':'#37506a';g.beginPath();g.arc(x,y,6,0,7);g.fill()}text(ja?'固定の接続行列で4ステップ更新':'4 recurrent steps · fixed connectivity',620,448,23);text(ja?'神経群ごとの平均活動を特徴量に':'Population mean activity → features',620,494,23);text('malecns-full-positive-rate-v1',620,545,18,'#a0b4c8');}
+if(i===3){const vals=[.2,.35,.43,.64,.9,.52,.25,.15,.3];vals.forEach((v,j)=>{box(85+j*56,564-v*140*p,34,v*140*p,j===4?'#71e8c2':'#3d6b8a');text(String(j),94+j*56,590,16)});text('score(a) = w[a] · z + b[a]',660,447,26);text(ja?'実行可能な行動から最大値を選択':'Select highest permitted action score',660,494,22);text(ja?'0–7: 8方向 / 8: 休息':'0–7: directions / 8: rest',660,545,20,'#a0b4c8');}
+if(i===4){for(let x=90;x<600;x+=40)line(x,418,x,580,'#22394c',1);for(let y=420;y<590;y+=40)line(90,y,610,y,'#22394c',1);g.fillStyle='#ffc95e';g.beginPath();g.arc(170,500,9,0,7);g.fill();line(460,500,235,500,'#71e8c2',3);g.fillStyle='#71e8c2';g.beginPath();g.ellipse(460-220*p,500,15,9,0,0,7);g.fill();text('action 4 → left',695,447,27);text('x ← x + dx × speed',695,493,25);text(ja?'更新した座標をGUIが描画':'GUI renders updated coordinates',695,546,22);}
+if(i===5){text(ja?'接近・回収 → 報酬 / 危険域 → ペナルティ':'Approach / food → reward; hazard → penalty',80,438,24);text('(neural features, action, reward) → SQLite',80,480,24);text(ja?'保存した経験でリッジ回帰を学習 → 行動評価を更新':'Fit Ridge Regression on saved experience → update action scores',80,526,24,'#71e8c2');text(ja?'学習フェーズで更新。毎フレームの再学習ではありません。':'Training phase update, not refitting on every animation frame.',80,579,18,'#a0b4c8');}
+text('CPU: AMD Ryzen 9 9950X · NumPy / SciPy',40,663,18,'#a0b4c8');text('MaleCNS v1.0 · male-cns.janelia.org · CC BY 4.0',40,694,16,'#a0b4c8');box(900,657,340,6,'#24384b');box(900,657,Math.max(1,340*t/36),6,'#71e8c2');document.querySelector('#seek').value=t;
+};
+window.renderAt(0);document.querySelector('#play').onclick=()=>{playing=!playing;document.querySelector('#play').textContent=playing?'Pause':'Play'};document.querySelector('#lang').onclick=()=>{language=language==='en'?'ja':'en';renderAt(time)};document.querySelector('#seek').oninput=e=>{playing=false;renderAt(+e.target.value)};
+function tick(now){if(last&&playing)renderAt((time+(now-last)/1000)%36);last=now;requestAnimationFrame(tick)}if(!new URLSearchParams(location.search).has('capture'))requestAnimationFrame(tick);
+</script></html>

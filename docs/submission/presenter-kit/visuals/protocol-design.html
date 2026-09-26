@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>BioAgent · Protocol design</title><style>body{margin:0;background:#09121e;color:#eff6ff;font:16px system-ui}canvas{display:block;width:min(100vw,1280px);margin:auto}nav{text-align:center;padding:15px}button,input{margin:0 12px}</style><canvas width="1280" height="720"></canvas><nav><button id="play">Pause</button><input id="seek" type="range" min="0" max="23.99" step="0.01"><button id="lang">日本語</button>24 s · Protocol design</nav>
+<script>
+const g=document.querySelector('canvas').getContext('2d');let time=0,language='en',playing=true,last=0;
+function text(s,x,y,size=20,color='#edf5ff'){g.fillStyle=color;g.font=`${size>=30?'600':'400'} ${size}px sans-serif`;g.fillText(s,x,y)}
+function box(x,y,w,h,active=false){g.fillStyle=active?'#20483f':'#132335';g.beginPath();g.roundRect(x,y,w,h,13);g.fill()}
+function arrow(x,y,a,b,active){g.strokeStyle=active?'#71e8c2':'#365268';g.lineWidth=3;g.beginPath();g.moveTo(x,y);g.lineTo(a,b);g.stroke();text('›',a-10,b+7,28,active?'#71e8c2':'#365268')}
+window.renderAt=(t,lang=language)=>{time=t;language=lang;const ja=lang==='ja',step=Math.min(3,Math.floor(t/6));g.fillStyle='#09121e';g.fillRect(0,0,1280,720);text('BIOLOGICAL AGENT PROTOCOL',40,45,18,'#71e8c2');text(ja?'今回は、このように設計しました':'This is the design we built.',40,94,38);
+text('ON-CHAIN · Solidity',40,143,18,'#71e8c2');text('OFF-CHAIN · Framework',490,143,18,'#71e8c2');text('APPLICATIONS · JavaScript',930,143,18,'#71e8c2');
+box(40,165,380,138,step===0);text('IBioAgent',60,198,28);text('getStatus() / updateStatus()',60,232,20);text('activity · energy · stimulus · revision',60,263,18,'#a0b4c8');text('IBioAgentRegistry extends IBioAgent',60,288,16,'#a0b4c8');
+box(40,324,380,111,step===1);text('IBioAgentStimulus',60,357,25);text('submitStimulus()',60,389,20);text('agentId · nonce · schema · payload',60,416,17,'#a0b4c8');
+box(40,455,380,92);text('IBioAgentWallet',60,487,23);text(ja?'ウォレット参照の関連付け':'Wallet reference association',60,517,18,'#a0b4c8');text(ja?'実行権限の委譲ではない':'Association, not execution authority',60,538,15,'#a0b4c8');
+arrow(422,236,480,236,step>=2);arrow(422,382,480,382,step>=2);
+box(490,165,360,382,step===2);text(ja?'確定レコードを取得':'Read confirmed records',512,204,24);text('Node.js',512,234,18,'#a0b4c8');text('↓',512,269,25,'#71e8c2');text(ja?'アプリ別の感覚入力':'Application sensory adapter',512,300,22);text('16-dimensional drives',512,330,18,'#a0b4c8');text('↓',512,365,25,'#71e8c2');text('MaleCNS v1.0',512,398,25);text('Python · NumPy / SciPy',512,429,18,'#a0b4c8');text('↓',512,464,25,'#71e8c2');text('Action readout → action ID',512,506,22);
+arrow(852,360,920,360,step===3);
+box(930,165,310,111,step===3);text(ja?'採餌アプリ':'Foraging application',950,202,23);text(ja?'座標更新 → GUI':'Coordinate update → GUI',950,239,19,'#a0b4c8');
+box(930,296,310,112,step===3);text('1inch Aqua Protocol',950,334,23);text(ja?'流動性の提示を更新':'Update liquidity offers',950,371,19,'#a0b4c8');
+box(930,428,310,119,step===3);text('Uniswap v3',950,466,24);text(ja?'スワップ → ERC-20移動':'Swaps → ERC-20 transfers',950,504,19,'#a0b4c8');
+const captions=ja?['入力状態を共通化する IBioAgent','構造化された刺激を受け付ける IBioAgentStimulus','フレームワークが入力を読み、モデルを実行','アプリごとに行動を実行する共通の接続設計']:['IBioAgent standardizes input status.','IBioAgentStimulus accepts schema-tagged stimuli.','The framework reads inputs and runs the model.','Applications execute actions through this shared design.'];text(captions[step],40,593,25,'#71e8c2');
+text('Connectome: MaleCNS v1.0 · FlyEM / HHMI Janelia · University of Cambridge',40,632,16,'#a0b4c8');text('MRC Laboratory of Molecular Biology · Google Research · male-cns.janelia.org · CC BY 4.0',40,658,16,'#a0b4c8');text('BioAgent adaptation: dynamics, sensory encoding and action readout',40,684,16,'#a0b4c8');document.querySelector('#seek').value=t;};
+renderAt(0);document.querySelector('#play').onclick=()=>{playing=!playing;document.querySelector('#play').textContent=playing?'Pause':'Play'};document.querySelector('#lang').onclick=()=>{language=language==='en'?'ja':'en';renderAt(time)};document.querySelector('#seek').oninput=e=>{playing=false;renderAt(+e.target.value)};function tick(n){if(last&&playing)renderAt((time+(n-last)/1000)%24);last=n;requestAnimationFrame(tick)}if(!new URLSearchParams(location.search).has('capture'))requestAnimationFrame(tick);
+</script></html>

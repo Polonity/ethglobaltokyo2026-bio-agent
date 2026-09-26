@@ -9,7 +9,7 @@ Connectome data: MaleCNS v1.0
 male-cns.janelia.org
 ```
 
-Closing overlay (at least 10 seconds, readable above the English speech captions):
+Closing design animation footer (24 seconds; preserve separate space for the English speech captions):
 
 ```text
 Connectome data: MaleCNS v1.0
@@ -30,8 +30,8 @@ The source dataset identifier is `male-cns:v1.0`. Our full runtime uses 166,700 
 For the learning shot, a compact supporting overlay can read:
 
 ```text
-Anvil · 12 training layouts
-Reward-based action readout · Fixed neural connections
+AMD Ryzen 9 9950X · CPU execution
+Ridge Regression · NumPy / SciPy
 ```
 
 Only the output layer is fitted using collected action rewards. The spoken script omits solver details to keep the GUI central; the experiment's method and independent evaluation are documented in [foraging-validation.md](foraging-validation.md). Training, selection, and final test layouts must not be conflated.

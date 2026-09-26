@@ -34,26 +34,30 @@ We found that when actions had identical scores, the selection code kept choosin
 
 ## 0:50–1:45 · The Biological Agent Protocol
 
-[Environment GUI and transaction receipt]
+[Switch from GUI to the 36-second stimulus-to-action animation. Speak each line as its numbered stage is highlighted; do not read the arrows aloud.]
 
-Let me explain the system we built.
+[01 · 0–6 s · Confirmed TX]
+Transactions record food and hazard coordinates.
 
-Applications provide stimuli.
-Food and hazard areas are recorded through transactions.
+[02 · 6–12 s · Sensory encoding]
+The adapter combines them with body state into sixteen inputs.
 
-The framework reads those records and converts them into sensory inputs for the neural circuit.
-The individual's state and the model's response inform action selection.
-The application executes the action and returns the outcome.
+[03 · 12–18 s · Neural activity]
+MaleCNS updates neural activity, then extracts population averages.
 
-We propose this shared interaction contract as the Biological Agent Protocol.
-Neural computation and movement run off-chain.
+[04 · 18–24 s · Action readout]
+Ridge regression predicts rewards for eight directions and rest.
 
-[Previously completed learning evaluation]
+[05 · 24–30 s · Execute movement]
+The highest-scoring allowed action updates the fly's coordinates.
 
-We fixed the directional bias.
-On Anvil, a local blockchain, we collected experience across twelve food-and-hazard layouts.
-Using rewards from those actions, we trained the output layer to score actions.
-The neural connections stayed fixed.
+[06 · 30–36 s · Record experience]
+We store neural features, actions, and rewards to train the readout.
+
+[Return to GUI. Hardware/method lower third; approximately 19 seconds remaining.]
+
+We propose this interface as the Biological Agent Protocol.
+We trained the readout with ridge regression on an AMD Ryzen nine, ninety-nine fifty X CPU.
 Let's try it again.
 
 ## 1:45–2:25 · MOMO and SORA try again
@@ -76,12 +80,11 @@ Got it! The counter is up to one.
 Now, SORA!
 Closer… closer…
 And got it!
-One food item each.
 
 [Show the counters; return to an explanatory tone]
 
-Recorded stimuli reached the model, and its decisions became actions in the application.
-The sensory encoding and action readout are engineered.
+One food item for MOMO, and one for SORA.
+Now, how well does this work across different layouts?
 
 ## 2:25–2:50 · What worked—and what remains unresolved
 
@@ -90,7 +93,7 @@ The sensory encoding and action readout are engineered.
 We also tested twelve previously unseen layouts.
 The model collected all twenty-four food items.
 
-But a small model without the neural circuit collected twenty-three.
+But ridge regression on the sensory inputs alone collected twenty-three.
 Our hazard-avoidance criterion was not met either.
 
 Running the experiment revealed both working behavior and unresolved problems.
@@ -101,28 +104,34 @@ Running the experiment revealed both working behavior and unresolved problems.
 
 We also connected the idea to wallet-based applications.
 
-Here are Aqua offers and Uniswap trades.
-Decisions lead to asset operations, with actual token transfers we can inspect.
+Here, agents update liquidity offers through the 1inch Aqua Protocol and execute swaps on Uniswap v3.
+The transaction receipts show ERC-20 token transfers.
 
-These are local test transactions.
-They do not demonstrate profitability.
+[On-screen label: Test assets · Ethereum fork]
 
 ## 3:15–3:40 · Our proposal
 
-[Return to the foraging GUI]
+[Show the 24-second protocol-design animation. Keep the model credits visible in its footer.]
 
-It started with a simple idea: a fly driven by onchain data.
-From that idea, we built a framework and two applications.
+[0–6 s · IBioAgent]
+This is the design we built.
+IBioAgent defines the onchain input status.
 
-Deliver a stimulus. Turn the response into a decision. Execute an action in an application.
+[6–12 s · IBioAgentStimulus]
+IBioAgentStimulus accepts structured stimuli, identified by a schema.
 
-We propose the Biological Agent Protocol as a shared interface for using biologically derived models in applications.
+[12–18 s · Framework]
+The framework reads those inputs and runs the neural model.
+
+[18–24 s · Applications]
+Applications execute the actions.
+This is our proposal: the Biological Agent Protocol.
 
 ## Model attribution on screen (not spoken)
 
 Pronunciation: MaleCNS = “male C-N-S.” This is connectome data used by our runtime, not a validated behavioral model supplied by the dataset authors.
 
-Show `Connectome data: MaleCNS v1.0 · male-cns.janelia.org` during the opening. Display the full credit in [video-credits.md](video-credits.md) over the closing GUI for at least 10 seconds, above the spoken captions. Credits must be burned into the final video; a description link alone is insufficient.
+Show `Connectome data: MaleCNS v1.0 · male-cns.janelia.org` during the opening. Display the full credit in [video-credits.md](video-credits.md) in the closing design animation for at least 10 seconds, above the spoken captions. Credits must be burned into the final video; a description link alone is insufficient.
 
 ## Editorial notes
 
@@ -133,4 +142,7 @@ Show `Connectome data: MaleCNS v1.0 · male-cns.janelia.org` during the opening.
 - The market uses EOA signers. Describe it as a wallet integration, not an implemented smart-wallet authorization system.
 - The narrative order is editorial, not a claim about when the protocol was first implemented.
 
-- The learning explanation refers to the recorded Anvil foraging experiment, not live training during this shot or the reduced Sepolia demo. The output layer predicts action rewards from neural features; the connectome itself is fixed.
+- The diagram is an explanatory animation with illustrative values, not a replay of measured neural activity. The learning step represents a separate training phase.
+- Hardware caption: AMD Ryzen 9 9950X · CPU execution · Python / NumPy / SciPy. The installed NVIDIA RTX PRO 6000 Blackwell Workstation Edition is not used by this inference/training path.
+- Both adopted foraging policies use `ridge-linear`, confirmed from the saved policy artifacts. Keep the fixed-connectivity detail in the diagram and Q&A rather than adding a disconnected disclaimer to the narration.
+- Use [animation-cues.md](animation-cues.md) for frame timing, source mapping, and hardware evidence. Replace rehearsal timing with timing from the human narration before final export.
