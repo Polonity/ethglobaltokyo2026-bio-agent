@@ -71,14 +71,14 @@ const apps = {
     ),
     legend: [
       row(
-        '黄色い粒＝蜜',
-        'Yellow dots = nectar',
+        '葉に乗った金色の結晶＝蜜',
+        'Golden crystals on leaves = nectar',
         'ローカルで生成するゲーム内の食べ物。近づいて取ると得点・満腹度・活動エネルギーが増え、蜜は別の場所に現れます。トークンやNFTではありません。',
         'Locally generated food. Collecting it increases food score, fullness and activity energy, then relocates it. It is not a token or NFT.',
       ),
       row(
-        '薄いオレンジの円＝危険地帯',
-        'Peach circles = hazards',
+        '赤い点線の輪＝危険地帯',
+        'Red dashed rings = hazards',
         '入ると減点とエネルギー消費。オンチェーンの刺激が強いほど衝突の罰が大きくなります。',
         'Entering costs reward and energy. Stronger onchain stimulus increases the collision penalty.',
       ),
@@ -120,8 +120,8 @@ const apps = {
       'Energy supports activity: movement consumes it, while rest and feeding replenish it. Fullness tracks recent feeding and declines over time. Reserves change more slowly through digestion and expenditure and determine target body size. Energy, fullness and reserves feed subsequent neural inputs. Individual Energy differs from the Status energy supply setting, which is fixed in the full GUI. Body size derives from reserves for display: it changes the original app’s belly, while the full app currently draws faces at a fixed size.',
     ),
     bubbles: t(
-      '全神経版のカードは「使用した方策」と「選んだ行動」の説明です。ハエの上の？はreadout学習中。従来版の♡＝蜜を獲得、！＝危険、すやすや＝休息、おなかいっぱい／ぐぅ＝満腹度の閾値による表示です。感情を計測したものではなく、処理結果を人が読める表現に変えています。',
-      'Full-app cards show the policy used and action chosen; a ? over the fly denotes readout training. In the original app, ♡ means nectar collected, ! means hazard, sleeping means rest, and full/hungry captions come from fullness thresholds. These are readable labels for state and outcomes, not measured emotions.',
+      '全神経版でもハエの上に状態を表示します。？＝readout学習中、♡＝蜜を獲得、！＝危険、すやすや＝休息、おなかいっぱい／空腹＝満腹度の閾値による表示です。使用したモデルや方策はⓘから確認します。感情を計測したものではなく、処理結果を人が読める表現に変えています。',
+      'The full app also shows state bubbles: ? for readout training, ♡ for nectar, ! for hazard contact, sleeping for rest, and full/hungry captions from fullness thresholds. Model and policy details live under ⓘ. These are readable labels for state and outcomes, not measured emotions.',
     ),
     metrics: [
       row(
@@ -138,7 +138,7 @@ const apps = {
       ),
     ],
     tryIt: t(
-      '①全神経を選ぶ → ②刺激を変えて「現在の方策で動かす」 → ③蜜の数・身体状態・TXを確認 → ④「収集→学習→評価」で採用前後を見る。学習ボタンは比較用の固定条件を使い、スライダー変更は通常実行へ反映します。',
+      '①全神経を選ぶ → ②刺激を変えて「刺激を送って観察」 → ③蜜の数・身体状態・TXを確認 → ④「学び直す」で採用前後を見る。学習ボタンは比較用の固定条件を使い、スライダー変更は通常実行へ反映します。',
       '1 Choose Full mode. 2 Change stimulus and run the current policy. 3 Inspect food count, body state and TX. 4 Collect → learn → evaluate to compare policies. Training uses fixed evaluation conditions; the slider affects normal runs.',
     ),
     browser: {
@@ -167,10 +167,10 @@ const apps = {
     ),
     legend: [
       row(
-        '折れ線＝観測した価格',
-        'Line = observed price',
-        '全神経版はAnvil上の実Uniswap V3 Swap履歴を再生。token1 / token0の価格で、画面の線は取得したサンプルの相対表示です。未来の予測線ではありません。',
-        'Full mode replays actual Uniswap V3 Swap history from Anvil. Price is token1 per token0; the line shows sampled observations on a relative scale, not a forecast.',
+        '折れ線＝損益の推移',
+        'Line = paper PnL',
+        '全神経版は各個体のペーパーPnLをゼロ基準の折れ線で表示します。単位は画面に示す基準トークン（現在はNECTAR）。ETHではありません。入力にはAnvil上のUniswap V3価格履歴を使用します。',
+        'The full app charts each fly’s paper PnL relative to zero, in the displayed quote token (currently NECTAR), not ETH. Input prices come from Uniswap V3 history on Anvil.',
       ),
       row(
         'ハエ＝ペーパー口座',
@@ -234,7 +234,7 @@ const apps = {
       ),
     ],
     tryIt: t(
-      '価格の線 → 行動名 → PnL → 元のSwap TXの順に見てください。次に学習を実行し、候補の改善と別条件の結果を分けて確認します。',
+      '損益の線 → 行動名 → 損益の単位 → ⓘ内のSwap TXの順に見てください。次に学習を実行し、候補の改善と別条件の結果を分けて確認します。',
       'Follow price line → action label → PnL → source Swap TX. Then train and distinguish candidate improvement from results on new inputs.',
     ),
     browser: {
@@ -256,10 +256,10 @@ const apps = {
     ),
     legend: [
       row(
-        '折れ線＝判断に使う価格履歴',
-        'Line = price history used as input',
-        '全神経版は実Uniswap履歴を再生し、変動の方向と大きさを使います。Aquaのテストトークン価格そのものを取得しているわけではありません。',
-        'Full mode replays real Uniswap history and uses the direction and magnitude of changes. It is not fetching a market price for the Aqua test tokens themselves.',
+        'ハエと枠＝選択中の戦略',
+        'Fly frames = selected strategies',
+        '全神経版は狭い提示・広い提示・撤回の選択、提示幅、約定回数を表示します。価格変化は別ペアのUniswap履歴を代理入力に使用し、実現PnLと区別した評価ポイントを表示します。',
+        'The full app shows tight/wide/withdraw choices, spreads and fills. Price changes from a separate Uniswap pair serve as a proxy; the evaluation points are not realized PnL.',
       ),
       row(
         'ハエ＝流動性を制御する方策',
@@ -475,16 +475,16 @@ const manuals = {
     ),
     steps: [
       t(
-        '刺激スライダーを決めて「現在の方策で動かす」を押します。まずは中くらいの刺激から。',
-        'Set the stimulus slider, then press “Run with current policy”. Start near the middle.',
+        '刺激スライダーを決めて「刺激を送って観察」を押します。まずは中くらいの刺激から。',
+        'Set the stimulus slider, then press “Send stimulus & watch”. Start near the middle.',
       ),
       t(
-        '黄色い蜜と桃色の危険エリアを見ながら、2匹の採餌数・衝突数・Energyを比べます。通常実行は64ステップで終了します。',
-        'Watch the yellow nectar and peach hazards. Compare food collected, collisions and Energy. A normal run ends after 64 steps.',
+        '金色の蜜と赤い点線の危険エリアを見ながら、2匹の採餌数・衝突数・Energyを比べます。通常実行は64ステップで終了します。',
+        'Watch the golden nectar and red hazard rings. Compare food collected, collisions and Energy. A normal run ends after 64 steps.',
       ),
       t(
-        '「収集→学習→評価」を実行し、採用されたPolicyと評価結果を見ます。この学習は固定条件を使い、刺激スライダーの値では進みません。',
-        'Run “Collect → learn → evaluate”, then inspect adopted policies and evaluation results. This uses fixed learning conditions, not the stimulus slider.',
+        '「学び直す」を実行し、採用されたPolicyと評価結果を見ます。この学習は固定条件を使い、刺激スライダーの値では進みません。',
+        'Run “Learn again”, then inspect adopted policies and evaluation results. This uses fixed learning conditions, not the stimulus slider.',
       ),
     ],
     score: t(
@@ -500,16 +500,16 @@ const manuals = {
     ),
     steps: [
       t(
-        '市場ページで「現在の方策で動かす」を押します。確認済みのローカルUniswap価格履歴を再生します。',
-        'On Market, press “Run with current policy” to replay confirmed local Uniswap price observations.',
+        '市場ページで「バトルをはじめる」を押します。確認済みのローカルUniswap価格履歴を再生します。',
+        'On Market, press “Start battle” to replay confirmed local Uniswap price observations.',
       ),
       t(
-        '価格線と、各個体の買う・売る・待つ、保有状態、ペーパーPnLを見比べます。取引判断と約定にはブロックの時間差があります。',
-        'Compare the price line with each fly’s buy/sell/hold action, position and paper PnL. Decision and execution occur at different observed blocks.',
+        '損益の線と、各個体の買う・売る・待つ、保有状態、ペーパーPnLを見比べます。取引判断と約定にはブロックの時間差があります。',
+        'Compare the PnL lines with each fly’s buy/sell/hold action, position and paper PnL. Decision and execution occur at different observed blocks.',
       ),
       t(
-        '「収集→学習→評価」で売買判断を学び直し、新しい評価入力で結果を確かめます。',
-        'Use “Collect → learn → evaluate” to refit trade decisions and inspect results on new evaluation inputs.',
+        '「学び直す」で売買判断を学び直し、新しい評価入力で結果を確かめます。',
+        'Use “Learn again” to refit trade decisions and inspect results on new evaluation inputs.',
       ),
     ],
     score: t(
@@ -525,16 +525,16 @@ const manuals = {
     ),
     steps: [
       t(
-        'Aquaページで「現在の方策で動かす」を押します。価格履歴を入力にして判断が始まります。',
-        'On Aqua, press “Run with current policy”. Decisions use a recorded price history.',
+        'Aquaページで「自律運用をはじめる」を押します。価格履歴を入力にして判断が始まります。',
+        'On Aqua, press “Start autonomous run”. Decisions use a recorded price history.',
       ),
       t(
         'tight（30 bps）・wide（800 bps）・withdrawの選択と、TX・約定・代理報酬を見ます。TX処理を待つため、採餌よりゆっくり進みます。',
         'Watch tight (30 bps), wide (800 bps) or withdraw choices, TXs, fills and proxy reward. Transaction processing makes this slower than Foraging.',
       ),
       t(
-        '「収集→学習→評価」で戦略選択を学び直します。処理中はフェーズ表示を確認し、完了後に採用Policyと評価を比較します。',
-        'Use “Collect → learn → evaluate” to refit strategy selection. Follow the phase indicator, then compare adopted policies and evaluations after completion.',
+        '「学び直す」で戦略選択を学び直します。処理中はフェーズ表示を確認し、完了後に採用Policyと評価を比較します。',
+        'Use “Learn again” to refit strategy selection. Follow the phase indicator, then compare adopted policies and evaluations after completion.',
       ),
     ],
     score: t(
@@ -622,6 +622,16 @@ for (const app of Object.keys(manuals)) {
   apps[app].browser.manual = { ...manuals[app], ...browserManuals[app] };
 }
 
+apps.foraging.browser.legend = [
+  row(
+    '花＝みつ',
+    'Flowers = nectar',
+    '従来版の花はローカルの食べ物です。',
+    'Flowers in the original app are local food.',
+  ),
+  row('危険領域', 'Hazards', '囲まれた危険領域への接触で減点します。', 'Hazard contact costs reward.'),
+  apps.foraging.legend[2],
+];
 function localize(value, lang) {
   if (Array.isArray(value)) return value.map((v) => localize(v, lang));
   if (value && typeof value === 'object') {
@@ -664,22 +674,35 @@ export function bubbleGuide(app, lang = 'ja', mode = 'full') {
   );
   const full = {
     foraging: [
-      training,
       item(
-        '方策 v2 · 行動 東へ',
-        'Policy v2 · Action East',
-        '8方向のいずれかへ移動する判断。方策v2は使用したreadoutの版で、賢さの点数ではありません。吹き出し風のカードに表示されます。',
-        'A choice to move in one of eight directions. Policy v2 identifies the readout version, not intelligence. Displayed in a bubble-style card.',
-        '#fff2cf',
-        true,
+        '？ 学び直し中',
+        '? Learning',
+        'readout学習中はその場で停止します。収集・評価中とは別の状態です。',
+        'Stops in place during readout training, distinct from collection or evaluation.',
+        '#f1e4ff',
       ),
       item(
-        '方策 v2 · 行動 休息',
-        'Policy v2 · Action Rest',
-        '移動せず休む行動。低エネルギー時には強制休息もあります。採餌の学び直し「？」とは別の状態です。',
-        'Rest without movement. Low energy can force rest. This differs from the training question mark.',
-        '#e5edf9',
-        true,
+        '！ あぶない',
+        '! Watch out',
+        '直近の動作で危険領域に接触しました。',
+        'The last action contacted a hazard.',
+        '#ffe1d8',
+      ),
+      item(
+        '♡ みつを見つけた！',
+        '♡ Found nectar!',
+        '直近の動作でみつを取得しました。',
+        'The last action collected nectar.',
+        '#fff0be',
+      ),
+      item('すやすや…', 'Zzz…', '休息する行動を選びました。', 'The selected action was rest.', '#e5edf9'),
+      item('おなかいっぱい', 'So full', '満腹度が80%より高い状態です。', 'Fullness is above 80%.', '#fff0be'),
+      item('おなかすいた…', 'Hungry…', '満腹度が15%未満です。', 'Fullness is below 15%.'),
+      item(
+        'みつ、どこ？',
+        'Where is nectar?',
+        'ほかの表示条件に当てはまらない通常の状態です。',
+        'Default when no higher-priority state applies.',
       ),
     ],
     market: [
@@ -854,8 +877,8 @@ export function bubbleGuide(app, lang = 'ja', mode = 'full') {
     groups.push({
       id: 'full',
       title: ja
-        ? '全神経版・7神経比較モード：状態と行動カード'
-        : 'Full app / reduced comparison: state and action cards',
+        ? '全神経版・7神経比較モード：状態と選択'
+        : 'Full app / reduced comparison: states and choices',
       items: full,
     });
   groups.push({

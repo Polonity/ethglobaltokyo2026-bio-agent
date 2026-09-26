@@ -3,288 +3,288 @@
     "file": "full-foraging-ja-1.png",
     "selector": "#live",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:03.659Z"
+    "capturedAt": "2026-09-26T03:27:41.144Z"
   },
   {
     "file": "full-foraging-ja-2.png",
     "selector": "#arena",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:03.747Z"
+    "capturedAt": "2026-09-26T03:27:41.492Z"
   },
   {
     "file": "full-foraging-ja-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:03.828Z"
+    "capturedAt": "2026-09-26T03:27:41.589Z"
   },
   {
     "file": "full-foraging-ja-4.png",
     "selector": "#tx",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:03.907Z"
+    "capturedAt": "2026-09-26T03:27:41.898Z"
   },
   {
     "file": "full-foraging-en-1.png",
     "selector": "#live",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:04.789Z"
+    "capturedAt": "2026-09-26T03:27:42.792Z"
   },
   {
     "file": "full-foraging-en-2.png",
     "selector": "#arena",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:04.859Z"
+    "capturedAt": "2026-09-26T03:27:43.120Z"
   },
   {
     "file": "full-foraging-en-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:04.943Z"
+    "capturedAt": "2026-09-26T03:27:43.202Z"
   },
   {
     "file": "full-foraging-en-4.png",
     "selector": "#tx",
     "url": "http://127.0.0.1:8812/",
-    "capturedAt": "2026-09-26T02:26:05.023Z"
+    "capturedAt": "2026-09-26T03:27:43.481Z"
   },
   {
     "file": "full-market-ja-1.png",
     "selector": "#live",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:06.041Z"
+    "capturedAt": "2026-09-26T03:27:44.541Z"
   },
   {
     "file": "full-market-ja-2.png",
     "selector": "#arena",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:06.126Z"
+    "capturedAt": "2026-09-26T03:27:44.918Z"
   },
   {
     "file": "full-market-ja-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:06.208Z"
+    "capturedAt": "2026-09-26T03:27:45.005Z"
   },
   {
     "file": "full-market-ja-4.png",
     "selector": "#tx",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:06.273Z"
+    "capturedAt": "2026-09-26T03:27:45.316Z"
   },
   {
     "file": "full-market-en-1.png",
     "selector": "#live",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:07.156Z"
+    "capturedAt": "2026-09-26T03:27:46.191Z"
   },
   {
     "file": "full-market-en-2.png",
     "selector": "#arena",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:07.225Z"
+    "capturedAt": "2026-09-26T03:27:46.570Z"
   },
   {
     "file": "full-market-en-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:07.308Z"
+    "capturedAt": "2026-09-26T03:27:46.654Z"
   },
   {
     "file": "full-market-en-4.png",
     "selector": "#tx",
     "url": "http://127.0.0.1:8812/market",
-    "capturedAt": "2026-09-26T02:26:07.373Z"
+    "capturedAt": "2026-09-26T03:27:46.952Z"
   },
   {
     "file": "full-aqua-ja-1.png",
     "selector": "#live",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:08.373Z"
+    "capturedAt": "2026-09-26T03:27:48.026Z"
   },
   {
     "file": "full-aqua-ja-2.png",
     "selector": "#arena",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:08.441Z"
+    "capturedAt": "2026-09-26T03:27:48.393Z"
   },
   {
     "file": "full-aqua-ja-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:08.525Z"
+    "capturedAt": "2026-09-26T03:27:48.492Z"
   },
   {
     "file": "full-aqua-ja-4.png",
     "selector": "#tx",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:08.590Z"
+    "capturedAt": "2026-09-26T03:27:48.816Z"
   },
   {
     "file": "full-aqua-en-1.png",
     "selector": "#live",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:09.472Z"
+    "capturedAt": "2026-09-26T03:27:49.692Z"
   },
   {
     "file": "full-aqua-en-2.png",
     "selector": "#arena",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:09.542Z"
+    "capturedAt": "2026-09-26T03:27:50.056Z"
   },
   {
     "file": "full-aqua-en-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:09.609Z"
+    "capturedAt": "2026-09-26T03:27:50.141Z"
   },
   {
     "file": "full-aqua-en-4.png",
     "selector": "#tx",
     "url": "http://127.0.0.1:8812/aqua",
-    "capturedAt": "2026-09-26T02:26:09.673Z"
+    "capturedAt": "2026-09-26T03:27:50.445Z"
   },
   {
     "file": "browser-foraging-ja-1.png",
     "selector": ".control-panel",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:11.076Z"
+    "capturedAt": "2026-09-26T03:27:51.827Z"
   },
   {
     "file": "browser-foraging-ja-2.png",
     "selector": "#arena canvas",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:11.172Z"
+    "capturedAt": "2026-09-26T03:27:51.923Z"
   },
   {
     "file": "browser-foraging-ja-3.png",
     "selector": "#body-readout",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:11.241Z"
+    "capturedAt": "2026-09-26T03:27:51.992Z"
   },
   {
     "file": "browser-foraging-ja-4.png",
     "selector": ".chain-panel",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:11.329Z"
+    "capturedAt": "2026-09-26T03:27:52.063Z"
   },
   {
     "file": "browser-foraging-en-1.png",
     "selector": ".control-panel",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:12.233Z"
+    "capturedAt": "2026-09-26T03:27:52.945Z"
   },
   {
     "file": "browser-foraging-en-2.png",
     "selector": "#arena canvas",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:12.343Z"
+    "capturedAt": "2026-09-26T03:27:53.040Z"
   },
   {
     "file": "browser-foraging-en-3.png",
     "selector": "#body-readout",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:12.424Z"
+    "capturedAt": "2026-09-26T03:27:53.108Z"
   },
   {
     "file": "browser-foraging-en-4.png",
     "selector": ".chain-panel",
     "url": "http://127.0.0.1:8800/",
-    "capturedAt": "2026-09-26T02:26:12.511Z"
+    "capturedAt": "2026-09-26T03:27:53.180Z"
   },
   {
     "file": "browser-market-ja-1.png",
     "selector": ".controls",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:13.657Z"
+    "capturedAt": "2026-09-26T03:27:54.309Z"
   },
   {
     "file": "browser-market-ja-2.png",
     "selector": "#field",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:13.727Z"
+    "capturedAt": "2026-09-26T03:27:54.382Z"
   },
   {
     "file": "browser-market-ja-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:13.808Z"
+    "capturedAt": "2026-09-26T03:27:54.461Z"
   },
   {
     "file": "browser-market-ja-4.png",
     "selector": ".connection",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:13.895Z"
+    "capturedAt": "2026-09-26T03:27:54.548Z"
   },
   {
     "file": "browser-market-en-1.png",
     "selector": ".controls",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:14.774Z"
+    "capturedAt": "2026-09-26T03:27:55.443Z"
   },
   {
     "file": "browser-market-en-2.png",
     "selector": "#field",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:14.844Z"
+    "capturedAt": "2026-09-26T03:27:55.534Z"
   },
   {
     "file": "browser-market-en-3.png",
     "selector": "#cards",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:14.924Z"
+    "capturedAt": "2026-09-26T03:27:55.615Z"
   },
   {
     "file": "browser-market-en-4.png",
     "selector": ".connection",
     "url": "http://127.0.0.1:8800/market",
-    "capturedAt": "2026-09-26T02:26:14.993Z"
+    "capturedAt": "2026-09-26T03:27:55.699Z"
   },
   {
     "file": "browser-aqua-ja-1.png",
     "selector": "#send",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:16.089Z"
+    "capturedAt": "2026-09-26T03:27:56.876Z"
   },
   {
     "file": "browser-aqua-ja-2.png",
     "selector": "#brain",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:16.162Z"
+    "capturedAt": "2026-09-26T03:27:56.965Z"
   },
   {
     "file": "browser-aqua-ja-3.png",
     "selector": "#flies",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:16.249Z"
+    "capturedAt": "2026-09-26T03:27:57.051Z"
   },
   {
     "file": "browser-aqua-ja-4.png",
     "selector": ".evidence",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:16.345Z"
+    "capturedAt": "2026-09-26T03:27:57.143Z"
   },
   {
     "file": "browser-aqua-en-1.png",
     "selector": "#send",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:17.225Z"
+    "capturedAt": "2026-09-26T03:27:58.058Z"
   },
   {
     "file": "browser-aqua-en-2.png",
     "selector": "#brain",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:17.311Z"
+    "capturedAt": "2026-09-26T03:27:58.148Z"
   },
   {
     "file": "browser-aqua-en-3.png",
     "selector": "#flies",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:17.398Z"
+    "capturedAt": "2026-09-26T03:27:58.234Z"
   },
   {
     "file": "browser-aqua-en-4.png",
     "selector": ".evidence",
     "url": "http://127.0.0.1:8800/aqua",
-    "capturedAt": "2026-09-26T02:26:17.489Z"
+    "capturedAt": "2026-09-26T03:27:58.331Z"
   }
 ]

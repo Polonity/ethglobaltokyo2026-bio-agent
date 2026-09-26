@@ -29,7 +29,7 @@ TXは二段目のモーダルで、ハッシュ・ブロック・成功状態・
 
 ## アセット
 
-元の `bio-agent/frontend/public/assets/game-v1/` から背景・ハエ・蜜を原本のままコピーし、来歴も保持しました。新たにimagegenで市場の交換所とAquaの共有流動性を表す背景を生成しています。格納先は `services/full-apps/assets/`。
+元の `bio-agent/frontend/public/assets/game-v1/` から背景・蜜と旧ハエ素材を原本のままコピーし、来歴も保持しました。新たにimagegenで市場の交換所とAquaの共有流動性を表す背景を生成しています。表示するハエはimagegenで新しく生成した、丸いクリーム色のデフォルメキャラクター `cute-fly-v1.png` に統一しました。旧写実版は表示しません。移動方向には軽く傾くだけで顔は上下反転せず、学び直しでは静止します。格納先は `services/full-apps/assets/`。
 
 アセットは環境の意味を補助する絵です。スコア・価格・選択・約定結果は絵に焼き込まず、実行データから描画します。背景のコインや水路は資産残高やトランザクション履歴ではありません。
 
@@ -37,6 +37,7 @@ TXは二段目のモーダルで、ハッシュ・ブロック・成功状態・
 
 ```sh
 node scripts/check-ux-refresh.mjs
+node scripts/check-pnl-display.mjs # 独立した表示用フィクスチャ。取引結果ではない
 node scripts/capture-guide-screens.mjs
 npm run docs:apps
 npm run build
@@ -44,3 +45,5 @@ npm run test:guides
 ```
 
 `check-ux-refresh`は3アプリをGUIから起動・停止し、166,700神経、通貨表記、代理価格、receipt、日英、390px表示、Esc操作を検証します。実行証拠と画像は `artifacts/ux-refresh/`。同じチェーンで他の実験を同時実行しないでください。過去のデモ動画は旧UIの記録として保持します。
+
+PNLの正負・単位・割合・ゼロ基準バーは独立した合成表示フィクスチャでも検証します。実APIへの入力や本番状態の書き換えは行いません。実観察の結果がゼロならそのままゼロを表示し、動画や画面の見栄えのために利益を作りません。

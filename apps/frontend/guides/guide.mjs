@@ -105,43 +105,47 @@ function mount(root, app, lang, mode, sheet = false) {
     ? [
         mode === 'browser'
           ? 'この操作で環境へ入力します。送信・適用と、画面上のローカル操作の違いは「はじめてのプレイ」を参照。'
-          : '「現在の方策で動かす」で開始します。移動や売買の選択はハエが行います。',
+          : '主画面下の開始ボタンで開始します。移動・売買・提示方法の選択はハエが行います。',
         {
           foraging:
-            '黄色い小粒＝蜜。桃色の円＝危険。顔のついた個体＝ハエ。蜜と危険はローカルの環境で、オンチェーン刺激と一緒に判断へ入力されます。',
+            mode === 'browser'
+              ? '花＝みつ。囲まれた領域＝危険。蜜と危険はローカルの環境で、オンチェーン刺激と一緒に判断へ入力されます。'
+              : '葉の上の金色の結晶＝みつ。赤い点線の輪＝危険。これらの位置と身体状態、オンチェーン刺激が判断に使われます。',
           market:
             mode === 'browser'
               ? 'TOKEN0・TOKEN1・OBSERVEへの移動は保有・観察状態を表します。トークンを物理的に拾っているわけではありません。'
-              : '線は観測した価格の履歴。顔は個体です。入力価格の出典はUniswapのSwapで、売買結果はペーパー口座に反映されます。',
+              : '線は2匹の損益推移。ゼロ線より上が利益、下が損失です。入力価格の出典はUniswapのSwapで、売買結果はペーパー口座に反映されます。',
           aqua:
             mode === 'browser'
               ? '光る図はMaleCNS部分回路の人工的な活動です。下の応答を戦略案へ変換します。'
-              : '線は入力に使ったUniswap価格履歴です。feesは約定の手数料相当額。ハエの上下動は演出で、戦略は下のAction欄に表示されます。',
+              : 'ハエの枠に選択中の戦略、提示幅、約定回数を表示します。背景の流れは共有資産の比喩です。実際の代理価格とTXはⓘの「チェーン・実装」で確認できます。',
         }[app],
         mode === 'browser'
           ? '画面に表示された身体状態・保有状態・戦略を読みます。吹き出しは状態や行動の表現で、思考を直接読み取ったものではありません。'
-          : '方策（Policy）＝使った方策、行動（Action）＝選んだ行動。Energy＝活動エネルギー、Fullness＝満腹度、Reserves＝蓄え。下の数値は各ゲームの成績です。',
+          : '採餌はみつの数と元気（%）、市場は符号と単位付きの損益、Aquaは選択中の戦略と代理評価を表示。モデルや身体の詳細はⓘから確認できます。',
         'ブロック・コントラクト・TXで入力や適用の出典を確認します。TXリンクを開くとreceiptを確認できます。ローカルAnvilの証拠です。',
       ]
     : [
         mode === 'browser'
           ? 'These controls change the environment. The first-play steps distinguish transaction submission from local actions.'
-          : 'Run with current policy starts the experiment. The flies choose their own movement or trading actions.',
+          : 'The start button in the floating control panel begins a run. The flies choose movement, trades or offers.',
         {
           foraging:
-            'Small yellow dots = nectar. Peach circles = hazards. Faces = flies. Food and hazards are local conditions, combined with onchain stimulus as decision inputs.',
+            mode === 'browser'
+              ? 'Flowers are nectar; marked regions are hazards. These local conditions combine with onchain stimulus as decision inputs.'
+              : 'Golden crystals on leaves are nectar; red dashed rings are hazards. Their positions, body state and onchain stimulus feed decisions.',
           market:
             mode === 'browser'
               ? 'TOKEN0, TOKEN1 and OBSERVE show holding or observation states, not physical token collection.'
-              : 'The line is observed price history; faces represent individuals. Uniswap Swap events supply prices; trade results affect paper accounts.',
+              : 'The two lines show paper PnL: above zero is profit, below zero is loss. Uniswap Swap events supply input prices.',
           aqua:
             mode === 'browser'
               ? 'The glowing diagram shows artificial activity in a MaleCNS subcircuit. Its response is decoded into a strategy proposal.'
-              : 'The line is input Uniswap price history; fees show gross fill differences. Fly bobbing is decorative. Read the chosen strategy in the Action card below.',
+              : 'Each fly shows its chosen strategy, spread and fills. The water background is a shared-asset metaphor. Inspect actual proxy prices and TXs under Chain & implementation.',
         }[app],
         mode === 'browser'
           ? 'Read body state, holdings or strategy here. Bubbles express state or actions, not directly decoded thoughts.'
-          : 'Policy is the readout used; Action is the chosen action. Energy, Fullness and Reserves describe the body. The score depends on this game.',
+          : 'Foraging shows nectar and energy (%), Market shows signed PnL with its token unit, and Aqua shows the strategy and proxy score. Model details live under ⓘ.',
         'Blocks, contracts and TXs identify input or application evidence. Open TX links to inspect receipts on local Anvil.',
       ];
   for (let i = 0; i < 4; i++) {
@@ -191,8 +195,8 @@ function mount(root, app, lang, mode, sheet = false) {
         el(
           'p',
           ja
-            ? '以下は従来版だけの表示です。現在の全神経版には、この感情風の吹き出しは出ません。'
-            : 'The following belong to the original browser app; these expressive captions do not appear in the full app.',
+            ? '以下は従来版の文言・条件です。上に示す現在の全神経版とは表示条件が異なる場合があります。'
+            : 'The following use the original browser app’s wording and conditions; these may differ from the current full app above.',
         ),
       );
     const grid = el('div');

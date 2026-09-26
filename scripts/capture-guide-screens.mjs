@@ -23,10 +23,15 @@ try {
         await page.selectOption('#language', lang);
         await page.waitForTimeout(800);
         for (const [index, selector] of (mode === 'full' ? targets.full : targets[app]).entries()) {
+          if (mode === 'full' && index === 3) {
+            await page.locator('#open-details').click();
+            await page.locator('[data-pane="evidence"]').click();
+          }
           const loc = page.locator(selector).first();
           await loc.waitFor();
           const name = `${mode}-${app}-${lang}-${index + 1}.png`;
           await loc.screenshot({ path: out + '/' + name });
+          if (mode === 'full' && index === 3) await page.locator('#close-details').click();
           report.push({ file: name, selector, url: page.url(), capturedAt: new Date().toISOString() });
         }
       }

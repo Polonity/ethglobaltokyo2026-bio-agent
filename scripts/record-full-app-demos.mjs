@@ -74,6 +74,7 @@ try {
           p.textContent = detail;
           p.style.fontSize = '18px';
           box.replaceChildren(h, p);
+          (document.querySelector('dialog[open]') || document.body).append(box);
         },
         { title, detail },
       );
@@ -82,7 +83,7 @@ try {
       await page
         .locator(selector)
         .first()
-        .evaluate((el) => window.scrollBy({ top: el.getBoundingClientRect().top - 65, behavior: 'smooth' }));
+        .evaluate((el) => el.scrollIntoView({ block: 'start', behavior: 'smooth' }));
       await hold(800);
     }
     async function stateUntil(predicate) {
@@ -96,9 +97,11 @@ try {
     try {
       await page.goto(base + '/' + app);
       await page.selectOption('#language', 'en');
-      await page.locator('#app-guide .guide-start').waitFor();
+      await page.locator('#app-guide .guide-start').waitFor({ state: 'attached' });
       await caption(titles[app], 'Two autonomous flies · 166,700 MaleCNS neurons per fly · local Anvil');
       await hold(4000);
+      if (!(await page.locator('#details-dialog').isVisible())) await page.locator('#open-details').click();
+      await page.locator('[data-pane="help"]').click();
       await focus('#app-guide');
       await caption(
         'Start here: the new game manual',
@@ -111,6 +114,7 @@ try {
         'Numbered screen crops explain the input control, playground, body state and blockchain evidence.',
       );
       await hold(6500);
+      await page.locator('#close-details').click();
       await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
       await hold(800);
       if (app === 'foraging') await page.locator('#stimulus').fill('0.75');
@@ -139,6 +143,8 @@ try {
         'Policy versions and chosen actions are observable outputs, not a decoding of biological thoughts.',
       );
       await hold(6000);
+      await page.locator('#open-details').click();
+      await page.locator('[data-pane="help"]').click();
       await focus('#app-guide .guide-trace');
       await caption(
         'Follow one completed decision',
@@ -154,7 +160,7 @@ try {
       evidence.receiptStatus = receipt.status();
       // Navigate this recorded page to the exact clicked receipt target, so the receipt remains in the same video.
       await link.evaluate((el) => el.removeAttribute('target'));
-      await link.click();
+      await page.goto(base + evidence.receiptUrl);
       // Presentation only: show verified receipt fields at readable size, without changing the response.
       const receiptData = await receipt.json();
       evidence.receipt = receiptData;
@@ -195,6 +201,8 @@ try {
       );
       await hold(5500);
       await page.goBack();
+      await page.locator('#open-details').click();
+      await page.locator('[data-pane="learning"]').click();
       await page.locator('#comparison').waitFor();
       await focus('#comparison');
       await caption(
@@ -204,6 +212,8 @@ try {
       await hold(6500);
       evidence.savedReport = (await fetch(base + '/api/state').then((r) => r.json())).reports[app + ':full'];
       assert(evidence.savedReport);
+      if (!(await page.locator('#details-dialog').isVisible())) await page.locator('#open-details').click();
+      await page.locator('[data-pane="help"]').click();
       await focus('#app-guide');
       await caption(
         'Play, observe, then inspect the evidence',

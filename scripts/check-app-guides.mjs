@@ -25,13 +25,16 @@ try {
       for (const app of ['foraging', 'market', 'aqua']) {
         const base = mode === 'full' ? 'http://127.0.0.1:8812' : 'http://127.0.0.1:8800';
         await page.goto(base + (app === 'foraging' ? '/' : '/' + app));
+        if (mode === 'full') await page.locator('#open-details').click();
         const guide = page.locator('[data-bio-guide]');
         await guide.locator('h3').first().waitFor();
         assert((await guide.innerText()).includes('MaleCNS'));
         await page.waitForFunction(() => typeof document.querySelector('#language').onchange === 'function');
         for (const lang of ['en', 'ja']) {
           console.log(JSON.stringify({ mode, app, lang }));
+          if (mode === 'full') await page.locator('#close-details').click();
           await page.selectOption('#language', lang);
+          if (mode === 'full') await page.locator('#open-details').click();
           await page.waitForFunction((l) => document.documentElement.lang === l, lang);
           await page.waitForFunction(
             ({ mode, app, lang }) =>
@@ -51,12 +54,14 @@ try {
           report.pages.push({ mode, app, lang, link });
         }
         if (mode === 'full') {
+          await page.locator('#close-details').click();
           await page.locator('#live').click();
           await stateUntil(
             (s) => s.busy?.app === app && s.latest[app]?.phase === 'live' && s.latest[app].tick >= 3,
           );
           await page.locator('#stop').click();
           await stateUntil((s) => !s.busy && s.latest[app]?.phase === 'stopped');
+          await page.locator('#open-details').click();
           await guide.locator('.guide-trace a').waitFor();
           const trace = await guide.locator('.guide-trace').innerText();
           assert(trace.includes('166,700'));
@@ -86,6 +91,7 @@ try {
     }
   await page.goto('http://127.0.0.1:8812/');
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('#open-details').click();
   await page.locator('[data-bio-guide] h3').first().waitFor();
   await page.locator('[data-bio-guide] summary').first().click();
   const size = await page.evaluate(() => ({
