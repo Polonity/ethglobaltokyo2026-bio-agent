@@ -1,5 +1,7 @@
 # Bio Agent — ETHGlobal Tokyo 2026
 
+**[BioAgent Framework / 共通の判断・学習基盤](packages/bioagent-framework/README.md)** — モノレポ内の実験用フレームワークを追加しました。チェーン入力からコネクトーム判断、学習候補の評価・採用、保存・復元までを採餌とAquaで共通化。`npm run framework:lab` → http://127.0.0.1:8826/ 。[未使用条件での実験結果](docs/research/bioagent-adaptation/README.md)。
+
 **新しい共有市場（4匹）:** [説明書・実画面・実売買の検証](docs/apps/shared-market/README.md)。`npm run shared:dev` → http://127.0.0.1:8814/ 。MOMO/SORAが公式Aquaへ提示し、KOHARU/HINATAが同じ通貨のUniswap/Aquaを比較して実売買します。全166,700神経/個体、独立状態・オンラインreadout更新。ローカルフォーク専用です。
 
 **[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](docs/submission/1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
@@ -52,10 +54,18 @@ npm run local:market
 
 [達成状況・不足・主張の境界](docs/submission/goal-audit.md)。[Circuit Lab](docs/design/circuit-evidence.md)では実測接続が行動計算に入ることを、実TXと接続除去対照で確認できます。`npm run local:circuit`で専用3個体を登録し、`/circuit`を開いてください。元データの再取得は通常の起動には不要です。
 
+## 実験用フレームワークのレイヤ
+
+![BioAgent Frameworkのレイヤ構造](packages/bioagent-framework/docs/layers.png)
+
+imagegenで生成。チェーン入力、取得・検証、コネクトーム実行、用途別の判断・学習、利用アプリの5層に分けています。図は今回の7神経版フレームワークの構成で、既存の全166,700神経版は別ランタイムです。[各層の実装と利用方法](packages/bioagent-framework/README.md#レイヤ構造)。
+
 ## 構成
 
 | パス | 役割 |
 | --- | --- |
+| `packages/bioagent-framework/` | チェーン入力検証、判断の出典、共通の学習・評価・採用・方策復元 |
+| `apps/research-lab/` | フレームワークの操作・比較・EVM記録再生を確認する日英GUI |
 | `packages/bio_agent/` | Bio Agent 本体。刺激を受け取り内部状態・行動を出力 |
 | `packages/training/` | 学習基盤。実験実行、評価、モデル成果物の管理 |
 | `apps/frontend/` | エージェントの入力・状態・行動の観察画面 |

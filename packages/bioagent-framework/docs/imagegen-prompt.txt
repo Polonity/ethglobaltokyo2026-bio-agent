@@ -1,0 +1,21 @@
+Use case: infographic-diagram
+Asset type: README software architecture diagram for an experimental open-source monorepo.
+Create a polished, technically accurate, very legible landscape diagram, 1800x1200 or similar, white/off-white background, restrained navy and teal palette with small amber highlights, clean flat boxes and thin precise arrows. Minimal scientific engineering aesthetic; no decorative photos, no robot, no tokens, no logos. English labels for exact legibility. Do not imply a full biological brain simulation or automatic trading.
+Title verbatim: "BioAgent Framework"
+Subtitle verbatim: "On-chain input → connectome computation → traceable decisions"
+Layout: five wide horizontal stacked layers at left/center, top to bottom, each numbered 01–05. Arrows go DOWN between adjacent layers. Right-side separate learning lifecycle panel spans layers 03–04, with a return arrow into layer 04 only. A subtle large outline around layers 02, 03, 04 labelled "packages/bioagent-framework + existing model packages". Layer 01 and layer 05 stay outside this outline.
+Layer 01 exact heading: "01  BLOCKCHAIN INPUT"
+Two smaller labels: "IBioAgent / BioAgentRegistry" and "Owner • model hash • status • revision"
+Layer 02 exact heading: "02  SOURCE & VALIDATION"
+Labels: "Read-only EVM RPC" and "Chain • registry • identity • freshness"
+Layer 03 exact heading: "03  CONNECTOME ENGINE"
+Labels: "MaleCNS measured 7-neuron slice" and "Fixed topology • engineered dynamics"
+Layer 04 exact heading: "04  TASK RUNTIME & DECISIONS"
+Labels: "Foraging adapter  |  Aqua adapter" and "Input provenance + model + policy version"
+Layer 05 exact heading: "05  APPLICATIONS"
+Labels: "Research Lab UI  |  Custom consumers" and "Decision output only — execution belongs to the app"
+Right panel heading: "SHARED LEARNING"
+Vertical mini-flow with exactly these five labels and arrows: "Train" → "Evaluate" → "Adopt or reject" → "Save" → "Restore"
+Under panel, smaller separate box heading: "SHARED CLOCK", body: "One Arena advance per tick"
+Footer exact: "Experimental framework • No biological superiority claim • No automatic transactions"
+Ensure all headings and labels are readable, spelled exactly, ample whitespace, no overlapping arrows, no additional claims. The learning arrow must feed the task readout, not mutate the connectome topology.
