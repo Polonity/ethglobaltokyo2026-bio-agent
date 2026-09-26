@@ -1,6 +1,6 @@
 import { chromium } from '@playwright/test';
-import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
-import { spawn } from 'node:child_process';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { renderPresenterDemo } from './render-presenter-demo.mjs';
 import assert from 'node:assert/strict';
 import { JsonRpcProvider, Interface, Contract, formatUnits } from 'ethers';
 import { verifyAquaFork } from '../../services/full-apps/fork.mjs';
@@ -33,7 +33,7 @@ const context = await browser.newContext({
   recordVideo: { dir: out + '/raw', size: { width: 1920, height: 960 } },
 });
 await context.addInitScript(() => localStorage.setItem('shared-language', 'en'));
-const started = Date.now(),
+const started = performance.now(),
   page = await context.newPage(),
   video = page.video();
 const cues = [],
@@ -42,7 +42,7 @@ const cues = [],
 let startedOwnRun = false,
   after;
 page.on('pageerror', (e) => errors.push(e.message));
-const cue = (en, ja) => cues.push({ start: (Date.now() - started) / 1000, en, ja });
+const cue = (en, ja) => cues.push({ start: (performance.now() - started) / 1000, en, ja });
 const esc = (value) =>
   String(value).replace(
     /[&<>"']/g,
@@ -249,7 +249,7 @@ try {
   assert(policyChanges.every((x) => x.updatesAfter > x.updatesBefore));
   assert(policyChanges.some((x) => x.weightsChanged));
   assert.deepEqual(errors, []);
-  const end = (Date.now() - started) / 1000;
+  const end = (performance.now() - started) / 1000;
   const evidence = {
     recordedAt: new Date().toISOString(),
     scope: 'Anvil Ethereum fork + full population; no public-chain writes',
@@ -294,57 +294,7 @@ try {
 const raw = await video.path();
 await writeFile(out + '/raw-video-path.txt', raw + '\n');
 const evidence = JSON.parse(await readFile(out + '/capture-evidence.json', 'utf8'));
-const rawStart = evidence.cues[0].start;
-const stamp = (n) => {
-  const ms = Math.floor(n * 1000);
-  return `${String(Math.floor(ms / 3600000)).padStart(2, '0')}:${String(Math.floor(ms / 60000) % 60).padStart(2, '0')}:${String(Math.floor(ms / 1000) % 60).padStart(2, '0')},${String(ms % 1000).padStart(3, '0')}`;
-};
-for (const lang of ['en', 'ja']) {
-  const srt = cues
-    .map(
-      (c, i) =>
-        `${i + 1}\n${stamp(i === 0 ? 0 : c.start - rawStart)} --> ${stamp((cues[i + 1]?.start ?? evidence.end) - rawStart)}\n${c[lang].join('\n')}\n`,
-    )
-    .join('\n');
-  await writeFile(`${out}/captions-${lang}.srt`, srt);
-  const target = `${delivery}/bioagent-submission-${lang}.mp4`;
-  await new Promise((resolve, reject) => {
-    const ff = spawn(
-      'ffmpeg',
-      [
-        '-y',
-        '-loglevel',
-        'error',
-        '-ss',
-        String(rawStart),
-        '-i',
-        raw,
-        '-t',
-        String(evidence.end - rawStart),
-        '-vf',
-        `pad=1920:1080:0:0:color=0x101d25,subtitles=${out}/captions-${lang}.srt:force_style='FontName=Noto Sans CJK JP,FontSize=8,PrimaryColour=&H00FFFFFF,OutlineColour=&H00251D10,BorderStyle=1,Outline=0,Shadow=0,Alignment=2,MarginV=8'`,
-        '-r',
-        '30',
-        '-c:v',
-        'libx264',
-        '-preset',
-        'fast',
-        '-crf',
-        '20',
-        '-pix_fmt',
-        'yuv420p',
-        '-movflags',
-        '+faststart',
-        target,
-      ],
-      { stdio: 'inherit' },
-    );
-    ff.on('error', reject);
-    ff.on('exit', (code) => (code === 0 ? resolve() : reject(Error(`ffmpeg exit ${code}`))));
-  });
-  await copyFile(`${out}/captions-${lang}.srt`, `${delivery}/captions-${lang}.srt`);
-}
-await copyFile(out + '/capture-evidence.json', delivery + '/capture-evidence.json');
+await renderPresenterDemo({ raw, evidence, out, delivery });
 console.log(
   JSON.stringify({
     videos: ['en', 'ja'].map((l) => `${delivery}/bioagent-submission-${l}.mp4`),

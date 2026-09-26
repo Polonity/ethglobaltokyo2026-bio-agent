@@ -1,0 +1,2891 @@
+{
+  "verifiedAt": "2026-09-26T07:42:20.700Z",
+  "chainId": 31337,
+  "scope": "Read-only receipt verification on the recording Anvil instance; local fork, not public-chain transactions",
+  "cycles": [
+    {
+      "tick": 5,
+      "time": "2026-09-26T07:27:37.993Z",
+      "metrics": {
+        "neuralMs": 492.14534598286264,
+        "cycleMs": 3017.67726900056,
+        "peakRSSMiB": 443.109375,
+        "neuronsPerFly": 166700,
+        "connections": 25582938,
+        "active": [
+          166391,
+          166407,
+          166443,
+          166443
+        ]
+      },
+      "market": {
+        "price": 0.9918745792561825,
+        "block": 26060619,
+        "blockHash": "0x4d35ef5f5bf50b0a789dedc3f3aebd7ad2099795a9456b266bc27f564cc0070a",
+        "timestamp": 1790399205
+      },
+      "end": {
+        "price": 0.991898915782065,
+        "block": 26060629,
+        "blockHash": "0xeb56442fcb60b3936488cad630c723373db577dc31beb8447ce6491971a4e058",
+        "timestamp": 1790406650
+      },
+      "flies": [
+        {
+          "name": "MOMO",
+          "role": "maker",
+          "status": "wide",
+          "updates": 38,
+          "id": "1790407656115562964-0",
+          "individual": 0,
+          "action": 1,
+          "scores": [
+            0.027209991659687467,
+            0.09438377415946676,
+            0.05408773225565111
+          ],
+          "exploration": false,
+          "policyHash": "0xa67b7758bfdeab29df5860cc57d4731af34e644a1658427b60d90046683c5543",
+          "spread": 80,
+          "result": {
+            "cycle": 5,
+            "valuationChange": 0.0022871092473906174,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "SORA",
+          "role": "maker",
+          "status": "wide",
+          "updates": 38,
+          "id": "1790407656116451224-1",
+          "individual": 1,
+          "action": 1,
+          "scores": [
+            0.009759814163266475,
+            0.11024018583673352,
+            0.07005920234343496
+          ],
+          "exploration": false,
+          "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+          "spread": 80,
+          "result": {
+            "cycle": 5,
+            "valuationChange": 0.0022871092473906174,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "KOHARU",
+          "role": "trader",
+          "status": "buy",
+          "updates": 38,
+          "id": "1790407657578360268-2",
+          "individual": 2,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.5464291585585195,
+            0.1751897658479606
+          ],
+          "exploration": false,
+          "policyHash": "0xfce6d779cd015e4bea2f8c2587ced95bdf3f11db6eb22b7485ff55d68c70d615",
+          "target": 0.85,
+          "holding": 0.7083256818272726,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+            "block": 26060628,
+            "gasETH": "0.000109874000878992",
+            "route": "Uniswap V3",
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "2.006317865399861324",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "2.006317865399861324"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "2.000252896377471589"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "2.000252896377471589"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 5,
+            "valuationChange": -0.006485321467835092,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09561159882895098,
+          "route": "Uniswap V3"
+        },
+        {
+          "name": "HINATA",
+          "role": "trader",
+          "status": "sell",
+          "updates": 38,
+          "id": "1790407657578891437-3",
+          "individual": 3,
+          "action": 2,
+          "scores": [
+            0.06,
+            0.1392294192985333,
+            0.5451297504522729
+          ],
+          "exploration": false,
+          "policyHash": "0xf1686607b28fa2ab48d614f1fe5871b0742ffff40d70c57c26c5df109f9e06d8",
+          "target": 0.15,
+          "holding": 0.29842976131115406,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+            "block": 26060629,
+            "gasETH": "0.000099628000797024",
+            "route": "Uniswap V3",
+            "direction": true,
+            "amountIn": "2",
+            "amountOut": "1.981782072553072589",
+            "input": "POLLEN",
+            "output": "NECTAR",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.981782072553072589"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.967879165243904"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.967879165243904"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 5,
+            "valuationChange": -0.0005552029996636065,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09843977174118679,
+          "route": "Uniswap V3"
+        }
+      ],
+      "balances": [
+        [
+          93.97846095445819,
+          106.08859312138246
+        ],
+        [
+          143.77524349119432,
+          55.903259393578224
+        ],
+        [
+          58.014975779964374,
+          141.92292643729846
+        ]
+      ],
+      "trades": [
+        {
+          "kind": "swap",
+          "hash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+          "block": 26060628,
+          "gasETH": "0.000109874000878992",
+          "route": "Uniswap V3",
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "2.006317865399861324",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "2.006317865399861324"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "2.000252896377471589"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "2.000252896377471589"
+            }
+          ],
+          "individual": 2
+        },
+        {
+          "kind": "swap",
+          "hash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+          "block": 26060629,
+          "gasETH": "0.000099628000797024",
+          "route": "Uniswap V3",
+          "direction": true,
+          "amountIn": "2",
+          "amountOut": "1.981782072553072589",
+          "input": "POLLEN",
+          "output": "NECTAR",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.981782072553072589"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.967879165243904"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.967879165243904"
+            }
+          ],
+          "individual": 3
+        }
+      ],
+      "pnl": [
+        -0.6942733510233552,
+        -1.4862324712037207,
+        -0.5320819874321217
+      ]
+    },
+    {
+      "tick": 6,
+      "time": "2026-09-26T07:27:42.089Z",
+      "metrics": {
+        "neuralMs": 354.3462490197271,
+        "cycleMs": 3092.6822429997846,
+        "peakRSSMiB": 443.234375,
+        "neuronsPerFly": 166700,
+        "connections": 25582938,
+        "active": [
+          166391,
+          166407,
+          166443,
+          166443
+        ]
+      },
+      "market": {
+        "price": 0.991898915782065,
+        "block": 26060629,
+        "blockHash": "0xeb56442fcb60b3936488cad630c723373db577dc31beb8447ce6491971a4e058",
+        "timestamp": 1790406650
+      },
+      "end": {
+        "price": 0.9958747054076035,
+        "block": 26060639,
+        "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+        "timestamp": 1790406655
+      },
+      "flies": [
+        {
+          "name": "MOMO",
+          "role": "maker",
+          "status": "wide",
+          "updates": 39,
+          "id": "1790407660056358498-0",
+          "individual": 0,
+          "action": 1,
+          "scores": [
+            0.00884601659173944,
+            0.11279911063126756,
+            0.07284720634352956
+          ],
+          "exploration": false,
+          "policyHash": "0xa49f6ac348b9217fd220e177b032b4765891a4639614403be310b4c0dfb6dcce",
+          "spread": 80,
+          "result": {
+            "cycle": 6,
+            "valuationChange": 0.38168620049179935,
+            "sharedWallet": true,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.015999999999870118
+        },
+        {
+          "name": "SORA",
+          "role": "maker",
+          "status": "wide",
+          "updates": 39,
+          "id": "1790407660056803137-1",
+          "individual": 1,
+          "action": 1,
+          "scores": [
+            -0.011375516262192548,
+            0.13137551626219254,
+            0.09140039998742089
+          ],
+          "exploration": false,
+          "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+          "spread": 80,
+          "result": {
+            "cycle": 6,
+            "valuationChange": 0.38168620049179935,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "KOHARU",
+          "role": "trader",
+          "status": "buy",
+          "updates": 39,
+          "id": "1790407661691433188-2",
+          "individual": 2,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.6698437947424135,
+            0.20835459333771086
+          ],
+          "exploration": false,
+          "policyHash": "0xb33bf6422787262581833cab8b02b6cfec891d34693a8d3177fd146ab7132256",
+          "target": 0.85,
+          "holding": 0.7183910209881592,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+            "block": 26060638,
+            "gasETH": "0.000109854000878832",
+            "route": "Uniswap V3",
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "2.006268688991726607",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "2.006268688991726607"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "2.000203819595710125"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "2.000203819595710125"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 6,
+            "valuationChange": 0.5696123610996722,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09561997336221917,
+          "route": "Uniswap V3"
+        },
+        {
+          "name": "HINATA",
+          "role": "trader",
+          "status": "buy",
+          "updates": 39,
+          "id": "1790407661692068777-3",
+          "individual": 3,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.166475605701036,
+            0.6684380533321919
+          ],
+          "exploration": true,
+          "policyHash": "0xdda06241090da36def0f5825ac6d1b654fb854cacd06ae0ff9bb959ec2917dc7",
+          "target": 0.15,
+          "holding": 0.2884924660999554,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "block": 26060639,
+            "gasETH": "0.000127887001023096",
+            "route": "Aqua",
+            "maker": 0,
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "2.000203819595710125",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "2.000203819595710125"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "2.000203819595710125"
+              },
+              {
+                "route": "Uniswap V3",
+                "out": "1.998267123117578599"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 6,
+            "valuationChange": 0.2226077284268797,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": -0.10770402387061406,
+          "route": "Aqua"
+        }
+      ],
+      "balances": [
+        [
+          91.97825713486247,
+          108.08859312138246
+        ],
+        [
+          145.78151218018604,
+          53.903259393578224
+        ],
+        [
+          60.015179599560085,
+          139.92292643729846
+        ]
+      ],
+      "trades": [
+        {
+          "kind": "swap",
+          "hash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+          "block": 26060638,
+          "gasETH": "0.000109854000878832",
+          "route": "Uniswap V3",
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "2.006268688991726607",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "2.006268688991726607"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "2.000203819595710125"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "2.000203819595710125"
+            }
+          ],
+          "individual": 2
+        },
+        {
+          "kind": "swap",
+          "hash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+          "block": 26060639,
+          "gasETH": "0.000127887001023096",
+          "route": "Aqua",
+          "maker": 0,
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "2.000203819595710125",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "2.000203819595710125"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "2.000203819595710125"
+            },
+            {
+              "route": "Uniswap V3",
+              "out": "1.998267123117578599"
+            }
+          ],
+          "individual": 3
+        }
+      ],
+      "pnl": [
+        -0.31258715053155584,
+        -0.9166201101040485,
+        -0.30947425900524195
+      ]
+    },
+    {
+      "tick": 7,
+      "time": "2026-09-26T07:27:45.820Z",
+      "metrics": {
+        "neuralMs": 377.5043409841601,
+        "cycleMs": 2729.6621450008824,
+        "peakRSSMiB": 443.234375,
+        "neuronsPerFly": 166700,
+        "connections": 25582938,
+        "active": [
+          166391,
+          166407,
+          166443,
+          166443
+        ]
+      },
+      "market": {
+        "price": 0.9958747054076035,
+        "block": 26060639,
+        "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+        "timestamp": 1790406655
+      },
+      "end": {
+        "price": 0.9958831869530954,
+        "block": 26060649,
+        "blockHash": "0x185474034c7e4e2e83c83d815bba2174103d021550496713302fb1f86bfa534e",
+        "timestamp": 1790406658
+      },
+      "flies": [
+        {
+          "name": "MOMO",
+          "role": "maker",
+          "status": "wide",
+          "updates": 40,
+          "id": "1790407663916245311-0",
+          "individual": 0,
+          "action": 1,
+          "scores": [
+            -0.2499577896090498,
+            0.37203985269733714,
+            0.10298462624657825
+          ],
+          "exploration": false,
+          "policyHash": "0xd50d4d4f84037798c60551c457ca30d4f4f22650ae69aa52ecb137d0f4f301fc",
+          "spread": 80,
+          "result": {
+            "cycle": 7,
+            "valuationChange": 0.0007801177721376007,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "SORA",
+          "role": "maker",
+          "status": "wide",
+          "updates": 40,
+          "id": "1790407663916690579-1",
+          "individual": 1,
+          "action": 1,
+          "scores": [
+            -0.26844240566096134,
+            0.38844240566096133,
+            0.12341813487710088
+          ],
+          "exploration": false,
+          "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+          "spread": 80,
+          "result": {
+            "cycle": 7,
+            "valuationChange": 0.0007801177721376007,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "KOHARU",
+          "role": "trader",
+          "status": "buy",
+          "updates": 40,
+          "id": "1790407665390251257-2",
+          "individual": 2,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.7045210935634272,
+            0.2397599104613379
+          ],
+          "exploration": false,
+          "policyHash": "0xfe93bb00ae7b368d1d3c0fa07492360648cc2b54dbfdc0720d00d4733e84c30e",
+          "target": 0.85,
+          "holding": 0.7292427955392876,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+            "block": 26060648,
+            "gasETH": "0.000102616000820928",
+            "route": "Uniswap V3",
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "1.998267123117578599",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.998267123117578599"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.992218488155269347"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.992218488155269347"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 7,
+            "valuationChange": -0.008722916518649981,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09534160931233959,
+          "route": "Uniswap V3"
+        },
+        {
+          "name": "HINATA",
+          "role": "trader",
+          "status": "sell",
+          "updates": 40,
+          "id": "1790407665390678241-3",
+          "individual": 3,
+          "action": 2,
+          "scores": [
+            0.06,
+            0.19100226900827963,
+            0.7361985996668128
+          ],
+          "exploration": false,
+          "policyHash": "0xe777be667a4dd5c7883ec8d0894f730959fe949f74c4051397e0061c15f874fb",
+          "target": 0.15,
+          "holding": 0.2993011264901815,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+            "block": 26060649,
+            "gasETH": "0.000099608000796864",
+            "route": "Uniswap V3",
+            "direction": true,
+            "amountIn": "2",
+            "amountOut": "1.989750461926482546",
+            "input": "POLLEN",
+            "output": "NECTAR",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.989750461926482546"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.975815415529472"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.975815415529472"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 7,
+            "valuationChange": -0.00150689050371966,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09871337111305067,
+          "route": "Uniswap V3"
+        }
+      ],
+      "balances": [
+        [
+          91.97825713486247,
+          108.08859312138246
+        ],
+        [
+          147.7797793033036,
+          51.903259393578224
+        ],
+        [
+          58.015179599560085,
+          141.91267689922492
+        ]
+      ],
+      "trades": [
+        {
+          "kind": "swap",
+          "hash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+          "block": 26060648,
+          "gasETH": "0.000102616000820928",
+          "route": "Uniswap V3",
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "1.998267123117578599",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.998267123117578599"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.992218488155269347"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.992218488155269347"
+            }
+          ],
+          "individual": 2
+        },
+        {
+          "kind": "swap",
+          "hash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+          "block": 26060649,
+          "gasETH": "0.000099608000796864",
+          "route": "Uniswap V3",
+          "direction": true,
+          "amountIn": "2",
+          "amountOut": "1.989750461926482546",
+          "input": "POLLEN",
+          "output": "NECTAR",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.989750461926482546"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.975815415529472"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.975815415529472"
+            }
+          ],
+          "individual": 3
+        }
+      ],
+      "pnl": [
+        -0.31180703275941823,
+        -0.9253430266226985,
+        -0.3109811495089616
+      ]
+    },
+    {
+      "tick": 8,
+      "time": "2026-09-26T07:27:49.863Z",
+      "metrics": {
+        "neuralMs": 340.43909501633607,
+        "cycleMs": 2770.699786999263,
+        "peakRSSMiB": 443.234375,
+        "neuronsPerFly": 166700,
+        "connections": 25582938,
+        "active": [
+          166391,
+          166407,
+          166443,
+          166443
+        ]
+      },
+      "market": {
+        "price": 0.9958831869530954,
+        "block": 26060649,
+        "blockHash": "0x185474034c7e4e2e83c83d815bba2174103d021550496713302fb1f86bfa534e",
+        "timestamp": 1790406658
+      },
+      "end": {
+        "price": 0.995891634813295,
+        "block": 26060659,
+        "blockHash": "0xdaf00212148c5d8d0c8b53b4e0188426d5e155c626e427d874d4fdf270a01dde",
+        "timestamp": 1790406662
+      },
+      "flies": [
+        {
+          "name": "MOMO",
+          "role": "maker",
+          "status": "wide",
+          "updates": 41,
+          "id": "1790407667986838930-0",
+          "individual": 0,
+          "action": 1,
+          "scores": [
+            -0.10543617130849728,
+            0.22754404890515811,
+            0.1241067729253249
+          ],
+          "exploration": false,
+          "policyHash": "0xea736ef39fc31ebba9538e4c17a5d88e445290c61c6db9ed719d0b1a30e75d50",
+          "spread": 80,
+          "result": {
+            "cycle": 8,
+            "valuationChange": 0.0007770194577005896,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "SORA",
+          "role": "maker",
+          "status": "wide",
+          "updates": 41,
+          "id": "1790407667987302868-1",
+          "individual": 1,
+          "action": 1,
+          "scores": [
+            -0.12817597895435318,
+            0.24817597895435317,
+            0.14599141765475715
+          ],
+          "exploration": false,
+          "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+          "spread": 80,
+          "result": {
+            "cycle": 8,
+            "valuationChange": 0.0007770194577005896,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "KOHARU",
+          "role": "trader",
+          "status": "buy",
+          "updates": 41,
+          "id": "1790407669484744736-2",
+          "individual": 2,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.709244930047602,
+            0.26642876010320504
+          ],
+          "exploration": false,
+          "policyHash": "0x72adb6676e98d7ba6c9a1c3e6dc6e772da5b2a83a9b97632abe102b25d533cbd",
+          "target": 0.85,
+          "holding": 0.7392774138974437,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+            "block": 26060658,
+            "gasETH": "0.000102616000820928",
+            "route": "Uniswap V3",
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "1.998250121630762442",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.998250121630762442"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.992201521214790295"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.992201521214790295"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 8,
+            "valuationChange": -0.008710996687369743,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09535104332088751,
+          "route": "Uniswap V3"
+        },
+        {
+          "name": "HINATA",
+          "role": "trader",
+          "status": "sell",
+          "updates": 41,
+          "id": "1790407669485161982-3",
+          "individual": 3,
+          "action": 2,
+          "scores": [
+            0.06,
+            0.2155295403286894,
+            0.7524530715164744
+          ],
+          "exploration": false,
+          "policyHash": "0x67f59702fb9a27f4c703c8efa7fcb58b673672fef35b368d1516416cb287e72d",
+          "target": 0.15,
+          "holding": 0.28933159311340884,
+          "trade": {
+            "kind": "swap",
+            "hash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+            "block": 26060659,
+            "gasETH": "0.000099608000796864",
+            "route": "Uniswap V3",
+            "direction": true,
+            "amountIn": "2",
+            "amountOut": "1.989767357373239398",
+            "input": "POLLEN",
+            "output": "NECTAR",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.989767357373239398"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.975832242914752"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.975832242914752"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 8,
+            "valuationChange": -0.001525808126643824,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.0987159362788671,
+          "route": "Uniswap V3"
+        }
+      ],
+      "balances": [
+        [
+          91.97825713486247,
+          108.08859312138246
+        ],
+        [
+          149.77802942493437,
+          49.903259393578224
+        ],
+        [
+          56.015179599560085,
+          143.90244425659816
+        ]
+      ],
+      "trades": [
+        {
+          "kind": "swap",
+          "hash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+          "block": 26060658,
+          "gasETH": "0.000102616000820928",
+          "route": "Uniswap V3",
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "1.998250121630762442",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.998250121630762442"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.992201521214790295"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.992201521214790295"
+            }
+          ],
+          "individual": 2
+        },
+        {
+          "kind": "swap",
+          "hash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+          "block": 26060659,
+          "gasETH": "0.000099608000796864",
+          "route": "Uniswap V3",
+          "direction": true,
+          "amountIn": "2",
+          "amountOut": "1.989767357373239398",
+          "input": "POLLEN",
+          "output": "NECTAR",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.989767357373239398"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.975832242914752"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.975832242914752"
+            }
+          ],
+          "individual": 3
+        }
+      ],
+      "pnl": [
+        -0.31103001330171764,
+        -0.9340540233100683,
+        -0.31250695763560543
+      ]
+    },
+    {
+      "tick": 9,
+      "time": "2026-09-26T07:27:53.772Z",
+      "metrics": {
+        "neuralMs": 342.6091790024657,
+        "cycleMs": 2678.7766950000077,
+        "peakRSSMiB": 443.234375,
+        "neuronsPerFly": 166700,
+        "connections": 25582938,
+        "active": [
+          166391,
+          166407,
+          166443,
+          166443
+        ]
+      },
+      "market": {
+        "price": 0.995891634813295,
+        "block": 26060659,
+        "blockHash": "0xdaf00212148c5d8d0c8b53b4e0188426d5e155c626e427d874d4fdf270a01dde",
+        "timestamp": 1790406662
+      },
+      "end": {
+        "price": 0.995900049121702,
+        "block": 26060669,
+        "blockHash": "0x0fda65c38e487d4e7edced82640cace94a9f8bba46bf43878357dffb3c95ef87",
+        "timestamp": 1790406666
+      },
+      "flies": [
+        {
+          "name": "MOMO",
+          "role": "maker",
+          "status": "wide",
+          "updates": 42,
+          "id": "1790407671908817868-0",
+          "individual": 0,
+          "action": 1,
+          "scores": [
+            -0.06778555860788762,
+            0.18992347934135967,
+            0.13882709196289766
+          ],
+          "exploration": false,
+          "policyHash": "0x70cd5edf647577e9032d24c54d410750dfcb0b92724d6364047be0d6bbfe523b",
+          "spread": 80,
+          "result": {
+            "cycle": 9,
+            "valuationChange": 0.0007739334222378602,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "SORA",
+          "role": "maker",
+          "status": "wide",
+          "updates": 42,
+          "id": "1790407671909199947-1",
+          "individual": 1,
+          "action": 1,
+          "scores": [
+            -0.09269701938054167,
+            0.21269701938054167,
+            0.16190097573715187
+          ],
+          "exploration": false,
+          "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+          "spread": 80,
+          "result": {
+            "cycle": 9,
+            "valuationChange": 0.0007739334222378602,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "KOHARU",
+          "role": "trader",
+          "status": "buy",
+          "updates": 42,
+          "id": "1790407673389379751-2",
+          "individual": 2,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.7009733391249386,
+            0.28661524391056437
+          ],
+          "exploration": false,
+          "policyHash": "0x663d139ad4abfd5743351fa7856f0cf06abdd72f94db53cd142a2f1f61a694e2",
+          "target": 0.85,
+          "holding": 0.7493129266850004,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+            "block": 26060668,
+            "gasETH": "0.000102616000820928",
+            "route": "Uniswap V3",
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "1.998233187954673607",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.998233187954673607"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.99218462194688333"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.99218462194688333"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 9,
+            "valuationChange": -0.008699191427155029,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09536047254318536,
+          "route": "Uniswap V3"
+        },
+        {
+          "name": "HINATA",
+          "role": "trader",
+          "status": "sell",
+          "updates": 42,
+          "id": "1790407673389764313-3",
+          "individual": 3,
+          "action": 2,
+          "scores": [
+            0.06,
+            0.23436260294521666,
+            0.7490110179898278
+          ],
+          "exploration": false,
+          "policyHash": "0xa35cfdee15b9514effae1aacf0eb2d56549478e5d91b6f2148bea828e60d5252",
+          "target": 0.15,
+          "holding": 0.27936175639167965,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+            "block": 26060669,
+            "gasETH": "0.000099608000796864",
+            "route": "Uniswap V3",
+            "direction": true,
+            "amountIn": "2",
+            "amountOut": "1.989784185717711272",
+            "input": "POLLEN",
+            "output": "NECTAR",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.989784185717711272"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.975849003468992"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.975849003468992"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 9,
+            "valuationChange": -0.0015445835290677223,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09871850779277203,
+          "route": "Uniswap V3"
+        }
+      ],
+      "balances": [
+        [
+          91.97825713486247,
+          108.08859312138246
+        ],
+        [
+          151.77626261288904,
+          47.903259393578224
+        ],
+        [
+          54.015179599560085,
+          145.89222844231588
+        ]
+      ],
+      "trades": [
+        {
+          "kind": "swap",
+          "hash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+          "block": 26060668,
+          "gasETH": "0.000102616000820928",
+          "route": "Uniswap V3",
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "1.998233187954673607",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.998233187954673607"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.99218462194688333"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.99218462194688333"
+            }
+          ],
+          "individual": 2
+        },
+        {
+          "kind": "swap",
+          "hash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+          "block": 26060669,
+          "gasETH": "0.000099608000796864",
+          "route": "Uniswap V3",
+          "direction": true,
+          "amountIn": "2",
+          "amountOut": "1.989784185717711272",
+          "input": "POLLEN",
+          "output": "NECTAR",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.989784185717711272"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.975849003468992"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.975849003468992"
+            }
+          ],
+          "individual": 3
+        }
+      ],
+      "pnl": [
+        -0.3102560798794798,
+        -0.9427532147372233,
+        -0.31405154116467315
+      ]
+    },
+    {
+      "tick": 10,
+      "time": "2026-09-26T07:27:57.677Z",
+      "metrics": {
+        "neuralMs": 333.34109201678075,
+        "cycleMs": 2581.8396610002965,
+        "peakRSSMiB": 443.234375,
+        "neuronsPerFly": 166700,
+        "connections": 25582938,
+        "active": [
+          166391,
+          166407,
+          166443,
+          166443
+        ]
+      },
+      "market": {
+        "price": 0.995900049121702,
+        "block": 26060669,
+        "blockHash": "0x0fda65c38e487d4e7edced82640cace94a9f8bba46bf43878357dffb3c95ef87",
+        "timestamp": 1790406666
+      },
+      "end": {
+        "price": 0.9959084300112899,
+        "block": 26060679,
+        "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+        "timestamp": 1790406670
+      },
+      "flies": [
+        {
+          "name": "MOMO",
+          "role": "maker",
+          "status": "wide",
+          "updates": 43,
+          "id": "1790407675904123296-0",
+          "individual": 0,
+          "action": 1,
+          "scores": [
+            -0.062455211776962366,
+            0.1846203071584121,
+            0.15070903506307723
+          ],
+          "exploration": false,
+          "policyHash": "0x1fb5aaad8f826cf1c135e107cf6b021d2fcc8bec0d1ea9113e488cb4d9d73d1b",
+          "spread": 80,
+          "result": {
+            "cycle": 10,
+            "valuationChange": 0.0007708596175461935,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "SORA",
+          "role": "maker",
+          "status": "wide",
+          "updates": 43,
+          "id": "1790407675904579700-1",
+          "individual": 1,
+          "action": 1,
+          "scores": [
+            -0.08872006565158172,
+            0.20872006565158172,
+            0.17471579047539978
+          ],
+          "exploration": false,
+          "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+          "spread": 80,
+          "result": {
+            "cycle": 10,
+            "valuationChange": 0.0007708596175461935,
+            "sharedWallet": true,
+            "fills": 0,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0
+        },
+        {
+          "name": "KOHARU",
+          "role": "trader",
+          "status": "buy",
+          "updates": 43,
+          "id": "1790407677298779794-2",
+          "individual": 2,
+          "action": 1,
+          "scores": [
+            0.06,
+            0.6864515782875907,
+            0.30254810263015186
+          ],
+          "exploration": false,
+          "policyHash": "0x6575f22ce12b0eed0e7e64cc6bbd8bc4e539263cb47830132191e014bb81bac2",
+          "target": 0.85,
+          "holding": 0.7593493320780484,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+            "block": 26060678,
+            "gasETH": "0.000102616000820928",
+            "route": "Uniswap V3",
+            "direction": false,
+            "amountIn": "2",
+            "amountOut": "1.998216321818277518",
+            "input": "NECTAR",
+            "output": "POLLEN",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.998216321818277518"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.992167790080062069"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.992167790080062069"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 10,
+            "valuationChange": -0.008687500016009153,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.0953698970340553,
+          "route": "Uniswap V3"
+        },
+        {
+          "name": "HINATA",
+          "role": "trader",
+          "status": "sell",
+          "updates": 43,
+          "id": "1790407677299170926-3",
+          "individual": 3,
+          "action": 2,
+          "scores": [
+            0.06,
+            0.24949974403479713,
+            0.7374702960632583
+          ],
+          "exploration": false,
+          "policyHash": "0x1e2439cd93b0179e3afe7a1b55265690c08afc4e659473880cae4e6ea5da26b0",
+          "target": 0.15,
+          "holding": 0.2693916143409002,
+          "trade": {
+            "kind": "swap",
+            "hash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "block": 26060679,
+            "gasETH": "0.000099608000796864",
+            "route": "Uniswap V3",
+            "direction": true,
+            "amountIn": "2",
+            "amountOut": "1.989800947225837873",
+            "input": "POLLEN",
+            "output": "NECTAR",
+            "quotes": [
+              {
+                "route": "Uniswap V3",
+                "out": "1.989800947225837873"
+              },
+              {
+                "route": "Aqua",
+                "maker": 0,
+                "out": "1.975865697458048"
+              },
+              {
+                "route": "Aqua",
+                "maker": 1,
+                "out": "1.975865697458048"
+              }
+            ]
+          },
+          "result": {
+            "cycle": 10,
+            "valuationChange": -0.0015632175404505233,
+            "sharedWallet": false,
+            "fills": 1,
+            "quoteToken": "NECTAR"
+          },
+          "reward": 0.09872108559722459,
+          "route": "Uniswap V3"
+        }
+      ],
+      "balances": [
+        [
+          91.97825713486247,
+          108.08859312138246
+        ],
+        [
+          153.77447893470733,
+          45.903259393578224
+        ],
+        [
+          52.015179599560085,
+          147.8820293895417
+        ]
+      ],
+      "trades": [
+        {
+          "kind": "swap",
+          "hash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+          "block": 26060678,
+          "gasETH": "0.000102616000820928",
+          "route": "Uniswap V3",
+          "direction": false,
+          "amountIn": "2",
+          "amountOut": "1.998216321818277518",
+          "input": "NECTAR",
+          "output": "POLLEN",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.998216321818277518"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.992167790080062069"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.992167790080062069"
+            }
+          ],
+          "individual": 2
+        },
+        {
+          "kind": "swap",
+          "hash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+          "block": 26060679,
+          "gasETH": "0.000099608000796864",
+          "route": "Uniswap V3",
+          "direction": true,
+          "amountIn": "2",
+          "amountOut": "1.989800947225837873",
+          "input": "POLLEN",
+          "output": "NECTAR",
+          "quotes": [
+            {
+              "route": "Uniswap V3",
+              "out": "1.989800947225837873"
+            },
+            {
+              "route": "Aqua",
+              "maker": 0,
+              "out": "1.975865697458048"
+            },
+            {
+              "route": "Aqua",
+              "maker": 1,
+              "out": "1.975865697458048"
+            }
+          ],
+          "individual": 3
+        }
+      ],
+      "pnl": [
+        -0.3094852202619336,
+        -0.9514407147532324,
+        -0.3156147587051237
+      ]
+    }
+  ],
+  "routeCounts": {
+    "Aqua": 1,
+    "Uniswap V3": 11
+  },
+  "records": [
+    {
+      "cycle": 5,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+        "block": 26060628,
+        "gasETH": "0.000109874000878992",
+        "route": "Uniswap V3",
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "2.006317865399861324",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "2.006317865399861324"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "2.000252896377471589"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "2.000252896377471589"
+          }
+        ],
+        "individual": 2
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xa5cd0e1f818b36b8dcfb230abcdbd141065d580a06925b2052d6e4e48185b029",
+        "blockNumber": 26060628,
+        "contractAddress": null,
+        "cumulativeGasUsed": "109874",
+        "from": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "109874",
+        "hash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xa5cd0e1f818b36b8dcfb230abcdbd141065d580a06925b2052d6e4e48185b029",
+            "blockNumber": 26060628,
+            "data": "0x0000000000000000000000000000000000000000000000001bd7df77f9adc04c",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xa5cd0e1f818b36b8dcfb230abcdbd141065d580a06925b2052d6e4e48185b029",
+            "blockNumber": 26060628,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xa5cd0e1f818b36b8dcfb230abcdbd141065d580a06925b2052d6e4e48185b029",
+            "blockNumber": 26060628,
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffe428208806523fb40000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000ff77e1c653e8a1586f397cfe00000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x4f02bffb3fc4c9beca600259925eaba26aab9bf318d396ef5b562f2741ae02d6",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000004000004000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000008000000000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002800000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 5,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+        "block": 26060629,
+        "gasETH": "0.000099628000797024",
+        "route": "Uniswap V3",
+        "direction": true,
+        "amountIn": "2",
+        "amountOut": "1.981782072553072589",
+        "input": "POLLEN",
+        "output": "NECTAR",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.981782072553072589"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.967879165243904"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.967879165243904"
+          }
+        ],
+        "individual": 3
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xeb56442fcb60b3936488cad630c723373db577dc31beb8447ce6491971a4e058",
+        "blockNumber": 26060629,
+        "contractAddress": null,
+        "cumulativeGasUsed": "99628",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "99628",
+        "hash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xeb56442fcb60b3936488cad630c723373db577dc31beb8447ce6491971a4e058",
+            "blockNumber": 26060629,
+            "data": "0x0000000000000000000000000000000000000000000000001b80b44b88c367cd",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xeb56442fcb60b3936488cad630c723373db577dc31beb8447ce6491971a4e058",
+            "blockNumber": 26060629,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xeb56442fcb60b3936488cad630c723373db577dc31beb8447ce6491971a4e058",
+            "blockNumber": 26060629,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000ffffffffffffffffffffffffffffffffffffffffffffffffe47f4bb4773c98330000000000000000000000000000000000000000fef600fd236b2897fedb551d00000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffae",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x9206bd223997d735832d8872d848b9e8fa979a197efa1df51cbca9f9bbd6da7b",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000000004000000000000000100000000040200000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000000000080000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002000000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 6,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+        "block": 26060638,
+        "gasETH": "0.000109854000878832",
+        "route": "Uniswap V3",
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "2.006268688991726607",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "2.006268688991726607"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "2.000203819595710125"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "2.000203819595710125"
+          }
+        ],
+        "individual": 2
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x27f5a74458db9022009ac16cbb4af1921e75a170bdc19ddb9b4b6811eafc4072",
+        "blockNumber": 26060638,
+        "contractAddress": null,
+        "cumulativeGasUsed": "109854",
+        "from": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "109854",
+        "hash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x27f5a74458db9022009ac16cbb4af1921e75a170bdc19ddb9b4b6811eafc4072",
+            "blockNumber": 26060638,
+            "data": "0x0000000000000000000000000000000000000000000000001bd7b2be33572c0f",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x27f5a74458db9022009ac16cbb4af1921e75a170bdc19ddb9b4b6811eafc4072",
+            "blockNumber": 26060638,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0x27f5a74458db9022009ac16cbb4af1921e75a170bdc19ddb9b4b6811eafc4072",
+            "blockNumber": 26060638,
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffe4284d41cca8d3f10000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000ff78aec1ed3434e5e37fafa700000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x865c7195fef3e4e18772dffa506f942ef7efcceee2d5dd71ab50d3e6c788bc86",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000004000004000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000008000000000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002800000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 6,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+        "block": 26060639,
+        "gasETH": "0.000127887001023096",
+        "route": "Aqua",
+        "maker": 0,
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "2.000203819595710125",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "2.000203819595710125"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "2.000203819595710125"
+          },
+          {
+            "route": "Uniswap V3",
+            "out": "1.998267123117578599"
+          }
+        ],
+        "individual": 3
+      },
+      "verifiedEventEmitter": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+      "verifiedEvents": [
+        "Pushed",
+        "Pulled"
+      ],
+      "tokenTransferCount": 3,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+        "blockNumber": 26060639,
+        "contractAddress": null,
+        "cumulativeGasUsed": "127887",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "127887",
+        "hash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046",
+              "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x1111113CCf1426A8E30e2bfF5E005d929bF6a90a",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046ae301fcaeb42fb8066775c83393919388404822362401653871e54c7b12bdc9c000000000000000000000000e77e534351d431a9f695fcc04ebe422f72a1ff420000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 2,
+            "topics": [
+              "0x3f18354abbd5306dd1665c2c90f614a4559e39dd620d04fbe5458e613b6588f3"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x0000000000000000000000000000000000000000000000001bc226c6c161bead",
+            "index": 3,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x1111113CCf1426A8E30e2bfF5E005d929bF6a90a",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046ae301fcaeb42fb8066775c83393919388404822362401653871e54c7b12bdc9c0000000000000000000000005d7851e545452467726b57503dd053921f7739ac0000000000000000000000000000000000000000000000001bc226c6c161bead",
+            "index": 4,
+            "topics": [
+              "0x3ad61047071575417c75e3311e5d46ff042e292b5dd8769ff18b4b254098ca7a"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc226c6c161bead",
+            "index": 5,
+            "topics": [
+              "0xc88f3fd8df2c786e330e638e87197fa3b93d179aeefb190fe49681055e459ad9",
+              "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65",
+              "0xae301fcaeb42fb8066775c83393919388404822362401653871e54c7b12bdc9c",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000040000000000000000006110000000040200000000100000000000000000000000000100000020000000000000000000000000000000000000000000000000001000000000000008000000000040000040000000080004000000000000206000000000000000000000000000000000000000000000008010000000000000000000004040000000000000000008000000000000000000000100000000000000000000000000000000000200000004000000000000000000400000000000000002000000000000000010000000000000000800000004000000000004000000000000000000000005000000000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046"
+      }
+    },
+    {
+      "cycle": 7,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+        "block": 26060648,
+        "gasETH": "0.000102616000820928",
+        "route": "Uniswap V3",
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "1.998267123117578599",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.998267123117578599"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.992218488155269347"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.992218488155269347"
+          }
+        ],
+        "individual": 2
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x7619e1e7b8cc0ab3c8c04bbf4cf0b47f09ee0a76e30678b4d07f30a2f0437ea6",
+        "blockNumber": 26060648,
+        "contractAddress": null,
+        "cumulativeGasUsed": "102616",
+        "from": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "102616",
+        "hash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x7619e1e7b8cc0ab3c8c04bbf4cf0b47f09ee0a76e30678b4d07f30a2f0437ea6",
+            "blockNumber": 26060648,
+            "data": "0x0000000000000000000000000000000000000000000000001bbb455c77c3d967",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x7619e1e7b8cc0ab3c8c04bbf4cf0b47f09ee0a76e30678b4d07f30a2f0437ea6",
+            "blockNumber": 26060648,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0x7619e1e7b8cc0ab3c8c04bbf4cf0b47f09ee0a76e30678b4d07f30a2f0437ea6",
+            "blockNumber": 26060648,
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffe444baa3883c26990000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000fffb5c86b6fd4133cf9bcd1300000000000000000000000000000000000000000000003635c9adc5dea00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x00991e3b0064dc71e2ffd84ae9ee3e50423e9ded4982ab9dae97c786f8fc1bde",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000004000004000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000008000000000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002800000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 7,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+        "block": 26060649,
+        "gasETH": "0.000099608000796864",
+        "route": "Uniswap V3",
+        "direction": true,
+        "amountIn": "2",
+        "amountOut": "1.989750461926482546",
+        "input": "POLLEN",
+        "output": "NECTAR",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.989750461926482546"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.975815415529472"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.975815415529472"
+          }
+        ],
+        "individual": 3
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x185474034c7e4e2e83c83d815bba2174103d021550496713302fb1f86bfa534e",
+        "blockNumber": 26060649,
+        "contractAddress": null,
+        "cumulativeGasUsed": "99608",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "99608",
+        "hash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x185474034c7e4e2e83c83d815bba2174103d021550496713302fb1f86bfa534e",
+            "blockNumber": 26060649,
+            "data": "0x0000000000000000000000000000000000000000000000001b9d0380c2cc2272",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x185474034c7e4e2e83c83d815bba2174103d021550496713302fb1f86bfa534e",
+            "blockNumber": 26060649,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0x185474034c7e4e2e83c83d815bba2174103d021550496713302fb1f86bfa534e",
+            "blockNumber": 26060649,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000ffffffffffffffffffffffffffffffffffffffffffffffffe462fc7f3d33dd8e0000000000000000000000000000000000000000ff78f60d8dba7b23147a178200000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x80d5ea688fc173c3a8fcb43462b8e5d32abd3d81868b3e07a57918c3e8997f51",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000000004000000000000000100000000040200000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000000000080000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002000000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 8,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+        "block": 26060658,
+        "gasETH": "0.000102616000820928",
+        "route": "Uniswap V3",
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "1.998250121630762442",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.998250121630762442"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.992201521214790295"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.992201521214790295"
+          }
+        ],
+        "individual": 2
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xba5d5259c700dcab73ac5b1f883c817b4f4a9638ca5381685c66d3c76a3b90d9",
+        "blockNumber": 26060658,
+        "contractAddress": null,
+        "cumulativeGasUsed": "102616",
+        "from": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "102616",
+        "hash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xba5d5259c700dcab73ac5b1f883c817b4f4a9638ca5381685c66d3c76a3b90d9",
+            "blockNumber": 26060658,
+            "data": "0x0000000000000000000000000000000000000000000000001bbb35e6002ec5ca",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xba5d5259c700dcab73ac5b1f883c817b4f4a9638ca5381685c66d3c76a3b90d9",
+            "blockNumber": 26060658,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xba5d5259c700dcab73ac5b1f883c817b4f4a9638ca5381685c66d3c76a3b90d9",
+            "blockNumber": 26060658,
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffe444ca19ffd13a360000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000fffba3d257838771009634ee00000000000000000000000000000000000000000000003635c9adc5dea00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x0c498a9d4149b00734cb7545b54de8c6c7ca75fb6e5979ffdd9ba829c14c4b8d",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000004000004000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000008000000000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002800000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 8,
+      "trade": {
+        "kind": "swap",
+        "hash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+        "block": 26060659,
+        "gasETH": "0.000099608000796864",
+        "route": "Uniswap V3",
+        "direction": true,
+        "amountIn": "2",
+        "amountOut": "1.989767357373239398",
+        "input": "POLLEN",
+        "output": "NECTAR",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.989767357373239398"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.975832242914752"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.975832242914752"
+          }
+        ],
+        "individual": 3
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xdaf00212148c5d8d0c8b53b4e0188426d5e155c626e427d874d4fdf270a01dde",
+        "blockNumber": 26060659,
+        "contractAddress": null,
+        "cumulativeGasUsed": "99608",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "99608",
+        "hash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xdaf00212148c5d8d0c8b53b4e0188426d5e155c626e427d874d4fdf270a01dde",
+            "blockNumber": 26060659,
+            "data": "0x0000000000000000000000000000000000000000000000001b9d12de89e65066",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xdaf00212148c5d8d0c8b53b4e0188426d5e155c626e427d874d4fdf270a01dde",
+            "blockNumber": 26060659,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xdaf00212148c5d8d0c8b53b4e0188426d5e155c626e427d874d4fdf270a01dde",
+            "blockNumber": 26060659,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000ffffffffffffffffffffffffffffffffffffffffffffffffe462ed217619af9a0000000000000000000000000000000000000000ff793d109d8345e1a3b7054a00000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0xf008b7bf522a86d2d8338221c827f7d7b8763e04a874a2dd04314302c936d652",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000000004000000000000000100000000040200000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000000000080000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002000000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 9,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+        "block": 26060668,
+        "gasETH": "0.000102616000820928",
+        "route": "Uniswap V3",
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "1.998233187954673607",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.998233187954673607"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.99218462194688333"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.99218462194688333"
+          }
+        ],
+        "individual": 2
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xddec90955e8ea95be290eab56da96003c5b8590443eba8e22e56f9f56271b11a",
+        "blockNumber": 26060668,
+        "contractAddress": null,
+        "cumulativeGasUsed": "102616",
+        "from": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "102616",
+        "hash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xddec90955e8ea95be290eab56da96003c5b8590443eba8e22e56f9f56271b11a",
+            "blockNumber": 26060668,
+            "data": "0x0000000000000000000000000000000000000000000000001bbb267f526f47c7",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xddec90955e8ea95be290eab56da96003c5b8590443eba8e22e56f9f56271b11a",
+            "blockNumber": 26060668,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xddec90955e8ea95be290eab56da96003c5b8590443eba8e22e56f9f56271b11a",
+            "blockNumber": 26060668,
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffe444d980ad90b8390000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000fffbead5674c522f8fd322b600000000000000000000000000000000000000000000003635c9adc5dea00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x50e0cab9c9ef9780441428c899623bed9d7fc1638c45a69864ed00a10b92fb86",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000004000004000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000008000000000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002800000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 9,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+        "block": 26060669,
+        "gasETH": "0.000099608000796864",
+        "route": "Uniswap V3",
+        "direction": true,
+        "amountIn": "2",
+        "amountOut": "1.989784185717711272",
+        "input": "POLLEN",
+        "output": "NECTAR",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.989784185717711272"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.975849003468992"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.975849003468992"
+          }
+        ],
+        "individual": 3
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x0fda65c38e487d4e7edced82640cace94a9f8bba46bf43878357dffb3c95ef87",
+        "blockNumber": 26060669,
+        "contractAddress": null,
+        "cumulativeGasUsed": "99608",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "99608",
+        "hash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x0fda65c38e487d4e7edced82640cace94a9f8bba46bf43878357dffb3c95ef87",
+            "blockNumber": 26060669,
+            "data": "0x0000000000000000000000000000000000000000000000001b9d222cb164e1a8",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x0fda65c38e487d4e7edced82640cace94a9f8bba46bf43878357dffb3c95ef87",
+            "blockNumber": 26060669,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0x0fda65c38e487d4e7edced82640cace94a9f8bba46bf43878357dffb3c95ef87",
+            "blockNumber": 26060669,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000ffffffffffffffffffffffffffffffffffffffffffffffffe462ddd34e9b1e580000000000000000000000000000000000000000ff7983cb665632574db3307400000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x6271e0ed379c13f5d7f3bc897f62ba2f1971b12fc5219b9b114461f28aaa7ed9",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000000004000000000000000100000000040200000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000000000080000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002000000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 10,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+        "block": 26060678,
+        "gasETH": "0.000102616000820928",
+        "route": "Uniswap V3",
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "1.998216321818277518",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.998216321818277518"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.992167790080062069"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.992167790080062069"
+          }
+        ],
+        "individual": 2
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x9ff049a7eb3c2818f9f81ceac5536956462c0986ff4281070be32a4594eec387",
+        "blockNumber": 26060678,
+        "contractAddress": null,
+        "cumulativeGasUsed": "102616",
+        "from": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "102616",
+        "hash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x9ff049a7eb3c2818f9f81ceac5536956462c0986ff4281070be32a4594eec387",
+            "blockNumber": 26060678,
+            "data": "0x0000000000000000000000000000000000000000000000001bbb17285e5db68e",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x9ff049a7eb3c2818f9f81ceac5536956462c0986ff4281070be32a4594eec387",
+            "blockNumber": 26060678,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0x9ff049a7eb3c2818f9f81ceac5536956462c0986ff4281070be32a4594eec387",
+            "blockNumber": 26060678,
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffe444e8d7a1a249720000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000fffc3190301f3ea539cf4de000000000000000000000000000000000000000000000003635c9adc5dea00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x0000000000000000000000009965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            ],
+            "transactionHash": "0x1e350a4befcbabd240286617a7b6b09c437d62ab88d8068ff7481f430dcff28b",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000004000004000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000008000000000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002800000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    },
+    {
+      "cycle": 10,
+      "trade": {
+        "kind": "swap",
+        "hash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+        "block": 26060679,
+        "gasETH": "0.000099608000796864",
+        "route": "Uniswap V3",
+        "direction": true,
+        "amountIn": "2",
+        "amountOut": "1.989800947225837873",
+        "input": "POLLEN",
+        "output": "NECTAR",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.989800947225837873"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.975865697458048"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.975865697458048"
+          }
+        ],
+        "individual": 3
+      },
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap"
+      ],
+      "tokenTransferCount": 2,
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+        "blockNumber": 26060679,
+        "contractAddress": null,
+        "cumulativeGasUsed": "99608",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "99608",
+        "hash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+            "blockNumber": 26060679,
+            "data": "0x0000000000000000000000000000000000000000000000001b9d316b4921c131",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+            "blockNumber": 26060679,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+            "blockNumber": 26060679,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000ffffffffffffffffffffffffffffffffffffffffffffffffe462ce94b6de3ecf0000000000000000000000000000000000000000ff79ca3e31b002c02a306f1f00000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000000004000000000000000100000000040200000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000000000080000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002000000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      }
+    }
+  ]
+}

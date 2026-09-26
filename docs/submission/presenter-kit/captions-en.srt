@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:02,712
+BioAgent | 4 × 166,700 neurons
+One market. Real local settlement.
+
+2
+00:00:02,712 --> 00:00:10,214
+Two makers. One self-custodied wallet.
+MOMO and SORA publish, widen or withdraw offers through official Aqua.
+
+3
+00:00:10,214 --> 00:00:17,715
+Two traders. The same token pair.
+KOHARU and HINATA choose buy, hold or sell. Code compares executable quotes.
+
+4
+00:00:17,715 --> 00:00:27,058
+Confirmed outcomes feed learning
+Readout weights update after each cycle. The measured connectome stays fixed.
+
+5
+00:00:27,058 --> 00:00:32,394
+Measured structure. Engineered dynamics.
+Full neural workload, resource use and per-agent learning history are inspectable.
+
+6
+00:00:32,394 --> 00:00:39,061
+Aqua | Actual token settlement
+A fresh successful transaction. Inspect ERC20 transfers and official Aqua events.
+
+7
+00:00:39,061 --> 00:00:45,696
+Uniswap V3 | Actual swap settlement
+The same tokens flow through the V3 pool. Gas is recorded separately in ETH.
+
+8
+00:00:45,696 --> 00:00:51,498
+A testbed for bio-inspired agents
+Trace inputs, learning and settlement. Artificial demand; no profitability claim.

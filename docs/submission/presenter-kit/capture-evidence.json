@@ -1,0 +1,520 @@
+{
+  "recordedAt": "2026-09-26T07:28:23.769Z",
+  "scope": "Anvil Ethereum fork + full population; no public-chain writes",
+  "fork": {
+    "chainId": 1,
+    "blockNumber": 26058941,
+    "blockHash": "0x08428251d0788f21b4c5ff641416c3918ec76bf1a43ef899d11c597580c1329c",
+    "aqua": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+    "codeHash": "0x720bc02d220db318164dc3bade86eec1f3655bdc00fc1174de7d816a95c341f8"
+  },
+  "config": {
+    "registry": "0x6a8Bfb2e6BfFf294519c2c21529c9E07BF6553aD",
+    "pool": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+    "router": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82",
+    "app": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046",
+    "tokens": [
+      "0x5D7851E545452467726B57503DD053921F7739aC",
+      "0xe77E534351d431a9F695fCc04ebe422F72a1ff42"
+    ],
+    "symbols": [
+      "POLLEN",
+      "NECTAR"
+    ],
+    "wallets": [
+      "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+      "0x976EA74026E726554dB657fA54763abd0C3a0aa9"
+    ]
+  },
+  "brain": {
+    "schema": "bioagent.app-brain.v1",
+    "dataset": "male-cns:v1.0",
+    "fullGraph": "0x5002da20c708af9f9363c85758b98020876d673c057c1d56899ea7f7536af0c3",
+    "fullRuntime": "0xbeaafed41d91f5e6e858680dbdc2141e7fa80423e2fb47506f82b13df58e1e13",
+    "encoder": "0xa0b82b540ee3d8498ca9bfd38639b0a86f5fd851ffae64b8ff83d7979dadb662",
+    "inputs": 16,
+    "applicationAdapters": {
+      "foraging": "0xd6e3de0bb9b164152d58b424fe0a7b5df089382c0fe584f5083c8ddca4a962f0",
+      "market": "0xc5af206ba7f8bb0e13305c8ae2be827f629d3464e16f7969ebdc91381b1480f1",
+      "aqua": "0xcbd3b15ad26e79b90f261945f24f3f2343857efbb2e7451a51909fd7d1b94eba"
+    },
+    "full": {
+      "neurons": 166700,
+      "connections": 25582938,
+      "normalization": "incoming",
+      "stepsPerDecision": 4,
+      "state": "persistent per application/session/individual",
+      "inputMapping": "all sensory neurons sorted by body ID; round-robin across 16 drives",
+      "readout": "16 input-population means + 16 motor-population means + every superclass mean"
+    },
+    "legacy": {
+      "neurons": 7,
+      "connections": 19,
+      "stepsPerDecision": 32,
+      "state": "zero-state trial per input channel as in previous browser encoder",
+      "graph": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987"
+    },
+    "limitations": [
+      "Positive artificial rate dynamics; not validated neurophysiology.",
+      "Legacy/full comparison includes encoding and temporal-state differences, not just neuron count."
+    ],
+    "brainHash": "0xafc2d89a77c2624fa9f81feac7c162e613089644198d586de900455c1eb7d33a",
+    "adapterHash": "0x6a77deae535efbc9cd9e697ec0a327a34acd5480fc8ad24398900b22067880eb"
+  },
+  "before": {
+    "tick": 4,
+    "routes": {
+      "Aqua": 4,
+      "Uniswap V3": 2
+    },
+    "targets": [
+      0.7,
+      0.3
+    ]
+  },
+  "after": {
+    "tick": 10,
+    "routes": {
+      "Aqua": 5,
+      "Uniswap V3": 13
+    },
+    "metrics": {
+      "neuralMs": 333.34109201678075,
+      "cycleMs": 2581.8396610002965,
+      "peakRSSMiB": 443.234375,
+      "neuronsPerFly": 166700,
+      "connections": 25582938,
+      "active": [
+        166391,
+        166407,
+        166443,
+        166443
+      ]
+    },
+    "pnl": [
+      -0.3094852202619336,
+      -0.9514407147532324,
+      -0.3156147587051237
+    ]
+  },
+  "newRoutes": {
+    "Aqua": 1,
+    "Uniswap V3": 11
+  },
+  "policyChanges": [
+    {
+      "name": "MOMO",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": true,
+      "policyHashAtLastDecision": "0x1fb5aaad8f826cf1c135e107cf6b021d2fcc8bec0d1ea9113e488cb4d9d73d1b"
+    },
+    {
+      "name": "SORA",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": false,
+      "policyHashAtLastDecision": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca"
+    },
+    {
+      "name": "KOHARU",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": true,
+      "policyHashAtLastDecision": "0x6575f22ce12b0eed0e7e64cc6bbd8bc4e539263cb47830132191e014bb81bac2"
+    },
+    {
+      "name": "HINATA",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": true,
+      "policyHashAtLastDecision": "0x1e2439cd93b0179e3afe7a1b55265690c08afc4e659473880cae4e6ea5da26b0"
+    }
+  ],
+  "receipts": [
+    {
+      "trade": {
+        "kind": "swap",
+        "hash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+        "block": 26060639,
+        "gasETH": "0.000127887001023096",
+        "route": "Aqua",
+        "maker": 0,
+        "direction": false,
+        "amountIn": "2",
+        "amountOut": "2.000203819595710125",
+        "input": "NECTAR",
+        "output": "POLLEN",
+        "quotes": [
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "2.000203819595710125"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "2.000203819595710125"
+          },
+          {
+            "route": "Uniswap V3",
+            "out": "1.998267123117578599"
+          }
+        ],
+        "time": "2026-09-26T07:27:42.077Z"
+      },
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+        "blockNumber": 26060639,
+        "contractAddress": null,
+        "cumulativeGasUsed": "127887",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "127887",
+        "hash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046",
+              "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x1111113CCf1426A8E30e2bfF5E005d929bF6a90a",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046ae301fcaeb42fb8066775c83393919388404822362401653871e54c7b12bdc9c000000000000000000000000e77e534351d431a9f695fcc04ebe422f72a1ff420000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 2,
+            "topics": [
+              "0x3f18354abbd5306dd1665c2c90f614a4559e39dd620d04fbe5458e613b6588f3"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x0000000000000000000000000000000000000000000000001bc226c6c161bead",
+            "index": 3,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x1111113CCf1426A8E30e2bfF5E005d929bF6a90a",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046ae301fcaeb42fb8066775c83393919388404822362401653871e54c7b12bdc9c0000000000000000000000005d7851e545452467726b57503dd053921f7739ac0000000000000000000000000000000000000000000000001bc226c6c161bead",
+            "index": 4,
+            "topics": [
+              "0x3ad61047071575417c75e3311e5d46ff042e292b5dd8769ff18b4b254098ca7a"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046",
+            "blockHash": "0x4d4796214e99321528106721f3592fbc6f4f6927eb0fe4256a8f980aa29364d2",
+            "blockNumber": 26060639,
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc226c6c161bead",
+            "index": 5,
+            "topics": [
+              "0xc88f3fd8df2c786e330e638e87197fa3b93d179aeefb190fe49681055e459ad9",
+              "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65",
+              "0xae301fcaeb42fb8066775c83393919388404822362401653871e54c7b12bdc9c",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x961787e46aa2fcd85abb7ba6a1fbdccd792a7380ad0523cda38dd4746b40e71d",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000040000000000000000006110000000040200000000100000000000000000000000000100000020000000000000000000000000000000000000000000000000001000000000000008000000000040000040000000080004000000000000206000000000000000000000000000000000000000000000008010000000000000000000004040000000000000000008000000000000000000000100000000000000000000000000000000000200000004000000000000000000400000000000000002000000000000000010000000000000000800000004000000000004000000000000000000000005000000000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046"
+      },
+      "transfers": [
+        {
+          "token": "NECTAR",
+          "tokenAddress": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+          "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+          "to": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046",
+          "raw": "2000000000000000000",
+          "amount": "2.0"
+        },
+        {
+          "token": "NECTAR",
+          "tokenAddress": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+          "from": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046",
+          "to": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+          "raw": "2000000000000000000",
+          "amount": "2.0"
+        },
+        {
+          "token": "POLLEN",
+          "tokenAddress": "0x5D7851E545452467726B57503DD053921F7739aC",
+          "from": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+          "to": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+          "raw": "2000203819595710125",
+          "amount": "2.000203819595710125"
+        }
+      ],
+      "verifiedEventEmitter": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+      "verifiedEvents": [
+        "Pushed(address,address,bytes32,address,uint256)",
+        "Pulled(address,address,bytes32,address,uint256)"
+      ]
+    },
+    {
+      "trade": {
+        "kind": "swap",
+        "hash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+        "block": 26060679,
+        "gasETH": "0.000099608000796864",
+        "route": "Uniswap V3",
+        "direction": true,
+        "amountIn": "2",
+        "amountOut": "1.989800947225837873",
+        "input": "POLLEN",
+        "output": "NECTAR",
+        "quotes": [
+          {
+            "route": "Uniswap V3",
+            "out": "1.989800947225837873"
+          },
+          {
+            "route": "Aqua",
+            "maker": 0,
+            "out": "1.975865697458048"
+          },
+          {
+            "route": "Aqua",
+            "maker": 1,
+            "out": "1.975865697458048"
+          }
+        ],
+        "time": "2026-09-26T07:27:57.626Z"
+      },
+      "receipt": {
+        "_type": "TransactionReceipt",
+        "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+        "blockNumber": 26060679,
+        "contractAddress": null,
+        "cumulativeGasUsed": "99608",
+        "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+        "gasPrice": "1000000008",
+        "blobGasUsed": null,
+        "blobGasPrice": "1",
+        "gasUsed": "99608",
+        "hash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+        "index": 0,
+        "logs": [
+          {
+            "_type": "log",
+            "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+            "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+            "blockNumber": 26060679,
+            "data": "0x0000000000000000000000000000000000000000000000001b9d316b4921c131",
+            "index": 0,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+            "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+            "blockNumber": 26060679,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000",
+            "index": 1,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+              "0x0000000000000000000000005edbcfe589b4725f6be625f6efd46b3d16a2c80d"
+            ],
+            "transactionHash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "transactionIndex": 0
+          },
+          {
+            "_type": "log",
+            "address": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+            "blockHash": "0xfe7f2007f0cac3f945594864eff9d7f48f5be9bad1374cd599ba9b8f06b2fd04",
+            "blockNumber": 26060679,
+            "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000ffffffffffffffffffffffffffffffffffffffffffffffffe462ce94b6de3ecf0000000000000000000000000000000000000000ff79ca3e31b002c02a306f1f00000000000000000000000000000000000000000000003635c9adc5dea00000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6",
+            "index": 2,
+            "topics": [
+              "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+              "0x000000000000000000000000c0a7cb0a4511fc09ea91226fb0224a4e57ca0c82",
+              "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+            ],
+            "transactionHash": "0x3b3024746517f303664e55c4878bbe610354099055ae5037bf7f230f84cc17ae",
+            "transactionIndex": 0
+          }
+        ],
+        "logsBloom": "0x00000000000004000000000000000100000000040200000000000000000000000000000000000000000000000000000000000000000020000000000000000000000040000000000800000008000000420000000000000000080000000000000000004000000000000000000000000000000000000000000000000010000800000000000000004000000000800000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000400000040000000002000000000000000000000000000000000800000004000000000000000000004000000000000000000004000000000000000000000000000000000000",
+        "status": 1,
+        "to": "0xC0A7cB0a4511fc09EA91226fB0224A4e57ca0C82"
+      },
+      "transfers": [
+        {
+          "token": "NECTAR",
+          "tokenAddress": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+          "from": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+          "to": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+          "raw": "1989800947225837873",
+          "amount": "1.989800947225837873"
+        },
+        {
+          "token": "POLLEN",
+          "tokenAddress": "0x5D7851E545452467726B57503DD053921F7739aC",
+          "from": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+          "to": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+          "raw": "2000000000000000000",
+          "amount": "2.0"
+        }
+      ],
+      "verifiedEventEmitter": "0x5EDbCFE589b4725f6Be625F6EFd46b3D16a2C80D",
+      "verifiedEvents": [
+        "Swap(address,address,int256,int256,uint160,uint128,int24)"
+      ]
+    }
+  ],
+  "browserErrors": [],
+  "cues": [
+    {
+      "start": 0.2,
+      "en": [
+        "BioAgent | From connectomes to on-chain action",
+        "Four simulated agents. 166,700 measured neurons each. One shared market."
+      ],
+      "ja": [
+        "BioAgent｜コネクトームから、オンチェーンの行動へ",
+        "各166,700神経で動く4個体。同じ市場で提示・売買・学習します。"
+      ]
+    },
+    {
+      "start": 2.913,
+      "en": [
+        "Two makers. One self-custodied wallet.",
+        "MOMO and SORA publish, widen or withdraw offers through official Aqua."
+      ],
+      "ja": [
+        "提示側2匹、資金は同じウォレットに。",
+        "MOMOとSORAが、公式Aquaへの提示・拡大・撤回を選びます。"
+      ]
+    },
+    {
+      "start": 10.414,
+      "en": [
+        "Two traders. The same token pair.",
+        "KOHARU and HINATA choose buy, hold or sell. Code compares executable quotes."
+      ],
+      "ja": [
+        "売買側2匹、同じ通貨ペアで取引。",
+        "KOHARUとHINATAが売買・待機を判断。通常コードが見積もりを比較します。"
+      ]
+    },
+    {
+      "start": 17.915,
+      "en": [
+        "Confirmed outcomes feed learning",
+        "Readout weights update after each cycle. The measured connectome stays fixed."
+      ],
+      "ja": [
+        "実際の行動結果から、学習を更新。",
+        "周期ごとに行動readoutを更新します。実測の神経接続は固定です。"
+      ]
+    },
+    {
+      "start": 27.258,
+      "en": [
+        "Measured structure. Engineered dynamics.",
+        "Full neural workload, resource use and per-agent learning history are inspectable."
+      ],
+      "ja": [
+        "構造は実測、動力学は人工設計。",
+        "全神経の計算量、使用メモリー、個体ごとの学習履歴を確認できます。"
+      ]
+    },
+    {
+      "start": 32.594,
+      "en": [
+        "Aqua | Actual token settlement",
+        "A fresh successful transaction. Inspect ERC20 transfers and official Aqua events."
+      ],
+      "ja": [
+        "Aqua｜実際のトークン決済",
+        "今回成立した取引のERC20移動と、公式Aquaのイベントを確認。"
+      ]
+    },
+    {
+      "start": 39.261,
+      "en": [
+        "Uniswap V3 | Actual swap settlement",
+        "The same tokens flow through the V3 pool. Gas is recorded separately in ETH."
+      ],
+      "ja": [
+        "Uniswap V3｜実際のスワップ決済",
+        "同じ通貨がV3プールで移動。ガス代はETHで別に記録しています。"
+      ]
+    },
+    {
+      "start": 45.896,
+      "en": [
+        "A testbed for bio-inspired agents",
+        "Trace inputs, learning and settlement. Artificial demand; no profitability claim."
+      ],
+      "ja": [
+        "生物由来Agentを、比較・検証する実験基盤。",
+        "入力・学習・決済を追跡。需要は人工設定で、収益性の実証ではありません。"
+      ]
+    }
+  ],
+  "end": 51.698,
+  "presentationChanges": "Compact CSS and clearly labelled decoded receipt excerpts; no result injection",
+  "restoredTargets": [
+    0.7,
+    0.3
+  ]
+}
