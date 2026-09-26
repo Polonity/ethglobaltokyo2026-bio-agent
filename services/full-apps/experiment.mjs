@@ -109,6 +109,7 @@ export async function rollout({
       neuralMs,
       lastDecision: last.decisions,
       neurons: last.neural.neuronsPerIndividual,
+      processPeakRSSMiB: last.neural.processPeakRSSMiB,
       snapshot: env.snapshot(),
       inputEvents:
         app === 'foraging'

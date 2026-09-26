@@ -1,6 +1,7 @@
 """JSON-lines local process API. Only the Node loopback application server owns this process."""
 import json
 import sys
+import resource
 from pathlib import Path
 
 import numpy as np
@@ -57,6 +58,7 @@ def main():
             identifier=store.decision(app,variant,agent,session,phase,features,action,policy['version'],observations[agent],{**data.get('source',{}),'policyHash':digest(policy)})
             decisions.append({'id':identifier,'agent':agent,'action':action,'policyVersion':policy['version'],
                               'candidateHash':candidate,'policyHash':digest(policy),'scores':scores.tolist()})
+        neural['processPeakRSSMiB']=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024
         return {'neural':neural,'decisions':decisions}
     print(json.dumps({'ready':True,'brainHash':brain.hash}),flush=True)
     for line in sys.stdin:

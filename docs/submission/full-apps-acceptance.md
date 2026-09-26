@@ -23,10 +23,13 @@ npm run full:apps:dev
 ```bash
 npm run test:full:apps
 npm run test:full:apps:browser
-# GUIジョブ完了後に実行。同じチェーンの実験を同時実行しない
+# GUIジョブ完了後、GUIサーバーをCtrl-Cで終了してから実行
 npm run full:apps:compare
 npm run full:apps:ablation
+npm run full:apps:dev # 方策を復元してGUIを再開
 ```
+
+チェーンと戦略を操作するプロセスは排他ロックで1つに制限する。CLI比較を実行するときはGUIサーバーを終了する。終了後に再起動すると、チェーン上の有効戦略とSQLiteの採用方策を再取得する。
 
 ブラウザー検証には `/usr/bin/google-chrome` が必要。`FULL_RPC_URL`、`FULL_APPS_PORT` でローカル接続先を変更できる。新しいAnvilを起動したら、以前の市場テープを流用せず再収集する。最初・最後のSwapのblockHashと過去quoteを検証し、不一致なら起動を止める。モデルや入力アダプターが変わった場合は、新しいbrain hashのデータ・方策として扱い、再収集する。古いSQLite履歴は削除しない。
 
@@ -43,7 +46,7 @@ npm run full:apps:ablation
 
 市場の売買はペーパーのみ。実V3 Swapログを観測し、次の記録ブロックでquote、さらに次のブロックで値洗いする。手数料・価格影響込み、ガスは1回0.001 token1というゲーム上の仮定。実トークンを売買するものではない。
 
-Aquaのship/dock/fillとテストトークン残高変化は実TX。価格は別ペアのUniswap記録を正規化した評価用代理値で、本番価格oracleではない。800bpsの提示は観測変動200bps以上でのみ約定する人工takerルール。結果はこの明示した実験条件の報酬であり、現実のLP収益性を証明しない。
+Aquaのship/dock/fillとテストトークン残高変化は実TX。価格は別ペアのUniswap記録を正規化した評価用代理値で、本番価格oracleではない。800bpsの提示は観測変動200bps以上でのみ約定する人工takerルール。報酬は各約定の残高差を次の代理価格で評価した増分で、ウォレット全体の時価損益やLVRの推定ではない。結果はこの明示した実験条件の報酬であり、現実のLP収益性を証明しない。
 
 共通学習器のfull/legacy比較は環境と評価列を揃えるが、入力mapping、神経状態の継続、4対32の神経step数も異なる。神経数だけの因果比較ではない。元のブラウザー版は学習則、先験的行動、タイミングが異なるため、別の参考欄として扱う。旧Aquaの教材誤差を新方式の実動作報酬と比較しない。
 

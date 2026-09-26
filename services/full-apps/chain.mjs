@@ -13,6 +13,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { AquaProtocolContract } from '@1inch/aqua-sdk';
 import { Address, HexString } from '@1inch/sdk-core';
+import { acquireExperimentLock } from './lock.mjs';
 const atom = 10n ** 18n;
 const coder = AbiCoder.defaultAbiCoder();
 const strategyTypes = ['uint256', 'uint256', 'uint256', 'bytes32', 'bytes32'];
@@ -26,6 +27,7 @@ export class FullChain {
       staticNetwork: true,
       cacheTimeout: -1,
       batchMaxCount: 1,
+      batchStallTime: 0,
     });
     this.provider.pollingInterval = 20;
     this.url = url;
@@ -42,6 +44,7 @@ export class FullChain {
     throw Error(`Receipt timeout; inspect before retrying: ${transaction.hash}`);
   }
   async setup(brain) {
+    this.releaseLock ||= acquireExperimentLock();
     const p = this.provider;
     if (
       BigInt(await p.send('eth_chainId', [])) !== 31337n ||
@@ -360,5 +363,7 @@ export class FullChain {
   }
   close() {
     this.provider.destroy();
+    this.releaseLock?.();
+    this.releaseLock = null;
   }
 }
