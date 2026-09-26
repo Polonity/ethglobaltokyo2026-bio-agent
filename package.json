@@ -31,7 +31,13 @@
     "test:male-learning": "node --test tests/male-learning.test.mjs",
     "benchmark:male-learning": "node scripts/benchmark-malecns.mjs",
     "local:foraging": "node scripts/setup-local-foraging.mjs",
-    "test:male-learning:browser": "node scripts/check-male-learning-browser.mjs"
+    "test:male-learning:browser": "node scripts/check-male-learning-browser.mjs",
+    "full:prepare": ".local/connectome-tools/bin/python scripts/full/prepare.py --download",
+    "full:benchmark": ".local/connectome-tools/bin/python scripts/full/benchmark.py",
+    "full:dev": ".local/connectome-tools/bin/python -m packages.bio_agent.full",
+    "test:full": ".local/connectome-tools/bin/python -m unittest discover -s tests/full -v",
+    "test:full:browser": "node scripts/full/check-browser.mjs",
+    "full:scaling": ".local/connectome-tools/bin/python scripts/full/scaling.py"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

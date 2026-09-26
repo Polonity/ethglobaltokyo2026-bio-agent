@@ -23,7 +23,7 @@ def sha(path):
 
 
 class FullCircuit:
-    def __init__(self, directory=DEFAULT_GRAPH, normalization='incoming', agents=3):
+    def __init__(self, directory=DEFAULT_GRAPH, normalization='incoming', agents=3, kernel='per-agent'):
         start = time.perf_counter()
         directory = Path(directory)
         self.manifest = json.loads((directory / 'manifest.json').read_text())
@@ -42,6 +42,9 @@ class FullCircuit:
                 len(self.ids) != self.manifest['neurons'] or
                 not np.all(np.isfinite(self.matrix.data)) or np.any(self.matrix.data <= 0)):
             raise ValueError('Invalid full graph')
+        if kernel not in ('per-agent', 'batched'):
+            raise ValueError('Unknown sparse kernel')
+        self.kernel = kernel
         self.normalization = normalization
         if normalization == 'incoming':
             self.divisor = np.maximum(1, np.asarray(self.matrix.sum(axis=1)).ravel())
@@ -83,7 +86,15 @@ class FullCircuit:
         inputs = self.indices(channel)
         start = time.perf_counter()
         for _ in range(steps):
-            drive = np.zeros_like(self.activity) if ablated else self.matrix @ self.activity
+            if ablated:
+                drive = np.zeros_like(self.activity)
+            elif self.kernel == 'per-agent':
+                # SciPy CSR matvec is faster on this host than the narrow matmat
+                # kernel. Every edge/count and every agent state is unchanged.
+                drive = np.column_stack([self.matrix @ np.ascontiguousarray(self.activity[:, i])
+                                         for i in range(self.agents)])
+            else:
+                drive = self.matrix @ self.activity
             drive /= self.divisor[:, None]
             drive[inputs, :] += values[None, :]
             self.activity *= 0.75
@@ -98,7 +109,7 @@ class FullCircuit:
             'schema': 'bioagent.full-circuit-result.v1', 'model': MODEL,
             'graphHash': self.graph_hash, 'runtimeHash': self.runtime_hash, 'normalization': self.normalization,
             'neuronsPerAgent': len(self.ids), 'connections': self.matrix.nnz,
-            'agents': self.agents, 'tick': self.tick, 'steps': steps,
+            'agents': self.agents, 'kernel': self.kernel, 'tick': self.tick, 'steps': steps,
             'channel': channel, 'inputNeurons': len(inputs), 'stimuli': values.tolist(),
             'ablated': ablated, 'seconds': duration, 'millisecondsPerStep': duration*1000/steps,
             'stateBytes': self.activity.nbytes,
@@ -113,14 +124,14 @@ class FullCircuit:
     def save(self, path):
         np.savez(path, activity=self.activity, tick=np.array(self.tick),
                  graph_hash=np.array(self.graph_hash), runtime_hash=np.array(self.runtime_hash), model=np.array(MODEL),
-                 normalization=np.array(self.normalization))
+                 normalization=np.array(self.normalization), kernel=np.array(self.kernel))
 
     def restore(self, path):
         with np.load(path, allow_pickle=False) as c:
             a = c['activity']
             tick = c['tick'].item()
             if (c['graph_hash'].item() != self.graph_hash or c['runtime_hash'].item() != self.runtime_hash or c['model'].item() != MODEL or
-                    c['normalization'].item() != self.normalization or a.shape != self.activity.shape or
+                    c['normalization'].item() != self.normalization or c['kernel'].item() != self.kernel or a.shape != self.activity.shape or
                     type(tick) is not int or tick < 0 or
                     not np.all(np.isfinite(a)) or np.any((a < 0) | (a > 1))):
                 raise ValueError('Checkpoint does not match model/state')

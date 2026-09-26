@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BioAgent · Full MaleCNS Lab</title>
+  <style>
+    :root {
+      font-family: system-ui, sans-serif;
+      color: #203e38;
+      background: #f3f7ed;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      max-width: 1160px;
+      margin: auto;
+      padding: 28px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    h1 {
+      font-size: clamp(25px, 4vw, 42px);
+      margin: 8px 0;
+    }
+    h2 {
+      font-size: 21px;
+    }
+    p {
+      line-height: 1.65;
+    }
+    small,
+    .muted {
+      color: #586d66;
+    }
+    .tag {
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .panel {
+      background: white;
+      border: 1px solid #d6e2d5;
+      border-radius: 22px;
+      padding: 24px;
+      margin: 18px 0;
+    }
+    .stats,
+    .flies {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 27px;
+    }
+    .fly {
+      background: #f1f6e8;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+    }
+    .fly:nth-child(2) {
+      background: #eff2fc;
+    }
+    .fly:nth-child(3) {
+      background: #fff0e9;
+    }
+    .creature {
+      font-size: 46px;
+
+      display: block;
+    }
+    .bubble {
+      display: inline-block;
+      background: #fff;
+      border-radius: 14px;
+      padding: 8px 15px;
+      font-family: monospace;
+      font-size: 12px;
+      min-width: 100px;
+    }
+    input {
+      width: 100%;
+      accent-color: #467961;
+    }
+    button,
+    select {
+      font: inherit;
+      border-radius: 10px;
+      padding: 10px 14px;
+      border: 1px solid #abc2b4;
+      background: white;
+      color: inherit;
+    }
+    button {
+      cursor: pointer;
+    }
+    button.primary {
+      background: #244d40;
+      color: white;
+    }
+    button:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    #status {
+      font-weight: 700;
+      min-height: 26px;
+    }
+    #error {
+      color: #ac322c;
+      white-space: pre-wrap;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #edf0e9;
+    }
+    td:not(:first-child) {
+      font-family: monospace;
+    }
+    .table {
+      overflow-x: auto;
+    }
+    canvas {
+      width: 100%;
+      height: 170px;
+    }
+    a {
+      color: #365f4f;
+    }
+    footer {
+      font-size: 13px;
+    }
+    #trace-note {
+      font-size: 12px;
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 14px;
+      }
+      .stats,
+      .flies {
+        grid-template-columns: 1fr !important;
+      }
+      .panel {
+        padding: 17px;
+      }
+      header {
+        flex-direction: column;
+      }
+      .fly {
+        padding: 12px;
+      }
+      .creature {
+        font-size: 30px;
+      }
+    }
+  </style>
+  <header>
+    <div>
+      <span class="tag">BIOAGENT / LOCAL RESEARCH</span>
+      <h1 data-t="title"></h1>
+      <p data-t="intro"></p>
+    </div>
+    <label
+      ><span data-t="language"></span>
+      <select id="lang">
+        <option value="system">System</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+      </select></label
+    >
+  </header>
+  <section class="panel">
+    <div class="stats">
+      <div class="stat"><small data-t="neurons"></small><strong id="neurons">—</strong></div>
+      <div class="stat"><small data-t="edges"></small><strong id="edges">—</strong></div>
+      <div class="stat"><small data-t="memory"></small><strong id="memory">—</strong></div>
+    </div>
+    <p data-t="scope"></p>
+    <small id="mode"></small>
+  </section>
+  <section class="flies" id="flies"></section>
+  <section class="panel">
+    <h2 data-t="experiment"></h2>
+    <div class="controls">
+      <label
+        ><span data-t="channel"></span>
+        <select id="channel">
+          <option value="DNp01">DNp01 / body 10001</option>
+          <option value="ol_sensory">ol_sensory</option>
+          <option value="cb_sensory">cb_sensory</option>
+          <option value="vnc_sensory">vnc_sensory</option>
+        </select></label
+      ><label
+        ><span data-t="steps"></span>
+        <select id="steps">
+          <option>8</option>
+          <option>16</option>
+          <option selected>32</option>
+          <option>64</option>
+          <option>128</option>
+        </select></label
+      ><button id="continuous" data-t="continuous"></button>
+      <button class="primary" id="advance" data-t="advance"></button
+      ><button id="reset" data-t="reset"></button><button id="save" data-t="save"></button
+      ><button id="restore" data-t="restore"></button>
+    </div>
+    <p id="status" role="status"></p>
+    <div id="error" role="alert"></div>
+    <p id="measurement"></p>
+    <p id="rates" aria-live="off"></p>
+    <canvas id="trace" width="1000" height="170"></canvas>
+    <p id="trace-note" data-t="trace"></p>
+  </section>
+  <section class="panel">
+    <h2 data-t="groups"></h2>
+    <p data-t="readout"></p>
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>MaleCNS superclass</th>
+            <th>MOMO</th>
+            <th>SORA</th>
+            <th id="third-heading">KIKI</th>
+          </tr>
+        </thead>
+        <tbody id="groups"></tbody>
+      </table>
+    </div>
+  </section>
+  <footer>
+    <p data-t="boundary"></p>
+    <p>
+      <a href="https://male-cns.janelia.org/download/"
+        >MaleCNS v1.0 · FlyEM / HHMI Janelia, Cambridge, MRC LMB, Google · CC-BY-4.0</a
+      >
+    </p>
+  </footer>
+  <script>
+    const texts = {
+      en: {
+        title: 'Every neuron. A living experiment.',
+        intro: 'Full MaleCNS runs on this computer. The small browser demo stays separate.',
+        language: 'Language',
+        neurons: 'Neurons per individual',
+        edges: 'Connections · shared graph',
+        memory: 'Sparse graph memory',
+        scope:
+          'All 166,700 classified neurons and every connection between them. No top-k, regional or connection-strength pruning.',
+        experiment: 'Stimulus → full-population calculation',
+        channel: 'Input population',
+        steps: 'Numerical steps',
+        advance: 'Apply stimulus',
+        continuous: 'Run continuously',
+        stop: 'Stop',
+        reset: 'Reset states',
+        save: 'Save states',
+        restore: 'Restore states',
+        groups: 'Read the response',
+        readout:
+          'Mean activity by annotated cell class. These are computed rate-model values, not decoded thoughts or proven motor behavior.',
+        trace:
+          'Motor-population mean after each request; independent full-size states. Graph display is a summary, not the neurons being calculated.',
+        boundary:
+          'Local experiment · no blockchain transaction is sent here. All-positive artificial rate dynamics, artificial sensory input and readout. Unclassified fragments/glia and connections outside the classified population are excluded. Full topology is not a validated whole-fly emulation.',
+        ready: 'Ready · full graph loaded',
+        busy: 'Calculating all 166,700 neurons for each individual…',
+        done: 'Complete',
+        stimulus: 'Stimulus',
+        activity: 'Motor mean',
+        restoreNote: 'State restored. Apply a stimulus to compute the next response.',
+      },
+      ja: {
+        title: '全神経で、ハエを動かす。',
+        intro: 'このPCでMaleCNSの全規模モデルを計算します。軽量なブラウザーデモとは別の実験です。',
+        language: '言語',
+        neurons: '1個体あたりの神経数',
+        edges: '共有グラフの接続数',
+        memory: '疎行列のメモリ',
+        scope:
+          '分類注釈付きの全166,700神経と、その間の全接続。上位だけ・特定部位だけ・強い接続だけの削減は行いません。',
+        experiment: '刺激 → 全神経の計算',
+        channel: '入力する集団',
+        steps: '数値計算ステップ',
+        advance: '刺激を与える',
+        continuous: '連続実行',
+        stop: '停止',
+        reset: '状態をリセット',
+        save: '状態を保存',
+        restore: '状態を復元',
+        groups: '反応を読む',
+        readout:
+          '注釈された細胞分類ごとの平均活動。計算モデルの数値であり、思考の解読や実証された運動行動ではありません。',
+        trace:
+          'リクエストごとの運動神経群の平均活動。各個体は全神経の状態を独立に保持。表示を集約しても計算する神経は減らしません。',
+        boundary:
+          'ローカル実験。この画面からブロックチェーンTXは送信しません。全興奮性の人工rateモデル・人工的な感覚入力と出力です。未分類の断片・グリア等および対象外への接続は除外しています。全接続構造の利用はハエ全体の再現を保証しません。',
+        ready: '準備完了 · 全グラフ読込済み',
+        busy: '各個体それぞれの全166,700神経を計算中…',
+        done: '計算完了',
+        stimulus: '刺激',
+        activity: '運動群の平均',
+        restoreNote: '状態を復元しました。刺激を与えると次の反応を計算します。',
+      },
+    };
+    const $ = (id) => document.getElementById(id);
+    let language = 'en',
+      state = null,
+      busy = false,
+      history = [];
+    let agents = 2,
+      running = false,
+      historyStart = 0,
+      stepsDone = 0,
+      frames = 0,
+      lastFrame = 0;
+    function makeFlies() {
+      $('flies').style.gridTemplateColumns = `repeat(${agents}, minmax(0, 1fr))`;
+      $('flies').innerHTML = '';
+      document.querySelector('thead tr').innerHTML = '<th>MaleCNS superclass</th>';
+      for (const [i, name] of ['MOMO', 'SORA', 'KIKI'].slice(0, agents).entries()) {
+        document.querySelector('thead tr').insertAdjacentHTML('beforeend', `<th>${name}</th>`);
+        $('flies').insertAdjacentHTML(
+          'beforeend',
+          `<article class="fly"><strong>${name}</strong><p class="bubble" id="bubble${i}">—</p><span class="creature" id="creature${i}"><svg viewBox="0 0 160 110" width="160" height="110" aria-hidden="true"><g stroke="#425e53" stroke-width="2.5" stroke-linecap="round"><ellipse cx="45" cy="39" rx="26" ry="14" transform="rotate(-28 45 39)" fill="#ffffff"/><ellipse cx="115" cy="39" rx="26" ry="14" transform="rotate(28 115 39)" fill="#ffffff"/><path d="M66 29 Q55 12 48 16 M94 29 Q105 12 112 16" fill="none"/><ellipse cx="80" cy="65" rx="43" ry="36" fill="#fff7d9"/><path d="M60 97 L56 103 M100 97 L104 103"/><ellipse cx="65" cy="59" rx="3" ry="5" fill="#425e53"/><ellipse cx="95" cy="59" rx="3" ry="5" fill="#425e53"/><path d="M73 73 Q80 80 87 73" fill="none"/></g><ellipse cx="53" cy="72" rx="7" ry="4" fill="#efb8ae"/><ellipse cx="107" cy="72" rx="7" ry="4" fill="#efb8ae"/></svg></span><p><span data-t="stimulus"></span> <output id="value${i}">${[20, 80, 100][i]}%</output></p><input aria-label="${name} stimulus" id="input${i}" type="range" min="0" max="100" value="${[20, 80, 100][i]}"></article>`,
+        );
+        $('input' + i).oninput = () => ($('value' + i).textContent = $('input' + i).value + '%');
+      }
+    }
+    function translate() {
+      language =
+        $('lang').value === 'system' ? (navigator.language.startsWith('ja') ? 'ja' : 'en') : $('lang').value;
+      document.documentElement.lang = language;
+      document.querySelectorAll('[data-t]').forEach((e) => (e.textContent = texts[language][e.dataset.t]));
+      $('status').textContent = texts[language][busy ? 'busy' : 'ready'];
+      if (state) render(state.last);
+    }
+    $('lang').value = localStorage.getItem('bioagent.full.language') || 'system';
+    $('lang').onchange = () => {
+      localStorage.setItem('bioagent.full.language', $('lang').value);
+      translate();
+    };
+    translate();
+    function plot() {
+      const c = $('trace'),
+        x = c.getContext('2d');
+      x.clearRect(0, 0, c.width, c.height);
+      const max = Math.max(1e-15, ...history.flat());
+      x.fillStyle = '#586d66';
+      x.font = '12px monospace';
+      x.fillText('max ' + max.toExponential(3), 8, 16);
+      ['#537751', '#707bcb', '#ce8461'].slice(0, agents).forEach((color, i) => {
+        x.strokeStyle = color;
+        x.lineWidth = 2;
+        x.beginPath();
+        history.forEach((p, n) => {
+          const a = 20 + (n * 960) / Math.max(1, history.length - 1),
+            b = 155 - (p[i] / max) * 125;
+          n ? x.lineTo(a, b) : x.moveTo(a, b);
+        });
+        x.stroke();
+      });
+    }
+    function render(r) {
+      if (!r) return;
+      $('measurement').textContent =
+        `tick ${r.tick} · ${r.steps} steps · ${r.seconds.toFixed(3)} s · ${r.millisecondsPerStep.toFixed(2)} ms/step · inputs ${r.inputNeurons.toLocaleString()}`;
+      for (let i = 0; i < agents; i++) {
+        $('bubble' + i).textContent = texts[language].activity + ' ' + r.motorMean[i].toExponential(3);
+        $('creature' + i).style.transform =
+          `translateY(${-Math.min(15, Math.log10(1 + r.motorMean[i] * 1e8))}px)`;
+      }
+      $('groups').replaceChildren();
+      for (const [key, values] of Object.entries(r.groups)) {
+        const tr = document.createElement('tr');
+        for (const item of [key, ...values.map((v) => v.toExponential(4))]) {
+          const td = document.createElement('td');
+          td.textContent = item;
+          tr.append(td);
+        }
+        $('groups').append(tr);
+      }
+    }
+    async function request(action) {
+      busy = true;
+      $('error').textContent = '';
+      $('status').textContent = texts[language].busy;
+      document.querySelectorAll('button:not(#continuous)').forEach((b) => (b.disabled = true));
+      try {
+        const response = await fetch('/api/' + action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            stimuli: Array.from({ length: agents }, (_, i) => i).map(
+              (i) => Number($('input' + i).value) / 100,
+            ),
+            steps: running ? 1 : Number($('steps').value),
+            channel: $('channel').value,
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw Error(data.error);
+        state.last = data.last;
+        if (action === 'reset' || action === 'restore') {
+          history = [];
+          for (let i = 0; i < agents; i++) $('bubble' + i).textContent = '—';
+          $('measurement').textContent = 'tick ' + data.tick;
+          $('groups').replaceChildren();
+        }
+        if (action === 'advance' && data.last) {
+          if (running) stepsDone += data.last.steps;
+          history.push(data.last.motorMean);
+          history = history.slice(-40);
+        }
+        render(data.last);
+        plot();
+        $('status').textContent = texts[language][action === 'restore' ? 'restoreNote' : 'done'];
+      } catch (error) {
+        $('error').textContent = error.message;
+        $('status').textContent = 'Error';
+        running = false;
+      } finally {
+        busy = false;
+        document.querySelectorAll('button:not(#continuous)').forEach((b) => (b.disabled = running));
+        $('continuous').textContent = texts[language][running ? 'stop' : 'continuous'];
+      }
+    }
+    for (const action of ['advance', 'reset', 'save', 'restore']) $(action).onclick = () => request(action);
+    $('continuous').onclick = async () => {
+      if (running) {
+        running = false;
+        return;
+      }
+      if (busy || !state) return;
+      running = true;
+      historyStart = performance.now();
+      frames = 0;
+      stepsDone = 0;
+      $('continuous').textContent = texts[language].stop;
+      while (running) await request('advance');
+    };
+    function animate(now) {
+      if (running && now - lastFrame >= 1000 / 30 - 0.5) {
+        lastFrame = now - ((now - lastFrame) % (1000 / 30));
+        frames++;
+        for (let i = 0; i < agents; i++) {
+          const response = state?.last?.motorMean[i] || 0;
+          const height = Math.min(15, Math.log10(1 + response * 1e8));
+          $('creature' + i).style.transform = `translateY(${-height + Math.sin(now / 180 + i) * 3}px)`;
+        }
+        const seconds = (now - historyStart) / 1000;
+        if (seconds > 0.5)
+          $('rates').textContent =
+            `${agents} agents · neural ${(stepsDone / seconds).toFixed(1)} steps/s · render ${(frames / seconds).toFixed(1)} fps (target 30)`;
+      }
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    fetch('/api/state')
+      .then((r) => {
+        if (!r.ok) throw Error('Full graph unavailable');
+        return r.json();
+      })
+      .then((s) => {
+        state = s;
+        agents = s.agents;
+        makeFlies();
+        translate();
+        $('neurons').textContent = s.graph.neurons.toLocaleString();
+        $('edges').textContent = s.graph.connections.toLocaleString();
+        $('memory').textContent = (s.graph.csrBytes / 1048576).toFixed(1) + ' MiB';
+        $('mode').textContent =
+          `male-cns:v1.0 · ${s.agents} agents · float64 · ${s.kernel} · normalization: ${s.normalization} · loaded ${s.loadSeconds.toFixed(2)} s`;
+        render(s.last);
+      })
+      .catch((e) => ($('error').textContent = e.message));
+  </script>
+</html>

@@ -47,6 +47,13 @@ class FullRuntimeTests(unittest.TestCase):
         self.assertTrue(np.all(self.model.activity[:,0] == 0))
         self.assertLess(result['motorMean'][1], result['motorMean'][2])
 
+    def test_sparse_kernels_match_for_two_agents(self):
+        a = FullCircuit(self.root, agents=2, kernel='per-agent')
+        b = FullCircuit(self.root, agents=2, kernel='batched')
+        a.advance([.3,.8], steps=32)
+        b.advance([.3,.8], steps=32)
+        np.testing.assert_allclose(a.activity, b.activity, atol=1e-14, rtol=0)
+
     def test_checkpoint_replay_and_rejection(self):
         self.model.advance(steps=8)
         path = self.root/'checkpoint.npz'
