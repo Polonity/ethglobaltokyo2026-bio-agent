@@ -2,23 +2,35 @@ import { chromium } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { renderPresenterDemo } from './render-presenter-demo.mjs';
 import assert from 'node:assert/strict';
-import { JsonRpcProvider, Interface, Contract, formatUnits } from 'ethers';
+import { JsonRpcProvider, Interface, formatUnits } from 'ethers';
 import { verifyAquaFork } from '../../services/full-apps/fork.mjs';
-
-const url = process.env.PRESENTER_DEMO_URL || 'http://127.0.0.1:8814';
-const out = process.env.PRESENTER_OUTPUT || 'artifacts/submission-presenter-20260926';
-const delivery = 'docs/submission/presenter-kit';
-assert.equal(new URL(url).hostname, '127.0.0.1');
+const forageUrl = process.env.PRESENTER_FORAGING_URL || 'http://127.0.0.1:8856';
+const url = process.env.PRESENTER_DEMO_URL || 'http://127.0.0.1:8857';
+const rpc = process.env.PRESENTER_MARKET_RPC || 'http://127.0.0.1:18577';
+const marketDir = process.env.PRESENTER_MARKET_STATE || '.local/presenter-current-market';
+const forageDir =
+  process.env.PRESENTER_FORAGING_ARTIFACTS || 'artifacts/submission-presenter-rerecord/foraging';
+const out = process.env.PRESENTER_OUTPUT || 'artifacts/submission-presenter-rerecord';
+const delivery = process.env.PRESENTER_DELIVERY || `${out}/delivery`;
+for (const u of [forageUrl, url, rpc]) assert.equal(new URL(u).hostname, '127.0.0.1');
 await mkdir(out + '/raw', { recursive: true });
 await mkdir(delivery, { recursive: true });
 const readState = async () => (await fetch(url + '/api/state')).json();
+const readForage = async () => (await fetch(forageUrl + '/api/state')).json();
 const before = await readState();
-assert(!before.running, 'An existing run must be paused; do not interrupt it');
+assert(!before.running);
+const beforeForage = await readForage();
+assert(!beforeForage.busy);
 assert.equal(before.brain.full.neurons, 166700);
-const beforePolicy = JSON.parse(await readFile('.local/shared-market/readout.json', 'utf8'));
-const p = new JsonRpcProvider('http://127.0.0.1:18551', undefined, { batchMaxCount: 1 });
+const beforePolicy = await readFile(`${marketDir}/readout.json`, 'utf8')
+  .then(JSON.parse)
+  .catch((e) => {
+    if (e.code !== 'ENOENT') throw e;
+    return { updates: [0, 0, 0, 0], weights: {} };
+  });
+const p = new JsonRpcProvider(rpc, undefined, { batchMaxCount: 1 });
 assert.equal(BigInt(await p.send('eth_chainId', [])), 31337n);
-const fork = await verifyAquaFork(p, '.local/aqua-fork/upstream.json');
+const fork = await verifyAquaFork(p, `${marketDir}/upstream.json`);
 const tokenInterface = new Interface([
   'event Transfer(address indexed from,address indexed to,uint256 value)',
 ]);
@@ -32,49 +44,68 @@ const context = await browser.newContext({
   locale: 'en-US',
   recordVideo: { dir: out + '/raw', size: { width: 1920, height: 960 } },
 });
-await context.addInitScript(() => localStorage.setItem('shared-language', 'en'));
-const started = performance.now(),
+await context.addInitScript(() => {
+  localStorage.setItem('shared-language', 'en');
+  localStorage.setItem('full-app-language', 'en');
+});
+const started = Date.now(),
   page = await context.newPage(),
   video = page.video();
 const cues = [],
   errors = [],
-  receipts = [];
+  receipts = [],
+  foraging = {};
 let startedOwnRun = false,
+  ownForage = false,
   after;
 page.on('pageerror', (e) => errors.push(e.message));
-const cue = (en, ja) => cues.push({ start: (performance.now() - started) / 1000, en, ja });
+const time = () => (Date.now() - started) / 1000;
+const sleep = (ms) => page.waitForTimeout(ms);
 const esc = (value) =>
   String(value).replace(
     /[&<>"']/g,
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
   );
-async function sleep(ms) {
-  await page.waitForTimeout(ms);
+async function shot(id, seconds, en, ja) {
+  const start = time();
+  await sleep(seconds * 1000);
+  const end = time();
+  cues.push({ id, start, end, en, ja });
+  await page.screenshot({ path: `${out}/scene-${id}.png` });
+}
+async function until(read, predicate, label) {
+  for (let i = 0; i < 900; i++) {
+    const s = await read();
+    if (predicate(s)) return s;
+    if (i % 40 === 0)
+      console.log(
+        JSON.stringify({
+          waiting: label,
+          phase: s.latest?.foraging?.phase,
+          tick: s.latest?.foraging?.tick,
+          market: s.tick,
+        }),
+      );
+    await sleep(500);
+  }
+  throw Error(`Timeout: ${label}`);
 }
 async function setTargets(values) {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 2; i++)
     await page.locator(`#target${i}`).evaluate(
-      (el, value) => {
-        el.value = String(value);
+      (el, v) => {
+        el.value = String(v);
         el.dispatchEvent(new Event('input', { bubbles: true }));
       },
       Math.round(values[i] * 100),
     );
-  }
   await page.locator('#apply').click();
 }
 async function stopOwnRun() {
   if (!startedOwnRun) return;
   await page.locator('#stop').click();
-  for (let i = 0; i < 120; i++) {
-    after = await readState();
-    if (!after.running) {
-      startedOwnRun = false;
-      return;
-    }
-    await sleep(250);
-  }
-  throw Error('Own recording run did not pause');
+  after = await until(readState, (s) => !s.running, 'market pause');
+  startedOwnRun = false;
 }
 async function showReceipt(trade) {
   // Open the application's real receipt first, then format that same data for legibility.
@@ -135,131 +166,202 @@ async function showReceipt(trade) {
   }, html);
 }
 try {
-  await page.goto(url);
-  await page.waitForFunction(() => document.querySelectorAll('[data-tx]').length > 0);
-  await page.addStyleTag({
-    content: `aside{padding:14px;gap:10px;width:340px}.card{padding:14px}h2{margin-bottom:10px}.controls label{margin:8px 0}.fill{padding:7px 0}dialog{width:1180px;max-width:90vw}dialog pre{font-size:13px}.receipt-label{font-size:14px;color:#b9d0c2;letter-spacing:1px}.receipt-stats{display:flex;gap:80px;margin:24px 0}.receipt-stats strong{display:block;font-size:28px;color:#c8f9a5}.receipt-table{width:100%;border-collapse:collapse;margin:24px 0}.receipt-table td,.receipt-table th{padding:12px;border-bottom:1px solid #577466;text-align:left}.receipt-table code{font-size:13px}`,
-  });
-  // Controlled demand is a visible user input, not a hidden action/result injection.
-  await setTargets([0.85, 0.15]);
-  cue(
+  await page.goto(forageUrl);
+  await page.locator('#live').waitFor();
+  await page.locator('#live').click();
+  ownForage = true;
+  let f = await until(
+    readForage,
+    (s) =>
+      s.busy &&
+      s.latest.foraging?.phase === 'live' &&
+      s.latest.foraging.tick >= 2 &&
+      s.latest.foraging.snapshot?.world?.worldSource?.transactionHash !==
+        beforeForage.latest.foraging?.snapshot?.world?.worldSource?.transactionHash,
+    'full foraging response',
+  );
+  assert.equal(f.latest.foraging.neural.neuronsPerIndividual, 166700);
+  foraging.first = f.latest.foraging;
+  await shot(
+    'purpose',
+    4,
     [
-      'BioAgent | From connectomes to on-chain action',
-      'Four simulated agents. 166,700 measured neurons each. One shared market.',
+      'BioAgent | Test biological decision models',
+      'Anvil · full 166,700-neuron runtime. Inputs, actions and learning.',
     ],
     [
-      'BioAgent｜コネクトームから、オンチェーンの行動へ',
-      '各166,700神経で動く4個体。同じ市場で提示・売買・学習します。',
+      'BioAgent｜生物由来の判断モデルを、使って検証する',
+      'Anvil＋全166,700神経。入力・行動・学習をつなぎます。',
     ],
   );
-  await sleep(4800);
+  await page.locator('#stop').click();
+  await until(readForage, (s) => !s.busy, 'foraging pause');
+  ownForage = false;
+  await page.locator('#open-details').click();
+  await page.locator('[data-pane="evidence"]').click();
+  await page.locator('#environment-proof').waitFor();
+  const environment = foraging.first.snapshot.world.worldSource;
+  assert((await page.locator('#tx').innerText()).includes(environment.transactionHash));
+  foraging.environmentReceipt = await (
+    await page.request.get(forageUrl + '/tx/' + environment.transactionHash)
+  ).json();
+  assert.equal(Number(foraging.environmentReceipt.status), 1);
+  await shot(
+    'environment',
+    6,
+    [
+      '1 | Initialize the world with a transaction',
+      'Dimensions, seed and hazard areas are recorded onchain.',
+    ],
+    ['1｜初期環境をトランザクションで構築', 'フィールドの寸法・seed・危険エリアもオンチェーン入力です。'],
+  );
+  await page.locator('#tx a').first().click();
+  await page.waitForFunction(() => document.querySelector('#receipt-body').textContent.includes('Success'));
+  await shot(
+    'receipt',
+    4,
+    ['Verify the actual environment receipt', 'Local Anvil success. No public-chain transaction.'],
+    ['実際の初期環境TXを確認', 'ローカルAnvilの成功receipt。公開チェーンへの送信ではありません。'],
+  );
+  await page.locator('#close-receipt').click();
+  await page.locator('#close-details').click();
+  await page.locator('#learn').click();
+  ownForage = true;
+  await until(
+    readForage,
+    (s) => s.latest.foraging?.phase === 'collect' && s.latest.foraging.tick >= 2,
+    'learning collection',
+  );
+  await shot(
+    'learn',
+    6,
+    [
+      '2 | Observe actions and collect experience',
+      'Confirmed stimuli add food. The fixed circuit feeds a learned action readout.',
+    ],
+    ['2｜行動して経験を集める', '確定した刺激TXで餌を追加。固定回路から行動を選び、結果を学習へ。'],
+  );
+  const completed = await until(readForage, (s) => !s.busy, 'full learning and comparison');
+  ownForage = false;
+  foraging.completed = completed.latest.foraging;
+  if (completed.latest.foraging.phase === 'error') throw Error(completed.latest.foraging.error);
+  assert.equal(completed.latest.foraging.phase, 'complete');
+  const report = JSON.parse(await readFile(`${forageDir}/foraging-full-latest.json`, 'utf8'));
+  assert.deepEqual(report.before.environmentInput, report.after.environmentInput);
+  assert.deepEqual(report.before.inputEvents, report.after.inputEvents);
+  foraging.report = report;
+  foraging.sameComparisonInputs = true;
+  await page.locator('#open-details').click();
+  await page.locator('[data-pane="learning"]').click();
+  await page.waitForFunction(() => document.querySelector('#summary').textContent.includes('Policy'));
+  await shot(
+    'compare',
+    7,
+    [
+      '3 | Compare before adopting · learning wait omitted',
+      'Same confirmed input TXs for both policies. Keep an unchanged or worse candidate out.',
+    ],
+    [
+      '3｜同じ入力で比べて採用する（学習待ち時間は省略）',
+      '新旧方策に同じ環境・刺激TXを使用。改善しない候補は採用しません。',
+    ],
+  );
+  await page.locator('[data-pane="evidence"]').click();
+  await page.locator('#neural').scrollIntoViewIfNeeded();
+  assert((await page.locator('#neural').innerText()).includes('166,700'));
+  await shot(
+    'model',
+    5,
+    [
+      'Full measured connectivity, engineered dynamics',
+      '166,700 neurons per agent. Body state and learning run offchain.',
+    ],
+    ['構造は実測、動力学は人工設計', '各166,700神経で計算。身体状態と学習の処理はオフチェーンです。'],
+  );
+  await page.goto(url);
+  await page.locator('#start').waitFor();
+  await page.addStyleTag({
+    content:
+      'aside{padding:14px;gap:10px;width:340px}.card{padding:14px}h2{margin-bottom:10px}.controls label{margin:8px 0}.fill{padding:7px 0}dialog{width:1180px;max-width:90vw}.receipt-label{font-size:14px;color:#b9d0c2;letter-spacing:1px}.receipt-stats{display:flex;gap:80px;margin:24px 0}.receipt-stats strong{display:block;font-size:28px;color:#c8f9a5}.receipt-table{width:100%;border-collapse:collapse;margin:24px 0}.receipt-table td,.receipt-table th{padding:12px;border-bottom:1px solid #577466;text-align:left}.receipt-table code{font-size:13px}',
+  });
+  await setTargets([0.85, 0.15]);
   await page.locator('#start').click();
   startedOwnRun = true;
-  cue(
+  await until(readState, (s) => s.tick >= before.tick + 2, 'new market cycles');
+  await shot(
+    'market',
+    8,
     [
-      'Two makers. One self-custodied wallet.',
-      'MOMO and SORA publish, widen or withdraw offers through official Aqua.',
-    ],
-    ['提示側2匹、資金は同じウォレットに。', 'MOMOとSORAが、公式Aquaへの提示・拡大・撤回を選びます。'],
-  );
-  await sleep(7500);
-  cue(
-    [
-      'Two traders. The same token pair.',
-      'KOHARU and HINATA choose buy, hold or sell. Code compares executable quotes.',
+      '4 | Apply the full model to a shared market',
+      'Four agents: Aqua offers and V3 trades. Confirmed outcomes update readouts.',
     ],
     [
-      '売買側2匹、同じ通貨ペアで取引。',
-      'KOHARUとHINATAが売買・待機を判断。通常コードが見積もりを比較します。',
+      '4｜全神経モデルを、同じ市場の4個体へ',
+      'Aquaへの提示とV3での売買。確定した行動結果でreadoutを更新します。',
     ],
   );
-  await sleep(7500);
-  cue(
-    [
-      'Confirmed outcomes feed learning',
-      'Readout weights update after each cycle. The measured connectome stays fixed.',
-    ],
-    ['実際の行動結果から、学習を更新。', '周期ごとに行動readoutを更新します。実測の神経接続は固定です。'],
+  await until(
+    readState,
+    (s) =>
+      s.routes.Aqua > before.routes.Aqua &&
+      s.routes['Uniswap V3'] > before.routes['Uniswap V3'] &&
+      s.tick >= before.tick + 6,
+    'both settlement routes',
   );
-  await sleep(9000);
   await stopOwnRun();
   assert.equal(after.error, null);
-  assert(after.tick > before.tick);
-  assert.equal(after.metrics.neuronsPerFly, 166700);
-  for (const route of ['Aqua', 'Uniswap V3'])
-    assert(after.routes[route] > before.routes[route], `No newly recorded ${route} settlement`);
-  await page.locator('#details').click();
-  cue(
-    [
-      'Measured structure. Engineered dynamics.',
-      'Full neural workload, resource use and per-agent learning history are inspectable.',
-    ],
-    ['構造は実測、動力学は人工設計。', '全神経の計算量、使用メモリー、個体ごとの学習履歴を確認できます。'],
-  );
-  await sleep(4200);
-  await page.locator('#modal').evaluate((el) => (el.scrollTop = el.scrollHeight));
-  await sleep(3000);
-  await page.locator('#close').click();
   for (const route of ['Aqua', 'Uniswap V3']) {
     const trade = after.transactions.find(
       (x) => x.kind === 'swap' && x.route === route && !before.transactions.some((b) => b.hash === x.hash),
     );
-    assert(trade, `Missing fresh ${route} receipt`);
+    assert(trade);
     await showReceipt(trade);
-    cue(
-      route === 'Aqua'
-        ? [
-            'Aqua | Actual token settlement',
-            'A fresh successful transaction. Inspect ERC20 transfers and official Aqua events.',
-          ]
-        : [
-            'Uniswap V3 | Actual swap settlement',
-            'The same tokens flow through the V3 pool. Gas is recorded separately in ETH.',
-          ],
-      route === 'Aqua'
-        ? ['Aqua｜実際のトークン決済', '今回成立した取引のERC20移動と、公式Aquaのイベントを確認。']
-        : ['Uniswap V3｜実際のスワップ決済', '同じ通貨がV3プールで移動。ガス代はETHで別に記録しています。'],
+    await shot(
+      route === 'Aqua' ? 'aqua' : 'uniswap',
+      6,
+      [
+        route + ' | A freshly confirmed local settlement',
+        'Actual token transfers and contract events. Test tokens on an Anvil fork.',
+      ],
+      [
+        route + '｜今回成立したローカル決済',
+        '実トークン移動とコントラクトのイベントを確認。Anvil forkのテスト通貨です。',
+      ],
     );
-    await sleep(6300);
-    await page.screenshot({ path: `${out}/${route === 'Aqua' ? 'aqua' : 'uniswap'}-receipt.png` });
     await page.locator('#close').click();
   }
   await setTargets(before.targets);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  cue(
+  await shot(
+    'close',
+    5,
     [
-      'A testbed for bio-inspired agents',
-      'Trace inputs, learning and settlement. Artificial demand; no profitability claim.',
+      'A framework for testing benefits and limits',
+      'Learning updates work. Biological superiority and energy savings remain unproven.',
     ],
     [
-      '生物由来Agentを、比較・検証する実験基盤。',
-      '入力・学習・決済を追跡。需要は人工設定で、収益性の実証ではありません。',
+      '効果と限界を比較できるフレームワークへ',
+      '学習更新は動作。生物回路の優位と省電力効果は、今後同条件で検証します。',
     ],
   );
-  await sleep(5500);
-  await page.screenshot({ path: out + '/poster.png' });
-  const afterPolicy = JSON.parse(await readFile('.local/shared-market/readout.json', 'utf8'));
+  const afterPolicy = JSON.parse(await readFile(`${marketDir}/readout.json`, 'utf8'));
   const policyChanges = after.flies.map((f, i) => ({
     name: f.name,
     updatesBefore: beforePolicy.updates[i],
     updatesAfter: afterPolicy.updates[i],
-    weightsChanged: JSON.stringify(beforePolicy.weights[i]) !== JSON.stringify(afterPolicy.weights[i]),
+    weightsChanged: beforePolicy.weights[i]
+      ? JSON.stringify(beforePolicy.weights[i]) !== JSON.stringify(afterPolicy.weights[i])
+      : afterPolicy.weights[i].flat().some((v) => v !== 0),
     policyHashAtLastDecision: f.policyHash,
   }));
   assert(policyChanges.every((x) => x.updatesAfter > x.updatesBefore));
   assert(policyChanges.some((x) => x.weightsChanged));
   assert.deepEqual(errors, []);
-  const end = (performance.now() - started) / 1000;
-  const evidence = {
+  const e = {
+    schema: 'bioagent.presenter-rerecord.v2',
+    recordingStartedAtMilliseconds: started,
     recordedAt: new Date().toISOString(),
-    scope: 'Anvil Ethereum fork + full population; no public-chain writes',
-    fork: {
-      chainId: fork.chainId,
-      blockNumber: fork.blockNumber,
-      blockHash: fork.blockHash,
-      aqua: fork.aqua,
-      codeHash: fork.codeHash,
-    },
+    scope: 'Fresh Anvil + full-population foraging and shared market; no public-chain writes',
+    fork,
     config: {
       registry: before.config.registry,
       pool: before.config.pool,
@@ -277,16 +379,35 @@ try {
     ),
     policyChanges,
     receipts,
+    foraging,
     browserErrors: errors,
     cues,
-    end,
-    presentationChanges: 'Compact CSS and clearly labelled decoded receipt excerpts; no result injection',
+    end: time(),
     restoredTargets: (await readState()).targets,
+    presentationChanges:
+      'Cuts omit setup and learning waits; each shown segment is real time. Market CSS compacted and actual receipts excerpted. No simulated result injection.',
+    paths: { marketState: marketDir, marketRpc: rpc, foragingUrl: forageUrl },
   };
-  await writeFile(out + '/capture-evidence.json', JSON.stringify(evidence, null, 2));
+  await writeFile(out + '/capture-evidence.json', JSON.stringify(e, null, 2) + '\n');
+  console.log(
+    JSON.stringify({
+      cycles: e.after.tick - e.before.tick,
+      routes: e.newRoutes,
+      foraging: completed.reports['foraging:full'],
+      shots: cues.length,
+    }),
+  );
 } finally {
-  if (startedOwnRun) await stopOwnRun();
-  if (!(await readState()).running) await setTargets(before.targets);
+  if (startedOwnRun) {
+    if (!page.url().startsWith(url)) await page.goto(url);
+    await stopOwnRun();
+  }
+  if (ownForage)
+    await page.request.post(forageUrl + '/api/stop', { headers: { Origin: forageUrl }, data: {} });
+  if (!(await readState()).running) {
+    if (!page.url().startsWith(url)) await page.goto(url);
+    await setTargets(before.targets);
+  }
   await context.close();
   await browser.close();
   p.destroy();
@@ -295,11 +416,3 @@ const raw = await video.path();
 await writeFile(out + '/raw-video-path.txt', raw + '\n');
 const evidence = JSON.parse(await readFile(out + '/capture-evidence.json', 'utf8'));
 await renderPresenterDemo({ raw, evidence, out, delivery });
-console.log(
-  JSON.stringify({
-    videos: ['en', 'ja'].map((l) => `${delivery}/bioagent-submission-${l}.mp4`),
-    cycles: evidence.after.tick - evidence.before.tick,
-    newRoutes: evidence.newRoutes,
-    policyChanges: evidence.policyChanges,
-  }),
-);

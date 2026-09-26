@@ -20,7 +20,7 @@ export function content(e) {
       subtitle: '現行の共通Fly Labに対応。市場動画・独立研究の結果は明示して区別。',
       pitchTitle: '全神経動画を補足するとき（約30秒）',
       pitch:
-        'BioAgentは、生物由来の神経回路で行動を決め、入力・学習・取引結果を追える実験基盤です。動画では4個体が各166,700神経で、Aquaの提示とUniswapの売買に関わります。実取引と学習更新を確認しました。別の採餌実験では行動が改善しましたが、通常モデルへの優位は未確認です。そこまで比較できる基盤を作ったことが成果です。',
+        'BioAgentは、生物由来の神経回路で行動を決め、入力・学習・取引結果を追える実験基盤です。動画の前半で全神経の環境TXと学習比較、後半で4個体のAqua提示とUniswap売買を示します。実取引と学習更新を確認しました。別の採餌実験では行動が改善しましたが、通常モデルへの優位は未確認です。そこまで比較できる基盤を作ったことが成果です。',
       stats: [
         ['166,700', '神経／個体 × 4個体'],
         [String(swaps), `新規決済：Aqua ${e.newRoutes.Aqua}・V3 ${e.newRoutes['Uniswap V3']}`],
@@ -48,7 +48,7 @@ export function content(e) {
           'R2, R3',
         ],
         [
-          '動画では何を学習している？',
+          '動画の市場場面では何を学習している？',
           '確定した行動結果から、行動を選ぶreadoutの重みを更新します。',
           `実測の神経接続は固定です。今回${updates[0]}周期で全4個体の更新数が増え、${changed}個体の重みが変化しました。報酬は提示の約定結果や目標保有比率への接近です。市場版はオンライン更新で、未使用データによる採用ゲートはありません。`,
           'R1, R2',
@@ -92,7 +92,7 @@ export function content(e) {
         [
           '審査員が公開URLで試すものも全神経？',
           '公開ページはSepolia＋7神経、提出動画はAnvil＋全166,700神経です。',
-          '公開版は3個体で、確認済み環境を再生するQ学習です。新旧方策の比較スコアが改善した時だけ採用します。市場動画の4個体・readoutオンライン更新とは別。動画は環境TX対応前の記録です。',
+          '公開版は3個体で、確認済み環境を再生するQ学習です。新旧方策の比較スコアが改善した時だけ採用します。新動画の前半は全神経2個体の採餌readout比較、後半は市場4個体のオンライン更新です。全神経も環境TXに対応しています。',
           'R5',
         ],
         [
@@ -119,7 +119,7 @@ export function content(e) {
         'Current shared Fly Lab. Recorded market results and independent research are labelled separately.',
       pitchTitle: 'Optional: introduce the full-market video',
       pitch:
-        'BioAgent is an experimental platform that connects biologically derived circuits to traceable actions. Four agents, each using 166,700 neurons, make Aqua offers and trade through Uniswap. We verified real local settlement and learning updates. A separate foraging experiment improved behavior, but did not outperform a matched non-biological model. Our contribution is a working platform for testing these possibilities and their limits.',
+        'BioAgent is an experimental platform that connects biologically derived circuits to traceable actions. The video first shows full-neuron environment TXs and learning comparison, then four agents making Aqua offers and Uniswap trades. We verified real local settlement and learning updates. A separate foraging experiment improved behavior, but did not outperform a matched non-biological model. Our contribution is a working platform for testing these possibilities and their limits.',
       stats: [
         ['166,700', 'neurons per agent × 4 agents'],
         [String(swaps), `new settlements: ${e.newRoutes.Aqua} Aqua · ${e.newRoutes['Uniswap V3']} V3`],
@@ -147,7 +147,7 @@ export function content(e) {
           'R2, R3',
         ],
         [
-          'What learns during the video?',
+          'What learns in the market scenes?',
           'The action readout updates from confirmed outcomes; neural connections stay fixed.',
           `All four agents received ${updates[0]} outcome updates; ${changed} changed saved weights. Rewards reflect offer fills or progress toward target holdings. This full-market runtime updates online, without a held-out adoption gate. Updates alone do not establish a better trading policy.`,
           'R1, R2',
@@ -191,7 +191,7 @@ export function content(e) {
         [
           'Does the public demo run the full population?',
           'The public demo is Sepolia + 7 neurons; the video is Anvil + 166,700 neurons per agent.',
-          'The public page has three agents, Q-learning on confirmed-world replays, and a score-based adoption gate. The four-agent market video uses separate online readout updates and predates environment TXs. Public Sepolia does not trade on Aqua/Uniswap.',
+          'The public page has three agents, Q-learning on confirmed-world replays, and a score-based adoption gate. The new video shows two full-foraging agents comparing readouts, then four market agents updating online. Both full foraging and public mode use environment TXs. Public Sepolia does not trade on Aqua/Uniswap.',
           'R5',
         ],
         [

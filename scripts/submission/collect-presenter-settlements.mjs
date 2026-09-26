@@ -1,11 +1,11 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import { JsonRpcProvider, Interface } from 'ethers';
-const dir = 'docs/submission/presenter-kit';
+const dir = process.env.PRESENTER_DELIVERY || 'docs/submission/presenter-kit';
 const e = JSON.parse(await readFile(`${dir}/capture-evidence.json`, 'utf8'));
 const end = Date.parse(e.recordedAt),
   start = end - e.end * 1000 - 1000;
-const cycles = (await readFile('.local/shared-market/cycles.jsonl', 'utf8'))
+const cycles = (await readFile(`${e.paths?.marketState || '.local/shared-market'}/cycles.jsonl`, 'utf8'))
   .trim()
   .split('\n')
   .map(JSON.parse)
@@ -21,7 +21,9 @@ assert.deepEqual(
   cycles.map((c) => c.tick),
   Array.from({ length: cycles.length }, (_, i) => e.before.tick + i + 1),
 );
-const p = new JsonRpcProvider('http://127.0.0.1:18551', undefined, { batchMaxCount: 1 });
+const p = new JsonRpcProvider(e.paths?.marketRpc || 'http://127.0.0.1:18551', undefined, {
+  batchMaxCount: 1,
+});
 const records = [];
 try {
   assert.equal(BigInt(await p.send('eth_chainId', [])), 31337n);

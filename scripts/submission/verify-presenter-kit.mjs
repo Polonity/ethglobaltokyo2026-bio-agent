@@ -5,10 +5,11 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import assert from 'node:assert/strict';
 import { chromium } from '@playwright/test';
-const dir = 'docs/submission/presenter-kit',
-  out = 'artifacts/submission-presenter-20260926';
+const dir = process.env.PRESENTER_DELIVERY || 'docs/submission/presenter-kit',
+  out = process.env.PRESENTER_OUTPUT || 'artifacts/submission-presenter-rerecord';
 await mkdir(out, { recursive: true });
 const evidence = JSON.parse(await readFile(`${dir}/capture-evidence.json`, 'utf8'));
+const edit = JSON.parse(await readFile(`${dir}/render-metadata.json`, 'utf8'));
 const settlement = JSON.parse(await readFile(`${dir}/settlement-evidence.json`, 'utf8'));
 assert.deepEqual(evidence.browserErrors, []);
 assert.equal(evidence.brain.full.neurons, 166700);
@@ -18,6 +19,14 @@ assert(evidence.policyChanges.some((c) => c.weightsChanged));
 assert.deepEqual(evidence.before.targets, evidence.restoredTargets);
 assert.deepEqual(settlement.routeCounts, evidence.newRoutes);
 assert(settlement.records.every((x) => Number(x.receipt.status) === 1 && x.tokenTransferCount >= 2));
+assert(evidence.foraging.sameComparisonInputs);
+assert.deepEqual(
+  evidence.foraging.report.before.environmentInput,
+  evidence.foraging.report.after.environmentInput,
+);
+assert.deepEqual(evidence.foraging.report.before.inputEvents, evidence.foraging.report.after.inputEvents);
+assert.equal(evidence.foraging.first.neural.neuronsPerIndividual, 166700);
+assert.equal(Number(evidence.foraging.environmentReceipt.status), 1);
 const report = {
   verifiedAt: new Date().toISOString(),
   recordingModel: evidence.brain.full,
@@ -89,7 +98,8 @@ try {
           execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-f', 'null', '-'], { stdio: 'pipe' });
           const srt = await readFile(`${dir}/captions-${lang}.srt`, 'utf8');
           const cues = srt.trim().split('\n\n');
-          assert.equal(cues.length, 8);
+          assert.equal(cues.length, edit.shots.length);
+          assert(Math.abs(Number(probe.format.duration) - edit.duration) < 0.05);
           const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
           const errors = [];
           page.on('pageerror', (err) => errors.push(err.message));
@@ -113,14 +123,7 @@ try {
             };
           });
           assert(playback.ended && playback.frames > 100 && playback.error === null);
-          for (const [scene, second] of [
-            ['opening', 0.8],
-            ['learning', 22],
-            ['resources', 28],
-            ['aqua', 35],
-            ['uniswap', 42],
-            ['closing', 49],
-          ]) {
+          for (const [scene, second] of edit.shots.map((s) => [s.id, s.start + (s.end - s.start) / 2])) {
             await page.evaluate((s) => {
               const v = document.querySelector('video');
               v.currentTime = s;
@@ -142,7 +145,7 @@ try {
             probe,
             fullDecode: true,
             browserPlayback: playback,
-            seekScenes: 6,
+            seekScenes: edit.shots.length,
             browserErrors: errors,
           };
         }),
@@ -173,6 +176,7 @@ for (const name of [
   'captions-ja.srt',
   'capture-evidence.json',
   'settlement-evidence.json',
+  'render-metadata.json',
   'qa-cheatsheet-ja.pdf',
   'qa-cheatsheet-en.pdf',
   'qa-cheatsheet-ja-en.pdf',

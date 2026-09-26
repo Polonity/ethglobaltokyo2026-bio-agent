@@ -1,16 +1,17 @@
-import { writeFile, mkdir } from 'node:fs/promises';
+import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
-import { walkthrough } from './presenter-walkthrough.mjs';
+import { walkthroughFor } from './presenter-walkthrough.mjs';
 const require = createRequire(import.meta.url);
 const PptxGenJS = require(
   process.env.PPTXGENJS_PATH ||
     '/mnt/c/Users/hiken/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pptxgenjs',
 );
 const dir = 'docs/submission/presenter-kit';
+const walkthrough = walkthroughFor(JSON.parse(await readFile(`${dir}/capture-evidence.json`, 'utf8')));
 const out = 'artifacts/submission-presenter-current';
 await mkdir(out, { recursive: true });
 const esc = (s) =>
@@ -24,7 +25,7 @@ const browser = await chromium.launch({
 });
 const report = {
   generatedAt: new Date().toISOString(),
-  scope: 'Current shared Fly Lab explanation; existing video unchanged',
+  scope: 'Current shared Fly Lab explanation with newly recorded full-foraging and market evidence',
   languages: [],
 };
 try {
@@ -125,19 +126,17 @@ try {
     await page.goto(pathToFileURL(resolve(`${dir}/explanation-${lang}.html`)).href);
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: 'print' });
-    const layout = await page
-      .locator('.slide')
-      .evaluateAll((nodes) =>
-        nodes.map((n) => ({
-          overflow: n.scrollHeight - n.clientHeight,
-          clearance:
-            n.querySelector('.boundary').getBoundingClientRect().top -
-            n.querySelector('.points').getBoundingClientRect().bottom,
-          boundaryClearance:
-            n.querySelector('footer').getBoundingClientRect().top -
-            n.querySelector('.boundary').getBoundingClientRect().bottom,
-        })),
-      );
+    const layout = await page.locator('.slide').evaluateAll((nodes) =>
+      nodes.map((n) => ({
+        overflow: n.scrollHeight - n.clientHeight,
+        clearance:
+          n.querySelector('.boundary').getBoundingClientRect().top -
+          n.querySelector('.points').getBoundingClientRect().bottom,
+        boundaryClearance:
+          n.querySelector('footer').getBoundingClientRect().top -
+          n.querySelector('.boundary').getBoundingClientRect().bottom,
+      })),
+    );
     assert(
       layout.every((x) => x.overflow < 2 && x.clearance > 8 && x.boundaryClearance > 8),
       JSON.stringify({ lang, layout }),

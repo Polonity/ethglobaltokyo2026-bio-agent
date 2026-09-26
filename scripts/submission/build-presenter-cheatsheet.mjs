@@ -5,11 +5,12 @@ import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
 import { content, sources } from './presenter-content.mjs';
 import { comparison, comparisonSources } from './presenter-comparison.mjs';
-import { walkthrough } from './presenter-walkthrough.mjs';
+import { walkthroughFor } from './presenter-walkthrough.mjs';
 
 const dir = 'docs/submission/presenter-kit';
 const evidence = JSON.parse(await readFile(`${dir}/capture-evidence.json`, 'utf8'));
 const data = content(evidence);
+const walkthrough = walkthroughFor(evidence);
 const settlement = JSON.parse(await readFile(`${dir}/settlement-evidence.json`, 'utf8'));
 const resources = JSON.parse(await readFile(`${dir}/resource-evidence.json`, 'utf8'));
 const comparisons = comparison(settlement, resources);

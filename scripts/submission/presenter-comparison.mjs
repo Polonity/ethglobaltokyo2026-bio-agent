@@ -74,9 +74,9 @@ export function comparison(settlement, resources) {
           'S3, R7',
         ],
         [
-          '333 msなら取引もその速さで終わる？',
+          '神経計算の時間で取引も終わる？',
           '神経処理の時間と、取引成立までの時間は別です。',
-          `4個体の神経計算＋特徴抽出は${neuralRange} ms。RPC・ローカル取引等を含む周期は${cycleRange}秒、ループは約4秒間隔。1個体の応答時間や公開チェーンの確定時間ではありません。`,
+          `4個体の神経計算＋特徴抽出は${neuralRange} ms。RPC・ローカル取引等を含む周期は${cycleRange}秒、目標4秒を超える周期は延長。1個体の応答時間や公開チェーンの確定時間ではありません。`,
           'R1, R7',
         ],
         [
@@ -137,9 +137,9 @@ export function comparison(settlement, resources) {
           'S3, R7',
         ],
         [
-          'Does 333 ms mean a completed trade?',
+          'Does neural processing time include settlement?',
           'Neural processing and settlement latency are different.',
-          `Four-agent neural computation plus features took ${neuralRange} ms; cycles including local transactions/RPC took ${cycleRange} s. The loop targets roughly 4 s. These are neither single-agent response times nor public-chain finality.`,
+          `Four-agent neural computation plus features took ${neuralRange} ms; cycles including local transactions/RPC took ${cycleRange} s. The 4 s target extends for slower cycles. These are neither single-agent response times nor public-chain finality.`,
           'R1, R7',
         ],
         [

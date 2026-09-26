@@ -1,5 +1,5 @@
 // One source for the opening sheet, presentation slides and speaking notes.
-export const walkthrough = {
+const base = {
   ja: {
     title: 'BioAgent｜目的からデモまで',
     goalTitle: '何を実現したいか',
@@ -34,7 +34,7 @@ export const walkthrough = {
     scopeTitle: '3つの証拠を使い分ける',
     scope: [
       ['現在の公開ページ', 'Sepolia・7神経・3個体。TX入力と採餌・Q学習を体験。'],
-      ['提出動画', 'Anvil・166,700神経×4個体。Aqua／V3決済とreadout更新の記録。環境TX変更前の収録。'],
+      ['提出動画', 'Anvil・全166,700神経。前半は2個体の環境TXと学習比較、後半は4個体のAqua／V3決済。'],
       ['独立した研究', '合成採餌環境の対照比較。報酬は改善したが、生物回路の優位は未確認。'],
     ],
     pitchTitle: '約1分の説明原稿',
@@ -94,7 +94,7 @@ export const walkthrough = {
           '別研究：報酬18.79 → 56.12、直接入力対照56.08',
         ],
         '接続・学習は動いた。生物回路の性能優位は未確認です。',
-        '数値は保存済み検証の結果。公開版の学習成績ではない。採餌研究は5探索seed・各条件60未使用環境で、終了時エネルギーも悪化。動画は現行の環境TX仕様より前の記録。',
+        '数値は保存済み検証の結果。公開版の学習成績ではない。採餌研究は5探索seed・各条件60未使用環境で、終了時エネルギーも悪化。撮り直した動画は現行の環境TX仕様に対応。全神経の採餌readoutと公開版のQ学習は別実装。',
       ],
       [
         'STEP 5 · 次の検証',
@@ -145,7 +145,7 @@ export const walkthrough = {
       ['Current public page', 'Sepolia, 7 neurons, 3 agents: TX inputs, foraging and Q-learning.'],
       [
         'Submitted video',
-        'Anvil, 166,700 neurons × 4 agents: Aqua/V3 settlement and readout updates. Recorded before the environment-TX change.',
+        'Anvil, 166,700 neurons per agent: two-agent environment TX and learning comparison, then four-agent Aqua/V3 settlement.',
       ],
       [
         'Independent research',
@@ -209,7 +209,7 @@ export const walkthrough = {
           'Research: reward 18.79 → 56.12; direct-input control 56.08',
         ],
         'Integration and learning work; biological superiority is unproven.',
-        'These are saved observations from three different tracks. Research used five search seeds and 60 unseen worlds per profile; final body energy also fell. The video predates the environment-TX implementation.',
+        'These are saved observations from three different tracks. Research used five search seeds and 60 unseen worlds per profile; final body energy also fell. The new recording includes current environment TXs. Full-foraging readouts are separate from public Q-learning.',
       ],
       [
         'STEP 5 · NEXT TEST',
@@ -225,3 +225,10 @@ export const walkthrough = {
     ],
   },
 };
+
+export function walkthroughFor(capture) {
+  const d = structuredClone(base);
+  d.ja.slides[4][2][1] = `動画：全神経4個体、Aqua ${capture.newRoutes.Aqua}件・V3 ${capture.newRoutes['Uniswap V3']}件の決済`;
+  d.en.slides[4][2][1] = `Video: four full agents, ${capture.newRoutes.Aqua} Aqua and ${capture.newRoutes['Uniswap V3']} V3 settlements`;
+  return d;
+}

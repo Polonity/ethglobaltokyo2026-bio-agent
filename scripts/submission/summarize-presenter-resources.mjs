@@ -2,11 +2,11 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { recordedResources } from './presenter-comparison.mjs';
-const dir = 'docs/submission/presenter-kit';
+const dir = process.env.PRESENTER_DELIVERY || 'docs/submission/presenter-kit';
 const capture = JSON.parse(await readFile(`${dir}/capture-evidence.json`, 'utf8'));
 const settlementBytes = await readFile(`${dir}/settlement-evidence.json`);
 const settlement = JSON.parse(settlementBytes);
-const policyBytes = await readFile('.local/shared-market/readout.json');
+const policyBytes = await readFile(`${capture.paths?.marketState || '.local/shared-market'}/readout.json`);
 const policy = JSON.parse(policyBytes);
 assert.equal(policy.identity, capture.brain.adapterHash, 'Inspect a checkpoint from the same adapter');
 assert.deepEqual(
