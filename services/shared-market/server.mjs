@@ -118,6 +118,8 @@ async function tick() {
       ...decision,
       status: ['hold', 'buy', 'sell'][decision.action],
       target: state.targets[j],
+      holding: fraction(traderBefore[j + 1], market.price),
+      trade: null,
     };
     if (decision.action !== 0) {
       const tx = await chain.trade(i, decision.action === 2);
@@ -125,10 +127,24 @@ async function tick() {
       state.routes[tx.route]++;
       trades.push({ ...tx, individual: i });
       state.flies[i].route = tx.route;
-    } else state.flies[i].route = null;
+      state.flies[i].trade = tx;
+    } // A hold retains the last venue; it must not look like a new trip to Uniswap.
   }
   const after = await chain.balances(),
     end = await chain.market();
+  for (let i = 0; i < 4; i++) {
+    const wallet = i < 2 ? 0 : i - 1;
+    state.flies[i].result = {
+      cycle: state.tick + 1,
+      valuationChange: equity(after[wallet], end.price) - equity(before[wallet], market.price),
+      sharedWallet: i < 2,
+      fills:
+        i < 2
+          ? trades.filter((t) => t.route === 'Aqua' && t.maker === i).length
+          : Number(Boolean(state.flies[i].trade)),
+      quoteToken: config.symbols[1],
+    };
+  }
   state.phase = 'learning';
   // Immediate task reward, not future-return or profitability evidence.
   for (let i = 0; i < 4; i++) {
@@ -273,6 +289,7 @@ const server = createServer(async (req, res) => {
     const files = {
       '/': ['services/shared-market/index.html', 'text/html'],
       '/app.mjs': ['services/shared-market/app.mjs', 'text/javascript'],
+      '/narrative.mjs': ['services/shared-market/narrative.mjs', 'text/javascript'],
       '/style.css': ['services/shared-market/style.css', 'text/css'],
       '/fly.png': ['services/full-apps/assets/cute-fly-v1.png', 'image/png'],
       '/garden.png': ['services/full-apps/assets/aqua-garden-v1.png', 'image/png'],

@@ -1,3 +1,4 @@
+import { narrative } from './narrative.mjs';
 const $ = (s) => document.querySelector(s),
   esc = (s) =>
     String(s).replace(
@@ -52,9 +53,10 @@ $('#help').onclick = () =>
     `
 <p><small>Powered by Aqua — © Degensoft Ltd 2025.</small></p>
 <p>${t('Four flies, one pair of local test tokens. No outside trader is required: KOHARU and HINATA are the buyers and sellers.', '4匹が同じテスト通貨のペアを使います。KOHARUとHINATAが買い手・売り手になるので、外部の参加者がいなくても取引が成立します。')}</p>
-<p>🌸 <b>MOMO / SORA</b> — ${t('Two Aqua strategies share one maker wallet. Tight (10 bps), wide (80 bps), or withdraw. An offer is not income: only a confirmed fill moves tokens.', '1つのウォレットからAquaに2つの戦略を提示。狭いスプレッド（10 bps）、広いスプレッド（80 bps）、撤回を選びます。提示だけでは収入はなく、約定したときに通貨が移動します。')}</p>
-<p>🛒 <b>KOHARU / HINATA</b> — ${t('Separate wallets. Their chosen target token share becomes a neural input. The readout chooses hold/buy/sell; each order compares executable Aqua and Uniswap quotes and selects the greatest token output, before gas. No order is forced to fill an Aqua offer.', '個別のウォレットを持ち、目標の保有割合を神経回路への入力にします。待機・購入・売却を判定し、注文時にAquaとUniswapの見積もりを比較。ガス代を除く受取量が多い方へ発注します。Aquaでの約定を強制しません。')}</p>
-<p>💭 ? → ${t('Thinking: all 166,700 classified MaleCNS neurons are evaluated per fly.', '考え中：各個体でMaleCNSの分類済み166,700ニューロンを計算。')}<br>🧠 → ${t('Online readout learning from confirmed outcomes; exploratory actions are labeled. Not a validated profit strategy.', '約定結果から読み出し部分をオンライン学習。探索行動には表示を付けます。利益が検証された戦略ではありません。')}<br>💤 → ${t('Hold / no trade. Quiet markets and no fills are valid outcomes.', '待機。売買しない・約定しない状態も正常です。')}</p>
+<p> <b>MOMO / SORA</b> — ${t('Two Aqua strategies share one maker wallet. Tight (10 bps), wide (80 bps), or withdraw. An offer is not income: only a confirmed fill moves tokens.', '1つのウォレットからAquaに2つの戦略を提示。狭いスプレッド（10 bps）、広いスプレッド（80 bps）、撤回を選びます。提示だけでは収入はなく、約定したときに通貨が移動します。')}</p>
+<p> <b>KOHARU / HINATA</b> — ${t('Separate wallets. Their chosen target token share becomes a neural input. The readout chooses hold/buy/sell; each order compares executable Aqua and Uniswap quotes and selects the greatest token output, before gas. No order is forced to fill an Aqua offer.', '個別のウォレットを持ち、目標の保有割合を神経回路への入力にします。待機・購入・売却を判定し、注文時にAquaとUniswapの見積もりを比較。ガス代を除く受取量が多い方へ発注します。Aquaでの約定を強制しません。')}</p>
+<p> ? → ${t('Thinking: all 166,700 classified MaleCNS neurons are evaluated per fly.', '考え中：各個体でMaleCNSの分類済み166,700ニューロンを計算。')}<br>LEARN → ${t('Online readout learning from confirmed outcomes; exploratory actions are labeled. Not a validated profit strategy.', '約定結果から読み出し部分をオンライン学習。探索行動には表示を付けます。利益が検証された戦略ではありません。')}<br>WAIT → ${t('Hold / no trade. Quiet markets and no fills are valid outcomes.', '待機。売買しない・約定しない状態も正常です。')}</p>
+<p>${t('TX bubbles explain the venue comparison and received amount. Wallet Δ is the change in marked wallet value during this cycle, not realized profit. Makers share one wallet; no fill does not mean no inventory price change.', 'TXの吹き出しは取引先の比較と受取額を示します。口座の増減は今回の周期の時価評価差で、確定利益ではありません。提示側は共有口座なので、未約定でも保有通貨の価格で評価額は変わります。')}</p>
 <p>${t('PnL is current wallet value minus its starting value, marked at the Uniswap spot price in the displayed quote token. It includes inventory price changes and swap costs; it is not realized profit and excludes gas. Gas is separately in ETH. A test token has no monetary value.', '損益は現在の残高をUniswapのスポット価格で評価し、開始時評価額との差を表示します。単位は表示中の評価通貨。保有資産の価格変化・売買コストを含み、確定利益ではなく、ガス代は含みません。ガス代は別途ETHで表示。テスト通貨に金銭的価値はありません。')}</p>
 <p>${t('Pause, adjust target shares and apply, then run. When the targets are reached trading can slow down. All transactions stay on a local Ethereum fork (Anvil 31337); links open actual local receipts, not Etherscan.', '一時停止→目標保有割合を調整・適用→再開してください。目標に近づけば取引が減ることもあります。取引先はローカルEthereumフォーク（Anvil 31337）。TXリンクは実際のローカル領収書を開きます。')}</p>`,
   );
@@ -108,10 +110,10 @@ function render() {
   for (const [key, value] of Object.entries(texts)) $(key).textContent = value;
   const phases = {
     idle: t('Ready', '準備完了'),
-    thinking: t('💭 Sensing & thinking', '💭 刺激を受けて考え中'),
-    offering: t('🌸 Updating Aqua offers', '🌸 Aquaへの提示を更新中'),
-    trading: t('🛒 Comparing quotes & trading', '🛒 見積もり比較・売買中'),
-    learning: t('🧠 Learning from outcomes', '🧠 結果から学習中'),
+    thinking: t(' Sensing & thinking', ' 刺激を受けて考え中'),
+    offering: t(' Updating Aqua offers', ' Aquaへの提示を更新中'),
+    trading: t(' Comparing quotes & trading', ' 見積もり比較・売買中'),
+    learning: t(' Learning from outcomes', ' 結果から学習中'),
     watching: t('Watching the market', '市場を観察中'),
     paused: t('Paused · existing offers expire automatically', '一時停止中・既存の提示は期限切れになります'),
     error: t('Stopped on error', 'エラーで停止'),
@@ -137,30 +139,23 @@ function render() {
   state.flies.forEach((f, i) => {
     const el = $(`#fly-${i}`);
     const small = innerWidth < 700;
+    // Hold / thinking never changes venue. Only a confirmed receipt changes destination.
+    const venue = f.route || 'home';
     const x =
       i < 2
-        ? small
-          ? 10 + i * 20
-          : 10 + i * 12
-        : (f.route === 'Aqua' ? (small ? 16 : 20) : small ? 61 : 43) + (i - 2) * 7;
-    el.style.left = x + '%';
-    el.style.top = i < 2 ? '29%' : '65%';
-    el.dataset.thinking = thinking;
-    const labels = {
-      idle: '…',
-      tight: t('🌸 Tight · 10 bps', '🌸 狭く提示 · 10 bps'),
-      wide: t('🌸 Wide · 80 bps', '🌸 広く提示 · 80 bps'),
-      withdrawn: t('💤 Withdrawn', '💤 提示を撤回'),
-      hold: t('💤 Hold', '💤 様子を見る'),
-      buy: t('🛒 Buy ', '🛒 買う ') + state.config.symbols[0],
-      sell: t('🪙 Sell ', '🪙 売る ') + state.config.symbols[0],
-      thinking: '?',
-    };
-    el.querySelector('.bubble').textContent = thinking
-      ? state.phase === 'learning'
-        ? '🧠 ?'
-        : '💭 ?'
-      : (labels[f.status] || f.status) + (f.exploration ? t(' · exploring', ' · 探索中') : '');
+        ? 20 + i * 30
+        : venue === 'Aqua'
+          ? 12 + (i - 2) * 24
+          : venue === 'Uniswap V3'
+            ? 60 + (i - 2) * 24
+            : 30 + (i - 2) * 40;
+    el.style.left = (small ? (i % 2 ? 74 : 26) : x) + '%';
+    el.style.top = small ? (i < 2 ? '28%' : '61%') : i < 2 ? '28%' : '59%';
+    el.dataset.thinking = thinking || f.status === 'thinking';
+    const n = narrative(f, state, ja());
+    el.querySelector('.bubble').innerHTML =
+      `<span class="bubble-badge">${esc(n.badge)}</span><strong>${esc(n.title)}</strong><span>${esc(n.reason)}</span>${n.decision ? `<small>${esc(n.decision)}</small>` : ''}${n.note ? `<small>${esc(n.note)}</small>` : ''}${n.result ? `<span class="bubble-result ${n.delta >= 0 ? 'gain' : 'loss'}">${esc(n.result)}</span><small>${t('This cycle · mark-to-market · gas excluded', '今回の時価評価差・ガス代を除く')}</small>` : ''}`;
+    el.dataset.venue = venue;
   });
   $('#flow').textContent =
     `Aqua ${state.routes.Aqua} ${t('fills', '約定')} · Uniswap ${state.routes['Uniswap V3']} ${t('swaps', '売買')} · ${t('Same ERC20 pair. Actual transfers.', '共通のERC20ペア。実際の残高移動。')}`;
