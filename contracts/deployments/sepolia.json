@@ -23,5 +23,12 @@
   "initialStatusTransaction": "0xfc30ece997bfedf28569f11b767b935fdf21afdbf589b2c7ce22a2f3387b8339",
   "metadataURI": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/model.json",
   "explorer": "https://sepolia.etherscan.io/address/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-  "verification": "runtime-bytecode-matched; explorer-source-verification-pending"
+  "verification": "runtime-bytecode-matched; sourcify-creation-and-runtime-exact-match",
+  "sourceVerification": {
+    "url": "https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+    "api": "https://sourcify.dev/server/v2/contract/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+    "creationMatch": "exact_match",
+    "runtimeMatch": "exact_match",
+    "verifiedAt": "2026-09-26T07:00:44Z"
+  }
 }

@@ -31,6 +31,14 @@ export async function ensureWallet() {
   } catch (e) {
     if (e.code !== 'ENOENT') throw e;
   }
+  try {
+    await fs.access(deploymentPath);
+    throw Error(
+      'A Sepolia deployment already exists; restore its existing test wallet instead of generating another',
+    );
+  } catch (e) {
+    if (e.code !== 'ENOENT') throw e;
+  }
   // Never overwrite a partial setup. Keep all testnet signing material out of Git and stdout.
   for (const file of ['keystore.json', 'passphrase']) {
     try {
@@ -51,7 +59,7 @@ export async function ensureWallet() {
       {
         chainId: CHAIN_ID,
         address: wallet.address,
-        purpose: 'BioAgent Sepolia test deployment and smoke tests',
+        purpose: 'Reusable BioAgent Sepolia gas wallet for deployments, browser and smart-wallet tests',
       },
       null,
       2,

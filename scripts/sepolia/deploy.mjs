@@ -49,6 +49,14 @@ try {
     await registry.updateStatus.populateTransaction(agentId, 1, 2, 7000, 5500),
   );
   const block = await p.getBlock(deployed.blockNumber);
+  let previous = null;
+  try {
+    previous = JSON.parse(await fs.readFile(deploymentPath, 'utf8'));
+  } catch (e) {
+    if (e.code !== 'ENOENT') throw e;
+  }
+  if (previous && (previous.registryAddress !== address || previous.deploymentTransaction !== deployed.hash))
+    throw Error('Existing deployment record does not match journal');
   const record = {
     schema: 'bioagent.sepolia-deployment.v1',
     chainId: CHAIN_ID,
@@ -58,7 +66,8 @@ try {
     blockNumber: deployed.blockNumber,
     blockHash: deployed.blockHash,
     deployedAt: new Date(block.timestamp * 1000).toISOString(),
-    sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
+    sourceCommit:
+      previous?.sourceCommit || execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
     compiler: { version: '0.8.30', evmVersion: 'cancun', optimizerRuns: 200 },
     runtimeBytecodeHash: keccak256(code),
     abiSha256: sha256(JSON.stringify(a.abi)),
@@ -70,7 +79,8 @@ try {
     initialStatusTransaction: initial.hash,
     metadataURI,
     explorer: `https://sepolia.etherscan.io/address/${address}`,
-    verification: 'runtime-bytecode-matched; explorer-source-verification-pending',
+    verification: previous?.verification || 'runtime-bytecode-matched; explorer-source-verification-pending',
+    ...(previous?.sourceVerification ? { sourceVerification: previous.sourceVerification } : {}),
   };
   await json(deploymentPath, record);
   console.log(JSON.stringify(record, null, 2));
