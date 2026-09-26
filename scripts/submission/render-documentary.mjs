@@ -48,6 +48,7 @@ for(const lang of ['en','ja']){
   const start=paragraphTimes[k][j],end=paragraphTimes[k][j+1];
   // Keep adoption rationale and the mechanics as separate subtitle cues.
   if(k===2&&j===3){const parts=lang==='en'?p.split(/(?<=regression\.) /):p.split(/(?<=選びました。) /);assert(parts.length===2);add(start,start+7,parts[0]);add(start+7,end,parts[1]);}
+  else if(k===2&&j===6){const parts=lang==='en'?p.split(/(?<=[.!]) /):p.split(/(?<=。) /);assert(parts.length===3);add(start+.1,start+7,parts[0]);add(start+7,start+14,parts[1]);add(start+14,end-.12,parts[2]);}
   else add(start+.1,end-.12,p);
  });});
  // Collection captions aligned to the visible counter changes in the 0.25x replay.

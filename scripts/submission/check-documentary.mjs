@@ -8,6 +8,7 @@ const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',hea
 const results=[];
 for(const lang of ['en','ja']){
  const captions=await readFile(`${out}/bioagent-documentary-${lang}.srt`,'utf8');
+ assert(!/AMD|Ryzen|CPU/.test(captions),'Hardware name must remain screen-only');
  const seconds=s=>s.split(/[:,]/).map(Number).reduce((v,n,i)=>v+n*[3600,60,1,.001][i],0);
  const ranges=[...captions.matchAll(/(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})/g)];
  assert(ranges.length>0&&ranges.every(r=>seconds(r[1])>=5&&seconds(r[2])<=231),'Greeting holds must have no narration captions');

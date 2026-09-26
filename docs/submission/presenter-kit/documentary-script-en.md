@@ -2,7 +2,7 @@
 
 This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:56 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
 
-Short-language revision: 235 written words; leave silent pauses rather than filling the entire timeline. Read product identifiers naturally; AMD Ryzen 9 9950X = “AMD Ryzen nine, ninety-nine fifty X.”
+Short-language revision: 238 written words; leave silent pauses rather than filling the entire timeline. Read product identifiers naturally.
 
 Read one short line at a time and leave room for the GUI. MOMO: MOH-moh. SORA: SOH-rah. Use a calm conversational voice for explanations and a brighter sports-commentary voice for the approach and collection. Do not rush to imitate a professional race caller.
 
@@ -55,11 +55,12 @@ It scores eight directions and rest.
 The app moves the fly using the chosen action.
 
 [06 · 36–42 s · Record experience]
-We save actions and rewards for training.
+We record neural activity, actions, and rewards.
 
-[Return to GUI. Hardware/method lower third; approximately 19 seconds remaining.]
+[Return to the saved learning results. Explain reward prediction; keep the CPU name on screen only.]
 
-Training runs on an AMD Ryzen 9 9950X CPU.
+Ridge regression learns to predict each action's reward.
+Only the readout learns.
 Let's try again.
 
 ## 1:56–2:36 · MOMO and SORA try again
