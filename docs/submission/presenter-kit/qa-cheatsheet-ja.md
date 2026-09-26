@@ -84,9 +84,9 @@ BioAgentは、生物由来の神経回路で行動を決め、入力・学習・
 
 ## 8. IBioAgentを共通化するうまみは？
 
-**入力とモデルの意味を共通化し、検証・学習の処理を再利用することを目指します。** SolidityのIBioAgentは個体・Statusの共通API、IBioAgentStimulusは環境payloadを扱います。Anvil／Sepolia箱庭はUIとQ学習を共有。独立JSフレームワークの採用・復元APIや全神経Python市場版まで、単一の学習器に統合したわけではありません。
+**入力とモデルの意味を共通化し、検証・学習の処理を再利用することを目指します。** Solidityは入力・権限、公開JavaScriptは判断・Q学習、Workersは取得検証。全神経版はNode.jsの制御とPythonの神経計算をJSON Linesで接続します。独立JSフレームワークとTypeScriptの共有型仕様は別です。構成はスライド付録へ。
 
-[R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md)
+[R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md) / [R8: Architecture, languages and trust boundaries](../../architecture.md)
 
 ## 9. 何がオンチェーン？ 判断も検証できる？
 

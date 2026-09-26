@@ -88,4 +88,14 @@
 
 現在の市場実装は独自FlyV3RouterとV3 core。Universal Router／Trading APIは未使用。直接の削減先はAgent運用者。利用者増加、プロトコルの利益、電力削減は未測定。
 
-[Q&A](qa-cheatsheet-ja.md) · [Current TX evidence](../judge-demo-review.md) · [Research](../../research/bioagent-adaptation/README.md) · [Video evidence](capture-evidence.json)
+## 7. どこで動き、何を境界越しに渡すか
+
+- 公開版：Browser JS ← HTTP/JSON → Workers JS ← JSON-RPC → Solidity
+- 全神経版：Browser JS ← HTTP/JSON → Node.js ← JSON Lines → Python
+- 署名と決済は別の責務。Pythonの判断だけではTXは発行されない
+
+**共有型：TypeScriptの仕様案。学習状態はブラウザー／ローカル保存。Workersで全神経計算は行いません。**
+
+公開版はJavaScriptの7神経計算とQ学習をブラウザー内で実行します。Workersは静的配信と検証済み入力の取得を担当し、定期送信はWorker Secretの所有者鍵とDurable Objectの送信記録を使います。手動Sepolia送信は所有者のブラウザーwallet、Anvilはローカルアカウントです。全神経版はNode.jsが世界、報酬、署名・取引を制御し、Python子プロセスとstdin/stdoutのJSON Linesで通信します。Pythonは166,700神経と学習readoutを計算し、秘密鍵を使いません。採餌経験はSQLite、市場readoutはJSON、公開方策と餌消費履歴はlocalStorageへ保存します。Solidityはowner、revision/nonce、入力と決済を扱い、推論や学習は実行しません。TypeScriptの共有型は仕様案で、全ランタイムへ統合済みではありません。独立JSフレームワークも別実装です。詳細：docs/architecture.md。
+
+[Q&A](qa-cheatsheet-ja.md) · [Current TX evidence](../judge-demo-review.md) · [Research](../../research/bioagent-adaptation/README.md) · [Video evidence](capture-evidence.json) · [Architecture / languages](../../architecture.md)

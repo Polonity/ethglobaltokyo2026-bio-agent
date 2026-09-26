@@ -51,5 +51,5 @@ for lang in ('ja','en'):
         for name in z.namelist():
             if name.endswith(('.xml','.rels')): ET.fromstring(z.read(name))
     report['pptx'].append({'file':file.name,'slides':7,'speakerNotes':7,'editableText':True,'sha256':hashlib.sha256(file.read_bytes()).hexdigest()})
-(dir / 'document-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(dir / 'document-audit.json').write_bytes((json.dumps(report,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
 print(json.dumps({'pdfs':len(report['pdfs']),'pdfPages':sum(p['pages'] for p in report['pdfs']),'pptx':report['pptx']},ensure_ascii=False))

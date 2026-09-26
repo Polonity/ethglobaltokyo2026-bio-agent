@@ -88,4 +88,14 @@ These are saved observations from three different tracks. Research used five sea
 
 The current market uses custom FlyV3Router and V3 core, not Universal Router or Trading API. Savings would accrue to agent operators. User growth, protocol revenue and energy savings have not been measured.
 
-[Q&A](qa-cheatsheet-en.md) · [Current TX evidence](../judge-demo-review.md) · [Research](../../research/bioagent-adaptation/README.md) · [Video evidence](capture-evidence.json)
+## 7. Where code runs and what crosses each boundary
+
+- Public: Browser JS ↔ HTTP/JSON ↔ Workers JS ↔ JSON-RPC ↔ Solidity
+- Full: Browser JS ↔ HTTP/JSON ↔ Node.js ↔ JSON Lines ↔ Python
+- Signing and settlement are separate; a Python decision alone sends no TX
+
+**Shared types: a TypeScript proposal. Policies stay in browser/local storage. Full-neuron computation does not run in Workers.**
+
+Public mode computes seven-neuron decisions and Q-learning inside the JavaScript browser runtime. Workers serves assets and verified inputs. Its scheduled writer uses the owner key in a Worker Secret and a Durable Object send journal. Manual Sepolia writes use the owner browser wallet; Anvil uses local accounts. Full mode places world/reward/execution logic in Node.js, which communicates with a Python child over stdin/stdout JSON Lines. Python computes 166,700 neurons and learned readouts; it does not use signing keys. Foraging experience lives in SQLite, market readouts in JSON, and public policies/consumed-food history in localStorage. Solidity enforces owners, revisions/nonces, inputs and settlement; it does not perform inference or learning. Shared TypeScript types are a proposal, not universal runtime integration. The independent JS framework is also a separate implementation. Details: docs/architecture.en.md.
+
+[Q&A](qa-cheatsheet-en.md) · [Current TX evidence](../judge-demo-review.md) · [Research](../../research/bioagent-adaptation/README.md) · [Video evidence](capture-evidence.json) · [Architecture / languages](../../architecture.en.md)

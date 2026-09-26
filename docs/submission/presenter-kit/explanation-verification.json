@@ -1,10 +1,12 @@
 {
-  "generatedAt": "2026-09-26T10:57:31.177Z",
+  "generatedAt": "2026-09-26T11:12:30.817Z",
   "scope": "Current shared Fly Lab explanation with newly recorded full-foraging and market evidence",
   "languages": [
     {
       "lang": "ja",
-      "slides": 6,
+      "slides": 7,
+      "mainSlides": 6,
+      "appendixSlides": 1,
       "layout": [
         {
           "overflow": 0,
@@ -35,6 +37,11 @@
           "overflow": 0,
           "clearance": 135,
           "boundaryClearance": 56.5625
+        },
+        {
+          "overflow": 0,
+          "clearance": 22.359375,
+          "boundaryClearance": 20.25
         }
       ],
       "mobileNoOverflow": true,
@@ -42,7 +49,9 @@
     },
     {
       "lang": "en",
-      "slides": 6,
+      "slides": 7,
+      "mainSlides": 6,
+      "appendixSlides": 1,
       "layout": [
         {
           "overflow": 0,
@@ -73,6 +82,11 @@
           "overflow": 0,
           "clearance": 135,
           "boundaryClearance": 56.5625
+        },
+        {
+          "overflow": 0,
+          "clearance": 22.359375,
+          "boundaryClearance": 20.25
         }
       ],
       "mobileNoOverflow": true,

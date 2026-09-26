@@ -84,9 +84,9 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 8. What does the shared BioAgent interface provide?
 
-**A shared meaning for inputs and models, with reusable validation and learning components.** Solidity IBioAgent defines identity/Status; IBioAgentStimulus carries environment payloads. Anvil/Sepolia share UI and Q-learning. The independent JS framework and full Python market runtime have separate learners. This is not one universal learning engine or demonstrated skill transfer.
+**A shared meaning for inputs and models, with reusable validation and learning components.** Solidity handles inputs/authority; public JavaScript runs Q-learning, while Workers verifies inputs. Full mode uses Node.js control and Python computation over JSON Lines. The independent JS framework and proposed TypeScript types remain separate. See the architecture appendix.
 
-[R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md)
+[R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md) / [R8: Architecture, languages and trust boundaries](../../architecture.md)
 
 ## 9. What is onchain, and is inference trustless?
 
