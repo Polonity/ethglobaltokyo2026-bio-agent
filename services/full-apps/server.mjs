@@ -1,8 +1,10 @@
 import http from 'node:http';
+import { tokenTransfers } from './receipt.mjs';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { BrainClient } from '../../scripts/full/brain-client.mjs';
 import { FullChain } from './chain.mjs';
 import { rollout, trainApplication } from './experiment.mjs';
+const artifactDir = process.env.FULL_APPS_ARTIFACT_DIR || 'artifacts/full-apps';
 const port = Number(process.env.FULL_APPS_PORT || 8812),
   base = `http://127.0.0.1:${port}`;
 const brain = new BrainClient(),
@@ -29,7 +31,7 @@ const display = {
     ),
   ),
 };
-const tape = JSON.parse(await readFile('artifacts/full-apps/market-tape.json', 'utf8'));
+const tape = JSON.parse(await readFile(`${artifactDir}/market-tape.json`, 'utf8'));
 await chain.validateTape(tape);
 const apps = ['foraging', 'market', 'aqua'];
 let current = null;
@@ -48,6 +50,8 @@ const cleanReport = (r) => ({
   inferenceMs: r.test.neuralMs / r.test.steps,
 });
 async function start({ app, variant, operation, stimulus = 0.5 }) {
+  if (chain.config.officialFork && app !== 'aqua')
+    throw Error('Submission fork supports Aqua only; use port 8812 for other apps');
   if (current) throw Error('An experiment is already running');
   const job = { app, variant, operation, cancelled: false, startedAt: Date.now() };
   current = job;
@@ -79,9 +83,9 @@ async function start({ app, variant, operation, stimulus = 0.5 }) {
           onProgress,
         });
         reports[`${app}:${variant}`] = cleanReport(report);
-        await mkdir('artifacts/full-apps', { recursive: true });
+        await mkdir(artifactDir, { recursive: true });
         await writeFile(
-          `artifacts/full-apps/${app}-${variant}-latest.json`,
+          `${artifactDir}/${app}-${variant}-latest.json`,
           JSON.stringify(report, null, 2) + '\n',
         );
         latest[app] = { ...latest[app], phase: 'complete', report: cleanReport(report) };
@@ -115,7 +119,7 @@ async function start({ app, variant, operation, stimulus = 0.5 }) {
 for (const app of apps)
   for (const variant of ['full', 'legacy']) {
     try {
-      const report = JSON.parse(await readFile(`artifacts/full-apps/${app}-${variant}-latest.json`, 'utf8'));
+      const report = JSON.parse(await readFile(`${artifactDir}/${app}-${variant}-latest.json`, 'utf8'));
       if (report.test.brainHash === descriptor.brainHash) reports[`${app}:${variant}`] = cleanReport(report);
     } catch (error) {
       if (error.code !== 'ENOENT') throw error;
@@ -183,8 +187,14 @@ const server = http.createServer(async (req, res) => {
           ),
         });
       if (url.pathname === '/api/history') return reply(200, await brain.call('summary'));
-      if (/^\/tx\/0x[0-9a-f]{64}$/i.test(url.pathname))
-        return reply(200, await chain.provider.getTransactionReceipt(url.pathname.slice(4)));
+      if (/^\/tx\/0x[0-9a-f]{64}$/i.test(url.pathname)) {
+        const receipt = await chain.provider.getTransactionReceipt(url.pathname.slice(4));
+        if (!receipt) return reply(404, { error: 'Receipt not found' });
+        return reply(200, {
+          ...receipt.toJSON(),
+          transfers: tokenTransfers(receipt, [...display.market, ...Object.values(display.aqua).flat()]),
+        });
+      }
       return reply(404, { error: 'Not found' });
     }
     if (

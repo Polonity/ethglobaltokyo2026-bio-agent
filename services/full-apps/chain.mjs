@@ -14,6 +14,7 @@ import { createHash } from 'node:crypto';
 import { AquaProtocolContract } from '@1inch/aqua-sdk';
 import { Address, HexString } from '@1inch/sdk-core';
 import { acquireExperimentLock } from './lock.mjs';
+import { verifyAquaFork } from './fork.mjs';
 const atom = 10n ** 18n;
 const coder = AbiCoder.defaultAbiCoder();
 const strategyTypes = ['uint256', 'uint256', 'uint256', 'bytes32', 'bytes32'];
@@ -31,6 +32,7 @@ export class FullChain {
     });
     this.provider.pollingInterval = 20;
     this.url = url;
+    this.stateDir = process.env.FULL_APPS_STATE_DIR || '.local/full-apps';
   }
   async receipt(transaction) {
     for (let attempt = 0; attempt < 300; attempt++) {
@@ -44,7 +46,7 @@ export class FullChain {
     throw Error(`Receipt timeout; inspect before retrying: ${transaction.hash}`);
   }
   async setup(brain) {
-    this.releaseLock ||= acquireExperimentLock();
+    this.releaseLock ||= acquireExperimentLock(`${this.stateDir}/experiment.lock`);
     const p = this.provider;
     if (
       BigInt(await p.send('eth_chainId', [])) !== 31337n ||
@@ -53,16 +55,20 @@ export class FullChain {
       throw Error('Anvil required');
     this.signer = await p.getSigner(0);
     this.taker = await p.getSigner(1);
+    const officialFork = process.env.AQUA_FORK_MANIFEST
+      ? await verifyAquaFork(p, process.env.AQUA_FORK_MANIFEST)
+      : null;
     const modelHash = '0x' + createHash('sha256').update(JSON.stringify(brain)).digest('hex');
     let saved;
     try {
-      saved = JSON.parse(await readFile('.local/full-apps/chain.json', 'utf8'));
+      saved = JSON.parse(await readFile(`${this.stateDir}/chain.json`, 'utf8'));
     } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
     if (
       saved &&
       saved.modelHash === modelHash &&
+      (saved.officialFork?.codeHash || null) === (officialFork?.codeHash || null) &&
       saved.rpcUrl === this.url &&
       (await p.getCode(saved.market.harness)) !== '0x' &&
       (await p.getBlock(saved.blockNumber))?.hash === saved.blockHash
@@ -92,7 +98,7 @@ export class FullChain {
     for (const token of [a, b])
       await this.receipt(await token.transfer(await harness.getAddress(), 100000n * atom));
     await this.receipt(await harness.seed());
-    const aqua = await deploy(null, 'Aqua');
+    const aquaAddress = officialFork ? officialFork.aqua : await (await deploy(null, 'Aqua')).getAddress();
     const cfg = {
       rpcUrl: this.url,
       modelHash,
@@ -103,7 +109,8 @@ export class FullChain {
         harness: await harness.getAddress(),
         pool: await harness.pool(),
       },
-      aqua: await aqua.getAddress(),
+      aqua: aquaAddress,
+      officialFork,
       registries: {},
       aquaApps: {},
     };
@@ -138,8 +145,8 @@ export class FullChain {
     const tip = await p.getBlock('latest');
     cfg.blockNumber = tip.number;
     cfg.blockHash = tip.hash;
-    await mkdir('.local/full-apps', { recursive: true });
-    await writeFile('.local/full-apps/chain.json', JSON.stringify(cfg, null, 2) + '\n');
+    await mkdir(this.stateDir, { recursive: true });
+    await writeFile(`${this.stateDir}/chain.json`, JSON.stringify(cfg, null, 2) + '\n');
     this.config = cfg;
     await this.attach();
     return cfg;
@@ -261,7 +268,9 @@ export class FullChain {
       )
         throw Error('Market tape belongs to a different chain history');
     }
-    await this.quote('buy', atom, tape.events[0]);
+    // The submission fork serves Aqua only; Aqua consumes confirmed Swap logs, not historical quotes.
+    // Anvil fork historical calls to newly deployed V3 bytecode are not supported reliably.
+    if (!this.config.officialFork) await this.quote('buy', atom, tape.events[0]);
   }
   async quote(side, amount, event) {
     if ((await this.provider.getBlock(event.blockNumber))?.hash !== event.blockHash)

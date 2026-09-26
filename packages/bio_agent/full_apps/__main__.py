@@ -1,4 +1,5 @@
 """JSON-lines local process API. Only the Node loopback application server owns this process."""
+import os
 import json
 import sys
 import resource
@@ -13,7 +14,7 @@ from packages.bio_agent.full.model import ROOT
 
 def main():
     brain=BrainPool()
-    path=ROOT/'.local/full-apps'
+    path=ROOT/Path(os.environ.get('FULL_APPS_STATE_DIR', '.local/full-apps'))
     path.mkdir(parents=True,exist_ok=True)
     store=ExperienceStore(path/'experience.sqlite3',brain.hash)
     generators={}

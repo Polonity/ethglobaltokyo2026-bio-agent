@@ -125,6 +125,10 @@ for (const b of document.querySelectorAll('button[data-app]'))
   };
 function historyReplace() {
   window.history.replaceState({}, '', `/${app}`);
+  if (state?.chain?.officialFork && app !== 'aqua') {
+    app = 'aqua';
+    window.history.replaceState(null, '', '/aqua');
+  }
   document.body.dataset.app = app;
   visuals.forEach((v) => (v.x = 0));
 }
@@ -214,12 +218,15 @@ $('stop').onclick = async () => {
 function render() {
   document.body.dataset.app = app;
   document.querySelector('.network').textContent = connected
-    ? '● Anvil · local'
+    ? state?.chain?.officialFork
+      ? '● Ethereum fork · local'
+      : '● Anvil · local'
     : t('○ 接続待ち', '○ Connecting');
   $('language').options[0].textContent = t('システム', 'System');
   const p = state?.latest?.[app],
     flies = p?.snapshot?.flies || [];
   for (const b of document.querySelectorAll('button[data-app]')) {
+    b.hidden = !!state?.chain?.officialFork && b.dataset.app !== 'aqua';
     b.textContent = {
       foraging: t('みつの箱庭', 'Nectar garden'),
       market: t('PnLバトル', 'PnL battle'),
@@ -576,6 +583,27 @@ function renderDetails() {
       'This is a local experiment. Open a TX for its actual receipt. Market trades are paper; Aqua trades real test tokens.',
     ),
   );
+  const official = $('official-aqua-proof');
+  official.replaceChildren();
+  const fork = state?.chain?.officialFork;
+  if (app === 'aqua' && fork) {
+    official.append(
+      node('h3', t('公式Aquaを使用', 'Official Aqua deployment')),
+      node('p', `Ethereum block ${fork.blockNumber} → local fork · ${fork.aqua}`),
+      node(
+        'p',
+        t(
+          '決済はこのfork内のテストトークン。メインネットへの送信ではありません。',
+          'Settlement uses test tokens inside this fork; no mainnet transactions.',
+        ),
+      ),
+    );
+    const contract = node('a', t('公式コントラクトをEtherscanで確認', 'View official contract on Etherscan'));
+    contract.href = `https://etherscan.io/address/${fork.aqua}#code`;
+    contract.target = '_blank';
+    contract.rel = 'noopener';
+    official.append(contract);
+  }
   const links = [];
   if (p?.snapshot?.lastEvent) links.push(p.snapshot.lastEvent);
   for (const o of p?.outcomes || []) {
@@ -704,6 +732,17 @@ async function openReceipt(url) {
       const row = node('div', undefined, 'receipt-row');
       row.append(node('strong', label), node('span', String(value)));
       $('receipt-body').append(row);
+    }
+    if (x.transfers?.length) {
+      $('receipt-body').append(node('h3', t('実際に移動したトークン', 'Actual token transfers')));
+      for (const transfer of x.transfers) {
+        const row = node('div', undefined, 'receipt-row');
+        row.append(
+          node('strong', `${transfer.amount} ${transfer.symbol}`),
+          node('span', `${transfer.from} → ${transfer.to}`),
+        );
+        $('receipt-body').append(row);
+      }
     }
     const a = node('a', t('元のJSONを開く', 'Open raw JSON'));
     a.href = url;

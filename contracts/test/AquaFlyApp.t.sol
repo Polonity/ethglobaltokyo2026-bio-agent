@@ -15,8 +15,12 @@ contract AquaFlyAppTest is Test {
     bytes32 constant MODEL = keccak256("test-model");
     address taker = address(0x123);
 
-    function setUp() public {
-        aqua = new Aqua();
+    function createAqua() internal virtual returns (Aqua) {
+        return new Aqua();
+    }
+
+    function setUp() public virtual {
+        aqua = createAqua();
         t0 = new AquaTestToken("N");
         t1 = new AquaTestToken("P");
         registry = new BioAgentRegistry();

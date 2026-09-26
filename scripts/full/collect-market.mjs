@@ -2,6 +2,7 @@ import { Interface, formatEther } from 'ethers';
 import { FullChain } from '../../services/full-apps/chain.mjs';
 import { BrainClient } from './brain-client.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
+const artifactDir = process.env.FULL_APPS_ARTIFACT_DIR || 'artifacts/full-apps';
 const chain = new FullChain(),
   brain = new BrainClient();
 try {
@@ -31,9 +32,9 @@ try {
     };
   });
   const save = async () => {
-    await mkdir('artifacts/full-apps', { recursive: true });
+    await mkdir(artifactDir, { recursive: true });
     await writeFile(
-      'artifacts/full-apps/market-tape.json',
+      `${artifactDir}/market-tape.json`,
       JSON.stringify(
         {
           schema: 'bioagent.confirmed-market-tape.v1',
@@ -58,9 +59,9 @@ try {
       console.log(JSON.stringify({ events: events.length, price: events.at(-1).price }));
     }
   }
-  await mkdir('artifacts/full-apps', { recursive: true });
+  await mkdir(artifactDir, { recursive: true });
   await writeFile(
-    'artifacts/full-apps/market-tape.json',
+    `${artifactDir}/market-tape.json`,
     JSON.stringify(
       {
         schema: 'bioagent.confirmed-market-tape.v1',
