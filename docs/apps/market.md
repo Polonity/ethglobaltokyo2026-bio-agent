@@ -1,158 +1,158 @@
-# 02 市場 — 値動きに反応するペーパートレード
+# 02 Market — paper trading in response to price changes
 
-買う？ 売る？ 待つ？ 相場を生き抜こう
+Buy, sell or wait: navigate the market
 
-あなたは相場実験の観察者です。価格履歴を読み、2匹が仮想資金で売買を判断します。直接売買ボタンを押してハエを操作するゲームではありません。
+You observe a market experiment. Two flies read a price history and decide how to trade virtual funds; you do not directly place their trades.
 
-[全神経版の印刷シート](http://127.0.0.1:8812/guides/sheet.html?app=market&mode=full&lang=ja) / [従来版の印刷シート](http://127.0.0.1:8800/guides/sheet.html?app=market&mode=browser&lang=ja)。画面内と同じ説明データから生成しています。英語はシートの言語選択で切り替えられます。
+[Full-neuron printable sheet](http://127.0.0.1:8812/guides/sheet.html?app=market&mode=full&lang=en) / [Legacy printable sheet](http://127.0.0.1:8800/guides/sheet.html?app=market&mode=browser&lang=en). Generated from the same content as in-app help. Use the sheet language selector for Japanese.
 
-## 01 はじめてのプレイ
+## 01 First run
 
-1. 市場ページで「バトルをはじめる」を押します。確認済みのローカルUniswap価格履歴を再生します。
-2. 損益の線と、各個体の買う・売る・待つ、保有状態、ペーパーPnLを見比べます。取引判断と約定にはブロックの時間差があります。
-3. 「学び直す」で売買判断を学び直し、新しい評価入力で結果を確かめます。
+1. On Market, press “Start battle” to replay confirmed local Uniswap price observations.
+2. Compare the PnL lines with each fly’s buy/sell/hold action, position and paper PnL. Decision and execution occur at different observed blocks.
+3. Use “Learn again” to refit trade decisions and inspect results on new evaluation inputs.
 
-途中で止めるには「停止」。進行中の動作が完了してから止まります。
+Select Stop to interrupt a run after the current action completes.
 
-## 02 画面の見方
+## 02 Reading the screen
 
-実画面の切り抜きです。数値は撮影時の例です。
+These are actual screen captures. Numbers are examples from the capture time.
 
-### 1. 操作する場所
+### 1. Controls
 
-![操作する場所](../../apps/frontend/guides/screens/full-market-ja-1.png)
+![Controls](../../apps/frontend/guides/screens/full-market-en-1.png)
 
-### 2. ハエが反応する場所
+### 2. Agent field
 
-![ハエが反応する場所](../../apps/frontend/guides/screens/full-market-ja-2.png)
+![Agent field](../../apps/frontend/guides/screens/full-market-en-2.png)
 
-### 3. 状態と成績
+### 3. State and results
 
-![状態と成績](../../apps/frontend/guides/screens/full-market-ja-3.png)
+![State and results](../../apps/frontend/guides/screens/full-market-en-3.png)
 
-### 4. ブロックチェーンの証拠
+### 4. Blockchain evidence
 
-![ブロックチェーンの証拠](../../apps/frontend/guides/screens/full-market-ja-4.png)
+![Blockchain evidence](../../apps/frontend/guides/screens/full-market-en-4.png)
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| 折れ線＝損益の推移 | 全神経版は各個体のペーパーPnLをゼロ基準の折れ線で表示します。単位は画面に示す基準トークン（現在はNECTAR）。ETHではありません。入力にはAnvil上のUniswap V3価格履歴を使用します。 |
-| ハエ＝ペーパー口座 | 各個体は仮想現金と保有量を持ちます。上下に揺れる見た目は演出で、注文サイズや神経活動量ではありません。 |
+| Line = paper PnL | The full app charts each fly’s paper PnL relative to zero, in the displayed quote token (currently NECTAR), not ETH. Input prices come from Uniswap V3 history on Anvil. |
+| Flies = paper accounts | Each individual holds virtual cash and a position. Visual bobbing is decorative, not order size or neural activity. |
 
-### 状態と吹き出し
+### State and bubbles
 
-食べ物を集める代わりに、正の報酬を「食べた」という人工的な身体入力へ写します。満腹度・蓄えは次の判断へ戻ります。全神経版のEnergyは現在0.7固定で、利益や勝率を示すゲージではありません。
+Instead of collecting food, positive reward is mapped to synthetic feeding. Fullness and reserves affect subsequent decisions. Energy is currently fixed at 0.7 in the full app; it is not profit or confidence.
 
-待機＝何もしない、買い＝ペーパー保有を作る、売り＝ペーパー保有を閉じる、？＝学習。学習中でも保有価格のリスクが消えるわけではありません。表示は選択した行動の要約で、ハエが市場を理解したという証拠ではありません。
+Hold means no trade, buy opens a paper position, sell closes it, and ? means learning. Learning does not eliminate existing position risk. These labels summarize actions, not evidence that the fly understands markets.
 
-### 吹き出し図鑑
+### Bubble reference
 
-実際の表示文言に合わせた説明用の模式図です。全神経版のカードと従来版の感情風の吹き出しは別の表示です。
+Illustrations match the actual labels. Full-mode action cards and legacy expressive bubbles are different displays.
 
-#### 全神経版・7神経比較モード：状態と選択
+#### Full app / reduced comparison: states and choices
 
-![？](bubbles/full-market-ja-0.svg)
+![?](bubbles/full-market-en-0.svg)
 
-**？**：readoutを学習しているフェーズ。ハエの移動表示が止まります。収集や評価の全時間に出る印ではなく、学習処理が短いと見逃すこともあります。
+**?**: The readout-training phase. Fly movement pauses. This does not cover the entire collection/evaluation job; a short fit may be easy to miss.
 
-![行動 待機](bubbles/full-market-ja-1.svg)
+![Action Hold](bubbles/full-market-en-1.svg)
 
-**行動 待機**：この判断では売買しません。保有中でも未保有でも選べるので、待機＝ノーポジションではありません。
+**Action Hold**: No trade on this decision. Hold can occur with or without a position.
 
-![行動 買う](bubbles/full-market-ja-2.svg)
+![Action Buy](bubbles/full-market-en-2.svg)
 
-**行動 買う**：ペーパー口座の買い判断。入力を見たブロックより後の観測ブロックのquoteで約定を評価します。
+**Action Buy**: A paper buy decision. Execution is valued using a quote at a later observed block.
 
-![行動 売る](bubbles/full-market-ja-3.svg)
+![Action Sell](bubbles/full-market-en-3.svg)
 
-**行動 売る**：保有しているペーパーポジションを閉じる判断。実資金を売るTXを送ったという表示ではありません。
+**Action Sell**: A choice to close a paper position, not a real-money sell transaction.
 
-#### 従来のブラウザー版：吹き出し
+#### Original browser app: bubbles
 
-![？ 考えなおし中](bubbles/browser-market-ja-0.svg)
+![? Thinking again…](bubbles/browser-market-en-0.svg)
 
-**？ 考えなおし中**：売買方策を学び直している状態。保有ポジションがある場合、その価格リスクは残ります。
+**? Thinking again…**: Relearning the trading policy. An existing position still carries price risk.
 
-![買うタイミングを待つ](bubbles/browser-market-ja-1.svg)
+![Waiting to buy](bubbles/browser-market-en-1.svg)
 
-**買うタイミングを待つ**：買い判断を予約し、後のSwap・quoteによるペーパー約定を待っています。まだ購入完了ではありません。
+**Waiting to buy**: A buy is pending, awaiting a later Swap/quote for paper execution. It has not filled yet.
 
-![売るタイミングを待つ](bubbles/browser-market-ja-2.svg)
+![Waiting to sell](bubbles/browser-market-en-2.svg)
 
-**売るタイミングを待つ**：売り判断を予約し、後のSwap・quoteによるペーパー約定を待っています。まだ売却完了ではありません。
+**Waiting to sell**: A sell is pending, awaiting a later Swap/quote for paper execution. It has not filled yet.
 
-![じっと保有中](bubbles/browser-market-ja-3.svg)
+![Holding patiently](bubbles/browser-market-en-3.svg)
 
-**じっと保有中**：予約中の注文がなく、ペーパートークンを保有しています。
+**Holding patiently**: There is no pending order and the fly holds paper tokens.
 
-![今は見送ろう](bubbles/browser-market-ja-4.svg)
+![Let’s wait](bubbles/browser-market-en-4.svg)
 
-**今は見送ろう**：学習中でも注文待ちでもなく、トークンを保有していません。
+**Let’s wait**: Not learning, no pending order, and no token position.
 
-### 成績と目標
+### Scores and goals
 
-初期資金は100 token1、買いは10 token1単位、保有は1ポジションです。売却見積もり・手数料・想定ガス代を含むペーパーPnLで比較します。実資金の売買や将来の利益を示すものではありません。
+Start with 100 virtual token1; buys use 10 token1 and only one position is held. Compare paper PnL including liquidation quotes, fees and assumed gas. This is not real-money trading or evidence of future profit.
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| PnL / 損益 | 初期100 token1に対する仮想資産の増減。保有は売却quoteで値洗いします。実ウォレットの利益ではありません。 |
-| Reward / 報酬 | その判断による評価額の変化。累積するとその実行のPnLになります。ガスは取引ごと0.001 token1という仮定です。 |
-| 入力TXと注文 | TXリンクは主に価格の出典となるSwapです。ハエの売買はペーパーなので、売買ボタンに対応する実資産の注文TXではありません。 |
+| PnL | Paper equity minus the initial 100 token1. Positions are marked using liquidation quotes. This is not actual wallet profit. |
+| Reward | Change in equity per decision, summing to run PnL. Gas is an explicit assumption of 0.001 token1 per trade. |
+| Input TX versus order | The linked TX primarily witnesses the source Swap price. Fly trades are paper trades, not asset-moving order transactions. |
 
-## 03 学び直して、もう一度
+## 03 Learn and try again
 
-収集＝実際に動かして観測・行動・結果を保存。学習＝保存した神経特徴と報酬からreadoutを更新。評価＝別の実行で旧方策と候補を比較。改善した個体だけ採用し、v2などの方策番号が次の判断へ反映されます。神経接続そのものは固定です。
+Collect: save real action observations and outcomes. Train: fit the readout from saved neural features and rewards. Evaluate: compare the current policy and candidate in another run. Only improved individuals adopt the new version for subsequent decisions. Neural connections remain fixed.
 
-「評価中」は候補を試している途中で、まだ採用を意味しません。「完了」はその実行の終了、「停止」はユーザーの操作による中断です。？はreadoutを学習している間の表示で、短時間の学習では見えないこともあります。
+Evaluating means a candidate is being tested, not yet adopted. Complete means the run ended; Stopped means the user interrupted it. A ? indicates readout training and may be too brief to see when fitting finishes quickly.
 
-損益の線 → 行動名 → 損益の単位 → ⓘ内のSwap TXの順に見てください。次に学習を実行し、候補の改善と別条件の結果を分けて確認します。
+Follow price line → action label → PnL → source Swap TX. Then train and distinguish candidate improvement from results on new inputs.
 
-## 04 ゲームの裏側
+## 04 Behind the application
 
-### 1 Swapを観測
+### 1 Observe Swap
 
-実プールの確認済みログとblockHashを読みます。全神経版は保存した履歴の再生であり、外部市場のリアルタイム配信ではありません。
+Read confirmed pool logs and block hashes. The full app replays recorded history; it is not a live external market feed.
 
-### 2 値動きと身体
+### 2 Price changes and body
 
-上昇・下落・変動幅、保有の有無、現金、満腹度、蓄えを入力へ変換します。
+Encode up/down movement, magnitude, position, cash, fullness and reserves.
 
-### 3 回路が売買を選ぶ
+### 3 Circuit chooses a trade
 
-神経活動をreadoutへ渡し、待機・買い・売りを選択。保有していなければ売れず、保有中は追加買いをしないルールです。
+Neural activity feeds a readout that chooses hold/buy/sell. The rules prohibit selling without a position and additional buying while already holding.
 
-### 4 後の価格で評価
+### 4 Evaluate at a later price
 
-全神経版は次の観測ブロックでquoteし、その次で値洗い。手数料・価格影響を含む評価額の差を報酬として記録します。
+Full mode quotes at the next observed block and values at the following one. Changes in liquidation equity, including pool fees and price impact, become rewards.
 
-チェーンは入力や取引の出典を追うためのものです。神経計算・身体更新・学習はローカルで実行します。TX成功は、判断の正しさや利益を保証する印ではありません。
+The chain lets you trace inputs and transactions. Neural computation, body updates and learning run locally. A successful transaction does not certify a correct decision or a profitable policy.
 
-全神経モードは分類付き166,700神経・25,582,938内部接続を個体ごとに計算します。16入力を感覚神経集団に与え、4神経step後の活動集計をreadout（行動に変換する学習器）へ渡します。7神経モードも明示的に選択できます。
+Full mode computes 166,700 classified neurons and 25,582,938 internal connections per individual. Sixteen inputs drive sensory populations; after four neural steps, activity summaries feed a learned action readout. A seven-neuron mode is an explicit alternative.
 
-MaleCNSは実測された神経接続の地図です。入力を神経に割り当てる方法、活動の計算式、身体、行動への変換はこの実験の人工モデルです。吹き出しから本物のハエの感情や思考を読み取れるわけではありません。
+MaleCNS provides measured neural connectivity. Input mapping, activity dynamics, body state and action decoding are engineered for this experiment. Bubbles do not reveal a real fly’s emotions or thoughts.
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| Policy v / 方策番号 | その判断に使った行動変換の版。神経数や年齢ではありません。 |
-| 神経step / ms | 人工モデルの更新回数と神経計算時間。生物学的な時間や画面のFPSとは異なります。 |
-| 学習前 / 候補 / 別条件 | 旧方策の評価、候補の評価、採用後の別入力での結果。各欄はMOMO / SORA順。数値はその実行の累積報酬です。 |
-| TX / Block / hash | 入力や取引が記録されたトランザクションとブロック。Anvilではローカルreceiptを開きます。ハエの全神経状態がチェーンに保存されるわけではありません。 |
+| Policy v / version | The action readout version used for this decision, not neuron count or age. |
+| Neural step / ms | Artificial model updates and neural computation time, not biological time or display FPS. |
+| Before / Candidate / New test | Current-policy evaluation, candidate evaluation, and a new-input run after adoption. Values are MOMO / SORA cumulative rewards for each run. |
+| TX / Block / hash | The transaction and block recording an input or trade. Anvil links open local receipts. The fly’s full neural state is not stored onchain. |
 
-## 従来のブラウザー版との違い
+## Differences from the legacy browser version
 
-1. 「価格を上げる」「価格を下げる」、または「デモ相場を再生」を選びます。
-2. 入力TXと、TOKEN1・TOKEN0・OBSERVEの場所へ移るハエの保有・観察状態を見ます。
-3. ペーパーPnLと学習結果を確認します。学習採用は報酬予測誤差で判定され、PnL改善を保証しません。
+1. Choose a price-up, price-down or demo-market playback button.
+2. Follow the input TX and flies moving between TOKEN1, TOKEN0 and OBSERVE states.
+3. Inspect paper PnL and learning results. Adoption uses reward-prediction error, not guaranteed PnL improvement.
 
-仮想口座のPnLを比べます。価格を動かすSwapは実TXですが、ハエの売買はペーパートレードです。
+Compare virtual-account PnL. Price-changing swaps are real TXs; fly trades are paper trades.
 
-従来のブラウザー版は実測MaleCNSの7神経・19接続を使います。32stepの回路応答を行動変換へ渡します。全神経版とは入力変換や学習方法が異なります。
+The original browser apps use seven measured MaleCNS neurons and 19 connections. Their 32-step circuit response feeds action decoding. Input mapping and learning differ from the full-population apps.
 
-- **1 実Swapを受け取る**：価格操作ボタンはテストプールで実Swapを起こし、確認済みログを入力にします。
-- **2 値動きと身体を符号化**：値動き、保有、満腹度を7神経回路の応答に変換します。
-- **3 仮想注文を選ぶ**：Q値などの行動変換から待機・買い・売りを選び、注文を保留します。
-- **4 後のブロックで約定**：次のブロック以降のquoteで仮想約定と値洗いを行い、報酬予測を学びます。
+- **1 Receive a real Swap**: Price controls cause real swaps in the test pool; confirmed logs become inputs.
+- **2 Encode prices and body**: Price changes, holdings and fullness are encoded through the seven-neuron circuit.
+- **3 Select a paper order**: The action policy selects hold/buy/sell and queues an order.
+- **4 Fill at a later block**: A later-block quote provides paper execution and valuation, feeding reward-prediction learning.
 
-従来版は実Swapログを受け、後のブロックのquoteで仮想約定します。報酬予測の誤差が減った候補を採用するため、採用がPnL改善を意味するとは限りません。
+The original app consumes real Swap logs and fills virtually using later-block quotes. Adoption is based on reduced reward-prediction error, which does not necessarily improve PnL.
 
-参照実装：全神経版 `services/full-apps/market.mjs`、神経入力 `packages/bio_agent/full_apps/brain.py`、学習 `packages/bio_agent/full_apps/learning.py`。説明データは `apps/frontend/guides/content.mjs`。
+Reference implementation: full mode `services/full-apps/market.mjs`, neural inputs `packages/bio_agent/full_apps/brain.py`, learning `packages/bio_agent/full_apps/learning.py`. Guide content: `apps/frontend/guides/content.mjs`.

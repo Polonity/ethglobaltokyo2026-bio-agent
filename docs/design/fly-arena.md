@@ -1,27 +1,27 @@
-# Fly Labの箱庭
+# Fly Lab environment
 
-[Anvil起動手順](../deployment/local-anvil.md) / [Sepolia公開デモ](../deployment/sepolia.md)。両環境は`apps/frontend/`の同じUIと`packages/bio_agent/browser/arena.js`を使用します。
+[Local Anvil setup](../deployment/local-anvil.md) · [Public Sepolia demo](../deployment/sepolia.md). Both use `apps/frontend/` and `packages/bio_agent/browser/arena.js`.
 
-## 入力の原則
+## Input principle
 
-**ハエに与える外部入力はすべてオンチェーンデータです。** 初期環境もTXで構築します。
+**All external inputs to the flies come from onchain data.** The initial environment is also created through a TX.
 
-- `IBioAgentStimulus.submitStimulus`の環境スキーマが、寸法・seed・餌配置範囲・危険エリアを定義する。
-- 個体ごとの`updateStatus`が活動・刺激・供給条件を記録する。
-- 正の刺激の成功イベントで餌を1個追加する。座標はTXと記録済みseedから計算する。
-- 環境を更新するTXはフィールドを再構築し、古い餌を消去する。
-- 保留・失敗・重複のTXでは餌を増やさず、食べた餌を自動補充しない。
+- `IBioAgentStimulus.submitStimulus` with the world schema defines dimensions, seed, food bounds, and hazards.
+- Per-agent `updateStatus` records activity, stimulus, and supply conditions.
+- Each successful positive-stimulus event adds one food; coordinates derive from its TX and the recorded seed.
+- A new world TX rebuilds the field and clears old food.
+- Pending, failed, and duplicate TXs add nothing. Consumed food is not automatically replaced.
 
-`registry-read.js`がreceipt・イベント・canonical blockを検査します。`tx-world.js`と`tx-food.js`が環境へ適用し、全神経版もこの処理を共有します。環境が未確認なら動作を始めず、RPC断では停止します。
+`registry-read.js` checks receipts, events, and canonical blocks. `tx-world.js` / `tx-food.js` apply them; full-neuron mode shares these transformations. Execution waits for a verified environment and pauses on RPC failure.
 
-## 計算と学習
+## Computation and learning
 
-身体状態・移動・消費・得点・方策は、記録された入力から計算するオフチェーンの内部状態です。実測7神経・19接続のMaleCNS部分回路が人工的に符号化した感覚入力を処理し、Q値から8方向の移動または休息を選びます。全神経版は別のPythonランタイムとreadout学習を使います。
+Body, movement, consumption, scores, and policy are offchain internal state derived from recorded inputs. A measured MaleCNS slice of 7 neurons and 19 connections processes encoded sensory inputs; Q-values select eight movement directions or rest. Full mode uses a separate Python runtime and readout learning.
 
-ブラウザー版の学習は、確認済み環境のコピーと経験を再生します。同条件の比較で改善した候補だけ採用します。学習用コピーで餌を再生しても、表示中の箱庭には追加しません。これは現在の条件での比較で、独立した汎化性能の証明ではありません。
+Browser learning replays experience and copies of the confirmed environment. It adopts improved candidates under identical comparison conditions. Training copies never add visible food. This is a comparison under current conditions, not independent proof of generalization.
 
-UIの再生速度や一時停止は観察用の操作です。ブラウザー間で共有するのは入力で、身体や学習状態をオンチェーン同期する構成ではありません。消費履歴と方策はブラウザー内に保存されます。
+Playback speed/pause are observation controls. Browsers share chain inputs, not synchronized body/policy state. Consumption history and policies are persisted locally.
 
-## オフライン実験
+## Offline experiments
 
-`createWorld`の合成環境は、チェーンを使わない研究・対照試験用です。Anvil／Sepolia接続時には使いません。以前の12匹・ローカル操作だけの実験記録を、現在の公開デモの仕様として扱わないでください。
+Synthetic `createWorld` environments are for offline research and controls, not chain-connected Anvil/Sepolia execution. Historical twelve-agent browser experiments are not the current public-demo specification.

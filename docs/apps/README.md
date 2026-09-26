@@ -1,44 +1,42 @@
-# ゲームの説明書
+# Application guides
 
-「はじめてのプレイ → 画面の見方 → 学び直し → ゲームの裏側」の順で読める説明書です。操作・目標・成績を先に、オンチェーン入力とMaleCNSの関係を後半にまとめています。
+Read each guide in order: first run, screen layout, learning, then implementation. Controls, goals, and metrics come before the relationship between onchain inputs and MaleCNS.
 
-| アプリ | 説明シート | オンチェーンで確認するもの | ローカルで計算するもの |
+| Application | Guide | Onchain evidence | Local computation |
 | --- | --- | --- | --- |
-| 採餌 | [蜜・状態・吹き出しの意味](foraging.md) | 個体に与えるStatus刺激とそのTX | 蜜・危険・身体・神経活動・移動・学習 |
-| 市場 | [価格・売買・PnLの意味](market.md) | 実Uniswap Swap、価格のブロックとquoteの出典 | ペーパー口座・神経活動・売買判断・学習 |
-| Aqua | [戦略・約定・代理報酬の意味](aqua.md) | Status、ship / dock、テストトークンの実交換 | 神経活動・戦略の選択・代理価格による評価・学習 |
+| Foraging | [Food, state, and bubbles](foraging.md) | Environment/hazards and per-agent Status stimulus TXs | Body, neural activity, movement, and learning |
+| Market | [Prices, trades, and PnL](market.md) | Real Uniswap Swaps, price blocks, and quote provenance | Paper accounts, decisions, and learning |
+| Aqua | [Strategies, fills, and proxy rewards](aqua.md) | Status, ship/dock, and actual test-token swaps | Strategy decisions, proxy valuation, and learning |
 
-全神経版は [8812](http://127.0.0.1:8812/)、従来のブラウザー版は [8800](http://127.0.0.1:8800/)。各ページの「説明シート」から日本語・英語を選んで印刷・PDF保存できます。全神経版の7神経比較モードと、従来のブラウザー版は学習方式が異なるため、シートも区別しています。
+Full-neuron UI: [port 8812](http://127.0.0.1:8812/). Legacy browser UI: [port 8800](http://127.0.0.1:8800/). Each page's explanation sheet supports English and Japanese printing/PDF export. Full-mode seven-neuron comparisons and the legacy browser learner are distinct implementations.
 
-主画面のⓘから説明モーダルを開けます。[UIの方針と単位](../design/player-experience.md)も参照してください。
+Open help through the main screen's information button. See [UI conventions and units](../design/player-experience.md). Each help panel has four numbered screenshots: controls, field, state, and chain evidence. Images are historical examples, not current measurements. The seven-neuron comparison labels its full-mode reference images accordingly.
 
-各ページの説明モーダルには実画面から切り出した4枚の図（操作・フィールド・状態・チェーン情報）を番号付きで掲載しています。図の見出しから実際の操作箇所に移動できます。画像は撮影時の例であり、現在の実測値とは区別します。日本語・英語、全神経版・従来版それぞれの画面を使っています。7神経比較モードでは全神経版の参考画像であることを明示します。
+Guides include legends, processing flow, state/bubble definitions, metrics, and suggested actions. The full UI's latest-action trace displays a completed action's actual input TX, neuron count, policy, action, and result; illustrative examples are not presented as measurements.
 
-各ページには凡例、処理の流れ、状態・吹き出しの定義、数値の意味、試す操作を掲載。全神経版の「直近の動作をたどる」は、実際に完了した動作の入力TX、神経数、使用方策、行動、結果を表示します。静的な説明例を実測値として表示しません。
+## Update the guides
 
-## 資料の更新
+`apps/frontend/guides/content.mjs` is the shared source for in-app help and printable HTML.
 
-説明の原本は `apps/frontend/guides/content.mjs`。画面内ヘルプと印刷HTMLは同じデータを読みます。
-
-```bash
-node scripts/capture-guide-screens.mjs # 稼働中の両GUIから48枚の画面領域を取得
-npm run docs:apps     # 3つのMarkdown説明シートを生成
-npm run build         # 従来Worker向けの静的ファイルを更新
-npm run test:guides   # 日英・両GUI・実動作の表示・モバイル・PDFを検証
+```sh
+node scripts/capture-guide-screens.mjs # Capture 48 regions from the running GUIs
+npm run docs:apps                     # Generate three English Markdown guides
+npm run build                        # Refresh static assets
+npm run test:guides                   # Check both languages, GUIs, traces, mobile, PDF
 ```
 
-ブラウザー検証にはローカルの8812 / 8800、Chrome、Anvilが必要です。全神経版では通常実行を少し進めて停止するため、既存の学習ジョブを終了してから実行します。公開Workerへのデプロイはこの変更に含めていません。
+Browser checks require ports 8812/8800, Chrome, and Anvil. They briefly run and stop the full application, so finish existing learning jobs first. These commands do not deploy the public Worker.
 
-生成PDFと画面キャプチャは `artifacts/app-guides/`、検証結果は同ディレクトリの `verification.json`。過去の学習性能の受入結果は[既存の受入記録](../submission/full-apps-acceptance.md)として保持し、今回の説明UIの検証とは区別します。
+PDFs, captures, and `verification.json` are under `artifacts/app-guides/`. Keep these UI checks separate from [historical learning acceptance](../submission/full-apps-acceptance.md).
 
-画像原本は `apps/frontend/guides/screens/`。`manifest.json` に取得元URL・セレクター・日時を記録しています。画面構成が変わった場合は画像も再取得してください。
+Image sources live in `apps/frontend/guides/screens/`; `manifest.json` records URLs, selectors, and capture times. Recapture images after layout changes.
 
-## 吹き出し図鑑
+## Bubble reference
 
-全神経版の学習表示・行動カードと、従来版の吹き出しを、実際の表示文言に合わせた模式図で説明しています。各図には表示条件と状況を併記し、採餌・市場の優先順位、注文待ちと約定の違い、Aquaの判断とTX確定の違いも明示しています。模式図は実測画面や感情計測ではありません。原本は `content.mjs` の `bubbleGuide` / `bubbleSvg`、Markdown用SVGは `docs/apps/bubbles/` へ生成します。
+`bubbleGuide` / `bubbleSvg` in `content.mjs` describe full-mode action cards and legacy bubbles, including priorities, pending-versus-filled orders, and Aqua decisions versus confirmed TXs. Generated SVGs live in `docs/apps/bubbles/`. These are explanatory diagrams, not captured measurements or evidence of emotions.
 
-取引バトル／Aquaの通貨と相手が分からない場合は、画面の「誰が取引している？」と[取引の仕組み](../design/aqua-market-flow.md)を参照してください。
+For counterparties and currencies, see the in-app trading explanation and [market flow](../design/aqua-market-flow.md).
 
-## 4匹の共有市場（新モード）
+## Four-agent shared market
 
-[実画面付き説明書](shared-market/README.md)。http://127.0.0.1:8814/ 。2匹がAqua提示、別の2匹が同じ通貨のUniswap/Aquaを比較して実売買します。既存のペーパー取引とは別モードです。
+[Guide with screenshots](shared-market/README.md), served at http://127.0.0.1:8814/. Two agents offer Aqua liquidity; two others compare Aqua/Uniswap quotes for actual test-token trades. This is separate from the paper-trading mode.

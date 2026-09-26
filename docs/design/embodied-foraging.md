@@ -1,6 +1,6 @@
 # Embodied foraging v2
 
-> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+> Update 2026-09-26: [Required MaleCNS, task-specific learning, and immediate adoption](malecns-learning.md) describes the updated implementation. The historical record below includes earlier fixed-circuit and synthetic models.
 
 Implemented 2026-09-26. `foraging-embodied-q-v2` is a synthetic Q-learning demonstration, not a MaleCNS simulation or validated physiology.
 

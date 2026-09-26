@@ -1,191 +1,121 @@
-# Anvil + ローカル Workers：3匹へオンチェーン刺激を送る
+# Anvil + local Workers: onchain inputs for three agents
 
-この手順はローカル PC 内で完結します。Cloudflare アカウント・API token・Sepolia ETH・ブラウザーウォレットは不要です。公開 Workers と Sepolia を更新しません。
+This runs entirely on your PC. No Cloudflare account/token, Sepolia ETH, or browser wallet is required. Public Workers and Sepolia are not modified.
 
-## ゴールと実行するもの
-
-| コンポーネント | 実体 | 既定の接続先 |
+| Component | Implementation | Default |
 | --- | --- | --- |
-| EVM | Foundry Anvil / chain ID 31337 | `http://127.0.0.1:8545` |
-| アプリ層 | `IBioAgentRegistry` / `IBioAgent` を実装する `BioAgentStimulusRegistry` | 起動時に Anvil へ実デプロイ |
-| ローカル Web アプリ | Wrangler dev の workerd + Static Assets + ローカル専用 API | `http://127.0.0.1:8798` |
-| Agent Runtime | GUI 内の Q-learning モデル、3個体 | MOMO #1 / SORA #2 / KIKI #3 |
+| EVM | Foundry Anvil, chain ID 31337 | http://127.0.0.1:8545 |
+| Contracts | BioAgentStimulusRegistry implementing IBioAgentRegistry / IBioAgent | Deployed at startup |
+| Web app | Wrangler workerd, Static Assets, local-only API | http://127.0.0.1:8798 |
+| Agent runtime | Browser Arena | MOMO #1, SORA #2, KIKI #3 |
 
-コントラクトの型を定義した interface 自体はデプロイしません。実装である Registry をデプロイし、Foundry Script が `IBioAgentRegistry` 経由で3匹を登録します。
+Interfaces themselves are not deployed. The deployment script creates the registry implementation and registers agents through `IBioAgentRegistry`.
 
-## 初回準備
+## Prerequisites and startup
 
-- Node.js 22以上、Python 3.11以上（既存テスト用）。
-- Foundry v1.8.3 の `forge` と `anvil`。Solidity コンパイラはプロジェクトの0.8.30に固定。
-- 初回依存取得・コンパイラ取得時はインターネットが必要です。
+Use Node.js 22+, Python 3.11+ for Python tests, and Foundry v1.8.3 (`forge`/`anvil`). Solidity is pinned to 0.8.30. Initial dependency/compiler downloads require network access.
 
 ```sh
 npm ci
 git submodule update --init --recursive
-```
-
-`forge` と `anvil` は PATH、または `~/.foundry/bin/` から検出します。別の場所に置いている場合は環境変数 `FORGE` / `ANVIL` で実行ファイルの絶対パスを指定してください。今回の検証では `/tmp/bio-agent-foundry-v1.8.3/` に置いた公式配布の v1.8.3 を使用しました。
-
-## 一式を起動する
-
-リポジトリルートで実行します。
-
-```sh
 npm run local:up
 ```
 
-明示的にツールの場所を指定する場合:
+Tools are resolved from PATH or `~/.foundry/bin/`. Override with absolute `FORGE` / `ANVIL` paths:
 
 ```sh
 FORGE=/path/to/forge ANVIL=/path/to/anvil npm run local:up
-```
-
-起動コマンドは次の順に処理します。
-
-1. GUI アセットとモデル manifest をビルドする。
-2. 空いている専用ポートに新しい Anvil を起動する。
-3. chain ID が31337、client が Anvil であることを確認する。
-4. `DeployLocalArena.s.sol` を **ローカルへ broadcast** する。
-5. Registry の CREATE・3回の registerAgent・初期環境submitStimulus、計5TXの成功receiptを確認する。
-6. 接続情報を `.local/deployment.json`、ローカル設定を `.local/wrangler.json` に生成する。
-7. `wrangler dev --local` を起動する。
-
-ターミナルに `Ready on http://127.0.0.1:8798` が出たら、[ローカル GUI](http://127.0.0.1:8798) を開きます。
-
-`Ctrl-C` で、このコマンドが起動した Anvil と Wrangler を終了します。既存プロセスは停止しません。起動のたびに新しいローカルチェーンを作るため、前回の状態は引き継ぎません。既存ポートが使用中なら自動上書きや停止をせずエラーにします。
-
-```sh
 ANVIL_PORT=8555 LOCAL_GUI_PORT=8808 LOCAL_INSPECTOR_PORT=9258 npm run local:up
 ```
 
-## GUI で試す
+Startup builds assets/manifest, starts its own Anvil on an unused port, verifies chain 31337 and Anvil client identity, broadcasts `DeployLocalArena.s.sol`, and verifies five receipts: CREATE, three registrations, and initial world submission. It writes `.local/deployment.json` and `.local/wrangler.json`, then runs `wrangler dev --local`.
 
-1. 上部の `ANVIL / 31337` が接続済みとなり、MOMO・SORA・KIKI の3匹が表示されることを確認。
-2. 順位表またはハエをクリックして対象を選ぶ。Inspector の矢印でも切り替えられる。
-3. 「採餌」、刺激95%、エネルギー供給90%などを設定。
-4. **「コントラクトに刺激を送信」** を押す。
-5. 送信 → 採掘 → ログ受信 → 適用済みを確認。Tx hash、block、log index、revision が画面に残る。
-6. 対象の1匹が新しい入力で行動する。他の2匹の Status は変化しない。
-7. 同じ個体を「休息」に変更すると、移動よりも休息を選ぶ傾向が強くなる。
+Open [the GUI](http://127.0.0.1:8798) after the Ready message. Ctrl-C stops only processes started by this command. Each launch creates a fresh chain; it refuses occupied ports rather than stopping existing processes.
 
-登録時の初期値は3匹ともRest / energy 5000 / stimulus 0 / revision 1。初期環境TXが寸法・seed・危険エリア・餌配置範囲を記録します。正の刺激TXを送るまで餌はなく、ハエは待機します。
+## Try the GUI
 
-AnvilとSepoliaは `apps/frontend/` の同じUI・判断・学習処理を使います。選択中の個体への正の刺激TXが成功すると、共通フィールドへ餌を1個追加。食べた餌は消え、自動補充しません。フィールドのクリックは個体選択で、「おやつ」も刺激TXを送ります。
+1. Check connection to ANVIL / 31337 and the three named agents.
+2. Select one using the field, leaderboard, or inspector arrows.
+3. Set Forage, 95% stimulus, and 90% energy supply, then send the stimulus transaction.
+4. Follow submitted → mined → received → applied, with TX hash, block, log index, and revision.
+5. Observe the selected agent. The other agents' Status inputs remain unchanged.
+6. Try Rest to increase the tendency to rest; it need not stop every movement.
 
-**ハエに与える外部入力はすべてオンチェーンデータです。** 環境入力は `IBioAgentStimulus.submitStimulus`、個体の活動・刺激・供給は `updateStatus` を使います。初期環境の送信内容は [foraging-world.json](../../packages/bio_agent/browser/foraging-world.json)。ローカル値での代替はありません。環境TXの更新はフィールドを再構築し、それ以前の餌を消去します。
+Initial Status is Rest / 5000 / 0 / revision 1. The world TX defines dimensions, seed, hazards, and food bounds. No food exists before a positive stimulus; agents wait. Each successful positive stimulus adds one shared food. Eating removes it permanently until a new stimulus. Field clicks select agents; the snack control also submits a TX.
 
-身体・位置・方策は入力から計算する内部状態です。再生速度は観察の速度で、環境条件ではありません。学習は確認済み環境のコピーを再生し、表示中の餌を増やしません。環境TXと餌の由来は「環境と餌の入力TX」で確認できます。
+**All external inputs to the flies come from onchain data.** `submitStimulus` supplies the world; `updateStatus` supplies activity/stimulus/supply. Initial payload source: [foraging-world.json](../../packages/bio_agent/browser/foraging-world.json). There is no local-value fallback. A new world TX rebuilds the field and clears old food.
 
-## イベントから反応まで
+Anvil/Sepolia share UI, decisions, and learning. Body, position, and policy are computed internal state. Playback speed is an observation control. Learning replays confirmed-world copies without adding visible food. Inspect world/food provenance in the input-TX panel.
 
-1. GUI が `/api/chain/status` へ agentId、expectedRevision、activity、energy、stimulus を送信。
-2. ローカル Worker が入力を検証し、固定 Registry の ABI で `updateStatus` をエンコード。
-3. Anvil のローカル owner アカウントで `eth_sendTransaction`。GUI や Worker に秘密鍵は渡さない。
-4. コントラクトが所有者・値域・revision を確認して状態を更新し、`BioAgentStatusUpdated` を emit。
-5. GUI の ChainSession が Worker 経由で `eth_getLogs` を定期取得する。
-6. ログの入力全体を対象の Agent に適用する。HTTPの送信成功だけでは適用しない。
-7. 次の Agent tick から新しい入力で判定・移動する。フレームの描画はブラウザーで継続する。
+## Transaction-to-action path
 
-ログ取得間隔は600ms、Agent tick は200ms（再生速度1×）。停止ボタンはシミュレーションを止めますが、ログ受信は継続します。画面を隠した間も受信は行いますが、ブラウザーのバックグラウンド制限によって遅れることがあります。
+1. GUI POSTs agentId, expectedRevision, activity, energy, and stimulus to `/api/chain/status`.
+2. Worker validates and encodes `updateStatus` for the fixed registry.
+3. Anvil's unlocked owner sends `eth_sendTransaction`; no key is handed to GUI/Worker.
+4. Contract validates owner, ranges, and revision and emits StatusUpdated.
+5. ChainSession polls logs through the Worker every 600 ms.
+6. Verified event values, not HTTP submission success, update the target agent.
+7. The next 200 ms tick (at 1×) computes actions; rendering continues independently.
 
-## 入力の対応
+Pause stops simulation, not event intake. Background browser throttling may delay polling.
 
-| コントラクト | Runtime | GUI |
-| --- | --- | --- |
-| Activity.Rest = 0 | mode = rest | 休息 |
-| Activity.Explore = 1 | mode = explore | 探索 |
-| Activity.Forage = 2 | mode = forage | 採餌 |
-| energy 0..10000 | エネルギー供給 0..1 | 供給 0..100% |
-| stimulus 0..10000 | 刺激 0..1 | 刺激 0..100% |
-| revision uint64 | 適用済み版（10進文字列） | rev N |
-
-入力 energy は供給条件です。Inspector の ENERGY は Runtime が計算した現在の体力なので、同じ値とは限りません。
-
-## API と保存境界
-
-| API | 用途 |
+| Contract | Runtime / GUI |
 | --- | --- |
-| GET `/api/config` | モード、Registry、modelHash、3つのID |
-| GET `/api/chain/snapshot` | 特定ブロック時点の3匹の状態と、それぞれの原因ログ |
-| GET `/api/chain/events?after=N&hash=0x...` | cursor 以降の Registry ログと次の cursor |
-| POST `/api/chain/status` | 固定 Registry の3匹に対する Status 書込 |
-| GET `/api/chain/receipt?hash=0x...` | pending / mined / reverted |
-| GET `/api/health` | Anvil と配置ブロックの整合確認 |
+| Activity 0 / 1 / 2 | Rest / Explore / Forage |
+| energy 0–10000 | Supply 0–1, displayed as 0–100% |
+| stimulus 0–10000 | Stimulus 0–1, displayed as 0–100% |
+| revision uint64 | Applied revision as a decimal string |
 
-GET のログは Registry アドレスに限定し、block / transactionIndex / logIndex 順に整列します。`eventId` と revision で重複を排除します。停止後に再び開くと、チェーンの最新 Status と原因イベントから初期化します。
+Input energy is supply, not the inspector's computed body ENERGY.
 
-Anvil 内には登録情報・Status・イベントが残ります。Runtime の位置・スコア・Q値はブラウザー内であり、ページ再読込でリセットされます。JSON保存には現在の方策・経験・チェーン出典が含まれますが、完全な再開ファイルではありません。
+## API and storage
 
-チェーンの巻戻り・revision欠番を検知した場合は canonical な snapshot から**競争を初期化**します。元の軌跡や学習を取り消し前まで厳密に巻き戻す機能ではありません。Anvil自体を起動し直した場合は、`local:up` で設定を再生成しGUIを再読込します。
+[Full API reference](../reference/local-api.md). GET config identifies the mode/model/IDs; snapshot pins state and cause logs to a block; events return logs after a cursor; receipt reports pending/mined/reverted; health checks Anvil/deployment consistency. POST status writes only configured agents.
 
-## ローカル専用の書込経路
+Logs are restricted to the registry and sorted by block/transaction/log index; eventId and revision prevent duplicates. Reopening retrieves the latest chain inputs. Onchain definitions, Status, and events are distinct from browser-local body, scores, experience, and policies. Exported JSON is not a complete resume file. See [current storage boundaries](../architecture.md#4-state-ownership) for persisted policy/consumption state.
 
-ローカル API は公開用の Worker entrypoint と別です。`wrangler.sepolia.jsonc` による通常デプロイにはこのAPIを含めません。
+A rollback or revision gap reinitializes the competition from a canonical snapshot; it does not exactly undo historical movement or learning. After restarting Anvil, regenerate configuration with local:up and reload the GUI.
 
-- Anvil RPC は loopback のみ、chain IDは31337、client名はAnvilを検証。
-- GUI の接続元も localhost / 127.0.0.1 に限定。
-- 書込は同一Originの JSON、agentId 1..3、固定 owner / Registry / 関数に限定。
-- 任意RPC転送や任意アドレスへの送金APIは提供しない。
-- ルート `.env` の Cloudflare情報や実ネットワーク用の鍵は使わない。
+## Local-only signing
 
-これは操作しやすさを優先したローカル開発用の署名経路です。公開環境ではウォレット等の認証済み署名へ置き換えます。
+The local entrypoint is separate from `wrangler.sepolia.jsonc` deployment. It requires loopback RPC, chain 31337, Anvil client identity, a localhost GUI, same-origin JSON, IDs 1–3, and a fixed owner/registry/function. It exposes no arbitrary RPC forwarding or transfers and uses no public-network key or root Cloudflare credentials. Public signing uses an authenticated owner wallet instead.
 
-## 動作確認
+## Verification
 
-起動したまま、別ターミナルで実行します。
+With the app running, use a second terminal:
 
 ```sh
 npm run test:local
-```
-
-デフォルトでは `.local/deployment.json` のGUIとRPCに接続します。公開URLに対する実行は拒否します。Chrome の場所が異なる場合は `CHROME_PATH=/path/to/chrome` を指定してください。
-
-確認項目:
-
-- 3匹の実登録とモデル manifest のハッシュ照合。
-- automineを一時停止し、危険エリアと餌が採掘前には変化せず、確定後だけ反映されること。
-- GUI送信の receipt・Status・イベント・Runtime入力が一致すること。
-- 採餌と休息で実際の判定回数が変わること。
-- 他個体の入力が変わらないこと。
-- 重複ログ、古いrevision、範囲外入力、別Originを拒否すること。
-- GUI以外から送ったトランザクションも受信すること。
-- ページ再読込で最新Statusを復元すること。
-- `evm_revert` 後に古い入力を捨てて同期し直すこと。
-- PC／スマートフォンの表示と JavaScript エラー。
-
-記録は `artifacts/local-chain/verification.json`、`desktop.png`、`mobile.png`。テストはローカル Status を変更します。初期状態から試したい場合は `Ctrl-C` 後に再起動してください。
-
-その他の確認:
-
-```sh
 npm run format:check
 npm run test:arena
 make contracts-test
 make test
 ```
 
-## よくある問題
+`test:local` reads `.local/deployment.json`, refuses public URLs, and accepts `CHROME_PATH`. It changes local state, temporarily controls automining, and uses snapshots/reverts; do not run during a presentation or recording.
 
-| 症状 | 対応 |
+Coverage: registrations/manifest hash, world/food only after mining, receipt/event/runtime agreement, foraging-versus-rest decisions, per-agent isolation, duplicates/stale revisions/ranges/origin rejection, external TX intake, reload, reorg resync, desktop/mobile, and JS errors. Outputs are `artifacts/local-chain/verification.json`, `desktop.png`, and `mobile.png`.
+
+## Troubleshooting
+
+| Symptom | Action |
 | --- | --- |
-| ポートが使用中 | 上記の環境変数で別ポートを選ぶ。既存プロセスは止めない |
-| forge / anvil が見つからない | Foundryを導入しPATHまたは実行ファイルの絶対パスを指定 |
-| 登録時に失敗 | `.local/forge.log` を確認。submoduleとコンパイラを準備 |
-| Workerが起動しない | ターミナルのWrangler出力と inspector port を確認 |
-| 接続待ち / Deployment changed | Anvilと起動設定を揃えて local:up を再起動。GUIも再読込 |
-| RevisionMismatch | 他の操作が先に更新した。受信後のrevisionを確認してもう一度送る |
-| 適用待ち | Txが採掘されたか確認。自動再送はしない。テスト中ならautomineの復帰を待つ |
-| 学習している個体が動かない | 学習室では競争を一時離脱。学習終了後に復帰 |
+| Occupied port | Choose other ports; preserve existing processes |
+| Missing forge/anvil | Install pinned Foundry or set absolute tool paths |
+| Registration failed | Inspect `.local/forge.log`, submodule, and compiler |
+| Worker failed | Inspect Wrangler output and inspector port |
+| Waiting / Deployment changed | Align Anvil/configuration, restart local:up, reload GUI |
+| RevisionMismatch | Receive the latest revision, then retry deliberately |
+| Waiting for application | Inspect mining/receipt; do not automatically resend |
+| Learning agent is stationary | It temporarily leaves competition and returns after learning |
 
-参照: [Foundry Anvil](https://www.getfoundry.sh/anvil/index.html)、[Cloudflare local development](https://developers.cloudflare.com/workers/local-development/)。
+[Foundry Anvil](https://www.getfoundry.sh/anvil/index.html) · [Cloudflare local development](https://developers.cloudflare.com/workers/local-development/)
 
-## 今回の実行記録（2026-09-25）
+## Historical verification — 2026-09-25
 
-- Anvil / Registry / 3登録 / ローカル workerd の起動を確認。
-- Foundry: 16テスト成功。Agent Runtime: 4テスト成功。既存Python: 2テスト成功。
-- `test:local` の12項目が成功し、PC・モバイルともJavaScriptエラーなし。
-- 実ブラウザーの30判定の観測例: 採餌では移動29 / 休息1、休息入力では移動6 / 休息24。入力による動作変化の確認であり、生物学的な評価ではない。
-- 採餌Tx: `0x8eb4fdc28473660206dea1520a85c80cfd9849f488d2b7e7e9c824f6893cceb4`。
-- 休息Tx: `0x4ba418b47903ba785fea33001c2d1742cc633c2b1f3ed4427655a3799d19a014`。
-- このTxは今回の一時Anvil内だけに存在する。再起動後のチェーンや公開Explorerでは参照できない。
-- 公開Workers・Sepoliaのデプロイは変更していない。
+Anvil, registry, three registrations, and workerd started successfully. Foundry 16 tests, runtime 4, Python 2, and 12 local browser checks passed without desktop/mobile JS errors. In one 30-decision sample, Forage produced 29 moves/1 rest, versus 6 moves/24 rests for Rest. This is behavior verification, not biological validation.
+
+- Forage TX: `0x8eb4fdc28473660206dea1520a85c80cfd9849f488d2b7e7e9c824f6893cceb4`.
+- Rest TX: `0x4ba418b47903ba785fea33001c2d1742cc633c2b1f3ed4427655a3799d19a014`.
+
+These hashes existed only on that temporary Anvil, not a public explorer or later restarted chain. That verification did not modify public Workers/Sepolia.

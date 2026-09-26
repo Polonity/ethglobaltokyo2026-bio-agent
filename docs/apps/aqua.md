@@ -1,150 +1,150 @@
-# 03 Aqua — 共有流動性を出す・引く
+# 03 Aqua — offer or withdraw shared liquidity
 
-流動性を出す？ 広げる？ 引き上げる？
+Offer liquidity, widen it or withdraw?
 
-あなたは流動性実験の観察者です。2匹は価格変化を受け、狭い提示・広い提示・撤回を選びます。テストトークンの実TXと、その評価を一緒に見ます。
+Observe two flies respond to price changes with a tight offer, a wide offer or withdrawal. Follow actual test-token transactions alongside their evaluation.
 
-[全神経版の印刷シート](http://127.0.0.1:8812/guides/sheet.html?app=aqua&mode=full&lang=ja) / [従来版の印刷シート](http://127.0.0.1:8800/guides/sheet.html?app=aqua&mode=browser&lang=ja)。画面内と同じ説明データから生成しています。英語はシートの言語選択で切り替えられます。
+[Full-neuron printable sheet](http://127.0.0.1:8812/guides/sheet.html?app=aqua&mode=full&lang=en) / [Legacy printable sheet](http://127.0.0.1:8800/guides/sheet.html?app=aqua&mode=browser&lang=en). Generated from the same content as in-app help. Use the sheet language selector for Japanese.
 
-## 01 はじめてのプレイ
+## 01 First run
 
-1. Aquaページで「自律運用をはじめる」を押します。価格履歴を入力にして判断が始まります。
-2. tight（30 bps）・wide（800 bps）・withdrawの選択と、TX・約定・代理報酬を見ます。TX処理を待つため、採餌よりゆっくり進みます。
-3. 「学び直す」で戦略選択を学び直します。処理中はフェーズ表示を確認し、完了後に採用Policyと評価を比較します。
+1. On Aqua, press “Start autonomous run”. Decisions use a recorded price history.
+2. Watch tight (30 bps), wide (800 bps) or withdraw choices, TXs, fills and proxy reward. Transaction processing makes this slower than Foraging.
+3. Use “Learn again” to refit strategy selection. Follow the phase indicator, then compare adopted policies and evaluations after completion.
 
-途中で止めるには「停止」。進行中の動作が完了してから止まります。
+Select Stop to interrupt a run after the current action completes.
 
-## 02 画面の見方
+## 02 Reading the screen
 
-実画面の切り抜きです。数値は撮影時の例です。
+These are actual screen captures. Numbers are examples from the capture time.
 
-### 1. 操作する場所
+### 1. Controls
 
-![操作する場所](../../apps/frontend/guides/screens/full-aqua-ja-1.png)
+![Controls](../../apps/frontend/guides/screens/full-aqua-en-1.png)
 
-### 2. ハエが反応する場所
+### 2. Agent field
 
-![ハエが反応する場所](../../apps/frontend/guides/screens/full-aqua-ja-2.png)
+![Agent field](../../apps/frontend/guides/screens/full-aqua-en-2.png)
 
-### 3. 状態と成績
+### 3. State and results
 
-![状態と成績](../../apps/frontend/guides/screens/full-aqua-ja-3.png)
+![State and results](../../apps/frontend/guides/screens/full-aqua-en-3.png)
 
-### 4. ブロックチェーンの証拠
+### 4. Blockchain evidence
 
-![ブロックチェーンの証拠](../../apps/frontend/guides/screens/full-aqua-ja-4.png)
+![Blockchain evidence](../../apps/frontend/guides/screens/full-aqua-en-4.png)
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| ハエと枠＝選択中の戦略 | 全神経版は狭い提示・広い提示・撤回の選択、提示幅、約定回数を表示します。価格変化は別ペアのUniswap履歴を代理入力に使用し、実現PnLと区別した評価ポイントを表示します。 |
-| ハエ＝流動性を制御する方策 | 神経活動から戦略を選びます。共有ウォレットの仮想提示額を増やしても、実残高が増えるわけではありません。 |
+| Fly frames = selected strategies | The full app shows tight/wide/withdraw choices, spreads and fills. Price changes from a separate Uniswap pair serve as a proxy; the evaluation points are not realized PnL. |
+| Flies = liquidity-control policies | Neural activity selects a strategy. Increasing virtual allocations against a shared wallet does not create additional real balance. |
 
-### 状態と吹き出し
+### State and bubbles
 
-正の代理報酬を人工的な摂食へ、撤回を休息へ対応づけています。満腹度と蓄えは次の入力に戻ります。全神経版のEnergyは0.7固定です。これは実際のハエが手数料を食べるという意味ではありません。
+Positive proxy reward maps to synthetic feeding and withdrawal to rest. Fullness and reserves feed the next input. Energy is fixed at 0.7 in full mode; the fly is not literally eating fees.
 
-狭い提示＝取引を受け入れやすい設定、広い提示＝より広いスプレッド、撤回＝戦略を取り下げる判断。？は学習中の表示です。神経領域の名前から恐怖・欲望を読み出しているわけではありません。
+Tight quote offers a narrow spread; wide quote widens it; withdrawal removes the strategy. ? denotes training. These are action labels, not fear or desire decoded from named brain regions.
 
-### 吹き出し図鑑
+### Bubble reference
 
-実際の表示文言に合わせた説明用の模式図です。全神経版のカードと従来版の感情風の吹き出しは別の表示です。
+Illustrations match the actual labels. Full-mode action cards and legacy expressive bubbles are different displays.
 
-#### 全神経版・7神経比較モード：状態と選択
+#### Full app / reduced comparison: states and choices
 
-![？](bubbles/full-aqua-ja-0.svg)
+![?](bubbles/full-aqua-en-0.svg)
 
-**？**：readoutを学習しているフェーズ。ハエの移動表示が止まります。収集や評価の全時間に出る印ではなく、学習処理が短いと見逃すこともあります。
+**?**: The readout-training phase. Fly movement pauses. This does not cover the entire collection/evaluation job; a short fit may be easy to miss.
 
-![行動 狭いスプレッド](bubbles/full-aqua-ja-1.svg)
+![Action Tight quote](bubbles/full-aqua-en-1.svg)
 
-**行動 狭いスプレッド**：30 bpsで流動性を提示する判断。取引が成立したかどうかは約定とTXで別に確認します。
+**Action Tight quote**: Offer liquidity at 30 bps. Inspect fills and TXs separately to confirm execution.
 
-![行動 広いスプレッド](bubbles/full-aqua-ja-2.svg)
+![Action Wide quote](bubbles/full-aqua-en-2.svg)
 
-**行動 広いスプレッド**：800 bpsで広く提示する判断。人工的な注文成立ルールにより、提示しても約定しない場合があります。
+**Action Wide quote**: Offer at 800 bps. The simulated taker rule may leave the offer unfilled.
 
-![行動 撤回](bubbles/full-aqua-ja-3.svg)
+![Action Withdraw](bubbles/full-aqua-en-3.svg)
 
-**行動 撤回**：戦略を取り下げる判断。dockのTXが確定したかも確認します。ハエが恐怖を感じた証拠ではありません。
+**Action Withdraw**: Withdraw the strategy; check confirmation of the dock TX. This is not evidence of fear.
 
-#### 従来のブラウザー版：吹き出し
+#### Original browser app: bubbles
 
-![ごはん、どうぞ！](bubbles/browser-aqua-ja-0.svg)
+![Open for snacks!](bubbles/browser-aqua-en-0.svg)
 
-**ごはん、どうぞ！**：shipの戦略案。学習係数をかけた応答が0.045未満で、強い生の応答もない場合。約定済みの意味ではありません。
+**Open for snacks!**: A ship proposal: scaled response below 0.045 and no strong raw response. This does not mean a fill occurred.
 
-![うーん…少しだけ。](bubbles/browser-aqua-ja-1.svg)
+![Hmm… smaller bites.](bubbles/browser-aqua-en-1.svg)
 
-**うーん…少しだけ。**：cautiousの戦略案。応答が0.045以上で、撤回条件には達していない場合。仮想提示量を小さくします。
+**Hmm… smaller bites.**: A cautious proposal: response at least 0.045 without triggering withdrawal. Uses a smaller virtual offer.
 
-![こわい！ひと休み。](bubbles/browser-aqua-ja-2.svg)
+![Too much! Taking shelter.](bubbles/browser-aqua-en-2.svg)
 
-**こわい！ひと休み。**：dockの判断。生の応答または係数調整後の応答が0.1以上。実際に撤回されたかはTX確定で確認します。
+**Too much! Taking shelter.**: A dock decision when raw or scaled response reaches 0.1. Confirm the actual withdrawal through its TX.
 
-### 成績と目標
+### Scores and goals
 
-約定の残高変化を、別ペアの次のUniswap価格比で評価した「代理報酬」を競います。feesは手数料相当の差分です。どちらもウォレットの実現PnLやLVR回避の実証とは異なります。
+Compare proxy reward: fill balance changes valued using the next Uniswap price ratio from another pair. Fees are gross fill differences. Neither metric establishes realized wallet PnL or LVR protection.
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| fees / 手数料 | 実テスト約定の入力額と出力額の差の累計。次の価格による不利な評価はここに含まないため、Rewardとは一致しません。 |
-| Reward / 代理報酬 | 残高差を次の価格比で評価した増分。ウォレット全体のPnL、実現利益、LVRの推定値ではありません。 |
-| bps / 約定条件 | 100bps＝1%。この実験では広い提示は直近変動が200bps以上の場合だけ人工takerが受け入れます。実際の市場需要を推測したものではありません。 |
+| fees | Cumulative input-minus-output amount in actual test fills. It excludes adverse valuation at the next price, so it differs from Reward. |
+| Reward / proxy reward | Incremental fill balance changes valued at the next price ratio. Not total-wallet PnL, realized profit or an LVR estimate. |
+| bps / fill condition | 100 bps = 1%. The experimental taker accepts wide quotes only when observed movement is at least 200 bps. This is a disclosed demand rule, not inferred market demand. |
 
-## 03 学び直して、もう一度
+## 03 Learn and try again
 
-収集＝実際に動かして観測・行動・結果を保存。学習＝保存した神経特徴と報酬からreadoutを更新。評価＝別の実行で旧方策と候補を比較。改善した個体だけ採用し、v2などの方策番号が次の判断へ反映されます。神経接続そのものは固定です。
+Collect: save real action observations and outcomes. Train: fit the readout from saved neural features and rewards. Evaluate: compare the current policy and candidate in another run. Only improved individuals adopt the new version for subsequent decisions. Neural connections remain fixed.
 
-「評価中」は候補を試している途中で、まだ採用を意味しません。「完了」はその実行の終了、「停止」はユーザーの操作による中断です。？はreadoutを学習している間の表示で、短時間の学習では見えないこともあります。
+Evaluating means a candidate is being tested, not yet adopted. Complete means the run ended; Stopped means the user interrupted it. A ? indicates readout training and may be too brief to see when fitting finishes quickly.
 
-行動名とfeesを見ながら、TXリンクでStatus・戦略登録／撤回・約定を確認してください。学習後はfeesだけでなく代理報酬の変化も比較します。
+Watch actions and fees, then inspect Status, strategy ship/dock and fill TXs. After training, compare proxy reward as well as fees.
 
-## 04 ゲームの裏側
+## 04 Behind the application
 
-### 1 市場を刺激へ
+### 1 Market to stimulus
 
-全神経版は価格変動幅を0〜1に変換。判断後、Aqua操作に対応する刺激とStatus TXを記録します。
+Full mode maps price-change magnitude to 0–1. After the decision, it records the corresponding stimulus in a Status TX alongside the Aqua operation.
 
-### 2 回路とreadout
+### 2 Circuit and readout
 
-変動の方向・大きさ、満腹度、蓄え、手数料、直前の約定有無を神経入力にして行動を選びます。
+Direction/magnitude, fullness, reserves, fees and the previous fill become neural inputs for action selection.
 
-### 3 SDKで実操作
+### 3 Execute via the SDK
 
-全神経版は狭い提示30bps、広い提示800bps、撤回を選択。SDKのship/dockと、成立したテストトークン交換は実TXです。撤回もガスを使います。
+Full mode chooses a 30-bps tight quote, an 800-bps wide quote, or withdrawal. SDK ship/dock operations and accepted test-token fills are real transactions. Withdrawal also uses gas.
 
-### 4 実結果を評価
+### 4 Evaluate actual outcomes
 
-実約定の残高差を、次のUniswap価格を使った代理評価へ変換し、報酬として学習します。
+Actual fill balance changes are valued using a proxy based on the next Uniswap price and become learning rewards.
 
-チェーンは入力や取引の出典を追うためのものです。神経計算・身体更新・学習はローカルで実行します。TX成功は、判断の正しさや利益を保証する印ではありません。
+The chain lets you trace inputs and transactions. Neural computation, body updates and learning run locally. A successful transaction does not certify a correct decision or a profitable policy.
 
-全神経モードは分類付き166,700神経・25,582,938内部接続を個体ごとに計算します。16入力を感覚神経集団に与え、4神経step後の活動集計をreadout（行動に変換する学習器）へ渡します。7神経モードも明示的に選択できます。
+Full mode computes 166,700 classified neurons and 25,582,938 internal connections per individual. Sixteen inputs drive sensory populations; after four neural steps, activity summaries feed a learned action readout. A seven-neuron mode is an explicit alternative.
 
-MaleCNSは実測された神経接続の地図です。入力を神経に割り当てる方法、活動の計算式、身体、行動への変換はこの実験の人工モデルです。吹き出しから本物のハエの感情や思考を読み取れるわけではありません。
+MaleCNS provides measured neural connectivity. Input mapping, activity dynamics, body state and action decoding are engineered for this experiment. Bubbles do not reveal a real fly’s emotions or thoughts.
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| Policy v / 方策番号 | その判断に使った行動変換の版。神経数や年齢ではありません。 |
-| 神経step / ms | 人工モデルの更新回数と神経計算時間。生物学的な時間や画面のFPSとは異なります。 |
-| 学習前 / 候補 / 別条件 | 旧方策の評価、候補の評価、採用後の別入力での結果。各欄はMOMO / SORA順。数値はその実行の累積報酬です。 |
-| TX / Block / hash | 入力や取引が記録されたトランザクションとブロック。Anvilではローカルreceiptを開きます。ハエの全神経状態がチェーンに保存されるわけではありません。 |
+| Policy v / version | The action readout version used for this decision, not neuron count or age. |
+| Neural step / ms | Artificial model updates and neural computation time, not biological time or display FPS. |
+| Before / Candidate / New test | Current-policy evaluation, candidate evaluation, and a new-input run after adoption. Values are MOMO / SORA cumulative rewards for each run. |
+| TX / Block / hash | The transaction and block recording an input or trade. Anvil links open local receipts. The fly’s full neural state is not stored onchain. |
 
-## 従来のブラウザー版との違い
+## Differences from the legacy browser version
 
-1. 個体と危険刺激を選び、送信してStatusのTXを確認します。
-2. 応答と戦略案を見て「適用」。続いてテスト約定の操作でreceiptを確認します。
-3. 学習ボタンで人工risk-target教材によるgain調整を試します。市場収益による学習ではありません。
+1. Select an individual and risk level, send the stimulus and inspect its Status TX.
+2. Inspect the response and proposal, then Apply. Use the separate test-fill control to inspect a receipt.
+3. Use the learning button to fit gain on synthetic risk-target examples, not market returns.
 
-提示・撤回・約定の違いを確かめる実験です。応答メーターや学習gainは投資収益ではありません。
+Explore offers, withdrawals and fills. Response meters and learned gain are not investment returns.
 
-従来のブラウザー版は実測MaleCNSの7神経・19接続を使います。32stepの回路応答を行動変換へ渡します。全神経版とは入力変換や学習方法が異なります。
+The original browser apps use seven measured MaleCNS neurons and 19 connections. Their 32-step circuit response feeds action decoding. Input mapping and learning differ from the full-population apps.
 
-- **1 刺激を記録**：従来版はスライダーの人工的な危険刺激をStatusとして記録し、そのログからMaleCNSの応答を計算します。市場変動を自動入力する全神経版とは異なります。
-- **2 応答を計算**：個体の感度で入力を調整し、7神経回路の応答と学習したgainを使います。
-- **3 戦略へ変換・適用**：応答からship / cautious / dockと提示幅を計算。「適用」でAquaの実TXを送ります。
-- **4 テスト約定を確認**：テストトークンの交換とreceiptを確認。学習は別途、人工risk-target教材で実行します。
+- **1 Record stimulus**: The original app records a slider-driven artificial risk stimulus as Status and computes the MaleCNS response from that event. Unlike full mode, it does not automatically use market movement as input.
+- **2 Compute response**: Individual sensitivity adjusts the input; the seven-neuron response and learned gain determine output.
+- **3 Decode and apply strategy**: Decode ship/cautious/dock and spread; Apply sends actual Aqua transactions.
+- **4 Inspect test fills**: Inspect test-token exchange and its receipt. Learning separately uses a synthetic risk-target curriculum.
 
-従来版の学習は人工risk-target教材に回路応答のgainを合わせます。誤差が小さくなっても取引収益の改善を意味しません。表示された戦略を適用・約定する操作は別です。
+Original learning fits a response gain to a synthetic risk-target curriculum. Lower error does not demonstrate improved trading returns. Applying and filling the displayed strategy are separate operations.
 
-参照実装：全神経版 `services/full-apps/aqua.mjs`、神経入力 `packages/bio_agent/full_apps/brain.py`、学習 `packages/bio_agent/full_apps/learning.py`。説明データは `apps/frontend/guides/content.mjs`。
+Reference implementation: full mode `services/full-apps/aqua.mjs`, neural inputs `packages/bio_agent/full_apps/brain.py`, learning `packages/bio_agent/full_apps/learning.py`. Guide content: `apps/frontend/guides/content.mjs`.

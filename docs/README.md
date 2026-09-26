@@ -1,64 +1,63 @@
-# ドキュメント
+# Documentation
 
-[プロジェクト概要](../README.md)から一歩進んで、実行環境・実装・研究結果を調べるための索引です。
+Start with the [project overview](../README.md), then use this index to explore execution, implementation, and research evidence. Default documentation is in English. Explicit Japanese (`-ja` / `.ja`) and bilingual (`ja-en`) editions remain available for presentation and study.
 
-## 使う
+## Use the project
 
-| 目的                          | ガイド                                                                        |
-| ----------------------------- | ----------------------------------------------------------------------------- |
-| 判断・学習・保存復元を試す    | [BioAgent Framework / Research Lab](../packages/bioagent-framework/README.md) |
-| 公開デモでチェーン入力を試す  | [Sepolia Lab](deployment/sepolia.md)                                          |
-| ローカルチェーンとGUIを動かす | [Anvil + Workers](deployment/local-anvil.md)                                  |
-| 全166,700神経のモデルを動かす | [全規模ランタイム](design/malecns-full-local.md)                              |
-| 全神経版のアプリを動かす      | [3用途の起動・学習・検証](submission/full-apps-acceptance.md)                 |
-| 4個体の共有市場を動かす       | [共有市場の操作と実装](apps/shared-market/README.md)                          |
-| 画面や個体の状態を理解する    | [アプリ説明シート](apps/README.md)、[GUIガイド](design/demo-experience.md)    |
+| Goal | Guide |
+| --- | --- |
+| Try decisions, learning, and policy save/restore | [Framework / Research Lab](../packages/bioagent-framework/README.md) |
+| Observe public chain inputs | [Sepolia Lab](deployment/sepolia.md) |
+| Run a local chain and GUI | [Anvil + Workers](deployment/local-anvil.md) |
+| Run all 166,700 neurons | [Full runtime](design/malecns-full-local.md) |
+| Run and train the full-neuron applications | [Three-task acceptance guide](submission/full-apps-acceptance.md) |
+| Run four agents in one market | [Shared market](apps/shared-market/README.md) |
+| Understand controls and agent state | [Application guides](apps/README.md), [GUI design](design/demo-experience.md) |
 
-## 設計を理解する
+## Design
 
-- [フレームワークのレイヤ構成図とAPI](../packages/bioagent-framework/README.md#レイヤ構造)
-- [実行境界・実装言語・通信・保存先](architecture.md) · [English](architecture.en.md)
-- [BioAgentの目的と設計方針](standards/bioagent-design-direction.md)
-- [なぜBioAgentを定義するか](standards/why-bioagent.md)、[既存規格との比較](standards/prior-art-and-bioagent.md)
-- [身体・学習profile案](standards/embodied-learning-profile.md)、[用途別の型と単位](standards/application-types.md)
-- [IBioAgent・Registryの設計](design/README.md)、[オンチェーン設計](design/onchain-contracts.md)、[ERC形式の草案](standards/bio-agent-draft.md)
-- [イベント駆動Runtimeの設計案](design/runtime-and-events.md)、[Agent・walletの拡張案](design/agent-types-and-wallets.md)
+- [Framework layers and API](../packages/bioagent-framework/README.md#layers)
+- [Runtime boundaries, languages, communication, and storage](architecture.md)
+- [Purpose and design direction](standards/bioagent-design-direction.md)
+- [Why define BioAgent?](standards/why-bioagent.md) · [Comparison with existing standards](standards/prior-art-and-bioagent.md)
+- [Embodied learning profile](standards/embodied-learning-profile.md) · [Application types and units](standards/application-types.md)
+- [Registry design](design/README.md) · [Onchain contracts](design/onchain-contracts.md) · [ERC-style draft](standards/bio-agent-draft.md)
+- [Event-driven runtime proposal](design/runtime-and-events.md) · [Agent and wallet extensions](design/agent-types-and-wallets.md)
 
-## 研究・検証を読む
+## Research and verification
 
-- [学習実験の結論・対照比較・副作用](research/bioagent-adaptation/README.md)
-- [実験から導いたフレームワークの要件](standards/experiment-derived-requirements.md)
-- [MaleCNSのデータ出典・帰属・変更点](data-sources.md)
-- [生物模倣の背景と比較計画](submission/biomimicry-positioning.md)
-- [全規模モデルの実測と縮小判断](design/malecns-full-local.md)
-- [部分回路の入出力検証](design/circuit-evidence.md)、[合成Swapイベントの初期検証](design/swap-event-game.md)
-- [学習基盤の設計](design/malecns-learning.md)、[全神経アプリの開発計画](design/full-app-learning.md)
-- [採餌モデル](design/fly-arena.md)、[身体状態とcheckpoint](design/embodied-foraging.md)
-- [ペーパートレード設計案](design/paper-trading-arena.md)、[実装の到達点と制約](submission/goal-audit.md)
+- [Learning findings, controls, and side effects](research/bioagent-adaptation/README.md)
+- [Experiment-derived requirements](standards/experiment-derived-requirements.md)
+- [MaleCNS sources, attribution, and modifications](data-sources.md)
+- [Biomimicry and comparison plan](submission/biomimicry-positioning.md)
+- [Full-model measurements](design/malecns-full-local.md)
+- [Circuit evidence](design/circuit-evidence.md) · [Synthetic Swap fixture](design/swap-event-game.md)
+- [Learning infrastructure](design/malecns-learning.md) · [Full-app learning plan](design/full-app-learning.md)
+- [Original foraging model](design/fly-arena.md) · [Body state and checkpoints](design/embodied-foraging.md)
+- [Paper-trading design](design/paper-trading-arena.md) · [Implementation scope audit](submission/goal-audit.md)
 
-## 開発・運用
+## Development and operation
 
-- [開発環境・検証コマンド](development.md)
-- [コントラクト開発](../contracts/README.md)
-- [ローカルAPI](reference/local-api.md)、[表示言語・翻訳](i18n.md)
-- [Workersへの配信](deployment/workers.md)、[Sepoliaへの配置と検証](deployment/sepolia.md)
-- [外部プロトコルとの連携・パートナー向け資料](integrations.md)
+- [Development and checks](development.md) · [Contracts](../contracts/README.md)
+- [Local API](reference/local-api.md) · [UI localization](i18n.md)
+- [Workers deployment](deployment/workers.md) · [Sepolia deployment](deployment/sepolia.md)
+- [External integrations and partner material](integrations.md)
 
-## 動画・発表資料
+## Video and presentation
 
-- [日英の提出動画・発表用Q&A・根拠データ](submission/presenter-kit/README.md)
-- [動画の再収録手順と過去の収録](demo-video.md)
-- [成果説明スライド](presentation/README.md)
-- [提出説明・検証索引](submission/README.md)、[設計思想の説明](submission/bioagent-thesis.md)
+- [Bilingual submission videos, Q&A, and evidence](submission/presenter-kit/README.md)
+- [Recording procedures and historical recordings](demo-video.md)
+- [Explanation slides](presentation/README.md)
+- [Submission index](submission/README.md) · [Project thesis](submission/bioagent-thesis.md)
 
-## 用語
+## Terms
 
-| 用語           | 意味                                                                           |
-| -------------- | ------------------------------------------------------------------------------ |
-| BioAgentStatus | 活動・エネルギー供給・刺激など、チェーンへ記録する入力条件                     |
-| Registry       | 個体の定義と最新の入力状態を保持するコントラクト                               |
-| Runtime        | 入力と内部状態から行動を計算する実行環境。用途に応じてブラウザーやPythonで動作 |
-| revision       | 入力状態の更新番号                                                             |
-| policy version | 学習済み方策の版。入力revisionとは別に管理                                     |
-| modelHash      | 登録対象のモデル成果物を照合するSHA-256。対象ファイルは実装ごとに定義          |
-| 適用済み       | 受け取った入力をAgentへ反映した状態。チェーンの最終確定とは別                  |
+| Term | Meaning |
+| --- | --- |
+| BioAgentStatus | Onchain input conditions: activity, energy supply, and stimulus |
+| Registry | Contract retaining agent definitions and the latest input state |
+| Runtime | Execution environment computing actions from inputs and internal state, in a browser or Python depending on the task |
+| revision | Input update number |
+| policy version | Learned-policy version, separate from input revision |
+| modelHash | SHA-256 identifying the registered model artifact; each implementation defines the exact target bytes |
+| Applied | An input has reached the agent; distinct from chain finality |

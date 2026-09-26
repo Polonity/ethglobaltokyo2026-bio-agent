@@ -1,24 +1,21 @@
 # Fly Lab GUI
 
-Canvasで個体の競争・判定・学習を観察するHTML/CSS/JavaScriptアプリです。
+An HTML/CSS/JavaScript Canvas application for observing agent behavior, competition, and learning.
 
-| 起動 | 動作 |
-| --- | --- |
-| ルートで `npm run local:up` | Anvilに登録した3匹。選択個体へコントラクト経由で入力 |
-| ルートで `npm run dev` | ブラウザー内の12匹。チェーン未接続 |
+Run `npm run local:up` or `npm run dev` from the repository root to start the chain-connected local demo. See [local setup](../../docs/deployment/local-anvil.md).
 
-`app.js` は描画・操作、`chain.js` はAnvilのsnapshot・イベント・送信進捗を担当します。行動判定・学習は `packages/bio_agent/browser/arena.js` です。ビルド成果物はルートの `dist/` に生成されます。
+`app.js` handles rendering and controls; `chain.js` handles snapshots, events, and transaction progress. Behavior and learning live in `packages/bio_agent/browser/arena.js`. Build output is written to the root `dist/` directory.
 
-## 状態の扱い
+## State boundaries
 
-- `/api/config` のmodeでAnvil接続を選びます。
-- Anvilモードでは編集値を送信しただけではAgentへ適用しません。採掘済みイベントで対象の入力を更新します。
-- Runtimeはタブ内にあり、リロードで位置・得点・経験・Q値が初期化されます。チェーンの最新入力は再取得します。
-- JSON保存は現在の実験状態の書き出しで、import・完全再開機能ではありません。
-- `?test=1` はブラウザーテスト用に `window.__arena` / `window.__chain` を公開します。通常の操作に不要です。
+- `/api/config` selects the chain mode.
+- Editing or submitting an input does not immediately apply it. Confirmed events update the target agent.
+- The runtime runs in the browser tab. Reloading resets transient body/competition state and reloads chain inputs; policy persistence is handled separately.
+- JSON export is an experiment record, not a complete environment import/resume feature.
+- `?test=1` exposes `window.__arena` / `window.__chain` for browser tests; normal use does not require it.
 
-[画面・デモ操作](../../docs/design/demo-experience.md) / [API](../../docs/reference/local-api.md) / [モデル](../../docs/design/fly-arena.md) / [検証](../../docs/development.md)
+[GUI guide](../../docs/design/demo-experience.md) · [API](../../docs/reference/local-api.md) · [Model](../../docs/design/fly-arena.md) · [Verification](../../docs/development.md)
 
-## 表示言語
+## Language
 
-ヘッダーからシステム（既定）・English・日本語を選べます。レースを止めずに切り替え、選択をブラウザーに保存します。[仕様・翻訳追加・検証](../../docs/i18n.md)を参照してください。
+The header supports System (default), English, and Japanese. Switching languages preserves the active run and saves the preference in the browser. See [language behavior and tests](../../docs/i18n.md).

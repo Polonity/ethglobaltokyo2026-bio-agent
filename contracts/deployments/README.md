@@ -1,5 +1,5 @@
 # Deployment records
 
-現在は未デプロイです。予測アドレスや dry-run の結果を本番の配置記録として保存しません。
+Record only successful deployments here. Predicted addresses and dry-run results are not deployment records.
 
-実デプロイ成功後にのみ `sepolia.json` を作成します。公開記録の項目と確認方法は [Sepolia 手順](../../docs/deployment/sepolia.md) を参照してください。
+See the [Sepolia guide](../../docs/deployment/sepolia.md) for the deployment record, required public fields, and verification steps. Never include signing keys.

@@ -2,7 +2,7 @@
 
 An experimental monorepo framework that receives on-chain BioAgent state, runs a fly-derived connectome, and returns traceable decisions. Foraging and Aqua adapters share candidate training, evaluation, adoption and policy save/restore.
 
-[日本語 / full API guide](README.md) · [Research findings](../../docs/research/bioagent-adaptation/README.md)
+[Japanese API guide](README.ja.md) · [Research findings](../../docs/research/bioagent-adaptation/README.md)
 
 ## Layers
 
@@ -38,7 +38,7 @@ The bilingual UI lets you train, evaluate, adopt or reject, save and restore pol
 
 ## Integrate
 
-Use `LearningBioAgent(identity, backend)` with `observe`, `step`, `snapshot`, `train`, `evaluate`, `adopt`, `exportPolicy` and `restorePolicy`. See the [working API example](README.md#共通apiを使う). Policies bind identity, task, model, encoder, dynamics, readout and action space. Restore rejects incompatible artifacts and discards pending candidates. It restores a policy, not the full environment state. SHA-256 checks content integrity; it is not an author signature.
+Use `LearningBioAgent(identity, backend)` with `observe`, `step`, `snapshot`, `train`, `evaluate`, `adopt`, `exportPolicy` and `restorePolicy`. See the [working API example](README.ja.md#共通apiを使う). Policies bind identity, task, model, encoder, dynamics, readout and action space. Restore rejects incompatible artifacts and discards pending candidates. It restores a policy, not the full environment state. SHA-256 checks content integrity; it is not an author signature.
 
 Read a compatible deployed Registry without a key or signer:
 

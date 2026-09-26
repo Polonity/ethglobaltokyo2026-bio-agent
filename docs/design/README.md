@@ -1,72 +1,51 @@
-# Bio Agent システム設計 v0.1
+# BioAgent system design v0.1
 
-状態: **Registry・型・イベントは Solidity 実装済み / Anvilに配置済み / Sepolia未デプロイ。Anvil とローカル Workers の3匹接続は実装済み。共有 Runtime・Sepolia 接続は次段階**。ユーザーの構想を実装可能な境界に整理する文書です。既存の Python デモの動作を説明するものではありません。
+This directory includes historical design proposals as well as implementation guides. The original v0.1 milestone implemented registry types, events, Foundry tests, and a three-agent Anvil/Workers GUI. Its proposed shared runtime, persistence, and SSE flow are not a description of the current deployed architecture. See [current architecture](../architecture.md) and [Sepolia](../deployment/sepolia.md).
 
-## 目指す体験
+## Intended experience
 
-ウォレットから Bio Agent の Status をブロックチェーンに登録する。そのイベントログを起動中の Agent が取得し、内部状態と行動を更新する。GUI で多数の個体が動き、どのトランザクションによって動きが変わったか追える。
+A wallet records an agent's Status onchain. A running agent receives the event and updates its internal state and actions. The GUI shows agents and lets viewers trace behavior changes to transactions.
 
-## 現在の実装との差分
+## Design boundaries
 
-この文書の共有Runtime・Backend・SSEは将来案です。現在はローカルWorkerのAPIをブラウザーが600ms間隔で取得し、ブラウザー内Arenaが5Hzで行動を判定します。ローカル3匹、ブラウザーデモ12匹を実装済みで、24体は初期提案です。実際の構成は [アーキテクチャ](../architecture.md)、APIは [リファレンス](../reference/local-api.md) を参照してください。
+1. `IBioAgent` defines identity-related inputs, Status operations, and events.
+2. `BioAgentRegistry` stores definitions and the latest Status.
+3. A proposed persistent runtime routes registry events to the correct agent.
+4. A proposed backend stores inputs/results and streams them to the GUI.
+5. The GUI interpolates runtime positions/actions for rendering.
 
-## 設計の軸
+The existing browser path polls local Worker APIs and runs Arena at 5 Hz. The shared Runtime → Backend → SSE path remains a proposal. The initial 24-agent target was also a proposal, distinct from the historical three-agent local and twelve-agent browser modes.
 
-1. `IBioAgent` で Agent の識別子、Status、更新操作、イベントを定義する。
-2. `BioAgentRegistry` に Agent の定義と最新 Status を保存する。
-3. 常駐する Agent Runtime が Registry のイベントログを取得して処理する。
-4. Backend が入力・処理結果を保存し、GUI に配信する。
-5. GUI は Runtime が出した位置・行動を補間して描画する。
-
-## 決定と提案
-
-| 項目 | v0.1 の案 |
+| Topic | v0.1 design |
 | --- | --- |
-| チェーン | Ethereum Sepolia（11155111）。ローカル検証は Foundry / Anvil |
-| コントラクト配置 | 1 Registry に複数 Agent。1 Agent ごとのコントラクトは作らない |
-| Agent の同一性 | `(chainId, registryAddress, agentId)` |
-| IBioAgent | オンチェーンの型・Status 更新契約。Runtime の処理契約は別名で定義 |
-| Status の意味 | 外部から与える状態・刺激。計算された実行状態とは分離（ユーザー確認済み） |
-| 書込権限 | Agent を登録した owner。v0.1 では所有権移転・書込委任なし |
-| ログ受信 | Runtime 内の共有 ChainListener が取得し、対象 Agent に振り分ける |
-| GUI 更新 | Runtime → Backend → SSE → GUI。描画はブラウザー内で継続 |
-| 学習 | デモ経路から独立。モデル版を固定し、記録した入力を再生可能にする |
+| Chain | Ethereum Sepolia (11155111); Foundry/Anvil locally |
+| Deployment | One registry containing multiple agent records |
+| Identity | `(chainId, registryAddress, agentId)` |
+| IBioAgent | Onchain Status interface; separate offchain runtime contract |
+| Status | External conditions/stimuli, distinct from computed RuntimeState |
+| Authority | Registering owner; no ownership transfer or delegated writes in the base design |
+| Event intake | Shared ChainListener routes inputs to agents |
+| GUI | Proposed runtime/backend/SSE pipeline with continuous browser rendering |
+| Learning | Separate from event delivery; pin model versions and retain replayable inputs |
 
-Status を入力として扱う方針はユーザー確認済み。それ以外の具体的なフィールド・API・配置は v0.1 の提案とする。Agent 自身の出力は RuntimeState として保存・表示する。
+## Documents and implementation mapping
 
-## 文書
+- [Types, registry, and events](onchain-contracts.md)
+- [Proposed event processing and storage](runtime-and-events.md)
+- [GUI demonstration](demo-experience.md)
+- `packages/bio_agent/step`: scaffold model to evolve into a stateful runtime.
+- `packages/shared/Stimulus`: proposed provenance-aware event inputs.
+- `packages/training`: training/evaluation using recorded transitions.
+- `services/backend`: proposed storage/read API/SSE responsibilities.
+- `apps/frontend`: agent display, Status controls, and transaction/application feedback.
+- `contracts/`: Solidity interfaces, registry, tests, scripts, and generated ABIs.
 
-- [型・Registry・イベント](onchain-contracts.md)
-- [ログ受信・実行・データ管理](runtime-and-events.md)
-- [GUI とハッカソンデモ](demo-experience.md)
+The original proposal left RPC/wallet/confirmation settings, initial model and mappings, and shared-runtime load targets to later implementation. Sponsor APIs and prize requirements do not define these base interfaces.
 
-## 現在のひな型との対応
+[Contract development](../../contracts/README.md) · [Foraging](fly-arena.md) · [Local chain setup](../deployment/local-anvil.md)
 
-| 現在 | 設計後 |
-| --- | --- |
-| `packages/bio_agent/step` | Runtime 内のモデル実装に相当。状態を保持する処理契約へ拡張 |
-| `packages/shared/Stimulus` | イベント由来の入力・出典付き型へ拡張 |
-| `packages/training` | 状態遷移記録を利用する学習・評価ジョブ |
-| `services/backend` | 保存・読取 API・SSE。RPC と Runtime を別モジュールとして接続 |
-| `apps/frontend` | 個体群の表示、Status 操作、Tx と処理の可視化 |
-| `contracts/`（実装済み） | Solidity interface、Registry、Foundry テスト、Forge Script、公開 ABI |
+## Current profiles and applications
 
-## 実装前に確定すること
+The [ERC-style draft](../standards/bio-agent-draft.md) defines an ordinary registry and schema-tagged stimulus extension. NFT/SBT experiment code was removed. The draft is unsubmitted and unnumbered; it claims neither ERC-8004 compliance nor execution proofs.
 
-- Sepolia の RPC、ウォレット、確認ブロック数。
-- 初期 Agent モデルと MaleCNS 部分回路、刺激・行動の対応。
-- 共有Runtime版の個体数と負荷目標。現在のローカル版は3匹、活動モード・エネルギー・刺激強度で実装済み。
-
-スポンサー固有の API や賞の要件は、この基礎設計の確定条件にしない。
-
-コントラクトのビルドとデプロイ準備は [contracts README](../../contracts/README.md) を参照。
-
-現在のブラウザー内競争・自己学習デモは [Fly Lab](fly-arena.md) を参照。以下の共有 Runtime / イベント駆動の設計とは接続段階が異なる。
-
-Anvil 上の実コントラクトからGUIの3匹へ入力する構成は [ローカル接続ガイド](../deployment/local-anvil.md) を参照。
-
-## 現在の共通仕様と用途別アプリ
-
-[ERC形式の草案](../standards/bio-agent-draft.md)は通常のRegistryとschema付き刺激拡張を定義します。NFT/SBT実験コードと依存は削除済み。未提出・番号未付与で、ERC-8004準拠や実行証明は主張しません。
-
-[思想と設計方針](../standards/bioagent-design-direction.md)、[2アプリの型](../standards/application-types.md)、[身体を持つ採餌](embodied-foraging.md)、[実Uniswapの市場](local-market-app.md)、[提出パッケージ](../submission/README.md)を参照してください。既存の採餌ABIと共通profile全体の相互運用性を区別します。
+See [design direction](../standards/bioagent-design-direction.md), [application types](../standards/application-types.md), [embodied foraging](embodied-foraging.md), [Uniswap market](local-market-app.md), and [submission index](../submission/README.md). Existing foraging ABI support is distinct from interoperability across the whole proposed profile.

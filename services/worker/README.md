@@ -1,14 +1,14 @@
-# 共通チェーン読取と配信
+# Shared chain reads and asset delivery
 
-| 実装 | 責務 |
+| Implementation | Responsibility |
 | --- | --- |
-| `registry-read.js` | AnvilとSepoliaのsnapshot・イベント・receiptを検証する共通API |
-| `rpc-read.js` | 独立した読取をまとめ、WorkersからのRPCリクエスト数を抑える |
-| `local.js` | Anvil限定の接続・署名。`local:up`が設定を生成 |
-| `index.js` | ローカルWorkerが利用する静的アセット配信 |
-| `../sepolia/worker.js` | 公開Sepolia APIと共通アセットの配信 |
-| `../sepolia/scheduler.js` | 毎時確認・最低1時間間隔・予算制限付きの刺激TX送信 |
+| `registry-read.js` | Shared snapshot, event, and receipt verification for Anvil and Sepolia |
+| `rpc-read.js` | Batch independent reads to reduce Worker RPC requests |
+| `local.js` | Anvil-only connection and signing; configured by `local:up` |
+| `index.js` | Static assets for the local Worker |
+| `../sepolia/worker.js` | Public Sepolia API and shared assets |
+| `../sepolia/scheduler.js` | Hourly checks and budget-limited stimulus TXs, at least one hour apart |
 
-公開用設定は`wrangler.sepolia.jsonc`。ローカルのunlocked accountを使う署名APIは公開しません。行動判断と学習はブラウザーで実行します。
+Public configuration is in `wrangler.sepolia.jsonc`. The local unlocked-account signing API is not exposed publicly. Behavior and learning execute in the browser.
 
-[ローカル起動](../../docs/deployment/local-anvil.md) · [Sepolia](../../docs/deployment/sepolia.md) · [入力の構成](../../docs/architecture.md)
+[Local setup](../../docs/deployment/local-anvil.md) · [Sepolia](../../docs/deployment/sepolia.md) · [Input architecture](../../docs/architecture.md)

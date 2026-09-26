@@ -1,21 +1,23 @@
-# Bio Agent contracts — Foundry
+# BioAgent contracts — Foundry
 
-`IBioAgent` / `IBioAgentRegistry` の型と `BioAgentRegistry` を実装しています。Status は Agent への入力で、内部状態や行動の計算はオフチェーンです。
+Implements the `IBioAgent` / `IBioAgentRegistry` types and `BioAgentRegistry`. Status is an **input** to an agent; internal state and actions are computed offchain.
 
-## ツールと配置
+## Toolchain and layout
 
-- Foundry **v1.8.3**（forge / cast / anvil）、Solidity **0.8.30**、EVM **Cancun**。
-- optimizer 有効、200 runs。設定は `foundry.toml`。
-- `forge-std` v1.9.7 を Git submodule と lockfile で固定。
-- `src/interfaces/`: 共通型、イベント、custom error、操作。
-- `src/BioAgentRegistry.sol`: 登録と owner による Status 更新。
-- `test/`: 単体・fuzz・デプロイスクリプトテスト。
-- `script/`: Sepolia / ローカル用 Forge Script。
-- `abi/`: コンパイルから生成した公開 ABI。Backend / Frontend で共用可能。
+- Foundry **v1.8.3** (`forge`, `cast`, `anvil`), Solidity **0.8.30**, EVM **Cancun**.
+- Optimizer enabled with 200 runs; see `foundry.toml`.
+- `forge-std` v1.9.7 is pinned by a Git submodule and lockfile.
+- `src/interfaces/`: shared types, events, custom errors, and operations.
+- `src/BioAgentRegistry.sol`: registration and owner-authorized Status updates.
+- `test/`: unit, fuzz, and deployment-script tests.
+- `script/`: Forge scripts for Sepolia and local deployment.
+- `abi/`: generated public ABIs shared by backend and frontend.
 
-Foundry が未導入なら [公式インストール手順](https://getfoundry.sh/introduction/installation/) に従い、`foundryup --install v1.8.3` で版を合わせます。`forge`・`cast`・`anvil` が PATH にあることを確認してください。
+Follow the [official Foundry installation guide](https://getfoundry.sh/introduction/installation/), then pin the version with `foundryup --install v1.8.3`. Ensure `forge`, `cast`, and `anvil` are on PATH.
 
-## ビルドとテスト（リポジトリルート）
+## Build and test
+
+Run from the repository root:
 
 ```sh
 git submodule update --init --recursive
@@ -25,30 +27,30 @@ make contracts-check-deployment
 make contracts-abi
 ```
 
-`contracts-dry-run` はローカル EVM に Sepolia の chain ID を設定したシミュレーションです。公開 Sepolia に接続せず、秘密鍵も不要です。
+`contracts-dry-run` simulates deployment in a local EVM with Sepolia's chain ID. It neither connects to public Sepolia nor requires a private key.
 
-`contracts-check-deployment` は一時 Anvil を起動し、RPC を使う Forge Script の dry-run を検証します。CREATE 計画が1件生成されること、nonce・ブロック番号が変わらないこと、予測アドレスにコードが存在しないことを確認して Anvil を終了します。
+`contracts-check-deployment` starts a temporary Anvil and checks the RPC-based Forge dry-run: exactly one CREATE is planned, nonce and block number remain unchanged, and the predicted address has no code. It then stops that Anvil process.
 
-Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/absolute/path/anvil` を使用できます。CI も固定版で同じ検証を行い、ABI の差分を検出します。
+If Foundry is not on PATH, use `make ... FORGE=/absolute/path/forge ANVIL=/absolute/path/anvil`. CI runs the same checks with pinned versions and detects ABI drift.
 
-## 型と制約
+## Types and constraints
 
-`Activity` は Rest=0 / Explore=1 / Forage=2。energy と stimulus は0..10000。初期 Status は Rest / 5000 / 0、revision は1。更新は現在の revision を指定し、成功時に1増加します。
+`Activity` is Rest=0 / Explore=1 / Forage=2. Energy and stimulus range from 0 to 10000. Initial Status is Rest / 5000 / 0, with revision 1. Updates must supply the current revision; successful updates increment it by one.
 
-登録時は `BioAgentRegistered` → `BioAgentStatusUpdated`、更新時は `BioAgentStatusUpdated` を発行します。Status イベントはその版の入力全体を含みます。
+Registration emits `BioAgentRegistered` followed by `BioAgentStatusUpdated`. Updates emit `BioAgentStatusUpdated`, including the complete input for that revision.
 
-登録は誰でも可能で、登録者が owner です。owner だけが自身の Agent の Status を更新できます。modelHash は非ゼロ、metadataURI は1..512バイトです。URI の UTF-8 妥当性や参照先の内容は検証しません。定義変更、所有権移転、削除、管理者権限、アップグレード、トークン発行はありません。
+Anyone may register and becomes the agent's owner. Only that owner may update its Status. `modelHash` must be nonzero; `metadataURI` must contain 1–512 bytes. UTF-8 validity and URI contents are not checked. The base registry has no definition updates, ownership transfer, deletion, administrator, upgrade mechanism, or token issuance.
 
-デプロイだけでは Agent は登録されません。稼働 Runtime や GUI の接続も別途必要です。[型の設計](../docs/design/onchain-contracts.md) と [Sepolia 手順](../docs/deployment/sepolia.md) を参照してください。
+Deployment alone does not register agents or connect a runtime and GUI. See [contract design](../docs/design/onchain-contracts.md) and [Sepolia setup](../docs/deployment/sepolia.md).
 
-## ローカルアプリ層を実デプロイ
+## Deploy the local application
 
-`script/DeployLocalArena.s.sol` は chain ID 31337 のみに対応し、Registry と3匹を用意します。`npm run local:up` が Anvil の起動から GUI 配信まで実行します。[ローカル接続ガイド](../docs/deployment/local-anvil.md) を参照してください。
+`script/DeployLocalArena.s.sol` supports chain ID 31337 only and creates a registry with three agents. `npm run local:up` starts Anvil, deploys, and serves the GUI. See the [local setup guide](../docs/deployment/local-anvil.md).
 
-## Agent用wallet参照
+## Agent wallet references
 
-`IBioAgentWallet` の `getAgentWallet` / `setAgentWallet` を追加しています。ownerが同一チェーン上のwalletアドレスを登録し、専用イベントを発行します。初期値はゼロで、設定しても操作権限は委任しません。実walletの作成・所有検証は別工程です。旧Registryへの自動アップグレードはありません。[Agent拡張設計](../docs/design/agent-types-and-wallets.md)を参照してください。
+`IBioAgentWallet` adds `getAgentWallet` / `setAgentWallet`. An owner can register a wallet address on the same chain, emitting a dedicated event. The initial address is zero. Setting it **does not delegate execution authority**. Wallet creation and ownership verification are separate responsibilities. Existing registries are not automatically upgraded. See [agent and wallet extensions](../docs/design/agent-types-and-wallets.md).
 
 ## Experimental stimulus extension
 
-`BioAgentStimulusRegistry` extends the existing Registry with schema-tagged inputs and ERC-165 discovery. It does not tokenize agents. See [mailbox semantics](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the base Registry; the separate Swap fixture demo deploys the stimulus extension on its own Anvil. The base Registry has now been deployed to Ethereum Sepolia; see [the deployment and live demo guide](../docs/deployment/sepolia.md). The separate stimulus extension is still a local fixture.
+`BioAgentStimulusRegistry` extends the existing registry with schema-tagged inputs and ERC-165 discovery. It does not tokenize agents. See [mailbox semantics](../docs/standards/bio-agent-draft.md). Deployment scripts and demos select their own registry variant; consult the relevant [deployment record](../docs/deployment/sepolia.md) rather than inferring deployed capabilities from an interface file.

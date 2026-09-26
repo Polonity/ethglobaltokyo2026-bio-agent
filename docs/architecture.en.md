@@ -1,6 +1,6 @@
 # Architecture: boundaries, languages and data flow
 
-[日本語](architecture.md) · [Presentation appendix: slide 7](submission/presenter-kit/explanation-en.pdf) · [Project](../README.md)
+[Japanese](architecture.ja.md) · [Presentation appendix: slide 7](submission/presenter-kit/explanation-en.pdf) · [Project](../README.md)
 
 **The chain stores inputs and enforces authority; runtimes compute decisions and learning; applications display and execute them.** Public mode computes in browser JavaScript. Full-neuron mode computes in local Python. Anvil and Sepolia share the common Fly Lab UI and learning code; the full-neuron recording applications have a separate runtime arrangement.
 

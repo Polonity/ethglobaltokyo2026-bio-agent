@@ -1,49 +1,47 @@
-# 観察を中心にした3アプリのUI
+# Observation-first UI for three applications
 
-対象は全MaleCNSを使うローカルGUI（http://127.0.0.1:8812）。従来の8800版は比較用として保持します。
+Full MaleCNS GUI: http://127.0.0.1:8812. The older 8800 application is retained for comparison.
 
-## 主画面の価値
-
-| アプリ | 見るもの | 主な成績 | 操作 |
+| Application | Observe | Metrics | Controls |
 | --- | --- | --- | --- |
-| みつの箱庭 | ハエの位置・食事・休息・危険への接触 | 今回集めたみつの個数、活動エネルギー% | 刺激を選んで開始、停止、学び直し |
-| PnLバトル | 2個体の売買判断と資産増減 | ゼロ基準のPnL折れ線、正負バー、符号・通貨・収益率付き成績 | 同じ記録済み相場で開始、停止、学び直し |
-| Aqua流動性 | 各個体の提示・撤回と約定 | 現在の戦略、提示幅%、約定回数、代理評価pt | 自律運用を開始、停止、学び直し |
+| Foraging | Movement, feeding, rest, hazard contact | Food count and body-energy percentage | Stimulus, run, stop, relearn |
+| PnL battle | Two policies and account-value changes | Zero-based PnL lines/bars with signs, currency, percentage | Recorded market run, stop, relearn |
+| Aqua | Offers, withdrawals, fills | Strategy, spread, fills, proxy points | Run, stop, relearn |
 
-箱庭を画面全体に広げ、成績・状況・操作をフローティングカードにします。狭い画面ではカードを下に並べ、指で操作できる余白を残します。色だけに頼らず、正負の符号、ゼロ線、戦略の文言、選択枠を併用します。
+Use a full-screen field with floating status/control cards; stack cards on narrow screens with touch spacing. Signs, zero lines, text, and selection borders supplement color.
 
-## 数値の契約
+## Metric contracts
 
-- PnLは `equity − initial 100 token1`。トークン名とdecimalsはコントラクトから読み取ります。現在の専用Anvilではtoken0=POLLEN、token1=NECTARなので、損益はNECTAR建てです。ETH表記に置き換えません。実ETHを模した残高ではありません。
-- 表示のプラスは `+`、マイナスは `−`。非ゼロの微小値は符号付きの `<0.001` とし、丸めてゼロに見せません。PnL%の分母は初期資金100です。
-- PnL折れ線はページが受信した観測値です。受信していない過去の経路を捏造しません。新しい実行を開始するとゼロを起点にリセットします。
-- Aquaの評価は `ΔNECTAR-full × (next Uniswap price / current Uniswap price) + ΔPOLLEN-full` の累積。参照は別ペアPOLLEN/NECTARの価格変化率です。POLLEN-full相当の正規化評価をptとして表示し、実現PnL・ETH・実トークン価格オラクルとは区別します。
-- Aquaの提示幅は30 bps=0.30%、800 bps=8.00%。現在の選択は実際のdecisionから表示します。提示案・登録・約定を区別し、未約定を成功した取引として表示しません。
-- Aquaは同じウォレット資産に対する仮想提示です。各戦略は各トークン100を提示しますが、複数の戦略分だけ資産が増えたり、別プールに預け入れられたりはしません。停止は実行を止める操作で、登録済み提示の全撤回ではありません。
+- PnL = equity − initial 100 token1. Read symbols/decimals from contracts. The recorded dedicated Anvil used token0=POLLEN/token1=NECTAR: never relabel PnL as ETH.
+- Use +/− signs and signed `<0.001` for tiny nonzero values, not misleading zero. PnL% uses initial 100 as denominator.
+- Plot only observations actually received by the page; reset from zero on a new run, never fabricate history.
+- Old Aqua reward accumulates `ΔNECTAR-full × (next Uniswap price / current Uniswap price) + ΔPOLLEN-full`. The reference is another pair's ratio. Display normalized points, not realized PnL, ETH, or an actual-token oracle.
+- Spreads: 30 bps=0.30%, 800 bps=8.00%. Display actual decisions and distinguish proposal, registration, and fill.
+- Aqua strategies virtually offer the same wallet assets. Each offers 100 per token; multiple offers do not multiply funds or deposit into separate pools. Stop does not withdraw all registered offers.
 
-## 詳細への分離
+## Details and evidence
 
-ⓘ → モーダル内の「遊び方・数値の意味」「チェーン・実装」「学習・比較」で調べられます。主画面に神経数・hash・学習比較表・全説明書を常設しません。
+The information dialog separates usage/metrics, chain/implementation, and learning/comparison. Keep hashes, neuron counts, full manuals, and evaluation tables out of the main scene.
 
-TXは二段目のモーダルで、ハッシュ・ブロック・成功状態・From/To・gas単位の使用量を表示します。元のJSONも参照できます。説明書の図から主画面の対応箇所へ戻れます。Escで閉じられ、フォーカスが戻ります。
+A nested receipt dialog shows hash, block, success, From/To, gas units, and source JSON. Guide images link back to controls. Esc closes dialogs and restores focus.
 
-## アセット
+## Assets
 
-元の `bio-agent/frontend/public/assets/game-v1/` から背景・蜜と旧ハエ素材を原本のままコピーし、来歴も保持しました。新たにimagegenで市場の交換所とAquaの共有流動性を表す背景を生成しています。表示するハエはimagegenで新しく生成した、丸いクリーム色のデフォルメキャラクター `cute-fly-v1.png` に統一しました。旧写実版は表示しません。移動方向には軽く傾くだけで顔は上下反転せず、学び直しでは静止します。格納先は `services/full-apps/assets/`。
+Original backgrounds/food/legacy flies were copied unchanged with provenance from `bio-agent/frontend/public/assets/game-v1/`. Imagegen supplied new market/Aqua backgrounds and the rounded cream mascot `cute-fly-v1.png`, stored in `services/full-apps/assets/`. The older realistic fly is not displayed. Movement tilts the mascot without flipping its face; learning holds it still.
 
-アセットは環境の意味を補助する絵です。スコア・価格・選択・約定結果は絵に焼き込まず、実行データから描画します。背景のコインや水路は資産残高やトランザクション履歴ではありません。
+Artwork explains setting. Scores, prices, actions, and fills come from runtime data, not baked-in imagery. Decorative coins/canals are not balances or transaction history.
 
-## 検証
+## Verification
 
 ```sh
 node scripts/check-ux-refresh.mjs
-node scripts/check-pnl-display.mjs # 独立した表示用フィクスチャ。取引結果ではない
+node scripts/check-pnl-display.mjs # synthetic display fixture, not a trading result
 node scripts/capture-guide-screens.mjs
 npm run docs:apps
 npm run build
 npm run test:guides
 ```
 
-`check-ux-refresh`は3アプリをGUIから起動・停止し、166,700神経、通貨表記、代理価格、receipt、日英、390px表示、Esc操作を検証します。実行証拠と画像は `artifacts/ux-refresh/`。同じチェーンで他の実験を同時実行しないでください。過去のデモ動画は旧UIの記録として保持します。
+UX checks run/stop all three apps and inspect 166,700-neuron mode, currencies, proxy prices, receipts, both languages, 390 px layouts, and Esc. Outputs: `artifacts/ux-refresh/`. Do not run competing experiments on the same chain. Old recordings remain historical UI evidence.
 
-PNLの正負・単位・割合・ゼロ基準バーは独立した合成表示フィクスチャでも検証します。実APIへの入力や本番状態の書き換えは行いません。実観察の結果がゼロならそのままゼロを表示し、動画や画面の見栄えのために利益を作りません。
+Independent display fixtures test PnL signs, units, percentages, and zero-based bars without injecting production state. If observed PnL is zero, display zero; never manufacture profit for a screenshot.

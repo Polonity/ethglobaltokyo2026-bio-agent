@@ -1,17 +1,17 @@
-# MaleCNS データ出典
+# MaleCNS data sources
 
-参照: https://male-cns.janelia.org/ （2026-09-25 確認）
+Reference: https://male-cns.janelia.org/ (checked 2026-09-25).
 
-公式ページは雄ショウジョウバエ CNS の接続データを公開し、ダウンロードと neuPrint などの問い合わせ手段を案内しています。公式トップページはデータセットを CC-BY と表記しています。取込時には対象配布物に付随するライセンスの版・帰属条件を確認してください。
+The official site publishes male fruit fly CNS connectivity and links to downloads and query tools such as neuPrint. Its landing page identifies the dataset as CC-BY. Check the license version and attribution requirements attached to each imported distribution.
 
-2026-09-26更新: Circuit Lab用にMaleCNS v1.0の7神経・19接続の抽出物を追加しました。元ID・接続数・データhash・抽出コードhash・帰属・変更内容を保持し、CC BY 4.0のデータとして配布します。大容量の元データは含めません。動力学と入出力は人工設計で、生理モデルではありません。詳細は[回路検証と再抽出手順](design/circuit-evidence.md)を参照。
+On 2026-09-26, Circuit Lab added a MaleCNS v1.0 extract of 7 neurons and 19 connections, distributed as CC BY 4.0 data. It retains original IDs, connection counts, data and extraction-code hashes, attribution, and changes. Large source data is not bundled. Dynamics and input/output mappings are engineered, not a physiological model. See [circuit verification and extraction](design/circuit-evidence.md).
 
-取込時にデータマニフェストへ記録する項目:
+Record the following in import manifests:
 
-- 配布 URL、リリース、取得日時、ハッシュ
-- ライセンスと推奨引用・帰属表記
-- 元論文、利用したニューロンとシナプスの抽出条件
-- 前処理コードの版と生成されたグラフの統計
-- 入力刺激・状態・行動へのマッピングとモデルの仮定
+- Distribution URL, release, retrieval date, and hash.
+- License, recommended citation, and attribution.
+- Source paper and neuron/synapse selection criteria.
+- Preprocessing code version and generated graph statistics.
+- Stimulus/state/action mappings and model assumptions.
 
-接続構造から行動・学習能力がそのまま得られるとは扱わず、回路モデルと評価結果を分けて記録します。
+Connectivity alone does not establish behavior or learning capability. Record model construction separately from evaluation results.

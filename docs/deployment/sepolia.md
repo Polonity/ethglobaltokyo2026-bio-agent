@@ -1,76 +1,72 @@
-# Sepolia / 共通Fly Lab
+# Sepolia / shared Fly Lab
 
-[日本語デモ](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) · [English demo](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en)
+[English demo](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) · [Japanese demo](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja)
 
-**ハエに与える外部入力はすべてオンチェーンデータです。** 初期環境・危険エリア・餌・活動・刺激・供給条件を、確定したTXから受け取ります。感覚入力への変換、身体状態、判断、学習はオフチェーンで計算します。
+**All external inputs to the flies come from onchain data.** Confirmed transactions supply the initial environment, hazards, food, activity, stimuli, and supply conditions. Sensory encoding, body state, decisions, and learning execute offchain.
 
-## 1分で確認する
+## One-minute check
 
-1. ウォレットなしでページを開き、3匹を観察する。
-2. 「環境と餌の入力TX」で、危険エリアの初期TXと餌の追加元TXを確認する。
-3. 正の刺激TXが1件確定すると黄色い餌が1個増える。食べると消え、自動補充しない。
-4. 「学習室へ」で確認済み環境を再生して学習する。学習用コピーは表示中の餌を増やさない。
+1. Open the page without a wallet and observe three agents.
+2. Inspect environment/food input TXs for hazard initialization and food provenance.
+3. Each confirmed positive-stimulus TX adds one yellow food. Eating removes it without automatic refill.
+4. Open learning to replay the confirmed environment. Training copies never add visible food.
 
-新しいブラウザーは、現在の環境TX以降の刺激履歴を再生します。消費済みの餌はブラウザーに記録し、再読込で復活しません。身体・消費・学習状態は別ブラウザーと共有せず、オンチェーンの入力を共有します。
+A new browser replays stimulus history since the current world TX. Consumed-food IDs persist locally and do not reappear on reload. Browsers share onchain inputs, not body, consumption, or learning state.
 
-## 入力と共通実装
+## Inputs and shared implementation
 
-| 入力 | TXと処理 |
+| Input | Transaction and processing |
 | --- | --- |
-| 初期環境・危険エリア | Agent #1の`submitStimulus`。`bioagent.foraging-world.v1`スキーマで幅・高さ・seed・餌配置範囲・危険エリアの位置と半径を記録 |
-| 環境の変更 | 同スキーマの新TXでフィールドを再構築し、以前の餌を消去 |
-| 活動・刺激・供給 | 個体ごとの`updateStatus`。正の刺激の成功イベント1件で餌を1個追加。登録・刺激0・重複・revertでは追加しない |
-| 餌の座標 | TX hashと環境TXのseed・寸法から決定的に計算 |
+| Initial world/hazards | Agent #1 `submitStimulus`, schema `bioagent.foraging-world.v1`: width, height, seed, food bounds, hazard positions/radii |
+| World change | A new TX with that schema rebuilds the field and clears previous food |
+| Activity/stimulus/supply | Per-agent `updateStatus`; one successful positive-stimulus event adds one food. Registration, zero stimulus, duplicates, and reverts add none |
+| Food coordinates | Deterministically derived from TX hash and recorded world seed/dimensions |
 
-環境TX未確認、モデル不一致、古いSepoliaブロック、RPC断では停止し、ローカル環境へ切り替えません。receiptとcanonical blockを照合し、追加確認深度は0です。最終確定や神経計算の暗号学的証明ではありません。
+Unverified world inputs, model mismatches, stale Sepolia blocks, or RPC failure pause execution; there is no fallback to a synthetic local world. Receipts are checked against canonical blocks with zero additional confirmation depth. This is not finality or a cryptographic proof of neural execution.
 
-- **共通画面**：`apps/frontend/`。AnvilとSepoliaで同じHTML・CSS・JSを配信。
-- **共通行動・学習**：`packages/bio_agent/browser/arena.js`。
-- **共通環境入力**：`tx-world.js` / `tx-food.js`。全神経Anvil版も共有。
-- **共通イベント検証**：`services/worker/registry-read.js`。
-- **環境差分**：RPC・chain ID・Registry・確認間隔・署名方法。Anvilはローカルアカウント、Sepoliaの手動送信は所有者ウォレット。
+- Shared UI: `apps/frontend/`, identical HTML/CSS/JS for Anvil and Sepolia.
+- Shared behavior/learning: `packages/bio_agent/browser/arena.js`.
+- Shared world/food: `tx-world.js` / `tx-food.js`, also used by full-neuron Anvil foraging.
+- Shared event verification: `services/worker/registry-read.js`.
+- Environment differences: RPC, chain ID, registry, polling interval, and signing adapter. Anvil uses a local account; manual Sepolia writes use the owner's wallet.
 
-旧Sepolia専用UI・旧RPC中継・旧専用監査コードは削除しました。初期設定の送信元は[foraging-world.json](../../packages/bio_agent/browser/foraging-world.json)ですが、接続中のランタイムはTXに記録された値を読みます。オフライン研究用の合成環境は公開デモに混ぜません。
+The old Sepolia-only UI, RPC proxy, and audit code were removed. [foraging-world.json](../../packages/bio_agent/browser/foraging-world.json) supplies deployment initialization, but connected runtimes read TX-recorded values. Offline synthetic research worlds are separate.
 
-## 定期TXとガス代
+## Scheduled TXs and gas
 
-Cloudflare Cron → `StimulusScheduler` Durable Object → Registry。毎時送信条件を確認し、最低1時間の間隔を空けてAgent #1へ正の刺激を送ります。ブラウザーを閉じても実行され、外部HTTPから送信を起動するAPIはありません。
+Cloudflare Cron → `StimulusScheduler` Durable Object → Registry. The scheduler checks hourly and sends a positive stimulus to Agent #1 at least one hour apart. It runs without an open browser and exposes no public HTTP signing trigger.
 
-署名者は既存の試験用EOA **0x0d01a92bae0E01754f7102466936397F609D67C3**。ユーザーの許可で同じ試験資金を再利用します。鍵はCloudflare Secretで保管し、静的ファイル・ブラウザーへ渡しません。現在スマートウォレットではありません。
+Signer: test EOA **0x0d01a92bae0E01754f7102466936397F609D67C3**, reusing authorized test funds. Its key is a Cloudflare Secret, never a browser/static asset. This is currently an EOA, not a smart wallet.
 
-- 最低送信間隔1時間。再試行と同時起動は、永続保存した同じ署名TXを使う。
-- 60,000 gas / 3 gweiを上限とし、24件の最大額は **0.00432 Sepolia ETH**。
-- 直近24時間予算0.005 ETH、残す残高0.001 ETH。超過時は送信を見送る。
-- [送信状態API](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/api/stimulus-scheduler)で直近のhashと状態を確認できる。
+- Minimum one-hour send interval; retries/concurrent invocations reuse the same durably journaled signed TX.
+- Caps: 60,000 gas and 3 gwei; 24 transactions cost at most **0.00432 Sepolia ETH** under those caps.
+- Rolling 24-hour budget: 0.005 ETH; balance reserve: 0.001 ETH. Exceeding limits skips sending.
+- [Scheduler status API](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/api/stimulus-scheduler) exposes the latest hash/status.
 
-確認時の残高は約0.01636 ETH。これは上限による資金保護で、24時間連続稼働試験を完了した意味ではありません。[実TXと画面反映の記録](../submission/judge-demo-review.md)。
+Balance at the recorded check was approximately 0.01636 ETH, not a current balance quote. Budget safeguards are not evidence of a completed 24-hour endurance run. See [TX and browser verification](../submission/judge-demo-review.md).
 
-## 配置と再現
+## Deployment and reproduction
 
-Ethereum Sepolia / **11155111** / Agent IDs **1, 2, 3**。
+Ethereum Sepolia / **11155111** / agent IDs **1, 2, 3**.
 
-- Registry：[`0x09DF8a4feEaceB690Da135d8355B84A6691c323B`](https://sepolia.etherscan.io/address/0x09DF8a4feEaceB690Da135d8355B84A6691c323B)
-- [初期環境TX](https://sepolia.etherscan.io/tx/0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc) / [配置記録](../../contracts/deployments/sepolia.json)
-- 既存の`BioAgentStimulusRegistry`を利用。配置bytecode一致を確認。旧Registryは配置記録の`previousRegistry`に残す。
+- Registry: [`0x09DF8a4feEaceB690Da135d8355B84A6691c323B`](https://sepolia.etherscan.io/address/0x09DF8a4feEaceB690Da135d8355B84A6691c323B).
+- [Initial world TX](https://sepolia.etherscan.io/tx/0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc) · [Deployment record](../../contracts/deployments/sepolia.json).
+- Uses an existing `BioAgentStimulusRegistry` with checked deployed bytecode. Previous registry is retained in `previousRegistry`.
 
 ```sh
 npm ci
 npm run sepolia:build
-npm run sepolia:dev           # localhost:8836、実Sepoliaを読む
-npm run test:sepolia          # 専用Anvilで環境入力・再送を検証
-npm run test:sepolia:browser  # 起動済みlocalhost:8836を読む
-npm run test:sepolia:public   # 公開ページを読む。送信なし
-npm run sepolia:prepare      # 残高・ガス見積り
-npm run sepolia:deploy       # 保存済みjournalで配置と初期入力を再開
-npm run sepolia:publish      # このWorkerを更新
+npm run sepolia:dev           # localhost:8836; reads real Sepolia
+npm run test:sepolia          # isolated Anvil input/retry checks
+npm run test:sepolia:browser  # reads running localhost:8836
+npm run test:sepolia:public   # reads public page; no writes
+npm run sepolia:prepare      # balance and gas estimates
+npm run sepolia:deploy       # resume deployment/initial inputs from journal
+npm run sepolia:publish      # update this Worker
 ```
 
-Node.js 22、Chrome、Foundryを使用。`.local/sepolia/`のkeystore・passphrase・署名journalはGit対象外です。journalを削除して予算や再送制御を回避しません。Cloudflare配布では`.env`のCloudflare認証情報だけを渡します。署名鍵は`wrangler secret put SEPOLIA_SIGNER_KEY --config wrangler.sepolia.jsonc`への標準入力で設定します。
+Requires Node.js 22, Chrome, and Foundry. `.local/sepolia/` keystore, passphrase, and signed journal are excluded from Git. Do not delete journals to bypass budgets or retry controls. Deployment passes only Cloudflare credentials from `.env`. Set the signing key through stdin to `wrangler secret put SEPOLIA_SIGNER_KEY --config wrangler.sepolia.jsonc`.
 
-## For judges / English
+## Public demo versus submission video
 
-**All external inputs to the flies come from onchain data.** An initial `IBioAgentStimulus` transaction defines dimensions, hazards, seed and food placement bounds. Each confirmed positive status TX adds one food. Eating removes it without refill. Sensory encoding, body state, movement and learning run offchain; invalid or unavailable chain input pauses the simulation.
-
-Anvil and Sepolia use the same UI and decision/learning runtime. Learning replays copies of the confirmed environment without adding visible food. The hourly Cloudflare sender uses the existing test wallet, a durable journal and gas/balance limits. Watching requires no wallet; manual writes require the owner.
-
-The public model uses a measured **7-neuron / 19-edge subgraph**, not an equivalent compression of a full brain. It does not trade on Aqua or Uniswap. The newly recorded submission video uses **Anvil / full 166,700 neurons per agent**. It shows two-agent foraging with current environment TXs and same-input readout comparison, followed by four-agent Aqua/V3 market settlement. Long waits are cut; the public browser Q-learning and full Python learning remain separate implementations.
+The public browser model uses a measured **7-neuron / 19-edge subgraph**, not an equivalent compression of a full brain. It does not trade on Aqua or Uniswap. The submission recording uses **166,700 neurons per agent** on local Anvil: two-agent foraging with world TXs and same-input readout comparison, followed by four-agent Aqua/V3 settlement. Long waits are cut. Public Q-learning and full Python learning are separate implementations.

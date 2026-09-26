@@ -1,178 +1,178 @@
-# 01 採餌 — オンチェーン刺激の箱庭
+# 01 Foraging — an onchain stimulus playground
 
-蜜を集めて、生き延びよう
+Gather nectar and keep going
 
-あなたは箱庭の環境を変える観察者です。ハエを方向キーで操作するのではなく、刺激を与え、2匹が自分で選ぶ移動・休息を見守ります。
+You shape the environment. Set a stimulus and watch two flies choose movement or rest; there are no arrow-key controls.
 
-[全神経版の印刷シート](http://127.0.0.1:8812/guides/sheet.html?app=foraging&mode=full&lang=ja) / [従来版の印刷シート](http://127.0.0.1:8800/guides/sheet.html?app=foraging&mode=browser&lang=ja)。画面内と同じ説明データから生成しています。英語はシートの言語選択で切り替えられます。
+[Full-neuron printable sheet](http://127.0.0.1:8812/guides/sheet.html?app=foraging&mode=full&lang=en) / [Legacy printable sheet](http://127.0.0.1:8800/guides/sheet.html?app=foraging&mode=browser&lang=en). Generated from the same content as in-app help. Use the sheet language selector for Japanese.
 
-## 01 はじめてのプレイ
+## 01 First run
 
-1. 刺激スライダーを決めて「刺激を送って観察」を押します。まずは中くらいの刺激から。
-2. 金色の蜜と赤い点線の危険エリアを見ながら、2匹の採餌数・衝突数・Energyを比べます。通常実行は64ステップで終了します。
-3. 「学び直す」を実行し、採用されたPolicyと評価結果を見ます。この学習は固定条件を使い、刺激スライダーの値では進みません。
+1. Set the stimulus slider, then press “Send stimulus & watch”. Start near the middle.
+2. Watch the golden nectar and red hazard rings. Compare food collected, collisions and Energy. A normal run ends after 64 steps.
+3. Run “Learn again”, then inspect adopted policies and evaluation results. This uses fixed learning conditions, not the stimulus slider.
 
-途中で止めるには「停止」。進行中の動作が完了してから止まります。
+Select Stop to interrupt a run after the current action completes.
 
-## 02 画面の見方
+## 02 Reading the screen
 
-実画面の切り抜きです。数値は撮影時の例です。
+These are actual screen captures. Numbers are examples from the capture time.
 
-### 1. 操作する場所
+### 1. Controls
 
-![操作する場所](../../apps/frontend/guides/screens/full-foraging-ja-1.png)
+![Controls](../../apps/frontend/guides/screens/full-foraging-en-1.png)
 
-### 2. ハエが反応する場所
+### 2. Agent field
 
-![ハエが反応する場所](../../apps/frontend/guides/screens/full-foraging-ja-2.png)
+![Agent field](../../apps/frontend/guides/screens/full-foraging-en-2.png)
 
-### 3. 状態と成績
+### 3. State and results
 
-![状態と成績](../../apps/frontend/guides/screens/full-foraging-ja-3.png)
+![State and results](../../apps/frontend/guides/screens/full-foraging-en-3.png)
 
-### 4. ブロックチェーンの証拠
+### 4. Blockchain evidence
 
-![ブロックチェーンの証拠](../../apps/frontend/guides/screens/full-foraging-ja-4.png)
+![Blockchain evidence](../../apps/frontend/guides/screens/full-foraging-en-4.png)
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| 葉に乗った金色の結晶＝蜜 | チェーン接続時は、正の刺激の確定TXごとに1個出現します。食べると消え、自動補充しません。位置と消費はローカル計算です。オフラインの比較実験は合成の餌を使います。 |
-| 赤い点線の輪＝危険地帯 | 位置と半径は環境TXの入力です。入ると減点とエネルギー消費。オンチェーンの刺激が強いほど衝突の罰が大きくなります。 |
-| ハエ＝独立した個体 | それぞれ身体状態と方策を持ちます。同じ蜜を取り合うため、同じ刺激でも経験や判断は一致しません。 |
+| Golden crystals on leaves = nectar | With a chain connection, each confirmed positive stimulus adds one food. Eating removes it without refill. Position and consumption are local calculations. Offline comparison experiments use synthetic food. |
+| Red dashed rings = hazards | Position and radius come from the environment TX. Entering costs reward and energy. Stronger onchain stimulus increases the collision penalty. |
+| Flies = separate individuals | Each has its own body state and policy. Shared food creates competition, so identical stimuli need not produce identical experiences or decisions. |
 
-### 状態と吹き出し
+### State and bubbles
 
-Energyは動くための活動エネルギーで、移動で減り、休息や採餌で回復。満腹度は最近食べた量の指標で、採餌で増え、時間とともに減ります。蓄えは消化と消費でゆっくり変わり、体格の目標値になります。次の神経入力に入るのはEnergy・満腹度・蓄えです。個体のEnergy残量と、Statusのenergy（供給設定）は別の値です。全神経GUIの供給設定は固定。体格は蓄えから決まる表示用の指標で、従来版のお腹に反映されますが、全神経版の顔の大きさは現在固定です。
+Energy supports activity: movement consumes it, while rest and feeding replenish it. Fullness tracks recent feeding and declines over time. Reserves change more slowly through digestion and expenditure and determine target body size. Energy, fullness and reserves feed subsequent neural inputs. Individual Energy differs from the Status energy supply setting, which is fixed in the full GUI. Body size derives from reserves for display: it changes the original app’s belly, while the full app currently draws faces at a fixed size.
 
-全神経版でもハエの上に状態を表示します。？＝readout学習中、♡＝蜜を獲得、！＝危険、すやすや＝休息、おなかいっぱい／空腹＝満腹度の閾値による表示です。使用したモデルや方策はⓘから確認します。感情を計測したものではなく、処理結果を人が読める表現に変えています。
+The full app also shows state bubbles: ? for readout training, ♡ for nectar, ! for hazard contact, sleeping for rest, and full/hungry captions from fullness thresholds. Model and policy details live under ⓘ. These are readable labels for state and outcomes, not measured emotions.
 
-### 吹き出し図鑑
+### Bubble reference
 
-実際の表示文言に合わせた説明用の模式図です。全神経版のカードと従来版の感情風の吹き出しは別の表示です。
+Illustrations match the actual labels. Full-mode action cards and legacy expressive bubbles are different displays.
 
-#### 全神経版・7神経比較モード：状態と選択
+#### Full app / reduced comparison: states and choices
 
-![？ 学び直し中](bubbles/full-foraging-ja-0.svg)
+![? Learning](bubbles/full-foraging-en-0.svg)
 
-**？ 学び直し中**：readout学習中はその場で停止します。収集・評価中とは別の状態です。
+**? Learning**: Stops in place during readout training, distinct from collection or evaluation.
 
-![！ あぶない](bubbles/full-foraging-ja-1.svg)
+![! Watch out](bubbles/full-foraging-en-1.svg)
 
-**！ あぶない**：直近の動作で危険領域に接触しました。
+**! Watch out**: The last action contacted a hazard.
 
-![♡ みつを見つけた！](bubbles/full-foraging-ja-2.svg)
+![♡ Found nectar!](bubbles/full-foraging-en-2.svg)
 
-**♡ みつを見つけた！**：直近の動作でみつを取得しました。
+**♡ Found nectar!**: The last action collected nectar.
 
-![すやすや…](bubbles/full-foraging-ja-3.svg)
+![Zzz…](bubbles/full-foraging-en-3.svg)
 
-**すやすや…**：休息する行動を選びました。
+**Zzz…**: The selected action was rest.
 
-![おなかいっぱい](bubbles/full-foraging-ja-4.svg)
+![So full](bubbles/full-foraging-en-4.svg)
 
-**おなかいっぱい**：満腹度が80%より高い状態です。
+**So full**: Fullness is above 80%.
 
-![おなかすいた…](bubbles/full-foraging-ja-5.svg)
+![Hungry…](bubbles/full-foraging-en-5.svg)
 
-**おなかすいた…**：満腹度が15%未満です。
+**Hungry…**: Fullness is below 15%.
 
-![みつ、どこ？](bubbles/full-foraging-ja-6.svg)
+![Where is nectar?](bubbles/full-foraging-en-6.svg)
 
-**みつ、どこ？**：ほかの表示条件に当てはまらない通常の状態です。
+**Where is nectar?**: Default when no higher-priority state applies.
 
-#### 従来のブラウザー版：吹き出し
+#### Original browser app: bubbles
 
-![？ どうしよう…](bubbles/browser-foraging-ja-0.svg)
+![? Let me think…](bubbles/browser-foraging-en-0.svg)
 
-**？ どうしよう…**：学習室で学び直し中。個体はその場で停止します。ほかの条件より優先して表示します。
+**? Let me think…**: Relearning in the learning room. The individual stops in place. This takes priority over other captions.
 
-![！ あぶない](bubbles/browser-foraging-ja-1.svg)
+![! Watch out!](bubbles/browser-foraging-en-1.svg)
 
-**！ あぶない**：直近の判断記録に「危険」がある状態。危険への接触などの結果を表示しており、未来の危険予知ではありません。
+**! Watch out!**: The latest decision record contains a danger result, such as hazard contact. It is not a forecast.
 
-![♡ やった！](bubbles/browser-foraging-ja-2.svg)
+![♡ Yum!](bubbles/browser-foraging-en-2.svg)
 
-**♡ やった！**：直近の判断で蜜を獲得。満腹度の表示より優先されるため、満腹でも♡が出ることがあります。
+**♡ Yum!**: Nectar was collected in the latest decision. This takes priority over fullness captions.
 
-![すやすや…](bubbles/browser-foraging-ja-3.svg)
+![Zzz…](bubbles/browser-foraging-en-3.svg)
 
-**すやすや…**：直近の判断が休息。学び直しではなく、休む行動を見せています。
+**Zzz…**: The latest decision was rest, not relearning.
 
-![おなかいっぱい…](bubbles/browser-foraging-ja-4.svg)
+![So full…](bubbles/browser-foraging-en-4.svg)
 
-**おなかいっぱい…**：満腹度が80%より高いとき。学習・危険・獲得・休息の表示が優先されます。
+**So full…**: Fullness is above 80%, unless learning, danger, collection or rest takes priority.
 
-![ぐぅ…おなかすいた](bubbles/browser-foraging-ja-5.svg)
+![Rumble… hungry!](bubbles/browser-foraging-en-5.svg)
 
-**ぐぅ…おなかすいた**：満腹度が15%未満。活動エネルギー残量やトークン残高の意味ではありません。
+**Rumble… hungry!**: Fullness is below 15%. This is not remaining activity energy or a token balance.
 
-![おやつ、どこ？](bubbles/browser-foraging-ja-6.svg)
+![Where’s a treat?](bubbles/browser-foraging-en-6.svg)
 
-**おやつ、どこ？**：上の条件に当てはまらない通常の表示。食べ物の正確な位置を発見したという意味ではありません。
+**Where’s a treat?**: The default caption when none of the above applies. It does not mean food has been located.
 
-### 成績と目標
+### Scores and goals
 
-蜜の数だけでなく、危険への接触や移動コストも累積報酬に影響します。決まったクリア点はありません。2匹の結果と、学習前後の評価を比べる実験ゲームです。
+Nectar, hazard contact and movement cost all affect cumulative reward. There is no fixed winning score. Compare the two individuals and their before/after learning evaluations.
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| 蜜の数 / Score | 集めた蜜の個数。Rewardとは別です。 |
-| Reward / 報酬 | 接近による小さな加点、蜜の獲得、危険による減点などの累積。蜜は満腹時ほど加点が小さくなります。 |
+| Nectar count / Score | Number of nectar items collected; different from Reward. |
+| Reward | Cumulative approach, food and hazard rewards/costs. Collecting food earns less reward when already full. |
 
-## 03 学び直して、もう一度
+## 03 Learn and try again
 
-収集＝実際に動かして観測・行動・結果を保存。学習＝保存した神経特徴と報酬からreadoutを更新。評価＝別の実行で旧方策と候補を比較。改善した個体だけ採用し、v2などの方策番号が次の判断へ反映されます。神経接続そのものは固定です。
+Collect: save real action observations and outcomes. Train: fit the readout from saved neural features and rewards. Evaluate: compare the current policy and candidate in another run. Only improved individuals adopt the new version for subsequent decisions. Neural connections remain fixed.
 
-「評価中」は候補を試している途中で、まだ採用を意味しません。「完了」はその実行の終了、「停止」はユーザーの操作による中断です。？はreadoutを学習している間の表示で、短時間の学習では見えないこともあります。
+Evaluating means a candidate is being tested, not yet adopted. Complete means the run ended; Stopped means the user interrupted it. A ? indicates readout training and may be too brief to see when fitting finishes quickly.
 
-①全神経を選ぶ → ②刺激を変えて「刺激を送って観察」 → ③蜜の数・身体状態・TXを確認 → ④「学び直す」で採用前後を見る。学習ボタンは比較用の固定条件を使い、スライダー変更は通常実行へ反映します。
+1 Choose Full mode. 2 Change stimulus and run the current policy. 3 Inspect food count, body state and TX. 4 Collect → learn → evaluate to compare policies. Training uses fixed evaluation conditions; the slider affects normal runs.
 
-## 04 ゲームの裏側
+## 04 Behind the application
 
-### 1 刺激を記録
+### 1 Record a stimulus
 
-スライダー → BioAgentStatusUpdatedのTX。全神経版の通常実行では0〜1を0〜10000として登録し、確認した値を入力へ戻します。
+Slider → a BioAgentStatusUpdated transaction. A normal full-app run records 0–1 as 0–10,000 and reads the confirmed value back into the input.
 
-### 2 観測を入力へ
+### 2 Encode the scene
 
-蜜の方向・距離、周囲の危険、エネルギー、満腹度、蓄え、刺激を人工的に数値化します。刺激を上げると移動入力が弱まり、危険の罰が増えます。「必ず右へ」などの命令ではありません。
+Engineered inputs encode nectar direction/distance, hazards, energy, fullness, reserves and stimulus. Higher stimulus attenuates movement drives and increases hazard cost; it is not a command such as “turn right”.
 
-### 3 回路から行動へ
+### 3 Circuit to action
 
-MaleCNSの活動 → readout → 8方向の移動または休息。全神経版ではエネルギーが0.08未満なら休息だけを許すルールもあります。
+MaleCNS activity → readout → one of eight movement directions or rest. Full mode also allows only rest when energy falls below 0.08.
 
-### 4 結果から学ぶ
+### 4 Learn from outcomes
 
-蜜の獲得、接近、衝突、休息の結果から報酬を計算し、次の学習に使います。描画と身体更新はオフチェーンです。
+Nectar collection, approach, collisions and rest produce rewards for learning. Rendering and body updates are offchain.
 
-チェーンは入力や取引の出典を追うためのものです。神経計算・身体更新・学習はローカルで実行します。TX成功は、判断の正しさや利益を保証する印ではありません。
+The chain lets you trace inputs and transactions. Neural computation, body updates and learning run locally. A successful transaction does not certify a correct decision or a profitable policy.
 
-全神経モードは分類付き166,700神経・25,582,938内部接続を個体ごとに計算します。16入力を感覚神経集団に与え、4神経step後の活動集計をreadout（行動に変換する学習器）へ渡します。7神経モードも明示的に選択できます。
+Full mode computes 166,700 classified neurons and 25,582,938 internal connections per individual. Sixteen inputs drive sensory populations; after four neural steps, activity summaries feed a learned action readout. A seven-neuron mode is an explicit alternative.
 
-MaleCNSは実測された神経接続の地図です。入力を神経に割り当てる方法、活動の計算式、身体、行動への変換はこの実験の人工モデルです。吹き出しから本物のハエの感情や思考を読み取れるわけではありません。
+MaleCNS provides measured neural connectivity. Input mapping, activity dynamics, body state and action decoding are engineered for this experiment. Bubbles do not reveal a real fly’s emotions or thoughts.
 
-| 表示 | 意味 |
+| Display | Meaning |
 | --- | --- |
-| Policy v / 方策番号 | その判断に使った行動変換の版。神経数や年齢ではありません。 |
-| 神経step / ms | 人工モデルの更新回数と神経計算時間。生物学的な時間や画面のFPSとは異なります。 |
-| 学習前 / 候補 / 別条件 | 旧方策の評価、候補の評価、採用後の別入力での結果。各欄はMOMO / SORA順。数値はその実行の累積報酬です。 |
-| TX / Block / hash | 入力や取引が記録されたトランザクションとブロック。Anvilではローカルreceiptを開きます。ハエの全神経状態がチェーンに保存されるわけではありません。 |
+| Policy v / version | The action readout version used for this decision, not neuron count or age. |
+| Neural step / ms | Artificial model updates and neural computation time, not biological time or display FPS. |
+| Before / Candidate / New test | Current-policy evaluation, candidate evaluation, and a new-input run after adoption. Values are MOMO / SORA cumulative rewards for each run. |
+| TX / Block / hash | The transaction and block recording an input or trade. Anvil links open local receipts. The fly’s full neural state is not stored onchain. |
 
-## 従来のブラウザー版との違い
+## Differences from the legacy browser version
 
-1. 採餌・探索・休息を選び、刺激とエネルギー供給を調整して適用します。
-2. 蜜を取ったときの♡、危険の！、休息、学び直しの？を観察します。チェーン接続時のおやつボタンも刺激TXを送ります。餌がないときは次のTXを待ちます。
-3. 「学習室へ」で学び直しを試し、ラウンド終了後は学習を引き継いで次へ進みます。
+1. First open “Environment and food input TXs” to inspect the initial hazard TX and food source TXs. Watching requires no wallet.
+2. Select an agent and observe food, danger and rest. Manual stimuli and the snack button require an owner-signed TX. With no food, wait for the next TX; there is no refill.
+3. Use “Start learning” to replay the confirmed environment, then read before/candidate and adopt/keep. This comparison alone does not establish unseen-world adaptation.
 
-採餌や危険への接触が成績に関係します。画面のラウンド成績と各個体の状態を比べてください。
+Foraging and hazard contact affect performance. Compare round results and individual states.
 
-従来のブラウザー版は実測MaleCNSの7神経・19接続を使います。32stepの回路応答を行動変換へ渡します。全神経版とは入力変換や学習方法が異なります。
+The original browser apps use seven measured MaleCNS neurons and 19 connections. Their 32-step circuit response feeds action decoding. Input mapping and learning differ from the full-population apps.
 
-- **1 個体の刺激TX**：刺激TXのreceiptとイベントを確認して個体の入力へ反映します。正の刺激1件につき蜜を1個追加。食べた蜜は自動補充せず、同じTXを再受信しても増えません。危険エリア・寸法・seedは環境TXに記録。餌の座標はTXとseedから計算し、消費は内部状態です。
-- **2 身体と環境を観測**：蜜の方向、危険、活動エネルギー、満腹度と刺激を回路への人工入力にします。
-- **3 7神経の応答から動く**：回路応答と学習したQ値から移動・休息を選び、ローカルの世界を更新します。
-- **4 行動経験を学習**：採餌と衝突などの結果を記録し、成績下位の個体が学び直して改善を評価します。
+- **1 Individual stimulus TX**: A verified receipt and event update the individual’s input. Each positive stimulus adds one food, with no refill or duplicate addition. An environment TX records hazards, dimensions and seed. Food coordinates derive from TX data and that seed; consumption is internal state.
+- **2 Observe body and scene**: Nectar direction, hazards, energy, fullness and stimulus become engineered circuit inputs.
+- **3 Move from the seven-neuron response**: Circuit responses and learned Q values select movement or rest and update the local world.
+- **4 Learn action experience**: Record feeding/collision outcomes; lower-ranking individuals retrain and are evaluated for improvement.
 
-ブラウザー版は経験からQ値を更新します。チェーン接続時は確認済み環境を複製して学習・比較し、表示中の餌は増やしません。比較条件で改善した候補だけ採用します。全神経版は別のreadout学習です。
+The browser updates Q values from experience. In chain mode, learning and comparison replay copies of the confirmed environment without adding visible food. Only a candidate with a better comparison score is adopted. The full runtime uses a separate readout learner.
 
-参照実装：全神経版 `services/full-apps/foraging.mjs`、神経入力 `packages/bio_agent/full_apps/brain.py`、学習 `packages/bio_agent/full_apps/learning.py`。説明データは `apps/frontend/guides/content.mjs`。
+Reference implementation: full mode `services/full-apps/foraging.mjs`, neural inputs `packages/bio_agent/full_apps/brain.py`, learning `packages/bio_agent/full_apps/learning.py`. Guide content: `apps/frontend/guides/content.mjs`.

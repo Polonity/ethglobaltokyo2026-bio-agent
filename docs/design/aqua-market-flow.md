@@ -1,49 +1,47 @@
-# AquaとUniswapで誰が取引するのか
+# Who trades in Aqua and Uniswap?
 
-2026-09-26。**統合版を8814に追加しました。[4匹の共有市場の実装・説明書・検証](../apps/shared-market/README.md)**。以下は既存8812/8813デモの仕様と、それを元にした統合計画の記録です。
+Updated 2026-09-26. [The four-agent integrated market](../apps/shared-market/README.md) runs on 8814. This page records the older 8812/8813 demos and the integration plan that followed.
 
-## 既存8812/8813のデモ
+## Original demos
 
-| 役割 | 実際に行っていること |
+| Role | Actual behavior |
 | --- | --- |
-| Uniswapの入力生成 | ローカルV3テストプールのNECTAR / POLLENをプログラムで交換し、Swapログを保存する。Aquaの実行時は履歴を再生する |
-| MOMO・SORA | 同じmakerウォレットを使う2つの提示戦略。MaleCNSと学習済みreadoutが狭い提示・広い提示・撤回を選ぶ。互いの売買相手ではない |
-| 交換相手 | 別のtakerウォレットを使うテストbot。狭い提示は受け入れ、広い提示は観測価格の絶対変化率が2%以上の場合に受け入れる。外部ユーザーの需要ではない |
-| Aquaの決済 | NECTAR-full / POLLEN-full等の別テストトークンを実際に交換する。提示幅を差し引く固定1:1基準であり、Uniswapの現在価格から交換レートを決める実装ではない |
-| 取引バトル | Uniswapの見積もりを使う仮想口座。ハエの注文はオンチェーンへ送らず、Aquaへも流れない |
+| Uniswap input generation | Programmed NECTAR/POLLEN swaps on a local V3 test pool; Aqua replays saved Swap history |
+| MOMO/SORA | Two offer strategies sharing one maker wallet; MaleCNS/readout chooses tight/wide/withdraw. They are not each other's counterparties |
+| Counterparty | Separate test-bot taker accepts tight offers, and wide offers only when absolute observed price change is at least 2%; not external demand |
+| Aqua settlement | Actual swaps of separate NECTAR-full/POLLEN-full test tokens at a fixed 1:1 reference less spread, not the current Uniswap exchange rate |
+| Paper trading | Virtual accounts using V3 quotes; agent orders neither reach the chain nor Aqua |
 
-NECTAR（蜜）・POLLEN（花粉）はプロジェクトで作ったデモ通貨名。ETHでも現金でもない。同名・類似名でも、Uniswap用とAqua用は別アドレスのERC20である。トークンの並び順は配置アドレスによって変わるため、画面は実コントラクトのsymbolを読む。
+NECTAR/POLLEN are project test currencies, not ETH/cash. Similarly named Aqua and Uniswap tokens in the old modes have different ERC20 addresses. UI reads actual symbols because deployment addresses determine ordering.
 
-## 提示・交換・利益を分ける
+## Offers, fills, and profit
 
-- shipで流動性を提示しても、取引収入は生じない。資金はmakerのウォレットに残る。
-- 相手が条件を受け入れ、交換が成立するとAquaのpush/pullでトークンが移る。
-- 成立しても、価格変動、保有在庫、取引費用等を含めた純利益が正とは限らない。ship/dockにもgasを使う。
-- 現在のptは、**各約定のトークン増減を別ペアの価格変化率で代理評価した合計**。保有資産全体の含み損益・gasを含む純利益ではない。約定しなければこのスコアも増えない。
-- 自分たちのmakerとtakerの間で取引を作っても、それだけで外部から価値が増えるわけではない。両者合計の評価も必要。
+Shipping an offer does not earn revenue or remove funds from the maker wallet. Accepted settlement moves tokens through Aqua push/pull. A fill does not imply positive net profit after inventory changes, price movement, and costs; ship/dock also consume gas.
 
-現在の目的は、生物由来構造を使う判断器から公式Aquaの戦略・実決済へ接続できることを示すこと。公開市場での需要、収益性、裁定機会を証明するデモではない。
+The old points metric sums **per-fill balance changes valued using another pair's price ratio**. It is not whole-wallet PnL after gas. No fill means no added fill score. Internal maker/taker trades do not by themselves create external value; aggregate accounting matters.
 
-## 4匹の統合計画（基本フローは8814で実装済み）
+The goal is to connect circuit decisions to official Aqua strategies and settlement, not prove public demand, profitability, or arbitrage.
 
-単に2つの画面を開くだけでは注文はつながらない。次のように、売買側と提示側を**同じ市場・別の資金管理**に接続する。
+## Four-agent integration plan
 
-1. UniswapとAquaに同じ2つのテストERC20を使う。
-2. Aqua側のハエはmakerとして提示条件を選ぶ。売買側のハエまたは需要botは別ウォレットのtakerにする。
-3. 売買側が同一数量・同一時点のUniswapとAquaの受取量を比較し、制約を満たす経路へ実注文を送る。該当する経路がなければ待機する。
-4. Aquaの固定1:1基準は、市場参照価格と提示幅から検証可能なquoteを作る方式へ変更する。古いquoteの拒否、minOut、在庫・注文額の上限を保つ。
-5. 約定結果と在庫を次の刺激に戻す。双方の損益、合計資産、取引費用、相手不在による未約定を別々に表示する。
-6. 「注文ゼロ」の対照ケースも用意し、外部注文のない収益を作らない。学習評価は接続確認とは別に行う。
+The basic flow is now implemented on 8814:
 
-独立した需要botは、保有比率の目標等から注文量を決める実験用の相手にできる。ただし、それでも人工需要であることを画面に明示する。メインネットの利用者獲得や自動集客機能が実装されたことにはならない。
+1. Use the same two ERC20 addresses for Aqua and Uniswap.
+2. Separate maker offer policies from taker trading wallets.
+3. Compare same-amount, same-time executable quotes and trade only a valid route; otherwise wait.
+4. Replace the old fixed 1:1 quote with a reference-price/spread quote, preserving freshness, minOut, inventory, and order caps.
+5. Feed fills/inventory into subsequent inputs and report participant/aggregate valuations, costs, and unfilled offers separately.
+6. Include a zero-order control; assess learning separately from integration success.
 
-## 画面とコード
+A target-holdings demand bot remains artificial demand, not user acquisition or mainnet adoption.
 
-主画面の短い注意書きと「誰が取引している？ / Who is trading?」から、日英の役割説明を開ける。細かな条件はモーダル内に置き、箱庭の観察を妨げない。
+## UI and code
 
-- `services/full-apps/aqua.mjs`: 入力再生、テストbotの受入条件、代理評価
-- `services/full-apps/chain.mjs`: 別takerウォレット、ship/dock、実swap
-- `contracts/src/AquaFlyApp.sol`: 固定参照交換レート、入力revision検証、push/pull
-- `services/full-apps/market.mjs`: ペーパー口座
+The short main-screen note and Who is trading? dialog explain roles in both languages. Details remain in the dialog.
 
-[公式Aquaの共有流動性・決済の説明](https://github.com/1inch/aqua#architecture) / [提出用の実行証拠](../submission/1inch-aqua.md)
+- `services/full-apps/aqua.mjs`: replay, taker acceptance, proxy rewards.
+- `services/full-apps/chain.mjs`: taker wallet, ship/dock, swaps.
+- `contracts/src/AquaFlyApp.sol`: fixed-reference quotes, revision checks, push/pull.
+- `services/full-apps/market.mjs`: paper accounts.
+
+[Official Aqua architecture](https://github.com/1inch/aqua#architecture) · [Submission evidence](../submission/1inch-aqua.md)

@@ -1,26 +1,26 @@
-# データ管理Backend（Pythonひな型）
+# Data backend — Python scaffold
 
-標準ライブラリのHTTPサーバーとSQLiteで、模擬刺激の実行結果を保存します。現在のAnvil版GUIが使うAPIは [ローカルWorker](../worker/README.md) で、このBackendへ競争状態は保存されません。
+A standard-library HTTP server and SQLite store for mock stimulus results. The chain-connected GUI uses the [local Worker](../worker/README.md); its competition state is not persisted here.
 
-## 起動
+## Run
 
-リポジトリルートで `make dev`。先に `npm ci` が必要です。フロントをビルドしてからPythonサーバーを起動します。
+Run `npm ci`, then `make dev` from the repository root. This builds the frontend and starts the Python server.
 
-| 環境変数 | 既定値 |
+| Variable | Default |
 | --- | --- |
 | HOST | 127.0.0.1 |
 | PORT | 8000 |
 | BIO_AGENT_DB | data/bio-agent.sqlite3 |
 
-単一ローカルプロセス向けです。公開用の認証・並行処理・スキーマ移行は実装していません。
+Designed for one local process. Public authentication, concurrency handling, and schema migrations are not implemented.
 
 ## API
 
-| API | 応答 |
+| Endpoint | Response |
 | --- | --- |
 | GET `/api/health` | status=ok, mode=mock |
-| GET `/api/runs` | runs配列。新しい順、最大50件 |
-| POST `/api/demo/step` | 本文不要。模擬入力を1回計算して保存、HTTP 201 |
+| GET `/api/runs` | Up to 50 runs, newest first |
+| POST `/api/demo/step` | No body required; compute and persist one mock input; HTTP 201 |
 
 ```sh
 curl -fsS http://127.0.0.1:8000/api/health
@@ -28,6 +28,6 @@ curl -fsS -X POST http://127.0.0.1:8000/api/demo/step
 curl -fsS http://127.0.0.1:8000/api/runs
 ```
 
-POSTはSQLiteに1件追加します。保存内容はschema_version、created_at、stimulus、stateと記録ID。入力sourceはmock、chain_idはnullです。再起動後も同じDBなら履歴を引き継ぎますが、連続した神経状態は保持しません。
+Each POST adds a SQLite record containing an ID, schema_version, created_at, stimulus, and state. Input source is `mock` and chain_id is null. The same database retains history across restarts, but not continuous neural state.
 
-GUIアセットも配信しますが、GUIの12匹と `/api/demo/step` は独立しています。検証はルートで `make test`。将来のスキーマは [共有Runtime設計](../../docs/design/runtime-and-events.md) を参照してください。
+Served GUI assets and `/api/demo/step` are independent. Run `make test`; see [runtime design](../../docs/design/runtime-and-events.md) for the proposed schema.
