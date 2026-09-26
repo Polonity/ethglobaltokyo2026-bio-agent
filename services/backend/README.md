@@ -6,20 +6,20 @@ A standard-library HTTP server and SQLite store for mock stimulus results. The c
 
 Run `npm ci`, then `make dev` from the repository root. This builds the frontend and starts the Python server.
 
-| Variable | Default |
-| --- | --- |
-| HOST | 127.0.0.1 |
-| PORT | 8000 |
+| Variable     | Default                |
+| ------------ | ---------------------- |
+| HOST         | 127.0.0.1              |
+| PORT         | 8000                   |
 | BIO_AGENT_DB | data/bio-agent.sqlite3 |
 
 Designed for one local process. Public authentication, concurrency handling, and schema migrations are not implemented.
 
 ## API
 
-| Endpoint | Response |
-| --- | --- |
-| GET `/api/health` | status=ok, mode=mock |
-| GET `/api/runs` | Up to 50 runs, newest first |
+| Endpoint              | Response                                                       |
+| --------------------- | -------------------------------------------------------------- |
+| GET `/api/health`     | status=ok, mode=mock                                           |
+| GET `/api/runs`       | Up to 50 runs, newest first                                    |
 | POST `/api/demo/step` | No body required; compute and persist one mock input; HTTP 201 |
 
 ```sh

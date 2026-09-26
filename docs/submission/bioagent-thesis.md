@@ -15,4 +15,3 @@ Public integration evidence, full-market recording and independent research answ
 Potential savings accrue directly to agent operators. Protocol teams could benefit from reusable integrations and evaluation methods that encourage adoption. Next tests target execute/hold decisions for identical Uniswap quotes and offer/withdraw decisions for Aqua. The current market uses V3 core and custom FlyV3Router, not Universal Router or Trading API. Energy savings, adoption, volume and capital efficiency remain unmeasured.
 
 The profile describes measured origin, engineered mappings and learned components with consistent meaning. Current contracts do not implement ERC-8004; this is a research profile, not an approved ERC. The framework’s value must ultimately be tested through interoperability and reduced integration effort.
-

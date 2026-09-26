@@ -1,105 +1,98 @@
-# BioAgent — 提出動画・発表資料 / Presenter kit
+# BioAgent presenter kit
 
-**最新の採餌検証 / Latest foraging validation:** [日本語動画](bioagent-foraging-validated-ja.mp4) · [English video](bioagent-foraging-validated-en.mp4) · [日英の結果・限界](foraging-validation.md)。未使用12配置で24/24回収、接近91.9%。安全基準は未達、Bio Agent固有の優位は未確定です。
+Start with the [documentary production guide](documentary-production.md) and [English narration script](documentary-script-en.md); [Japanese translation](documentary-script-ja.md) is for comprehension. The latest local documentary includes the presenter's own English recording and lasts approximately 3: 57.5. English/Japanese subtitle editions are under `artifacts/documentary/`.
 
-新しい採餌動画は40.3秒。通常速度の実行と、同じ動作の明示付き0.25倍速リプレイを収録しています。[再生・TX検証記録](foraging-video-verification.json)。
-The new foraging clip is 40.3 seconds: a full-speed run plus an explicitly labelled 0.25x replay of the same actions.
+## Foraging validation and historical cuts
 
-以下の57秒統合動画は修正前の記録です。採餌の説明には上の新動画を使用してください。市場の決済証拠は引き続き有効です。
-The 57-second integrated video below predates the foraging fix. Use the new clip above for foraging; its market settlement evidence remains historical evidence.
+[English40.3-second clip](bioagent-foraging-validated-en.mp4) · [Japanese clip](bioagent-foraging-validated-ja.mp4) · [Results and limitations](foraging-validation.md) · [Playback/TX verification](foraging-video-verification.json).
 
-2026-09-26再収録。**目的 → 環境TX → 行動 → 学習比較 → 市場の決済 → 次の検証**を約1分で示します。
+The validated clip contains a normal-speed run and explicitly labeled0.25× replay of the same actions. Held-out results: 24/24 food, 91.9% approach; safety criterion failed and unique biological advantage is unproven.
 
-| 用途 / Use | 日本語 | English |
-| --- | --- | --- |
-| 提出動画 / Video | [日本語字幕 MP4](bioagent-submission-ja.mp4) | [English captions MP4](bioagent-submission-en.mp4) |
-| 説明6枚＋構成付録1枚 / Six slides + appendix | [PDF](explanation-ja.pdf) · [PPTX](explanation-ja.pptx) | [PDF](explanation-en.pdf) · [PPTX](explanation-en.pptx) |
-| 原稿・操作手順 / Walkthrough | [日本語](walkthrough-ja.md) · [HTML](explanation-ja.html) | [English](walkthrough-en.md) · [HTML](explanation-en.html) |
-| Q&A・4ページ / Four-page Q&A | [PDF](qa-cheatsheet-ja.pdf) · [原稿](qa-cheatsheet-ja.md) | [PDF](qa-cheatsheet-en.pdf) · [Text](qa-cheatsheet-en.md) |
+The historical57.1-second integrated cut below predates that fix. Its market settlement evidence remains valid historical evidence; use the updated clip/documentary for foraging.
 
-[日英8ページPDF / Combined PDF](qa-cheatsheet-ja-en.pdf) · [言語切替HTML / Interactive Q&A](qa-cheatsheet.html)
+| Material                              | English                                                   | Japanese                                                  |
+| ------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- |
+| Historical integrated cut             | [MP4](bioagent-submission-en.mp4)                         | [MP4](bioagent-submission-ja.mp4)                         |
+| Six explanation slides + architecture | [PDF](explanation-en.pdf) · [PPTX](explanation-en.pptx)   | [PDF](explanation-ja.pdf) · [PPTX](explanation-ja.pptx)   |
+| Walkthrough                           | [Script](walkthrough-en.md) · [HTML](explanation-en.html) | [Script](walkthrough-ja.md) · [HTML](explanation-ja.html) |
+| Four-page Q&A                         | [PDF](qa-cheatsheet-en.pdf) · [Text](qa-cheatsheet-en.md) | [PDF](qa-cheatsheet-ja.pdf) · [Text](qa-cheatsheet-ja.md) |
 
-動画は **57.1秒、1920×1080、30fps、H.264、音声なし**。英語の実画面に日英それぞれの字幕を焼き込んでいます。[日本語SRT](captions-ja.srt) / [English SRT](captions-en.srt)。字幕は画面下の専用帯に配置しています。
+[Combined eight-page Q&A](qa-cheatsheet-ja-en.pdf) · [Language-switching HTML](qa-cheatsheet.html).
 
-Both masters use the same newly recorded browser footage. Setup, navigation and long learning/settlement waits are cut; each included segment runs at its original speed. The learning-wait cut is explicitly captioned. Raw capture lasted 243.1 seconds. Receipt excerpts are labelled and derived from actual logs; no result data or balances are inserted.
+The historical integrated masters are57.1 s, 1920×1080, 30 fps, H.264, silent, using the same243.1-second raw capture and separate lower caption bands. [English SRT](captions-en.srt) / [Japanese SRT](captions-ja.srt). Setup/navigation/long waits are cut; retained segments use original speed. Learning-wait cuts and receipt excerpts are labeled. No results/balances are injected.
 
-7枚目は質疑応答用の構成付録です。境界ごとの言語・役割・通信を一覧化しています。詳しい保存先・署名権限・実装リンクは[日本語アーキテクチャ](../../architecture.md) / [English architecture](../../architecture.en.md)へ。1分説明は先頭6枚を使います。
+Slide 7 is the architecture/Q&A appendix: languages, responsibilities, and communication. [English architecture](../../architecture.md) · [Japanese](../../architecture.ja.md). The brief explanation uses slides 1–6.
 
-## 何を伝えるか / Purpose
+## Purpose
 
-**生物由来の判断モデルをオンチェーン入力で動かし、経験から適応させ、効果と資源消費を比較できるフレームワークをつくる。** Agent開発者・研究者が、入力検証・モデルの出典・学習結果を再利用して評価するための基盤です。省電力・低コスト・通常AIへの優位は、今後検証する仮説です。
+Build a framework to run biologically derived decision models on onchain inputs, adapt from experience, and compare effectiveness/resource use. Intended users are agent developers/researchers. Lower power/cost and superior adaptation remain hypotheses.
 
-**Build a framework to run biologically derived decision models on onchain inputs, adapt from experience and compare effects and resource use.** The intended users are agent developers and researchers. Lower energy, cost and superior adaptation remain hypotheses.
+## Historical57-second edit
 
-## 動画の流れ / Chapters
+| Time        | Scene                                                  |
+| ----------- | ------------------------------------------------------ |
+| 0–4 s       | Purpose                                                |
+| 4–10 s      | TX-defined initial world                               |
+| 10–14.1 s   | Actual world receipt                                   |
+| 14.1–20.1 s | Actions and experience                                 |
+| 20.1–27.1 s | Same-input candidate comparison, learning wait omitted |
+| 27.1–32.1 s | Measured structure, engineered dynamics                |
+| 32.1–40.1 s | Four full-model market agents                          |
+| 40.1–46 s   | Fresh Aqua settlement                                  |
+| 46–52 s     | Fresh Uniswap V3 settlement                            |
+| 52–57.1 s   | Framework for testing benefits and limits              |
 
-| 時間 / Time | 場面 / Scene |
-| --- | --- |
-| 0.0–4.0s | BioAgent｜生物由来の判断モデルを、使って検証する / BioAgent | Test biological decision models |
-| 4.0–10.0s | 1｜初期環境をトランザクションで構築 / 1 | Initialize the world with a transaction |
-| 10.0–14.1s | 実際の初期環境TXを確認 / Verify the actual environment receipt |
-| 14.1–20.1s | 2｜行動して経験を集める / 2 | Observe actions and collect experience |
-| 20.1–27.1s | 3｜同じ入力で比べて採用する（学習待ち時間は省略） / 3 | Compare before adopting · learning wait omitted |
-| 27.1–32.1s | 構造は実測、動力学は人工設計 / Full measured connectivity, engineered dynamics |
-| 32.1–40.1s | 4｜全神経モデルを、同じ市場の4個体へ / 4 | Apply the full model to a shared market |
-| 40.1–46.0s | Aqua｜今回成立したローカル決済 / Aqua | A freshly confirmed local settlement |
-| 46.0–52.0s | Uniswap V3｜今回成立したローカル決済 / Uniswap V3 | A freshly confirmed local settlement |
-| 52.0–57.1s | 効果と限界を比較できるフレームワークへ / A framework for testing benefits and limits |
+## Evidence from that take
 
-## 今回の証拠 / This recording
+**Foraging acceptance failed in that recording.** The opening had untrained directional bias; collection was fully random; both agents collected zero food on the separate-layout test. [Diagnosis](foraging-behavior-review.md) is distinct from [later validation](foraging-validation.md).
 
-**採餌性能の再評価：受入未達。** 冒頭に未学習の一方向選択があり、経験収集は100%ランダムです。別配置テストでは2個体とも餌の取得0でした。[日英の再評価と改善条件](foraging-behavior-review.md)。動画は接続・学習工程の証拠で、安定した刺激追従の実証ではありません。
+Two full-model foragers consumed TX-defined world/hazards/food. Both policies replayed identical confirmed input TXs. MOMO retained its old policy (5.20→−1.54 candidate); SORA adopted (4.08→8.64). Separate-condition rewards were−6.29/−12.79, not evidence of improved generalization.
 
-**Foraging acceptance is not met:** the opening includes untrained directional bias, collection is fully random, and both agents collect zero food on the subsequent different-layout test. See the [behavior review](foraging-behavior-review.md).
+The four-agent market added**2 Aqua fills and25 V3 swaps over 14 cycles**. All27 successful receipts, ERC20 Transfers, and contract events were checked by RPC. Displayed cumulative counters include earlier runs. All four agents received14 readout updates; three changed saved weights. This demonstrates the update path, not profitability.
 
-- **前半：全神経の採餌2個体。** 初期環境TXに寸法・seed・危険エリアを記録。確定した刺激TXから餌を追加。新旧方策に同じ確認済み環境・刺激TXを再生し、比較結果に従って採用／維持します。今回はMOMOが維持（5.20→−1.54）、SORAが採用（4.08→8.64）。別条件のテスト報酬は−6.29／−12.79で、汎化の改善は示していません。身体・判断・学習はオフチェーンです。
-- **後半：全神経の市場4個体。** 14周期で新規 **Aqua 2件・Uniswap V3 25件**。全27件の成功receipt、ERC20 Transfer、対応するコントラクトイベントをRPCで確認しました。市場の累積表示には前の収録分も含みます。
-- 市場では4個体すべてに14回のreadout更新があり、3個体の保存重みが変化しました。更新数の差分は[収録記録](capture-evidence.json)に保存しています。これは学習経路の動作であり、収益改善の証明ではありません。
-- 各個体は **166,700神経・25,582,938接続**の計算。実測MaleCNS接続と人工動力学を使い、グラフを共有して個体ごとの状態を持ちます。生物学的な全脳の再現を意味しません。
-- 市場14周期の神経処理は **304.1–349.5 ms（中央値324.0 ms）**、ローカル取引等を含む周期は **7.679–9.354秒（中央値8.642秒）**。Python peak RSS **443.1 MiB**。全システムRAM・電力・公開チェーン確定時間ではありません。
-- GUIで保有目標を85%／15%へ変更し、人工的な需要を作りました。終了後に市場を停止し、元の70%／30%へ戻しています。残高・学習状態は保持しています。
+Each agent computes166, 700 neurons/25, 582, 938 connections, sharing the fixed graph while keeping independent state. Measured wiring plus engineered dynamics is not validated whole-brain biology.
 
-The foraging comparison replays identical confirmed input TXs for both policies. MOMO keeps its previous policy (5.20 → −1.54 candidate); SORA adopts (4.08 → 8.64). The separate new-condition test returns −6.29 / −12.79. This is not proof of improved generalization or a biological advantage. The market segment adds 27 successful local settlements over 14 cycles; all four agents receive outcome updates and 3 change saved weights. Different takes preserve learning and balances. Independent seven-neuron research is a separate result.
+Neural processing across 14 market cycles was304.1–349.5 ms (median324.0 ms); complete local cycles7.679–9.354 s (median8.642 s), excluding cadence wait. Python peak RSS443.1 MiB is not whole-system RAM/power/public-chain finality latency.
 
-## 公開デモとの違い / Public demo boundary
+The recording changed artificial demand targets to85%/15%, then stopped and restored70%/30%. Balances/learning were preserved. [Capture](capture-evidence.json), [settlements](settlement-evidence.json), [resources](resource-evidence.json).
 
-[Sepolia公開ページ](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en)は **7神経・19接続・3個体**。Anvilと共通のFly Lab UI・Q学習を使い、初期環境・危険エリア・刺激・餌の外部入力をTXから読みます。観察と学習はウォレット不要。Aqua／Uniswapへの注文は送りません。
+## Public boundary
 
-動画は **Anvil＋全神経**。前半はPythonの採餌readout選択、後半は共有市場のオンライン更新です。公開版のQ学習、独立JSフレームワーク、全神経版の学習は別実装です。アプリ間の学習済み能力の移転は実証していません。
+[Sepolia page](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en): 7 neurons/19 edges, 3 agents, shared Anvil/Sepolia UI and Q-learning, TX-defined external world/food. Observation/learning requires no wallet; it sends no Aqua/Uniswap orders.
 
-The video includes current environment TXs. The public page remains a lightweight reviewer entry point, not a hosted full-neuron trading runtime. Local Anvil receipts have no public Etherscan URL. The market uses Ethereum block **26,058,941** as its fork origin and executes on chain **31337**. Official Aqua: `0x1111113ccf1426a8e30e2bff5e005d929bf6a90a`. Tokens and transactions are local tests.
+Video uses local full Python foraging selection and market online updates. These differ from public Q-learning and the independent JS framework. Cross-application skill transfer is unproven.
 
-## 質疑応答の根拠 / Evidence
+Local receipts have no Etherscan TX URL. Market fork origin: Ethereum block 26, 058, 941; execution chain 31337. Official Aqua:`0x1111113ccf1426a8e30e2bff5e005d929bf6a90a`. Tokens/transactions are local tests.
 
-| 参照 | 根拠 / Source |
-| --- | --- |
-| R1 | [収録・全神経採餌比較](capture-evidence.json) · [全決済と周期](settlement-evidence.json) · [資源集計](resource-evidence.json) |
-| R2 | [共有市場の実装と制約](../../apps/shared-market/README.md) |
-| R3 | [独立した採餌実験と対照比較](../../research/bioagent-adaptation/README.md) |
-| R4 | [JSフレームワーク](../../../packages/bioagent-framework/README.md) |
-| R5 | [Sepoliaの配置・操作](../../deployment/sepolia.md) · [公開ページの実演確認](public-walkthrough.json) |
-| R6 | [現行の環境TXと定期送信の検証](../judge-demo-review.md) |
-| R8 | [実行境界・実装言語](../../architecture.md) / [English](../../architecture.en.md) |
-| R7 | [AI Agent比較：期待・実測・未実施の計画](ai-agent-comparison.md) |
-| 検証 | [全編デコード・Chrome再生・SHA-256](verification.json) · [目視確認](artifact-review.json) · [PDF/PPTX監査](document-audit.json) |
-| 編集 | [元映像と編集後の時刻](render-metadata.json) · [収録方針](production-plan.md) |
+## Q&A sources
 
-Q&Aには消費電力・メモリー・反応速度・適応の期待効果と限界を記載しています。RAMから電力削減率を計算せず、「LLMは一律256 GB必要」とも説明しません。PDFは全ページを確認し、PPTXは構造・テキスト・ノートを検証します。PowerPoint本体での描画は未確認です。
+| Ref          | Evidence                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| R1           | [Capture](capture-evidence.json), [settlements](settlement-evidence.json), [resources](resource-evidence.json)            |
+| R2           | [Shared market](../../apps/shared-market/README.md)                                                                       |
+| R3           | [Independent experiments](../../research/bioagent-adaptation/README.md)                                                   |
+| R4           | [JS framework](../../../packages/bioagent-framework/README.md)                                                            |
+| R5           | [Sepolia](../../deployment/sepolia.md), [public walkthrough](public-walkthrough.json)                                     |
+| R6           | [World/scheduled TX checks](../judge-demo-review.md)                                                                      |
+| R7           | [AI comparison](ai-agent-comparison.md)                                                                                   |
+| R8           | [Architecture/languages](../../architecture.md)                                                                           |
+| Verification | [Decode/playback/hashes](verification.json), [visual review](artifact-review.json), [PDF/PPTX audit](document-audit.json) |
+| Editing      | [Source/edit times](render-metadata.json), [production plan](production-plan.md)                                          |
 
-## 再収録と再生成 / Reproduction
+Q&A separates power/memory/latency/adaptation hypotheses from measurements. Do not infer power savings from RAM or say all LLMs require256 GB. PDFs were visually checked; PPTX structure/text/notes were audited, not native PowerPoint rendering.
 
-Use the repository's Node/Chrome/ffmpeg dependencies and prepared full connectome data. The recorder defaults to dedicated paused servers: full foraging at `127.0.0.1:8856`, market at `127.0.0.1:8857`, market Anvil fork at `127.0.0.1:18577`. Market state defaults to `.local/presenter-current-market`, foraging artifacts to `artifacts/submission-presenter-rerecord/foraging`. Match the servers' state and artifact settings; set `PRESENTER_FORAGING_URL`, `PRESENTER_DEMO_URL`, `PRESENTER_MARKET_RPC`, `PRESENTER_MARKET_STATE` and `PRESENTER_FORAGING_ARTIFACTS` when using other paths. Do not start against an active run or reset someone else's chain.
+## Reproduce the historical integrated recording
+
+Use Node/Chrome/ffmpeg and prepared full data. Defaults: paused foraging8856, market8857, market fork18577, `.local/presenter-current-market`, foraging artifacts `artifacts/submission-presenter-rerecord/foraging`. Override PRESENTER_FORAGING_URL, PRESENTER_DEMO_URL, PRESENTER_MARKET_RPC, PRESENTER_MARKET_STATE, PRESENTER_FORAGING_ARTIFACTS consistently. Do not record during an active job or reset another chain.
 
 ```sh
-# Running prepared local servers: record, then verify receipts/resources.
 node scripts/submission/record-presenter-demo.mjs
 PRESENTER_DELIVERY=artifacts/submission-presenter-rerecord/delivery node scripts/submission/collect-presenter-settlements.mjs
 PRESENTER_DELIVERY=artifacts/submission-presenter-rerecord/delivery node scripts/submission/summarize-presenter-resources.mjs
-# Re-render the existing raw recording without new transactions.
 node scripts/submission/render-presenter-demo.mjs
 ```
 
-New takes are staged under `artifacts/submission-presenter-rerecord/delivery/`. Review the staged MP4s and evidence, preserve the previous delivery, then copy the two MP4s, two SRTs and capture/settlement/resource/render JSONs here. Rebuild and verify:
+New takes stage under `artifacts/submission-presenter-rerecord/delivery/`. Review MP4 s/evidence, preserve the previous delivery, then copy both MP4 s/SRTs and capture/settlement/resource/render JSONs here.
 
 ```sh
 node scripts/submission/build-presenter-walkthrough.mjs
@@ -107,4 +100,4 @@ node scripts/submission/build-presenter-cheatsheet.mjs
 node scripts/submission/verify-presenter-kit.mjs
 ```
 
-The builders read the delivered capture/resource evidence. Perform a fresh visual review after a new take; automated checks alone cannot validate the narrative. Raw WebM, scene screenshots and cut files remain local, Git-ignored artifacts. Viewing delivered files requires no chain or server. External submission forms have not been submitted in this work.
+Builders use delivered evidence. Fresh visual review is required after replacement; automation cannot validate narrative alone. Raw footage/screens/cuts remain local Git-ignored artifacts. Delivered files need no running chain. External forms are not submitted by these commands.

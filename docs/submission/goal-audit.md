@@ -1,70 +1,32 @@
-# 目標達成の監査
+# Goal and scope audit
 
-> **2026-09-26 Sepolia追記:** 独立した審査員向けWorkerを公開し、Registry配置・登録・ブラウザーから2件の実入力更新・縮小モデル動作を確認。[実TXと検証結果](sepolia-evidence.json)。提出動画はAnvil＋全166,700神経版を使用します。以下の古い未配置記録はこの追記で更新します。
+Updated2026-09-26. **Local full-neuron integration passed for three tasks**, and a separate public Sepolia Worker was deployed/checked. [Full-app acceptance](full-apps-acceptance.md), [standalone full-model acceptance](full-local-acceptance.md), [Sepolia evidence](sepolia-evidence.json). These are distinct milestones.
 
+A demonstrable research prototype exists; biologically validated behavior and a finalized interoperable standard do not. Readout learning uses fixed connectivity, not whole-connectome plasticity.
 
-> **全3アプリのローカル目標を達成。** MaleCNSの全分類付き166,700神経×2個体で、採餌・市場・Aquaの動作→記録→readout学習→別実行評価→改善候補の採用→再起動後使用を確認した。[受入結果と省略版比較](full-apps-acceptance.md)。改善しない候補は棄却し、全神経版の一律な優位性は主張しない。
+## Historical audit and corrections
 
-> 全神経単体実験の[受入試験](full-local-acceptance.md)と、今回の3用途への統合は別の証拠として残す。今回の学習対象は固定コネクトームのreadoutであり、全接続の可塑性や生物学的な全脳再現ではない。
+| Finding                                                             | Correction/evidence                                                                                                          |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Early models were synthetic despite a connectome-derived definition | Added measured7-neuron/19-edge Circuit Lab; actual TX→response, edge ablation                                                |
+| Provenance was only prose                                           | Bound source/extraction/graph/dynamics/mappings to registered descriptors; re-extraction matches and hash mismatch stops GUI |
+| Same-implementation tests were insufficient                         | Independent Python checked192 exported steps within1e-12; not full-profile certification                                     |
+| Numeric-string constructors coerced JS values                       | Added typeof checks and number/BigInt/object rejection tests                                                                 |
+| Old model ID remained in health                                     | Corrected that milestone's ID and checked source/build                                                                       |
+| Video/docs lagged implementation                                    | Added circuit evidence video and scoped audit; later recordings have their own acceptance records                            |
 
-> 以下は以前のブラウザー版・提出仕様に関する監査履歴。公開Worker、既存動画、正式EIP化などの状態と、ローカル全神経版の達成を区別する。
+## Milestone boundaries
 
-2026-09-26。最新の思想を含めて再評価。過去の「目標達成」はローカル2アプリと提出資料の準備に対する判定であり、実コネクトーム接続や標準化の全面達成と読むには広すぎました。
+Historical v0.1 implemented registry/Status/logs/Foundry, local registered agents and GUI TXs, synthetic games/body/i18n, and then Circuit Lab. Local checkpoint/kernel replay was verified; cross-application exchange and a generic profile validator remained incomplete. Wallet support initially stored only an address reference, not a deployed smart account or delegated spending policy. Earlier “Sepolia not deployed” notes were superseded by the later deployment evidence linked above.
 
-## 判定
+Initial Aqua Connectome added official pinned source/SDK, measured slice→three offer controllers, actual test-token settlement, receipts, languages/mobile, and29 Foundry tests including6 new Aqua cases. That fixed/manual controller milestone claimed neither gasless dock, cross-chain shared funds, biological brain-region reproduction, nor capital-efficiency equivalence.
 
-**ローカルで説明・操作できる提出プロトタイプは成立。生物学的な妥当性を備えたAgentと、正式な相互運用標準の完成は未達。** この2つを同じ完了欄に入れないよう修正しました。
+The subsequent required-MaleCNS update connected all three lightweight apps, rejected missing/tampered models, reused fixed responses, and added task-specific learning/evaluation/adoption/persistence. Recorded checks: 39 Node, 29 Foundry, 2 Python tests and real browsers; `.local/malecns`, GUI 8800, Anvil 18547. [Details](../design/malecns-learning.md).
 
-## 不足を補った内容
+The later full-app milestone verified action→experience→readout training→separate selection→adoption/rejection→restart use for all tasks with 166, 700 neurons per agent. It did not establish uniform full-model superiority. Public Sepolia uses the reduced model; submission footage uses the full local runtime.
 
-| 発見 | 対応 | 証拠 |
-| --- | --- | --- |
-| 最新の定義がコネクトーム由来なのに、全実行モデルがsyntheticだった | MaleCNS実測7神経・19接続の固定kernelと、独立したCircuit Labを追加 | 実TX→計算→advance/wait、接続除去対照。既存2ゲームへの導入とは区別 |
-| 生物的な出典の記述が設計文書に留まる | 公式データhash、抽出コード、graph、dynamics、mappingを共通descriptorへ接続し登録 | 元データから同一JSONを再生成。登録値・artifact不一致でGUI停止 |
-| 同一実装の自己テストだけでは計算比較が弱い | 別のPython scalar実装でブラウザーexportを照合 | 192stepを絶対誤差1e-12以内で照合。profile全体の相互運用証明ではない |
-| 共通数値文字列の検証がJSの型変換を許す | typeofチェックと数値/BigInt/object入力の拒否テスト追加 | test:types |
-| Worker healthに旧モデルIDが残る | 現行のforaging-embodied-q-v2へ修正 | ソースと配信ビルドの照合 |
-| 最新成果物が旧動画・説明とずれる | 回路補足の英語動画、実装境界と監査表を追加 | circuit-browser成果物と提出README |
+## Claims explicitly excluded
 
-## 要件ごとの状態
+NFT/SBT are not requirements. Do not claim an approved EIP, ERC-8004 conformance, completed interoperability, whole-brain biological reproduction, generalizable profitability from candidate selection, or decoded emotions from bubbles.
 
-| 要件 | 状態 |
-| --- | --- |
-| 思想、既存ERC調査、BioAgentを拡張profileにする根拠 | 文書化済み |
-| IBioAgent / Registry / Status / logs / Foundry | 実装とテスト済み。新しいsemantic core全体のABI準拠は未完 |
-| Anvil、3匹登録、ローカルWorkers、GUIから実刺激 | 採餌と回路検証で実動作確認済み |
-| 採餌・市場の2アプリ、学習表示、身体入力、i18n、TX情報 | 実装・ブラウザー検証済み。両競争モデルはsynthetic |
-| 実測コネクトームを計算に使う例 | Circuit Labで追加。部分グラフの人工rateモデル |
-| 出典付きdescriptorとその照合 | 回路bundleで実装。任意profile用の汎用validatorは未完 |
-| 継続した身体/神経/学習状態の交換 | 採餌のローカルcheckpointと回路kernel再開は検証済み。アプリ間交換は未完 |
-| BioAgentが持つsmart wallet | address参照のみ。スマートアカウント配置・権限付与・支出実行は未実装 |
-| 英語動画、説明文、再現手順 | 2アプリ本編と回路補足、日英pitchを準備済み |
-| Sepolia | 手順・配置準備のみ。ユーザー指示に従い未配置 |
-| 公開Workersの最新版、外部提出フォーム | ローカル優先という現在の範囲外。旧公開版は最新版ではない |
-
-## 過剰な主張を除いたもの
-
-- NFT/SBT機能は要件ではなく、追加しない。
-- 正式EIP、ERC-8004準拠、完成した相互運用標準とは呼ばない。
-- 実測接続を使うこと、全脳エミュレーション、生物学的な行動再現を同一視しない。
-- 候補選択や利益の発生を、学習の一般化・収益性の証明と呼ばない。
-- 説明用の吹き出しを、神経回路の内的感情を読み取った表示と呼ばない。
-
-## 残る研究・統合の受入条件
-
-1. 生物的意味を持つ入力/出力mappingと対象行動の検証。現kernelの全興奮性・人工readoutを生理モデルと呼ばない。
-2. 採餌/市場へ回路を導入するなら、モデルmanifest、学習対象、保存状態、既存学習baselineを同時に更新し、新しい登録と動画を用意する。単に表示だけ差し替えない。
-3. 別producer/consumerでdescriptorと状態を受け渡す互換試験、encoding/test vectors、汎用schema検証。
-4. 学習なし・回路シャッフル等の対照、独立held-out評価。利益や神経的説明力の一般的優位性は結果が出るまで保留する。
-
-これらは未実装を隠すための任意項目ではなく、「生物としての再現」「移植できる標準」「学習による優位性」へ主張を広げる前の条件です。現在の提出は、追跡可能な最小実装と2用途のsyntheticデモを示すプロトタイプとして説明します。
-
-## 2026-09-26追記: Aqua Connectome
-
-[追加の箱庭](../design/aqua-connectome.md)をローカル実装。公式Aquaの固定ソースとSDKを使い、7神経・19接続の人工rate modelから3個体の提示・縮小・撤回へ接続した。テストトークンの実交換、receipt、英日・モバイル、artifact照合をブラウザー検証済み。Foundryは追加6件を含む29件成功。
-
-草案のガスレスdock、同一資金のクロスチェーン共有、全脳・特定脳部位の再現、神経系と資本効率の同型性は主張しない。固定回路で学習はなく、刺激は手動の人工値。専用descriptorを使うため、汎用profile相互運用の完成でもない。公開Workersと既存デモ動画への反映は未実施。
-
-## MaleCNS必須化・学習反映の到達点
-
-採餌・市場・Aquaの判断経路をMaleCNS実測7神経・19接続へ接続した。欠損・改変時の代替モデル実行を拒否。固定接続の応答を再利用し、用途別readoutの学習・評価・採用・保存を接続。Node39/Foundry29/Python2テストと3用途のブラウザー検証を通過。現行環境は `.local/malecns` / GUI8800 / Anvil18547。全脳・生物学的妥当性・本番取引の優位性は未実証。詳細は[現在の学習基盤](../design/malecns-learning.md)。
+Before broadening claims, require scoped sensory/motor biological validation; consistent updated manifests/artifacts/recordings when changing models; independent producer/consumer encoding and checkpoint tests; and frozen nonlearning/shuffled/direct-input controls with held-out evaluation. These are prerequisites for stronger claims, not optional wording to hide missing work.

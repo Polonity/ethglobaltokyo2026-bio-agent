@@ -11,7 +11,7 @@ npm run local:market
 # http://127.0.0.1:8798/market
 ```
 
-Use absolute FORGE/ANVIL if needed and the same LOCAL_STATE_DIR for both commands. Recorded environment: `.local/embodied`, Anvil18546, GUI8799. `local:market` creates a **new test market**, not a continuation. An open GUI detects changed configuration and requires reload.
+Use absolute FORGE/ANVIL if needed and the same LOCAL_STATE_DIR for both commands. Recorded environment: `.local/embodied`, Anvil 18546, GUI 8799. `local:market` creates a **new test market**, not a continuation. An open GUI detects changed configuration and requires reload.
 
 ## Onchain execution
 

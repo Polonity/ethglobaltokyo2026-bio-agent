@@ -13,21 +13,21 @@ All three tasks use measured MaleCNS v1.0 connectivity; missing/tampered artifac
 
 ## Task paths
 
-| Task | Engineered input | Learned component | Selection | Application |
-| --- | --- | --- | --- | --- |
-| Foraging | Food alignment, hazard, fullness, energy, stimulus, activity for9 candidate drives | Nine-action Q-values keyed partly by circuit response | Improved reward on three fixed courses outside fit; not independent final testing | Next0.2s tick |
-| Market | Up/down magnitude, holdings, fullness into4 drives | Hold/buy/sell immediate-reward predictions | First70% chronological fit, last30% MSE selection; not profit selection | Next confirmed Swap |
-| Aqua | Artificial risk × per-agent sensitivity | Response gain in0.5–2 | Least squares on192 synthetic samples, selection MSE on64 | New Status revision, save, dock old, ship new |
+| Task     | Engineered input                                                                    | Learned component                                     | Selection                                                                         | Application                                   |
+| -------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------- |
+| Foraging | Food alignment, hazard, fullness, energy, stimulus, activity for 9 candidate drives | Nine-action Q-values keyed partly by circuit response | Improved reward on three fixed courses outside fit; not independent final testing | Next0.2 s tick                                |
+| Market   | Up/down magnitude, holdings, fullness into4 drives                                  | Hold/buy/sell immediate-reward predictions            | First70% chronological fit, last30% MSE selection; not profit selection           | Next confirmed Swap                           |
+| Aqua     | Artificial risk × per-agent sensitivity                                             | Response gain in0.5–2                                 | Least squares on 192 synthetic samples, selection MSE on 64                       | New Status revision, save, dock old, ship new |
 
 Priors, exploration, balance limits, and low-energy rest are engineered controls. Circuit responses affect observation keys/initial action values; ablation tests their contribution. Aqua target=`0.24*risk`, not learned market risk or a DAN model. Raw response≥0.1 always withdraws even if the fitted gain would weaken that signal.
 
 ## Efficiency
 
-Quantize drive to1/256 and cache32-tick zero-state responses. At most257 entries per graph,514 including ablation. This is the declared quantized model, not zero approximation error for arbitrary continuous input.
+Quantize drive to1/256 and cache32-tick zero-state responses. At most257 entries per graph, 514 including ablation. This is the declared quantized model, not zero approximation error for arbitrary continuous input.
 
-Foraging runs960 environment updates as ten96-update batches (~2s at1×), plus equal-size memory replay where available. Reported updates count environment updates. Adoption follows evaluation without the old fixed8s delay.
+Foraging runs960 environment updates as ten96-update batches (~2 s at 1×), plus equal-size memory replay where available. Reported updates count environment updates. Adoption follows evaluation without the old fixed8 s delay.
 
-Market fits12 epochs in chunks of256 updates; small datasets can complete next0.2s learning tick. Holdings remain marked during learning. Aqua solves one-coefficient least squares using sufficient statistics rather than prolonged gradient training.
+Market fits12 epochs in chunks of 256 updates; small datasets can complete next0.2 s learning tick. Holdings remain marked during learning. Aqua solves one-coefficient least squares using sufficient statistics rather than prolonged gradient training.
 
 ## Artifacts and consistency
 
@@ -54,12 +54,12 @@ npm run benchmark:male-learning
 LOCAL_GUI_URL=http://127.0.0.1:8800 npm run test:male-learning:browser
 ```
 
-Run local:up in one terminal, then the add-on deployments in another with the same state directory. The recorded GUI was8800 (`/`, `/market`, `/aqua`). Public deployment status at this historical milestone is superseded by [Sepolia](../deployment/sepolia.md).
+Run local: up in one terminal, then the add-on deployments in another with the same state directory. The recorded GUI was8800 (`/`, `/market`, `/aqua`). Public deployment status at this historical milestone is superseded by [Sepolia](../deployment/sepolia.md).
 
 ## Recorded evidence
 
-Node22.14.0 benchmark:4096 direct32-tick calculations146.08ms; cold cached9.15ms; warm0.38ms. Foraging batch maximum5.53ms, evaluation startup5.13ms, Aqua calibration0.32ms. Hardware-specific, not a device/browser guarantee. Evidence: `artifacts/male-learning/benchmark.json`, `browser-evidence.json`, PNGs.
+Node 22.14.0 benchmark: 4096 direct32-tick calculations146.08 ms; cold cached9.15 ms; warm0.38 ms. Foraging batch maximum5.53 ms, evaluation startup5.13 ms, Aqua calibration0.32 ms. Hardware-specific, not a device/browser guarantee. Evidence: `artifacts/male-learning/benchmark.json`, `browser-evidence.json`, PNGs.
 
-Verified foraging v1→v2 adoption/reload, Aqua gain and203→270bps application, and tampered-artifact rejection. The market example rejected a non-improving MSE candidate; controlled unit tests separately verified adoption/next-decision use.
+Verified foraging v1→v2 adoption/reload, Aqua gain and203→270 bps application, and tampered-artifact rejection. The market example rejected a non-improving MSE candidate; controlled unit tests separately verified adoption/next-decision use.
 
-Python backend step uses the same fixed graph; `python -m packages.training` is a synthetic-label calibration reference, not automatic GUI policy delivery. Recorded final checks:39 Node,29 Foundry,2 Python tests; browser learning/persistence/tamper rejection, languages/mobile, actual Aqua swaps and V3 input swaps, and independent Circuit Lab Python agreement.
+Python backend step uses the same fixed graph; `python -m packages.training` is a synthetic-label calibration reference, not automatic GUI policy delivery. Recorded final checks: 39 Node, 29 Foundry, 2 Python tests; browser learning/persistence/tamper rejection, languages/mobile, actual Aqua swaps and V3 input swaps, and independent Circuit Lab Python agreement.

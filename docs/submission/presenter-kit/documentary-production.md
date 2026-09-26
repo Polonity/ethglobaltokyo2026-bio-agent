@@ -1,34 +1,33 @@
-# Documentary review cut
+# Documentary production and human narration
 
-日英とも **3分56秒・1920×1080・30fps**。本人の英語ナレーションを収録する前の無音・字幕付き編集確認版。字幕時刻はリハーサル用で、音声収録後に同期を調整する。合成音声は使用していない。
+Silent review cuts are **3: 56, 1920×1080, 30 fps**, with English/Japanese subtitles. They were prepared for recording the presenter's own English narration; no synthesized voice was used.
 
-- 日本語確認版：`artifacts/documentary/bioagent-documentary-review-ja.mp4`
-- 英語版：`artifacts/documentary/bioagent-documentary-review-en.mp4`
-- 字幕：`artifacts/documentary/bioagent-documentary-{ja,en}.srt`
-- 編集元・カット時刻・再生倍率・元ファイルSHA-256：`artifacts/documentary/production.json`
-- ブラウザ再生検証：`artifacts/documentary/browser-check.json`
+- Review files: `artifacts/documentary/bioagent-documentary-review-{en,ja}.mp4`.
+- Captions: `artifacts/documentary/bioagent-documentary-{en,ja}.srt`.
+- Sources, cuts, playback rates, SHA-256: `artifacts/documentary/production.json`.
+- Browser checks: `artifacts/documentary/browser-check.json`.
 
-| 時刻 | 内容 |
-|---|---|
-| 0:00–0:05 | 公式ページを保持。字幕なしのあいさつ用余白 |
-| 0:05–0:20 | MaleCNS公式ページの実スクリーンショットで導入 |
-| 0:20–0:30 | アプリを作ったというセリフでMOMOとSORAのGUIへ |
-| 0:30–0:55 | 過去の失敗。通常速度＋明示付き0.25倍速リプレイ |
-| 0:55–1:37 | 左から右へ流れる処理アニメーション。採用理由→リッジ回帰 |
-| 1:37–1:56 | GUIの保存済み学習結果、リッジ回帰による報酬予測（CPU名は画面表示のみ） |
-| 1:56–2:36 | 修正・学習後の実行、0.25倍速リプレイ、回収後の停止画面 |
-| 2:36–3:01 | 未使用配置での評価と安全基準の未達 |
-| 3:01–3:26 | 1inch Aqua Protocol、Uniswap v3、ERC-20の移動 |
-| 3:26–3:51 | IBioAgent等の設計図、提案と出典 |
-| 3:51–3:56 | 最終画面を保持。字幕なしの締めのあいさつ用余白 |
+| Time        | Content                                                              |
+| ----------- | -------------------------------------------------------------------- |
+| 0: 00–0: 05 | Official-page hold, no captions, greeting space                      |
+| 0: 05–0: 20 | Actual MaleCNS official-page screenshot                              |
+| 0: 20–0: 30 | Introduce the built app, show MOMO/SORA GUI                          |
+| 0: 30–0: 55 | Historical failure, normal speed and labeled0.25× replay             |
+| 0: 55–1: 37 | Left-to-right processing animation; rationale and ridge regression   |
+| 1: 37–1: 56 | Saved learning results and reward prediction; CPU name onscreen only |
+| 1: 56–2: 36 | Improved run, labeled slow replay, stopped collection result         |
+| 2: 36–3: 01 | Unseen-layout evaluation and failed safety criterion                 |
+| 3: 01–3: 26 | 1inch Aqua Protocol, Uniswap v3, ERC-20 transfers                    |
+| 3: 26–3: 51 | IBioAgent design, proposal, and credits                              |
+| 3: 51–3: 56 | Closing hold, no captions, greeting space                            |
 
-採餌実況の回収字幕は、スロー再生中のMOMO・SORAのカウンター増加に合わせて配置。旧実装と修正後を区別し、モデル・入力変換・学習のすべてが同じだったとは主張しない。市場映像は別の検証済み収録で、テスト資産とEthereum forkを画面に明記する。
+Collection captions follow counter changes in the slow replay. Old/new implementations are labeled; inputs/models/learning are not claimed identical across them. Market footage is a separate verified take with test-assets/Ethereum-fork labeling.
 
-説明アニメーションは模式図であり、実際の神経活動の録画ではない。字幕は映像下部の専用120px領域に表示し、GUI、設計図、出典を遮らない。元映像を速度を上げて圧縮していない。
+Animations are schematic, not neural recordings. Captions occupy a separate120 px lower band, clear of GUI/diagrams/credits. Source action footage is never sped up to fit.
 
-検証：日英両ファイルを全編デコード。Chromeで再生開始、9時点へのシーク、終端再生、1920×1080と236秒を確認。代表フレームで日本語字幕、回収カウンター、図と出典の非重複を目視確認。本人音声の収録・同期が残っているため、提出準備完了とは扱わない。
+Both review files passed full decode and Chrome playback, nine seeks, ending playback, dimension/duration checks, plus representative visual checks for captions/counters/credits. At the silent-review milestone, human narration was still pending; the narrated edition below completes that separate step.
 
-再生成：
+## Rebuild review cuts
 
 ```sh
 node scripts/submission/capture-malecns-intro.mjs
@@ -38,16 +37,14 @@ node scripts/submission/render-documentary.mjs
 node scripts/submission/check-documentary.mjs
 ```
 
-冒頭の出典：https://male-cns.janelia.org/ 。Chromeで公式ページを改変せずに撮影。URL・取得時刻・画像ハッシュは `artifacts/documentary/sources/malecns-official-page.json` に保存。
+Opening source: https://male-cns.janelia.org/, captured unmodified in Chrome. URL/time/hash: `artifacts/documentary/sources/malecns-official-page.json`.
 
-英語原稿を361語から238語へ短縮。3分56秒のまま、約60語/分（表記上の語数。製品番号を読む音節分は増える）を目安に、図や動きを見る間を確保。専門名とリッジ回帰の採用理由を残し、文法と一般表現を簡略化した。
+The English script was shortened from 361 to238 words, roughly60 words/minute over 3: 56, leaving viewing pauses. Formal names and the reason for ridge regression remain; generic phrasing is simpler. CPU is displayed, not spoken. Short sentences explain recording neural features/actions/rewards and fitting action-reward predictions.
 
-CPU名の読み上げは削除。神経活動・行動・報酬の記録と、リッジ回帰で各行動の報酬を予測する学習を短文で説明する。動画の長さとあいさつの余白は維持。
+## Narrated edition
 
-## 本人録音を重ねた版
+`artifacts/documentary/bioagent-documentary-narrated-en.mp4` contains English subtitles and the presenter's recording. The `-ja.mp4` counterpart uses Japanese subtitles with the **same English voice** for comprehension.
 
-`artifacts/documentary/bioagent-documentary-narrated-en.mp4` が英語字幕＋本人音声版。`bioagent-documentary-narrated-ja.mp4` は日本語字幕＋同じ本人音声の確認版。
+The presenter recorded while watching the video, so audio starts at zero offset. The recording lasts approximately 237.525 seconds; the final frame is extended about 1.525 seconds. Voice speed, volume, and pauses are unchanged. Existing subtitle timings remain; no word-level forced alignment is claimed. Silent review cuts are retained.
 
-動画を再生しながら録音したという本人の説明に基づき、先頭位置を合わせて重ねる。録音は約237.525秒のため、元動画の最終画面を約1.525秒延ばす。声の速度・音量・間は変更しない。既存字幕のタイミングを維持し、単語単位の強制アライメントは行わない。元の無音確認版も保持する。
-
-再生成：`node scripts/submission/add-presenter-audio.mjs <録音ファイルのパス>`。音声付き動画の長さと音声保持の証拠は `artifacts/documentary/narration-production.json`。元AACパケットのハッシュ一致で音声の切断・変更がないことを検証し、映像と音声を全編デコードする。
+Rebuild: `node scripts/submission/add-presenter-audio.mjs <recording-path>`. `artifacts/documentary/narration-production.json` records duration and matching source/output AAC-packet hashes, verifying no audio truncation/change. Both streams are fully decoded; playback evidence is in `narrated-browser-check.json`.

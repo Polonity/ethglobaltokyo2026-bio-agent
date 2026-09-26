@@ -8,25 +8,25 @@ The slice selected DNp01 body 10001 and six strongly connected outputs, retainin
 
 ## Definition of full
 
-FlyWire's female adult brain count (139,255) is distinct from this project’s MaleCNS brain-and-ventral-nerve-cord dataset. [FlyWire](https://home.flywire.ai/) · [MaleCNS](https://male-cns.janelia.org/) · [Download specification](https://male-cns.janelia.org/download/).
+FlyWire's female adult brain count (139, 255) is distinct from this project’s MaleCNS brain-and-ventral-nerve-cord dataset. [FlyWire](https://home.flywire.ai/) · [MaleCNS](https://male-cns.janelia.org/) · [Download specification](https://male-cns.janelia.org/download/).
 
-For `male-cns:v1.0`, use **all 166,700 annotation rows with non-null superclass**, from 211,577 rows. No extra filtering by region, cell type, status, degree, weight, or behavior; no Traced-only filter.
+For `male-cns:v1.0`, use **all 166, 700 annotation rows with non-null superclass**, from 211, 577 rows. No extra filtering by region, cell type, status, degree, weight, or behavior; no Traced-only filter.
 
-| Item | Count |
-| --- | ---: |
-| Classified neurons | 166,700 |
-| Internal connection pairs | 25,582,938 |
-| Retained synapse counts | 124,177,617 |
-| All-segment source connection rows | 151,856,684 |
-| Unclassified annotation rows | 44,877 |
-| Boundary rows with one included endpoint | 117,436,340 |
+| Item                                     |         Count |
+| ---------------------------------------- | ------------: |
+| Classified neurons                       |      166, 700 |
+| Internal connection pairs                |  25, 582, 938 |
+| Retained synapse counts                  | 124, 177, 617 |
+| All-segment source connection rows       | 151, 856, 684 |
+| Unclassified annotation rows             |       44, 877 |
+| Boundary rows with one included endpoint | 117, 436, 340 |
 
 This is the induced graph of classified neurons, **not the full segmentation graph**. Unclassified fragments/glia are not counted as additional identified neurons. Excluded boundary counts/weights are recorded in the manifest; upstream confidence 0.5 remains. Boundary effects are unmeasured, not evidence that excluded fragments are biologically irrelevant.
 
 ## Implementation and assumptions
 
 - `scripts/full/prepare.py`: verify official source hashes and build the sparse graph, retaining all included IDs, isolated nodes, self-edges, and counts.
-- `packages/bio_agent/full/model.py`: CPU NumPy/SciPy float64; shared CSR `W[post, pre]` with independent 166,700-element state per agent (1–3 agents). Every neuron updates each step.
+- `packages/bio_agent/full/model.py`: CPU NumPy/SciPy float64; shared CSR `W[post, pre]` with independent 166, 700-element state per agent (1–3 agents). Every neuron updates each step.
 - `packages/bio_agent/full/__main__.py`: dedicated loopback API/GUI, independent of Anvil/Workers.
 - `scripts/full/benchmark.py`: full stimulus, zero/ablated controls, complete restore, and seven-neuron comparison.
 
@@ -58,7 +58,7 @@ Prepare downloads missing sources (~1.1 GB), verifies hashes, and refuses to ove
 
 Options: `npm run full:dev -- --port 8811 --normalization global-max`, `--agents 1` or `--agents 3`; default is two. Ctrl-C stops this dedicated server only.
 
-Select stimulus strength/population per agent. Rendering aggregates neurons but computation retains all 166,700. State persists across requests; reset for zero-state comparisons. Checkpoints contain full state and reject mismatched graph manifest, runtime-file hash, normalization, or agent count. Re-preparing a changed manifest invalidates old checkpoints.
+Select stimulus strength/population per agent. Rendering aggregates neurons but computation retains all 166, 700. State persists across requests; reset for zero-state comparisons. Checkpoints contain full state and reject mismatched graph manifest, runtime-file hash, normalization, or agent count. Re-preparing a changed manifest invalidates old checkpoints.
 
 This dedicated screen sends no TXs and does not replace the three applications' registrations, policies, or contracts.
 
@@ -66,15 +66,15 @@ This dedicated screen sends no TXs and does not replace the three applications' 
 
 `artifacts/malecns-full/benchmark.json`, 2026-09-26, this host, CPU float64:
 
-| Measurement | Result |
-| --- | ---: |
-| CSR matrix | 293.41 MiB |
-| Benchmark peak RSS | ~443 MiB |
-| Graph load/verification | ~0.80 s |
-| 3 agents × 32 steps, DNp01 | ~2.00 s |
-| 3 agents × 32 steps, sensory population | ~1.91–1.93 s |
-| Updated state elements | 16,003,200 |
-| Continuous versus save/resume maximum error | 0 |
+| Measurement                                 |       Result |
+| ------------------------------------------- | -----------: |
+| CSR matrix                                  |   293.41 MiB |
+| Benchmark peak RSS                          |     ~443 MiB |
+| Graph load/verification                     |      ~0.80 s |
+| 3 agents × 32 steps, DNp01                  |      ~2.00 s |
+| 3 agents × 32 steps, sensory population     | ~1.91–1.93 s |
+| Updated state elements                      | 16, 003, 200 |
+| Continuous versus save/resume maximum error |            0 |
 
 Agents share the matrix, not activity; stimuli were 0.2/0.5/1.0. Two-second 32-step batches enable interactive experiments but do not establish a 5 Hz game with 32 steps per action.
 
@@ -88,11 +88,11 @@ The full model fits memory and remains the local reference. Reduction should be 
 
 `artifacts/malecns-full/agent-scaling.json`; medians of three 16-step runs:
 
-| Agents | Neural steps/s | ms/step |
-| --- | ---: | ---: |
-| 1 | 62.9 | 15.9 |
-| 2 (default) | 30.6 | 32.7 |
-| 3 | 20.4 | 49.0 |
+| Agents      | Neural steps/s | ms/step |
+| ----------- | -------------: | ------: |
+| 1           |           62.9 |    15.9 |
+| 2 (default) |           30.6 |    32.7 |
+| 3           |           20.4 |    49.0 |
 
 These exclude HTTP/statistics/rendering. Continuous mode batches four fully computed steps per request and permits no overlapping compute requests. Input changes apply at the next request, with corresponding four-step latency.
 

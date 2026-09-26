@@ -4,15 +4,15 @@ Start with the [project overview](../README.md), then use this index to explore 
 
 ## Use the project
 
-| Goal | Guide |
-| --- | --- |
-| Try decisions, learning, and policy save/restore | [Framework / Research Lab](../packages/bioagent-framework/README.md) |
-| Observe public chain inputs | [Sepolia Lab](deployment/sepolia.md) |
-| Run a local chain and GUI | [Anvil + Workers](deployment/local-anvil.md) |
-| Run all 166,700 neurons | [Full runtime](design/malecns-full-local.md) |
-| Run and train the full-neuron applications | [Three-task acceptance guide](submission/full-apps-acceptance.md) |
-| Run four agents in one market | [Shared market](apps/shared-market/README.md) |
-| Understand controls and agent state | [Application guides](apps/README.md), [GUI design](design/demo-experience.md) |
+| Goal                                             | Guide                                                                         |
+| ------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Try decisions, learning, and policy save/restore | [Framework / Research Lab](../packages/bioagent-framework/README.md)          |
+| Observe public chain inputs                      | [Sepolia Lab](deployment/sepolia.md)                                          |
+| Run a local chain and GUI                        | [Anvil + Workers](deployment/local-anvil.md)                                  |
+| Run all 166, 700 neurons                         | [Full runtime](design/malecns-full-local.md)                                  |
+| Run and train the full-neuron applications       | [Three-task acceptance guide](submission/full-apps-acceptance.md)             |
+| Run four agents in one market                    | [Shared market](apps/shared-market/README.md)                                 |
+| Understand controls and agent state              | [Application guides](apps/README.md), [GUI design](design/demo-experience.md) |
 
 ## Design
 
@@ -52,12 +52,12 @@ Start with the [project overview](../README.md), then use this index to explore 
 
 ## Terms
 
-| Term | Meaning |
-| --- | --- |
-| BioAgentStatus | Onchain input conditions: activity, energy supply, and stimulus |
-| Registry | Contract retaining agent definitions and the latest input state |
-| Runtime | Execution environment computing actions from inputs and internal state, in a browser or Python depending on the task |
-| revision | Input update number |
-| policy version | Learned-policy version, separate from input revision |
-| modelHash | SHA-256 identifying the registered model artifact; each implementation defines the exact target bytes |
-| Applied | An input has reached the agent; distinct from chain finality |
+| Term           | Meaning                                                                                                              |
+| -------------- | -------------------------------------------------------------------------------------------------------------------- |
+| BioAgentStatus | Onchain input conditions: activity, energy supply, and stimulus                                                      |
+| Registry       | Contract retaining agent definitions and the latest input state                                                      |
+| Runtime        | Execution environment computing actions from inputs and internal state, in a browser or Python depending on the task |
+| revision       | Input update number                                                                                                  |
+| policy version | Learned-policy version, separate from input revision                                                                 |
+| modelHash      | SHA-256 identifying the registered model artifact; each implementation defines the exact target bytes                |
+| Applied        | An input has reached the agent; distinct from chain finality                                                         |

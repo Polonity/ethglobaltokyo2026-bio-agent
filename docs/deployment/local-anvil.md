@@ -2,12 +2,12 @@
 
 This runs entirely on your PC. No Cloudflare account/token, Sepolia ETH, or browser wallet is required. Public Workers and Sepolia are not modified.
 
-| Component | Implementation | Default |
-| --- | --- | --- |
-| EVM | Foundry Anvil, chain ID 31337 | http://127.0.0.1:8545 |
-| Contracts | BioAgentStimulusRegistry implementing IBioAgentRegistry / IBioAgent | Deployed at startup |
-| Web app | Wrangler workerd, Static Assets, local-only API | http://127.0.0.1:8798 |
-| Agent runtime | Browser Arena | MOMO #1, SORA #2, KIKI #3 |
+| Component     | Implementation                                                      | Default                   |
+| ------------- | ------------------------------------------------------------------- | ------------------------- |
+| EVM           | Foundry Anvil, chain ID 31337                                       | http://127.0.0.1:8545     |
+| Contracts     | BioAgentStimulusRegistry implementing IBioAgentRegistry / IBioAgent | Deployed at startup       |
+| Web app       | Wrangler workerd, Static Assets, local-only API                     | http://127.0.0.1:8798     |
+| Agent runtime | Browser Arena                                                       | MOMO #1, SORA #2, KIKI #3 |
 
 Interfaces themselves are not deployed. The deployment script creates the registry implementation and registers agents through `IBioAgentRegistry`.
 
@@ -59,12 +59,12 @@ Anvil/Sepolia share UI, decisions, and learning. Body, position, and policy are 
 
 Pause stops simulation, not event intake. Background browser throttling may delay polling.
 
-| Contract | Runtime / GUI |
-| --- | --- |
-| Activity 0 / 1 / 2 | Rest / Explore / Forage |
-| energy 0–10000 | Supply 0–1, displayed as 0–100% |
-| stimulus 0–10000 | Stimulus 0–1, displayed as 0–100% |
-| revision uint64 | Applied revision as a decimal string |
+| Contract           | Runtime / GUI                        |
+| ------------------ | ------------------------------------ |
+| Activity 0 / 1 / 2 | Rest / Explore / Forage              |
+| energy 0–10000     | Supply 0–1, displayed as 0–100%      |
+| stimulus 0–10000   | Stimulus 0–1, displayed as 0–100%    |
+| revision uint64    | Applied revision as a decimal string |
 
 Input energy is supply, not the inspector's computed body ENERGY.
 
@@ -74,7 +74,7 @@ Input energy is supply, not the inspector's computed body ENERGY.
 
 Logs are restricted to the registry and sorted by block/transaction/log index; eventId and revision prevent duplicates. Reopening retrieves the latest chain inputs. Onchain definitions, Status, and events are distinct from browser-local body, scores, experience, and policies. Exported JSON is not a complete resume file. See [current storage boundaries](../architecture.md#4-state-ownership) for persisted policy/consumption state.
 
-A rollback or revision gap reinitializes the competition from a canonical snapshot; it does not exactly undo historical movement or learning. After restarting Anvil, regenerate configuration with local:up and reload the GUI.
+A rollback or revision gap reinitializes the competition from a canonical snapshot; it does not exactly undo historical movement or learning. After restarting Anvil, regenerate configuration with local: up and reload the GUI.
 
 ## Local-only signing
 
@@ -98,15 +98,15 @@ Coverage: registrations/manifest hash, world/food only after mining, receipt/eve
 
 ## Troubleshooting
 
-| Symptom | Action |
-| --- | --- |
-| Occupied port | Choose other ports; preserve existing processes |
-| Missing forge/anvil | Install pinned Foundry or set absolute tool paths |
-| Registration failed | Inspect `.local/forge.log`, submodule, and compiler |
-| Worker failed | Inspect Wrangler output and inspector port |
-| Waiting / Deployment changed | Align Anvil/configuration, restart local:up, reload GUI |
-| RevisionMismatch | Receive the latest revision, then retry deliberately |
-| Waiting for application | Inspect mining/receipt; do not automatically resend |
+| Symptom                      | Action                                                       |
+| ---------------------------- | ------------------------------------------------------------ |
+| Occupied port                | Choose other ports; preserve existing processes              |
+| Missing forge/anvil          | Install pinned Foundry or set absolute tool paths            |
+| Registration failed          | Inspect `.local/forge.log`, submodule, and compiler          |
+| Worker failed                | Inspect Wrangler output and inspector port                   |
+| Waiting / Deployment changed | Align Anvil/configuration, restart local: up, reload GUI     |
+| RevisionMismatch             | Receive the latest revision, then retry deliberately         |
+| Waiting for application      | Inspect mining/receipt; do not automatically resend          |
 | Learning agent is stationary | It temporarily leaves competition and returns after learning |
 
 [Foundry Anvil](https://www.getfoundry.sh/anvil/index.html) · [Cloudflare local development](https://developers.cloudflare.com/workers/local-development/)

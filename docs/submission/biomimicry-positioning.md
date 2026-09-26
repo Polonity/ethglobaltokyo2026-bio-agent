@@ -1,65 +1,38 @@
-# 生物模倣からBioAgentへ
+# From biomimicry to BioAgent
 
-> 2026-09-26更新: [MaleCNS必須・用途別学習・即時反映](../design/malecns-learning.md)が現在の実装です。以下には更新前の固定回路・syntheticモデルの記録を含みます。
+Research/pitch snapshot, 2026-09-26. [Later MaleCNS learning integration](../design/malecns-learning.md) supersedes the historical synthetic/fixed-circuit implementation status. Complements the [thesis](bioagent-thesis.md).
 
-2026-09-26調査。提出用の訴求と検証方針。[ピッチ](bioagent-thesis.md)を補足する。
+**Just as sharkskin inspired surfaces that reduce drag, biological circuits can inspire how agents act.** BioAgent makes that choice traceable from circuit source and mappings to actions. Inspiration is a research direction, not a demonstrated performance gain.
 
-## 中心となるメッセージ
+## Product precedents
 
-**鮫肌から流れの制御を学んだように、私たちは神経回路から行動のつくり方を学ぶ。**
+| Biological structure | Product                        | Evidence scope                                                                                                                                                                                                         |
+| -------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sharkskin grooves    | AeroSHARK riblet film          | [Lufthansa Technik](https://www.lufthansa-technik.com/en/aeroshark) describes approximately 1% fuel/emission reduction for specified applications, not every geometry/condition                                        |
+| Burdock hooks        | VELCRO hook-and-loop fasteners | [Manufacturer history](https://www.velcro.com/original-thinking/our-timeline-of-innovation/): observation followed by material/manufacturing development                                                               |
+| Lotus leaf surface   | Lotusan facade paint           | [Sto technical sheet](https://www.sto-sea.com/media/documents/download_broschuere_1/03__facade/05__facade_paint_1/StoColor_Lotusan_TDS_SE_24.02.2022.pdf): water repellence/microstructure and rain-dependent cleaning |
+| Gecko toes           | Gecko Gripper                  | [NASA2020 account](https://www.nasa.gov/technology/tech-transfer-spinoffs/new-commercial-robot-copies-geckos-toes/): commercial gripping via microstructure/intermolecular contact, separate from space prototypes     |
 
-生物模倣（biomimicry）の価値は、自然に存在する機能的な構造を工学の設計候補として使えることにある。BioAgentは、この発想をコネクトーム由来の計算へ応用する。生物の形や素材から学ぶ製品と同じように、感覚・内部状態・行動をつなぐ仕組みから学ぶAgentを目指す。
+These establish examples, not biomimicry's success rate or universal superiority.
 
-## 製品化された例
+## Research hypothesis
 
-| 生物から借りたもの | 製品・仕組み | 根拠と主張の範囲 |
-| --- | --- | --- |
-| 鮫肌の微細な溝 | AeroSHARK。航空機の表面にribletフィルムを貼り、空気との摩擦を減らす | [Lufthansa Technik](https://www.lufthansa-technik.com/en/aeroshark)は現行の適用構成で燃料消費・排出を約1%削減すると説明。あらゆる形状・運転条件への保証ではない |
-| ゴボウの実の鉤 | VELCROの面ファスナー。小さな鉤とループの機械的な結合を、繰り返し着脱できる製品へ | [メーカーの開発史](https://www.velcro.com/original-thinking/our-timeline-of-innovation/)。観察から材料・製造法の開発を経て製品化 |
-| ハスの葉の表面 | Lotusan外壁塗料。撥水性と微細構造により、雨滴とともに付着した汚れが流れやすくなる | [Sto製品資料](https://www.sto-sea.com/media/documents/download_broschuere_1/03__facade/05__facade_paint_1/StoColor_Lotusan_TDS_SE_24.02.2022.pdf)。雨への露出などの条件がある |
-| ヤモリの足裏 | Gecko Gripper。微細構造による接触と分子間力を利用し、平滑な部品を把持・解放する | [NASAの技術移転事例](https://www.nasa.gov/technology/tech-transfer-spinoffs/new-commercial-robot-copies-geckos-toes/)。2020年記事で商用化を報告。宇宙実験用の機体と商用製品は区別する |
+Related functional structures can be starting points/constraints rather than searching from scratch. For agents, test adaptation from limited experience, bounded-compute response, and stability under disturbed inputs. [Research rationale](../standards/why-bioagent.md).
 
-これらは生物模倣が実用につながる事例であり、生物模倣製品の成功率や、他方式に対する普遍的な優位性の統計ではない。
+Evolution does not optimize arbitrary human tasks. Simulating neural connectivity on a CPU does not automatically inherit a living fly's energy efficiency. Select relevant structure, state engineered mappings/learning, and decide through measurements.
 
-## なぜ試す価値があるのか
+Engineering usefulness and biological fidelity are separate axes: compare reward/samples/latency/resources/noise tolerance under matched budgets; independently check source connectivity, neural predictions, and biological behavior. Useful engineering need not reproduce an organism, but usefulness does not prove brain emulation.
 
-上の事例から得る設計上の示唆は、**一から構造を探す代わりに、目的に関連する機能を持った構造を出発点にできる**ことだ。模倣した構造が課題に合えば、材料や形状だけで機能を実現できる場合もある。人間の直感だけでは見つけにくい設計を候補に加えられる。
+## Proposed tests, not completed results
 
-この考えをAgentに移すと、神経回路の接続構造を学習の出発点や制約に使い、環境と内部状態に応じて行動を変える仕組みを探れる。少ない経験での適応、限られた計算量での応答、入力が乱れたときの安定性を研究仮説とする。これらは本プロジェクトで達成済みの性能ではない。関連するコネクトーム制約モデルの研究は[既存調査](../standards/why-bioagent.md)にまとめている。
+- Measured graph versus degree-preserving shuffle and matched artificial models, multiple seeds/equal learning budgets: unseen reward and samples to target.
+- Body inputs on/off with changed food/stimuli: resource use, recovery, stability.
+- Small-circuit computational advantage on the same hardware/quality target: latency, memory, and power if measured.
 
-進化は人間の任意の課題に対する最適化ではない。神経回路を普通のコンピューターで計算しても、生物の低消費エネルギー性が自動的に引き継がれるわけではない。用途に合う構造を抽出し、人工的な入力変換や学習と組み合わせ、実測で採否を決める。
+Market tests need isolated chronological data plus fees/impact. Foraging results do not establish market profit. At the initial milestone, two games were synthetic and Circuit Lab's measured7-neuron/19-edge response changed under ablation. That proved dependence, not superiority of biological arrangement. [Circuit evidence](../design/circuit-evidence.md).
 
-## 工学的な有用性と生物学的な忠実度
+## Profile and blockchain role
 
-この2軸を分けて評価する。
+Consumers need to know borrowed structure, engineered additions, trainable components, and evaluation conditions. The proposed profile shares those meanings while reusing ordinary identity/authority/communication. Onchain stimuli provide common traceable inputs; records alone do not establish performance or biology.
 
-- **工学的な有用性:** 同じ入力・学習予算・実行条件で、報酬、必要サンプル数、処理時間、計算資源、入力ノイズへの耐性を比較する。
-- **生物学的な忠実度:** 出典に対応する接続を使っているか、神経活動や行動が実測と一致するかを、それぞれの証拠で評価する。
-
-便利な生物模倣製品に、生物全体の忠実な再現は必須ではない。一方、便利に動くことだけで生物の脳を再現したとは言えない。この区別によって、人工動力学を使う試作にも工学的な意味を持たせつつ、研究上の主張を正確に保てる。
-
-## 検証計画と現在地
-
-次の比較は計画であり、完了済みの評価ではない。
-
-| 仮説 | 比較方法 | 指標 |
-| --- | --- | --- |
-| 回路構造が学習の出発点として役立つ | 実測由来、次数を保ったシャッフル、同等規模の人工モデル。同じ学習予算で複数seedを評価 | 未学習の環境での報酬、一定性能までの経験数 |
-| 内部状態との結合が適応に役立つ | 身体入力あり・なしを比較し、食物配置や刺激条件を変更 | 資源消費、回復時間、行動の安定性 |
-| 小さな回路に計算上の利点がある | 同じ機器・品質条件で測定 | 応答時間、メモリ、測定可能なら消費電力 |
-
-市場評価には、学習から隔離した時系列と手数料・価格影響を含む条件を使う。採餌での効果も市場での利益を保証しない。
-
-現在の2ゲームはsyntheticモデル。Circuit Labは実測7神経・19接続を人工動力学で実行し、接続除去との応答差を確認している。この対照は接続への依存を示すが、接続の生物的な配置が他の配置より優れている証拠ではない。[実装と検証](../design/circuit-evidence.md)
-
-## なぜ仕様とブロックチェーンにつながるか
-
-生物模倣モデルを他者が利用するには、「どの構造を借りたか」「何を人工的に追加したか」「何が学習で変わるか」「どの条件で評価したか」を読める必要がある。BioAgent profileは、その説明を異なるアプリで共有するための提案である。一般Agentの識別・権限・通信を共用し、生物由来モデルの意味を追加する。
-
-オンチェーンデータは、外部からの刺激とその記録を参加者間で検証する基盤になる。モデルの出典と入力の出典を対応づけることで、行動を追跡しやすくする。記録だけでモデルの性能や生物学的正しさが証明されるものではない。
-
-## 発表での流れ
-
-鮫肌→航空機、ゴボウ→面ファスナーの2例で身近な成功を示す。続いて「私たちは神経回路から行動のつくり方を学ぶ」と宣言する。オンチェーン刺激→個体の反応→出典と計算の検査をデモし、これを共有するBioAgent profileを紹介する。
-
-English hook: **Just as sharkskin inspired surfaces that reduce drag, biological circuits can inspire how agents act. BioAgent makes that design choice traceable—from the source circuit and input mapping to the resulting action.** “Can inspire” expresses the engineering direction; performance gains require controlled comparisons.
+A possible presentation introduces sharkskin/fasteners, then circuit-inspired action, shows input TX→response→provenance/computation, and closes with the shared profile. “Can inspire” expresses the hypothesis accurately.

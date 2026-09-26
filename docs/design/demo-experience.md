@@ -6,15 +6,15 @@ For the chain-connected three-agent Fly Lab, see [architecture](../architecture.
 
 Onchain Status supplies inputs. Agents receive verified events, compute actions, and learn from experience. Candidate evaluation may keep the old policy; rejection is a valid outcome.
 
-| Area | Observe |
-| --- | --- |
-| Chain panel | Connection, selected input revision, TX/block/log |
-| Foraging field | Movement, shared food, hazards, selection |
-| Leaderboard | Food, rank, time |
-| World input | Selected agent's activity, stimulus, energy supply |
-| Inspector | Body energy, decisions, experience, score, policy version |
-| Learning | Progress, candidate comparison, adoption/rejection |
-| Field notes | Input and learning events |
+| Area           | Observe                                                   |
+| -------------- | --------------------------------------------------------- |
+| Chain panel    | Connection, selected input revision, TX/block/log         |
+| Foraging field | Movement, shared food, hazards, selection                 |
+| Leaderboard    | Food, rank, time                                          |
+| World input    | Selected agent's activity, stimulus, energy supply        |
+| Inspector      | Body energy, decisions, experience, score, policy version |
+| Learning       | Progress, candidate comparison, adoption/rejection        |
+| Field notes    | Input and learning events                                 |
 
 The latest-submission card retains its target even if selection changes. Selected-agent evidence follows the selected agent; do not confuse these two scopes.
 

@@ -15,12 +15,12 @@ A new browser replays stimulus history since the current world TX. Consumed-food
 
 ## Inputs and shared implementation
 
-| Input | Transaction and processing |
-| --- | --- |
-| Initial world/hazards | Agent #1 `submitStimulus`, schema `bioagent.foraging-world.v1`: width, height, seed, food bounds, hazard positions/radii |
-| World change | A new TX with that schema rebuilds the field and clears previous food |
+| Input                    | Transaction and processing                                                                                                                    |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Initial world/hazards    | Agent #1 `submitStimulus`, schema `bioagent.foraging-world.v1`: width, height, seed, food bounds, hazard positions/radii                      |
+| World change             | A new TX with that schema rebuilds the field and clears previous food                                                                         |
 | Activity/stimulus/supply | Per-agent `updateStatus`; one successful positive-stimulus event adds one food. Registration, zero stimulus, duplicates, and reverts add none |
-| Food coordinates | Deterministically derived from TX hash and recorded world seed/dimensions |
+| Food coordinates         | Deterministically derived from TX hash and recorded world seed/dimensions                                                                     |
 
 Unverified world inputs, model mismatches, stale Sepolia blocks, or RPC failure pause execution; there is no fallback to a synthetic local world. Receipts are checked against canonical blocks with zero additional confirmation depth. This is not finality or a cryptographic proof of neural execution.
 
@@ -39,7 +39,7 @@ Cloudflare Cron → `StimulusScheduler` Durable Object → Registry. The schedul
 Signer: test EOA **0x0d01a92bae0E01754f7102466936397F609D67C3**, reusing authorized test funds. Its key is a Cloudflare Secret, never a browser/static asset. This is currently an EOA, not a smart wallet.
 
 - Minimum one-hour send interval; retries/concurrent invocations reuse the same durably journaled signed TX.
-- Caps: 60,000 gas and 3 gwei; 24 transactions cost at most **0.00432 Sepolia ETH** under those caps.
+- Caps: 60, 000 gas and 3 gwei; 24 transactions cost at most **0.00432 Sepolia ETH** under those caps.
 - Rolling 24-hour budget: 0.005 ETH; balance reserve: 0.001 ETH. Exceeding limits skips sending.
 - [Scheduler status API](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/api/stimulus-scheduler) exposes the latest hash/status.
 
@@ -69,4 +69,4 @@ Requires Node.js 22, Chrome, and Foundry. `.local/sepolia/` keystore, passphrase
 
 ## Public demo versus submission video
 
-The public browser model uses a measured **7-neuron / 19-edge subgraph**, not an equivalent compression of a full brain. It does not trade on Aqua or Uniswap. The submission recording uses **166,700 neurons per agent** on local Anvil: two-agent foraging with world TXs and same-input readout comparison, followed by four-agent Aqua/V3 settlement. Long waits are cut. Public Q-learning and full Python learning are separate implementations.
+The public browser model uses a measured **7-neuron / 19-edge subgraph**, not an equivalent compression of a full brain. It does not trade on Aqua or Uniswap. The submission recording uses **166, 700 neurons per agent** on local Anvil: two-agent foraging with world TXs and same-input readout comparison, followed by four-agent Aqua/V3 settlement. Long waits are cut. Public Q-learning and full Python learning are separate implementations.

@@ -1,6 +1,6 @@
 # BioAgent design direction — semantics before interfaces
 
-Design review,2026-09-26. **Proposal; ABI not finalized.** This does not automatically make existing contracts conform to a new standard. See [rationale](why-bioagent.md) and [submission thesis](../submission/bioagent-thesis.md).
+Design review, 2026-09-26. **Proposal; ABI not finalized.** This does not automatically make existing contracts conform to a new standard. See [rationale](why-bioagent.md) and [submission thesis](../submission/bioagent-thesis.md).
 
 ## Core idea
 
@@ -14,13 +14,13 @@ NFT/SBT were examples of base-and-extension relationships, not feature requireme
 
 Show actual encoded observations and pre/post state when testing hunger/fullness or experience effects. A financial-to-sensory adapter is engineered, not evidence that a fly understands finance. Declare connectivity, dynamics, mappings, and plasticity separately. Synthetic Q-learning remains a labeled control; it need not be called biological.
 
-| Concept | Meaning | Keep separate from |
-| --- | --- | --- |
-| Agent identity | Continuously tracked individual | Model type, current owner, wallet |
-| Model descriptor | Origin, dynamics, sensory/motor/body mapping, trainable scope | Mutable state or blanket validity claims |
-| Stimulus | Provenance/time/schema-bound input | Execution order, executed action, reward |
-| Checkpoint | Body, neural transients, policy, PRNG, and other resume state | Supplied energy or GUI position alone |
-| Transition | State + input → action + next state | TX success or file replacement |
+| Concept           | Meaning                                                        | Keep separate from                                  |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Agent identity    | Continuously tracked individual                                | Model type, current owner, wallet                   |
+| Model descriptor  | Origin, dynamics, sensory/motor/body mapping, trainable scope  | Mutable state or blanket validity claims            |
+| Stimulus          | Provenance/time/schema-bound input                             | Execution order, executed action, reward            |
+| Checkpoint        | Body, neural transients, policy, PRNG, and other resume state  | Supplied energy or GUI position alone               |
+| Transition        | State + input → action + next state                            | TX success or file replacement                      |
 | Learning evidence | Changed parameters, conditions, evaluation, adoption/rejection | Changed behavior, one profit, or learning animation |
 
 Many concepts apply to ordinary AI. The profile adds explicit biological structural origin, interoception, circuit/sensory/motor correspondence, and plasticity semantics; it does not claim these are exclusive or unprecedented.

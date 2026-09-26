@@ -2,11 +2,11 @@
 
 Read each guide in order: first run, screen layout, learning, then implementation. Controls, goals, and metrics come before the relationship between onchain inputs and MaleCNS.
 
-| Application | Guide | Onchain evidence | Local computation |
-| --- | --- | --- | --- |
-| Foraging | [Food, state, and bubbles](foraging.md) | Environment/hazards and per-agent Status stimulus TXs | Body, neural activity, movement, and learning |
-| Market | [Prices, trades, and PnL](market.md) | Real Uniswap Swaps, price blocks, and quote provenance | Paper accounts, decisions, and learning |
-| Aqua | [Strategies, fills, and proxy rewards](aqua.md) | Status, ship/dock, and actual test-token swaps | Strategy decisions, proxy valuation, and learning |
+| Application | Guide                                           | Onchain evidence                                       | Local computation                                 |
+| ----------- | ----------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------- |
+| Foraging    | [Food, state, and bubbles](foraging.md)         | Environment/hazards and per-agent Status stimulus TXs  | Body, neural activity, movement, and learning     |
+| Market      | [Prices, trades, and PnL](market.md)            | Real Uniswap Swaps, price blocks, and quote provenance | Paper accounts, decisions, and learning           |
+| Aqua        | [Strategies, fills, and proxy rewards](aqua.md) | Status, ship/dock, and actual test-token swaps         | Strategy decisions, proxy valuation, and learning |
 
 Full-neuron UI: [port 8812](http://127.0.0.1:8812/). Legacy browser UI: [port 8800](http://127.0.0.1:8800/). Each page's explanation sheet supports English and Japanese printing/PDF export. Full-mode seven-neuron comparisons and the legacy browser learner are distinct implementations.
 

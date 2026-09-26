@@ -16,7 +16,7 @@ An exploratory body audit then found final energy **0.722 → 0.361**, and low-e
 
 **Sponsor value.** The practical proposal is a reusable way to compare candidate controllers against rules and direct-input models on identical inputs, reject regressions, and trace decisions to chain state and policy versions. Increased router use, user adoption, trading returns and power savings remain hypotheses. A concrete next Uniswap task is quote-and-fee-based candidate/hold decisions, measured against matched controls on unseen data. The current Aqua task is artificial calibration; its defining formula solves the target exactly.
 
-**What is biological?** A measured 7-neuron, 19-edge MaleCNS slice participates in feature computation. Dynamics, mappings and body model are engineered. The existing full 166,700-neuron runtime is separate and not integrated into this framework release.
+**What is biological?** A measured 7-neuron, 19-edge MaleCNS slice participates in feature computation. Dynamics, mappings and body model are engineered. The existing full 166, 700-neuron runtime is separate and not integrated into this framework release.
 
 **What was learned?** Three readout coefficients were selected from 48 reward-evaluated candidates per run. This is optimization from experience, not biological synaptic plasticity or proof of live-animal learning.
 
@@ -39,5 +39,3 @@ npm run test:framework:browser
 ```
 
 Primary protocol hash: `1db1bf40c3f88601a877e981ca8a10add46cf5cef205d99ae71d0216b471c314`. Development results remain in `development.json`. Generated files are under `artifacts/bioagent-adaptation-20260926/` (Git-ignored). Protocol and reproducible source are tracked in the repository. The evidence package contains their hashes and a ZIP manifest.
-
-

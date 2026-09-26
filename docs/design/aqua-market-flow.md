@@ -4,13 +4,13 @@ Updated 2026-09-26. [The four-agent integrated market](../apps/shared-market/REA
 
 ## Original demos
 
-| Role | Actual behavior |
-| --- | --- |
-| Uniswap input generation | Programmed NECTAR/POLLEN swaps on a local V3 test pool; Aqua replays saved Swap history |
-| MOMO/SORA | Two offer strategies sharing one maker wallet; MaleCNS/readout chooses tight/wide/withdraw. They are not each other's counterparties |
-| Counterparty | Separate test-bot taker accepts tight offers, and wide offers only when absolute observed price change is at least 2%; not external demand |
-| Aqua settlement | Actual swaps of separate NECTAR-full/POLLEN-full test tokens at a fixed 1:1 reference less spread, not the current Uniswap exchange rate |
-| Paper trading | Virtual accounts using V3 quotes; agent orders neither reach the chain nor Aqua |
+| Role                     | Actual behavior                                                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Uniswap input generation | Programmed NECTAR/POLLEN swaps on a local V3 test pool; Aqua replays saved Swap history                                                    |
+| MOMO/SORA                | Two offer strategies sharing one maker wallet; MaleCNS/readout chooses tight/wide/withdraw. They are not each other's counterparties       |
+| Counterparty             | Separate test-bot taker accepts tight offers, and wide offers only when absolute observed price change is at least 2%; not external demand |
+| Aqua settlement          | Actual swaps of separate NECTAR-full/POLLEN-full test tokens at a fixed 1: 1 reference less spread, not the current Uniswap exchange rate  |
+| Paper trading            | Virtual accounts using V3 quotes; agent orders neither reach the chain nor Aqua                                                            |
 
 NECTAR/POLLEN are project test currencies, not ETH/cash. Similarly named Aqua and Uniswap tokens in the old modes have different ERC20 addresses. UI reads actual symbols because deployment addresses determine ordering.
 
@@ -29,7 +29,7 @@ The basic flow is now implemented on 8814:
 1. Use the same two ERC20 addresses for Aqua and Uniswap.
 2. Separate maker offer policies from taker trading wallets.
 3. Compare same-amount, same-time executable quotes and trade only a valid route; otherwise wait.
-4. Replace the old fixed 1:1 quote with a reference-price/spread quote, preserving freshness, minOut, inventory, and order caps.
+4. Replace the old fixed 1: 1 quote with a reference-price/spread quote, preserving freshness, minOut, inventory, and order caps.
 5. Feed fills/inventory into subsequent inputs and report participant/aggregate valuations, costs, and unfilled offers separately.
 6. Include a zero-order control; assess learning separately from integration success.
 

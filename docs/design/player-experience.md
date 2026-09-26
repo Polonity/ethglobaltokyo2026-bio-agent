@@ -2,11 +2,11 @@
 
 Full MaleCNS GUI: http://127.0.0.1:8812. The older 8800 application is retained for comparison.
 
-| Application | Observe | Metrics | Controls |
-| --- | --- | --- | --- |
-| Foraging | Movement, feeding, rest, hazard contact | Food count and body-energy percentage | Stimulus, run, stop, relearn |
-| PnL battle | Two policies and account-value changes | Zero-based PnL lines/bars with signs, currency, percentage | Recorded market run, stop, relearn |
-| Aqua | Offers, withdrawals, fills | Strategy, spread, fills, proxy points | Run, stop, relearn |
+| Application | Observe                                 | Metrics                                                    | Controls                           |
+| ----------- | --------------------------------------- | ---------------------------------------------------------- | ---------------------------------- |
+| Foraging    | Movement, feeding, rest, hazard contact | Food count and body-energy percentage                      | Stimulus, run, stop, relearn       |
+| PnL battle  | Two policies and account-value changes  | Zero-based PnL lines/bars with signs, currency, percentage | Recorded market run, stop, relearn |
+| Aqua        | Offers, withdrawals, fills              | Strategy, spread, fills, proxy points                      | Run, stop, relearn                 |
 
 Use a full-screen field with floating status/control cards; stack cards on narrow screens with touch spacing. Signs, zero lines, text, and selection borders supplement color.
 
@@ -42,6 +42,6 @@ npm run build
 npm run test:guides
 ```
 
-UX checks run/stop all three apps and inspect 166,700-neuron mode, currencies, proxy prices, receipts, both languages, 390 px layouts, and Esc. Outputs: `artifacts/ux-refresh/`. Do not run competing experiments on the same chain. Old recordings remain historical UI evidence.
+UX checks run/stop all three apps and inspect 166, 700-neuron mode, currencies, proxy prices, receipts, both languages, 390 px layouts, and Esc. Outputs: `artifacts/ux-refresh/`. Do not run competing experiments on the same chain. Old recordings remain historical UI evidence.
 
 Independent display fixtures test PnL signs, units, percentages, and zero-based bars without injecting production state. If observed PnL is zero, display zero; never manufacture profit for a screenshot.

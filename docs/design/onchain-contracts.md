@@ -68,22 +68,22 @@ This excerpt omits custom errors. `contracts/abi/`, generated from Solidity sour
 
 ## Registration and updates
 
-| Operation | Validation | Result |
-| --- | --- | --- |
-| registerAgent | Nonzero modelHash; metadataURI 1–512 bytes, without UTF-8 validation | owner=msg.sender; initial Rest / energy 5000 / stimulus 0 / revision 1; Registered then StatusUpdated in the same TX |
-| updateStatus | Registered agent, owner caller, values 0–10000, matching expectedRevision | Replace Status, increment revision, emit one StatusUpdated |
-| getAgent / getStatus | Registered agent | Latest value; unknown ID reverts |
+| Operation            | Validation                                                                | Result                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| registerAgent        | Nonzero modelHash; metadataURI 1–512 bytes, without UTF-8 validation      | owner=msg.sender; initial Rest / energy 5000 / stimulus 0 / revision 1; Registered then StatusUpdated in the same TX |
+| updateStatus         | Registered agent, owner caller, values 0–10000, matching expectedRevision | Replace Status, increment revision, emit one StatusUpdated                                                           |
+| getAgent / getStatus | Registered agent                                                          | Latest value; unknown ID reverts                                                                                     |
 
 Definitions are immutable in v0.1; a different model requires another registration. Repeating the same values still creates a new revision, allowing repeated stimulation. Conflicts and revision overflow revert. The GUI refreshes before retrying a conflict. Distinct custom errors cover authority, unknown IDs, ranges, and revisions. Invalid enum values are rejected, including during ABI decoding. Contracts do not fetch or verify URI contents.
 
 ## Status versus RuntimeState
 
-| | Onchain BioAgentStatus | Offchain RuntimeState |
-| --- | --- | --- |
-| Meaning | Owner-supplied conditions/stimuli | Computed state and action |
-| Examples | Forage, energy 8000, stimulus 9000 | Position, heading, speed, activation, selected action |
-| Update frequency | Per submitted input | Per simulation tick |
-| Writer | Owner wallet | Running agent runtime |
+|                  | Onchain BioAgentStatus             | Offchain RuntimeState                                 |
+| ---------------- | ---------------------------------- | ----------------------------------------------------- |
+| Meaning          | Owner-supplied conditions/stimuli  | Computed state and action                             |
+| Examples         | Forage, energy 8000, stimulus 9000 | Position, heading, speed, activation, selected action |
+| Update frequency | Per submitted input                | Per simulation tick                                   |
+| Writer           | Owner wallet                       | Running agent runtime                                 |
 
 Activity is context, not a movement coordinate. Its interpretation belongs to the model version/manifest. A Status record is neither a biological measurement nor proof of execution.
 

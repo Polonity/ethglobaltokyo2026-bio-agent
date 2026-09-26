@@ -1,89 +1,71 @@
-# 全3アプリの全神経・経験学習（検証済み）
+# Full-neuron experience learning in all three applications
 
-対象は採餌、市場ペーパートレード、Aqua。166,700分類付き神経と25,582,938内部接続を各個体の判断に使う。2個体でCSR行列を共有し、状態は用途・セッション・個体ごとに分離する。全セグメントを神経と呼ぶものではなく、未分類の44,877 annotation行とグラフ境界の接続は対象外。入力符号化、興奮性rate dynamics、身体、行動readoutは人工モデルであり、生理的な全脳再現ではない。
+Foraging, paper market, and Aqua use 166, 700 classified neurons/25, 582, 938 internal edges per agent. Two agents share CSR connectivity but have independent task/session/agent states. Unclassified44, 877 annotation rows and boundary edges are excluded. Encoding, rate dynamics, body, and readout are engineered, not physiological whole-brain reconstruction.
 
-## 実測結果
+## Recorded results —2026-09-26
 
-2026-09-26。3用途×full/legacyの6条件をGUIで実行し、TXレシート、改善候補の採用、その後の判断を確認。最後にサーバーを再起動し、全3用途の方策復元と停止、採餌の刺激9000の実TXを確認した。
+All six task×full/legacy cases ran through the GUI with receipts, candidate decisions, and subsequent actions. Restart restored policies for all tasks; stop and a foraging stimulus9000 TX were checked.
 
-| 用途 | 全神経の採用評価：学習前 → 候補（MOMO / SORA） | 採用後のバージョン |
-| --- | --- | --- |
-| foraging | -1.254 / 1.110 → 13.164 / -2.278 | v2 / v1 |
-| market | 0.000 / 0.000 → -1.896 / 2.387 | v1 / v2 |
-| aqua | -1.423 / -1.423 → 1.569 / 1.554 | v2 / v2 |
+| Task     | Selection baseline → candidate (MOMO / SORA) | Adopted versions |
+| -------- | -------------------------------------------- | ---------------- |
+| foraging | −1.254 /1.110 →13.164 /−2.278                | v2 /v1           |
+| market   | 0.000 /0.000 →−1.896 /2.387                  | v1 /v2           |
+| aqua     | −1.423 /−1.423 →1.569 /1.554                 | v2 /v2           |
 
-改善しない個体は旧方策を維持する。採餌MOMOと市場SORA、Aqua両個体で採用を確認した。採用判定の改善は別条件での勝利や全個体の改善を保証しない。
+Non-improving agents retain old policies. Selection improvement does not guarantee success elsewhere. Additional evaluation: three foraging seeds, two market/Aqua intervals, 80 actions each. Rewards have different task-specific meanings and cannot be compared across rows.
 
-追加条件は採餌3 seed、市場・Aqua各2区間、各80行動。下表は個体ごとの累積報酬の平均。**用途間では報酬の意味と単位が異なるため比較しない。**
+| Task     | Full mean reward | Reduced mean reward | Full / reduced neural ms per two-agent decision |
+| -------- | ---------------: | ------------------: | ----------------------------------------------: |
+| foraging |            0.222 |              −3.348 |                                   157.56 /0.180 |
+| market   |            0.367 |               4.019 |                                   155.21 /0.180 |
+| aqua     |            1.534 |               1.590 |                                   156.45 /0.237 |
 
-| 用途 | 全神経の平均報酬 | 省略版の平均報酬 | 全神経 / 省略版の神経計算 ms（2個体1判断） |
-| --- | ---: | ---: | ---: |
-| foraging | 0.222 | -3.348 | 157.56 / 0.180 |
-| market | 0.367 | 4.019 | 155.21 / 0.180 |
-| aqua | 1.534 | 1.590 | 156.45 / 0.237 |
+Full performed better in limited foraging trials; reduced performed better in market. No uniform full-model advantage was established. Keep full for research and reduced for the browser. In32 fixed-input/policy probes, removing edges changed at least one agent's maximum-score action in each task: computational dependence, not animal-behavior validation.
 
-この限られた追加試行では採餌は全神経版、市場は省略版が上だった。全神経版の一律な優位性は確認できない。**全神経版は研究・比較用として残し、ブラウザーの軽量デモは省略版を維持する**のが現時点の判断。局所的な縮小の最適解や生物学的妥当性はこの実験から断定しない。
+[Machine-readable acceptance](evidence/full-apps-acceptance.json) verifies an outcome for every SQLite decision, matching hashes, no selection/test leakage into fit, and adopted-policy use. `artifacts/full-apps/full-apps-english-demo.webm` shows post-restart operation/stop, not a complete newly recorded training cycle.
 
-神経接続をゼロにして方策と入力を固定した32ケースの対照では、全3用途で少なくとも1個体の最大スコア行動が変わった。これは接続への依存を示す人工入力probeで、動物行動の再現性を示すものではない。
+## Reproduce
 
-[機械可読の実測・出自・監査結果](evidence/full-apps-acceptance.json)。SQLite上の全decisionにoutcomeがあり、方策のhash一致、fitへの評価データ混入なし、採用後の方策使用を確認した。
+Recorded environment: Foundry 1.8.3, Python 3.12, NumPy 2.2.6, SciPy 1.15.3. [Prepare data](../design/malecns-full-local.md). Lightweight GUI 8800, standalone full8810, integrated full apps8812. Public Workers do not host Python full inference.
 
-英語の短い実演は `artifacts/full-apps/full-apps-english-demo.webm`。再起動後の3アプリの動作・停止を実画面で収録しており、学習の全工程を収録した動画ではない。
-
-## 再実行
-
-検証環境はFoundry 1.8.3、Python 3.12、NumPy 2.2.6、SciPy 1.15.3。神経データ準備は[全規模ランタイム手順](../design/malecns-full-local.md)を参照。
-
-既存のブラウザー版は8800、全神経単体実験は8810、新しい3アプリは8812。公開Workerはこのローカル全神経処理を実行しない。Sepoliaへのデプロイは行わない。
-
-```bash
+```sh
 npm ci
-# 既存の全神経準備手順で .local/connectome-tools と .local/malecns-full を用意
 npm run full:prepare
 forge build --root contracts
-# 別ターミナル。元のAnvilとは別ポートを使い、過去ブロック状態を保持する
 anvil --host 127.0.0.1 --port 18550 --chain-id 31337 \
   --max-persisted-states 100000 --cache-path .local/full-apps/anvil-history --silent
 npm run full:apps:collect
 npm run full:apps:dev
 ```
 
-`http://127.0.0.1:8812/` を開く。採餌の刺激スライダーは「現在の方策で実行」でStatus TXに反映される。「収集→学習→評価」は比較条件を固定して200動作を収集、別条件で旧方策と候補を80動作ずつ評価、改善した個体のみ採用し、さらに別の80動作を実行する。2個体それぞれの学習結果がその後の判断に使われる。モードは全神経／7神経encoderから明示的に選ぶ。
+Open http://127.0.0.1:8812/. Running a policy sends slider values as Status TXs. The collect/train/evaluate workflow collects200 actions, compares old/candidate on 80 separate actions each, adopts improvements per agent, then runs another80-action test. Select full or seven-neuron encoder explicitly.
 
-```bash
+```sh
 npm run test:full:apps
 npm run test:full:apps:browser
-# GUIジョブ完了後、GUIサーバーをCtrl-Cで終了してから実行
 npm run full:apps:compare
 npm run full:apps:ablation
-npm run full:apps:dev # 方策を復元してGUIを再開
+npm run full:apps:dev
 ```
 
-チェーンと戦略を操作するプロセスは排他ロックで1つに制限する。CLI比較を実行するときはGUIサーバーを終了する。終了後に再起動すると、チェーン上の有効戦略とSQLiteの採用方策を再取得する。
+Stop the GUI server after its job finishes before CLI comparison/ablation: an exclusive lock allows only one process to control chain/strategies. Restart reloads active strategies and adopted policies.
 
-ブラウザー検証には `/usr/bin/google-chrome` が必要。`FULL_RPC_URL`、`FULL_APPS_PORT` でローカル接続先を変更できる。新しいAnvilを起動したら、以前の市場テープを流用せず再収集する。最初・最後のSwapのblockHashと過去quoteを検証し、不一致なら起動を止める。モデルや入力アダプターが変わった場合は、新しいbrain hashのデータ・方策として扱い、再収集する。古いSQLite履歴は削除しない。
+Browser checks use `/usr/bin/google-chrome`. Override FULL_RPC_URL/FULL_APPS_PORT for isolation. A new Anvil requires recollecting the market tape: first/last Swap hashes and historical quotes are verified. Changed model/adapter means a new brain hash and collection, not deletion/reuse of old SQLite history.
 
-## 証拠と解釈
+## Evidence and interpretation
 
-- `.local/full-apps/experience.sqlite3`: 観測、神経特徴、行動、方策、実結果、出自、候補、採用記録。
-- `artifacts/full-apps/*-latest.json`: 学習・評価・採用後の実行とdecision ID。
-- `artifacts/full-apps/browser-verification.json`: GUI実行、神経数、採用結果、再起動後の方策使用。
-- `artifacts/full-apps/comparison.json`: 共通環境でのfull/legacy比較と、未変更の旧ブラウザー方策の補助比較。
-- `artifacts/full-apps/readout-ablation.json`: 同じ入力・方策で実接続をゼロにした対照。
-- `artifacts/full-apps/*-gui.png`: 実画面。
+- `.local/full-apps/experience.sqlite3`: inputs/features/actions/policies/outcomes/provenance/candidates/adoption.
+- `artifacts/full-apps/*-latest.json`: train/select/test decisions.
+- `browser-verification.json`: real GUI, neuron counts, adoption, restart.
+- `comparison.json`: matched full/legacy and separate unchanged-browser reference.
+- `readout-ablation.json`: fixed-policy/input edge ablation; `*-gui.png`: real screens.
 
-学習中は保存済みの神経特徴を使い、全グラフ計算を繰り返さない。変更するのは行動readoutで、25,582,938接続そのものではない。市場は線形回帰と小さな決定木を収集データの予約区間で比較する。採用にはそれとは別の実行結果が必要で、方策ハッシュ、同じ評価ケース列、実結果の平均値を照合する。
+Fit reuses saved features and changes readouts, not25, 582, 938 connections. Market compares regression/tree prediction on reserved collection data; adoption additionally needs separate action outcomes with matched policy hashes/cases/reward means.
 
-市場の売買はペーパーのみ。実V3 Swapログを観測し、次の記録ブロックでquote、さらに次のブロックで値洗いする。手数料・価格影響込み、ガスは1回0.001 token1というゲーム上の仮定。実トークンを売買するものではない。
+Market orders remain paper-only: real V3 logs, next-block quotes, following-block marks, included fees/impact, assumed gas0.001 token1/fill. Aqua ship/dock/fill and balance changes are real TXs, but reward values per-fill changes against another pair's next-price ratio. Wide800 bps offers fill only when observed variation≥200 bps under an artificial taker rule. This is neither whole-wallet PnL nor LVR/real LP profitability.
 
-Aquaのship/dock/fillとテストトークン残高変化は実TX。価格は別ペアのUniswap記録を正規化した評価用代理値で、本番価格oracleではない。800bpsの提示は観測変動200bps以上でのみ約定する人工takerルール。報酬は各約定の残高差を次の代理価格で評価した増分で、ウォレット全体の時価損益やLVRの推定ではない。結果はこの明示した実験条件の報酬であり、現実のLP収益性を証明しない。
+Full/legacy comparison also changes mapping, state continuity, and4-versus32 neural steps, so it is not a neuron-count-only causal test. Old browser learners have different priors/timing/objectives; do not compare old synthetic-target MSE directly with action reward.
 
-共通学習器のfull/legacy比較は環境と評価列を揃えるが、入力mapping、神経状態の継続、4対32の神経step数も異なる。神経数だけの因果比較ではない。元のブラウザー版は学習則、先験的行動、タイミングが異なるため、別の参考欄として扱う。旧Aquaの教材誤差を新方式の実動作報酬と比較しない。
+About150 ms for two agents/four steps means roughly6–7 decisions/s or26 neural steps/s, not30 render fps. RSS measures a process that loads the full graph even in legacy mode; legacy RSS is not standalone seven-neuron memory.
 
-全神経の4stepは2個体で約150ms程度の実測がある。これは約6–7判断/秒、約26神経step/秒であり、GUI描画の30fpsと同じ指標ではない。最終値は比較成果物を参照する。
-
-RSSはfullとlegacyを切り替える共通Pythonプロセスの最大値を記録する。このプロセスは最初から全グラフを読み込むため、legacy行のRSSを7神経単体の必要メモリとは解釈しない。
-
-## 回帰確認
-
-学習・出自・改ざん拒否のPython 7件、全神経数値実行のPython 7件、既存ブラウザー学習・身体・市場・AquaのNode 21件、Foundryコントラクトテストが通過。実配置市場コントラクトのowner制限と数量範囲もstatic callで確認した。GUI受入はソース検査で代用せず、Chromeで操作した。
+Recorded regression: 7 Python learning/provenance tests, 7 full numerical tests, 21 Node application tests, Foundry tests, deployed owner/quantity static-call checks, and actual Chrome acceptance.

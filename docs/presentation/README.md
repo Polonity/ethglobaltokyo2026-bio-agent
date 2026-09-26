@@ -1,30 +1,26 @@
-# BioAgent 成果説明スライド / Explanation slides
+# BioAgent explanation slides
 
-> **履歴資料 / Historical snapshot.** 現行実装の説明には[最新の日英スライド・実演手順・Q&A](../submission/presenter-kit/README.md)を使用してください。このディレクトリの旧スライドは作成時点の保存資料で、Sepolia配置前の記述や未実装の提案を含みます。Use the current presenter kit; these older proposals are not a current implementation guide.
+> **Historical snapshot.** Use the [current presenter kit](../submission/presenter-kit/README.md) for implementation explanations. These older slides include pre-Sepolia statements and unimplemented proposals.
 
-2026-09-26の保存済み受入記録と現行ソースを根拠にした、理解・質疑応答用の資料です。
-日本語版と英語版は同じスライド番号・構成です。性能値は新たに測定したものではありません。
+Prepared from saved2026-09-26 acceptance records and source for study/Q&A. Japanese and English editions share slide numbers/structure. Performance figures are reused evidence, not new measurements.
 
-生成先: `artifacts/explanation-slides-20260926/`
+Output: `artifacts/explanation-slides-20260926/`.
 
-- `index.html`: 日英の閲覧入口
-- `BioAgent-ja.pptx`, `BioAgent-en.pptx`: 編集可能なPowerPoint。各ページに発表者ノート付き
-- `BioAgent-ja.pdf`, `BioAgent-en.pdf`: 閲覧・印刷用
-- `BioAgent-ja.html`, `BioAgent-en.html`: オフライン閲覧。矢印キーで移動、Nキーで補足表示
-- `study-notes-ja.md`, `study-notes-en.md`: スライド別の説明原稿
-- `qa-bilingual.md`: 日英の想定問答
-- `source-audit.json`: 出典と保存済み検証のhash照合
-- `validation.json`: 資料の描画・文字欠け・PPTX構造の検証結果
+- index.html: bilingual entry point.
+- BioAgent-ja/en.pptx: editable PowerPoint with speaker notes.
+- BioAgent-ja/en.pdf: reading/printing.
+- BioAgent-ja/en.html: offline slides; arrows navigate, N toggles notes.
+- study-notes-ja/en.md: per-slide scripts; qa-bilingual.md: Q&A.
+- source-audit.json: provenance/hash checks.
+- validation.json: rendering, clipping, and PPTX structure checks.
 
-原稿と生成コードはこのディレクトリに保存します。ローカルの成果物を作るだけで、アプリの実行・学習・公開環境の変更は行いません。
+Source/build scripts live here. Building creates local artifacts; it does not run learning or modify deployments.
 
-```bash
+```sh
 node docs/presentation/build.mjs
 node docs/presentation/validate.mjs
 ```
 
-ビルドにはPptxGenJS、PDF化・描画検査にはPlaywrightとChromeを使います。環境のバンドル依存パスはコード先頭で指定しています。
+Uses PptxGenJS and Playwright/Chrome; bundled dependency paths are configured in source. `audit_artifacts.py` uses bundled Windows Python for independent PDF rendering and PPTX page/notes/XML checks, not native PowerPoint rendering.
 
-PDFを別エンジンで描画し、PPTXのページ・ノート・XMLを検査するには、同梱Windows Pythonで `audit_artifacts.py` を実行します。PowerPoint本体での描画確認とは区別しています。
-
-生成には `artifacts/explanation-slides-20260926/evidence-snapshot.json` と同フォルダーの `assets/`（3アプリの保存済み受入画面）が必要です。生成物一式を保存すると、画面・数値の根拠を固定して再生成できます。
+Reproduction requires the saved evidence-snapshot.json and assets/ under the output directory. Preserve the full bundle to pin screenshots and numerical evidence.

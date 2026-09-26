@@ -1,16 +1,14 @@
-# Tokyo 2026 — 動画要件の確認
+# Tokyo2026 — recorded video requirement review
 
-確認日：2026-09-26。一次資料：[公式提出・審査案内](https://ethglobal.com/events/tokyo2026/info/details)の「Tips for a Great Demo Video」。
+Checked2026-09-26 against [official submission/judging guidance](https://ethglobal.com/events/tokyo2026/info/details), Tips for a Great Demo Video. This records that review; recheck the official page when submitting.
 
-- 動画は任意ですが、提出するなら **2〜4分、720p以上**。範囲外はアップロードで拒否されます。
-- **音声合成・AIナレーションは禁止**。人による説明を前提にします。
-- 尺に収めるための早送りは禁止。不要な待ち時間のカットは可能です。
-- 話す代わりに音楽と説明テキストを流す形式は禁止です。
-- 字幕自体の禁止は記載されていません。ただし、無音・字幕のみで提出できるとは確認できません。**人の説明＋補助字幕**で仕上げます。
-- スマートフォンでの動画撮影は禁止。導入は短くし、実際の動作を中心にします。
+- Video is optional; submitted videos must be **2–4 minutes and at least720p**. Out-of-range uploads are rejected.
+- **Synthesized/AI voiceover is prohibited**; use human explanation.
+- Do not speed up to fit. Unnecessary waits may be cut.
+- Music/text must not replace spoken explanation.
+- Captions are not expressly prohibited, but silent caption-only submission was not confirmed acceptable. Use human speech with supporting captions.
+- No smartphone filming; keep introductions short and focus on working functionality.
 
-新しい日英の3分53秒GUI動画は、**本人の録音を入れる前の無音ドラフト**です。提出完成版ではありません。字幕時刻も読み上げ練習用であり、本人の録音後に合わせ直す必要があります。過去の40秒・57秒動画も、この提出尺を満たしません。
+The earlier3: 53silent GUI drafts and40/57-second clips were not compliant finished submissions. The later [documentary](documentary-production.md) includes the presenter's recorded English voice, with English/Japanese subtitle editions.
 
-Confirmed: 2–4 minutes, at least 720p, no synthesized/AI voiceover, no speeding up to meet the limit. Captions are not expressly prohibited; text/music must not replace spoken explanation. The new silent GUI cuts are recording drafts, not submission-ready videos.
-
-補足：[パートナー要件](https://ethglobal.com/events/tokyo2026/prizes)では、Aquaは公式コントラクトとトークン移動の実行を示す必要があり、ローカルforkも認められています。Uniswapには公開コード、FEEDBACK.md、所定フィードバックフォーム、統合箇所へのREADME案内が必要です。フォーム送信は本作業で行っていません。
+[Partner requirements](https://ethglobal.com/events/tokyo2026/prizes) at review: Aqua requires official-contract use and visible token movement, allowing local forks. Uniswap asks for public code, FEEDBACK.md, its feedback form, and README integration pointers. These workflows do not submit external forms.

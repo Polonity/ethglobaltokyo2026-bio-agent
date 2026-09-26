@@ -1,27 +1,20 @@
-# 2〜4分GUIデモ — 収録・編集計画
+# Historical2–4-minute GUI demo plan
 
-人による説明を前提にした **3分53秒、1920×1080、30fps** の日英ドラフトです。画面時間の約88%をアプリのGUIに使い、残りは実測結果の表に充てます。合成音声・音楽は入れません。[確認した公式要件](video-requirements.md)。
+This earlier bilingual **3: 53, 1920×1080, 30 fps** draft devoted approximately 88% of screen time to GUI and the rest to measured-result tables. It used no synthetic voice or music. The later [documentary production](documentary-production.md) supersedes this edit. [Recorded requirements review](video-requirements.md).
 
-| 時間 | 画面 | 話す内容 |
-| --- | --- | --- |
-| 0:00–0:20 | 採餌GUI | 開発者・研究者が判断モデルを検証できる基盤 |
-| 0:20–0:45 | 環境の出典・TX receipt | 初期環境と刺激はTX由来、内部計算はオフチェーン |
-| 0:45–1:10 | 学習済みの採餌GUI | 通常速度の動作と、同じ動作の明示付き0.25倍速リプレイ |
-| 1:10–1:35 | 保存済みの学習比較GUI | 12配置で収集、別の6配置で候補選定 |
-| 1:35–2:02 | 実測結果の表 | 未使用12配置の結果、直接入力対照、安全基準未達 |
-| 2:02–2:24 | 市場GUI | 別収録の4個体と役割 |
-| 2:24–2:50 | 動作中の市場GUI | 提示・売買・見送りと通常コードによるルート選択 |
-| 2:50–3:10 | Aqua receipt | 成功・トークン移動・イベント、ローカルforkでの実行 |
-| 3:10–3:30 | Uniswap receipt | V3 coreと独自routerの実装範囲 |
-| 3:30–3:53 | 市場GUI | 成果と今後の比較。省電力や生物固有の優位は未確定 |
+| Time        | Screen / narration                                                    |
+| ----------- | --------------------------------------------------------------------- |
+| 0: 00–0: 20 | Foraging GUI: platform for developers/researchers to test controllers |
+| 0: 20–0: 45 | World source/receipt: TX inputs versus offchain computation           |
+| 0: 45–1: 10 | Learned run and labeled0.25× replay                                   |
+| 1: 10–1: 35 | Saved learning comparison: 12 collection worlds, 6 selection worlds   |
+| 1: 35–2: 02 | 12 held-out worlds, direct-input control, failed safety gate          |
+| 2: 02–2: 24 | Separate four-agent market take and roles                             |
+| 2: 24–2: 50 | Offers/trades/wait and ordinary-code routing                          |
+| 2: 50–3: 10 | Aqua receipt, transfers/events, local fork                            |
+| 3: 10–3: 30 | V3 core/custom-router receipt                                         |
+| 3: 30–3: 53 | Results/limits; power and biological advantage unproven               |
 
-採餌・環境・学習画面は今回GUIで再収録。市場は2026-09-26の既存の検証済み生映像を再編集し、別収録と明示します。画面を停止して読む場面も明示します。スローは動作説明用で、推論速度の証拠には使いません。
+Foraging/world/learning were freshly captured; market reused verified2026-09-26raw footage with separate-take labeling. Held frames and slow replay were marked. Slow motion is explanatory, not latency evidence.
 
-## 人の声で仕上げる手順
-
-1. 日英どちらかの原稿とドラフトを使い、各章の時間内で読み上げを練習します。
-2. 静かな場所で本人の声を録音します。音声合成・声変換は使いません。
-3. 本人の録音に合わせて字幕・必要な間を調整します。完成尺は2〜4分を維持し、音声や動作を早送りしません。
-4. 最後まで再生し、声の明瞭さ、GUIと説明の対応、字幕の同期を確認してから提出します。
-
-現在の字幕は原稿に沿った目安です。本人の声が未提供のため、音声と字幕の最終同期は未完了です。無音ドラフトを提出可能な完成版とは扱いません。
+Finishing procedure: rehearse the script within chapter times; record the presenter's own voice without synthesis/conversion; align captions/pauses while staying2–4 minutes without speeding voice/actions; review the entire result for clarity, correspondence, and sync. At this historical draft stage, narration was pending, so the silent file was not submission-ready. See the newer documentary page for the completed voice overlay.

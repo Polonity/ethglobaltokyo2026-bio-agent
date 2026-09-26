@@ -18,14 +18,14 @@ The registry does not call a runtime. Runtime processes must already exist. Regi
 
 Encode uint256, uint64, chainId, tick, and SSE cursors as decimal strings in JSON. Energy/stimulus remain numbers in 0–10000; do not rely on JavaScript Number for large integers.
 
-| Type | Required fields |
-| --- | --- |
-| AgentKey | chainId, registryAddress, agentId |
+| Type             | Required fields                                                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AgentKey         | chainId, registryAddress, agentId                                                                                                                          |
 | ChainLogEnvelope | schemaVersion, chainId, registryAddress, blockNumber, blockHash, transactionHash, transactionIndex, logIndex, eventName, payload, observedAt, canonicality |
-| StatusInput | agentKey, activity, energy, stimulus, revision, updatedAt, causeEventId |
-| RuntimeState | agentKey, sessionId, modelHash, tick, appliedRevision, lastCauseEventId, x, y, heading, speed, activation, action |
-| RuntimeFrame | schemaVersion, frameId, sessionId, generatedAt, agents (RuntimeState array) |
-| RuntimePresence | agentKey, state (starting/running/catching_up/offline/error), lastHeartbeatAt, errorCode |
+| StatusInput      | agentKey, activity, energy, stimulus, revision, updatedAt, causeEventId                                                                                    |
+| RuntimeState     | agentKey, sessionId, modelHash, tick, appliedRevision, lastCauseEventId, x, y, heading, speed, activation, action                                          |
+| RuntimeFrame     | schemaVersion, frameId, sessionId, generatedAt, agents (RuntimeState array)                                                                                |
+| RuntimePresence  | agentKey, state (starting/running/catching_up/offline/error), lastHeartbeatAt, errorCode                                                                   |
 
 Canonicality is observed/confirmed/orphaned. Confirmed means the configured depth, not unconditional finality. Normalize `(chainId, registryAddress, blockHash, transactionHash, logIndex)` into causeEventId for duplicate detection. Coordinates are 0–1, heading is radians, speed is field widths/second, activation is 0–1; reject nonfinite values. Preserve Solidity event names and separately version application schemas.
 
@@ -65,27 +65,27 @@ Check rescanned block hashes as well as removed notifications. Find a common anc
 
 ## Storage proposal
 
-| Table | Responsibility / identity |
-| --- | --- |
-| agents | Definition and canonical Status projection per AgentKey |
-| chain_logs | Raw topics/data, decoded payload, canonicality per eventId |
-| chain_cursors | Last fetched block/hash per chain and registry |
-| runtime_sessions | Model, seed, dt, starting conditions, status |
-| applied_inputs | Application tick and validity per session/agent/event |
-| checkpoints | Internal state per session/agent/tick |
-| runtime_frames | Latest frame and selected recordings, not permanent retention of every frame |
-| stream_outbox | Monotonic cursor for replaying persisted updates |
+| Table            | Responsibility / identity                                                    |
+| ---------------- | ---------------------------------------------------------------------------- |
+| agents           | Definition and canonical Status projection per AgentKey                      |
+| chain_logs       | Raw topics/data, decoded payload, canonicality per eventId                   |
+| chain_cursors    | Last fetched block/hash per chain and registry                               |
+| runtime_sessions | Model, seed, dt, starting conditions, status                                 |
+| applied_inputs   | Application tick and validity per session/agent/event                        |
+| checkpoints      | Internal state per session/agent/tick                                        |
+| runtime_frames   | Latest frame and selected recordings, not permanent retention of every frame |
+| stream_outbox    | Monotonic cursor for replaying persisted updates                             |
 
 Extend SQLite with migrations. Canonical logs/state govern definitions and inputs; checkpoints govern runtime state; GUI is a projection.
 
 ## GUI API proposal
 
-| Endpoint | Content |
-| --- | --- |
-| GET `/api/agents` | Definitions, latest Status, RuntimePresence |
-| GET `/api/agents/{agentId}/snapshot` | RuntimeState, applied revision, cause event |
-| GET `/api/events?agentId=...&cursor=...` | Input and execution history |
-| GET `/api/stream` | SSE: agent.registered, status.observed/confirmed/reverted, runtime.frame/reset/presence |
+| Endpoint                                 | Content                                                                                 |
+| ---------------------------------------- | --------------------------------------------------------------------------------------- |
+| GET `/api/agents`                        | Definitions, latest Status, RuntimePresence                                             |
+| GET `/api/agents/{agentId}/snapshot`     | RuntimeState, applied revision, cause event                                             |
+| GET `/api/events?agentId=...&cursor=...` | Input and execution history                                                             |
+| GET `/api/stream`                        | SSE: agent.registered, status.observed/confirmed/reverted, runtime.frame/reset/presence |
 
 v0.1 targets one chain/registry and includes that context in responses. Multi-registry URLs need the full AgentKey. SSE IDs use outbox cursors, not chain logIndex; resume from Last-Event-ID. Outside retention, obtain a consistent snapshot/cursor. Slow clients may lose intermediate frames, never Status/reset messages. Subscribe after the snapshot cursor to avoid gaps.
 

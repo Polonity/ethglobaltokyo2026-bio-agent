@@ -8,18 +8,18 @@ Integrated mode: **http://127.0.0.1:8814/**. Original foraging, paper-market, an
 
 ## Reading the screen
 
-| Element | Meaning |
-| --- | --- |
-| MOMO / SORA | Two Aqua offer strategies sharing one maker wallet, not separate PnL accounts |
-| 1inch Aqua | Test-token exchange using agent-selected offers; offering alone earns nothing |
-| Uniswap V3 | Same two token addresses as Aqua, with 0.3% pool fee |
-| KOHARU / HINATA | Separate wallets placing actual orders and moving toward the selected venue |
-| Price | Spot quote per unit of the base token; token order depends on deployment addresses |
-| Wallet PnL | Mark-to-market change since initialization, in the actual token symbol, not ETH |
-| Chart | Shared maker (green), KOHARU (yellow), HINATA (blue), matching score order |
-| Target sliders | Desired asset-value percentage in the displayed base token; artificial demand, not a price forecast |
-| Confirmed trades | Actual settlements; TX opens receipt, quotes, transfers, and gas |
-| Evidence & brain | Official Aqua/token addresses, MaleCNS measurements, policy hash, and learning counts |
+| Element          | Meaning                                                                                             |
+| ---------------- | --------------------------------------------------------------------------------------------------- |
+| MOMO / SORA      | Two Aqua offer strategies sharing one maker wallet, not separate PnL accounts                       |
+| 1inch Aqua       | Test-token exchange using agent-selected offers; offering alone earns nothing                       |
+| Uniswap V3       | Same two token addresses as Aqua, with 0.3% pool fee                                                |
+| KOHARU / HINATA  | Separate wallets placing actual orders and moving toward the selected venue                         |
+| Price            | Spot quote per unit of the base token; token order depends on deployment addresses                  |
+| Wallet PnL       | Mark-to-market change since initialization, in the actual token symbol, not ETH                     |
+| Chart            | Shared maker (green), KOHARU (yellow), HINATA (blue), matching score order                          |
+| Target sliders   | Desired asset-value percentage in the displayed base token; artificial demand, not a price forecast |
+| Confirmed trades | Actual settlements; TX opens receipt, quotes, transfers, and gas                                    |
+| Evidence & brain | Official Aqua/token addresses, MaleCNS measurements, policy hash, and learning counts               |
 
 **Powered by Aqua — © Degensoft Ltd 2025.** Tokens have no monetary value. These are real contract executions on a **local Anvil fork** carrying official Ethereum Aqua, not public Etherscan transactions.
 

@@ -20,17 +20,17 @@ Select an agent and submit 0%/100% stimulus. Only confirmed Status stimulus is u
 
 ## Measured data and engineered model
 
-| Element | Definition |
-| --- | --- |
-| Source | MaleCNS v1.0 official annotations/connectome weights |
-| Selection | bodyId 10001 (DNp01) plus six annotated postsynaptic neurons with highest counts; ties by ascending body_post |
-| Graph | 7 neurons / 19 internal edges, retaining original IDs/counts |
-| Dynamics | Discrete rate model, all connections positive, normalized by maximum count |
-| Input | stimulus/10000 added directly to neuron 10001 |
-| Time | 32 synchronous updates from zero; no biological seconds assigned |
-| Readout | Mean of six non-input nodes; advance at ≥0.1, otherwise wait |
-| Learning/body | None in this circuit test; fixed wiring/weights/decoder |
-| Display | Illustrative positions, fly movement, and colors, not measured activity/geometry |
+| Element       | Definition                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------- |
+| Source        | MaleCNS v1.0 official annotations/connectome weights                                                          |
+| Selection     | bodyId 10001 (DNp01) plus six annotated postsynaptic neurons with highest counts; ties by ascending body_post |
+| Graph         | 7 neurons / 19 internal edges, retaining original IDs/counts                                                  |
+| Dynamics      | Discrete rate model, all connections positive, normalized by maximum count                                    |
+| Input         | stimulus/10000 added directly to neuron 10001                                                                 |
+| Time          | 32 synchronous updates from zero; no biological seconds assigned                                              |
+| Readout       | Mean of six non-input nodes; advance at ≥0.1, otherwise wait                                                  |
+| Learning/body | None in this circuit test; fixed wiring/weights/decoder                                                       |
+| Display       | Illustrative positions, fly movement, and colors, not measured activity/geometry                              |
 
 `a_next = 0.75*a + 0.25*tanh(sum(count/maxCount*a_pre) + externalDrive)`
 

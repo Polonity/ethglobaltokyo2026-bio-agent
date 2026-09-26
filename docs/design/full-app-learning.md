@@ -4,7 +4,7 @@
 
 Run foraging, paper-market, and Aqua with full MaleCNS, collect actual experience, train readouts, evaluate candidates, persist accepted policies, and compare the reduced model. A standalone full-neuron visualization is insufficient.
 
-Each application must verify: all 166,700 classified neurons/25,582,938 internal edges are used without silent fallback; observations/features/actions/policies/outcomes/rewards/provenance are linked; training uses actual outcomes; fresh selection runs gate adoption; subsequent actions use the adopted version; persistence rejects mismatched identity/task/model; full/reduced comparisons use matched action budgets and report neural steps/time separately; GUI exposes collection/training/evaluation/adoption.
+Each application must verify: all 166, 700 classified neurons/25, 582, 938 internal edges are used without silent fallback; observations/features/actions/policies/outcomes/rewards/provenance are linked; training uses actual outcomes; fresh selection runs gate adoption; subsequent actions use the adopted version; persistence rejects mismatched identity/task/model; full/reduced comparisons use matched action budgets and report neural steps/time separately; GUI exposes collection/training/evaluation/adoption.
 
 ## Shared infrastructure
 

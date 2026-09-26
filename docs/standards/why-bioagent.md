@@ -1,6 +1,6 @@
 # Why propose a BioAgent profile?
 
-Research/design snapshot:2026-09-26. Distinguish primary-source findings from our design inferences. This does not prove scientific novelty or the need for an independent ERC.
+Research/design snapshot: 2026-09-26. Distinguish primary-source findings from our design inferences. This does not prove scientific novelty or the need for an independent ERC.
 
 ## Traceable inputs
 
@@ -18,12 +18,12 @@ Registration alone guarantees neither correctness nor benign behavior. Current c
 
 A connectome-derived BioAgent uses measured biological connectivity in the input-to-action computation. It may use a slice, no body, fixed dynamics, or a trainable readout, provided scope/assumptions are declared. A mascot or ordinary neural network alone does not meet that definition. Synthetic and bio-inspired controls remain explicitly labeled.
 
-| Primary research | Finding scope | Our inferred profile need |
-| --- | --- | --- |
-| [Shiu et al., Nature2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11446845/) | Connectivity/transmitter-informed taste and grooming sensorimotor modeling with experimental checks | Dataset/extraction, dynamics, IDs, mappings, behavior-specific evidence |
-| [Lappalainen et al., Nature2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11525180/) | Connectivity constraints and task optimization both support visual-response prediction | Separate fixed biological constraints from optimized components |
-| [NeuroMechFly v2](https://www.nature.com/articles/s41592-024-02497-y), [implementation](https://github.com/NeLy-EPFL/flygym/) | Sensory/motor/body/environment simulation | Declare feedback loops, time steps, and interface versions |
-| [The digital sphinx, author manuscript2026](https://faculty.washington.edu/tuthill/docs/TheSphinx_2026.pdf) | Worm connectivity plus learned motor decoder can generate fly-like walking | Visual similarity alone does not establish biological fidelity; evaluate decoder and circuit separately |
+| Primary research                                                                                                              | Finding scope                                                                                       | Our inferred profile need                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [Shiu et al., Nature2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11446845/)                                                 | Connectivity/transmitter-informed taste and grooming sensorimotor modeling with experimental checks | Dataset/extraction, dynamics, IDs, mappings, behavior-specific evidence                                 |
+| [Lappalainen et al., Nature2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11525180/)                                          | Connectivity constraints and task optimization both support visual-response prediction              | Separate fixed biological constraints from optimized components                                         |
+| [NeuroMechFly v2](https://www.nature.com/articles/s41592-024-02497-y), [implementation](https://github.com/NeLy-EPFL/flygym/) | Sensory/motor/body/environment simulation                                                           | Declare feedback loops, time steps, and interface versions                                              |
+| [The digital sphinx, author manuscript2026](https://faculty.washington.edu/tuthill/docs/TheSphinx_2026.pdf)                   | Worm connectivity plus learned motor decoder can generate fly-like walking                          | Visual similarity alone does not establish biological fidelity; evaluate decoder and circuit separately |
 
 Peer-review status of the last manuscript was not established by this review. These authors did not propose Ethereum profiles. The studies support separating structure, assumptions, and optimization—not universal speed, safety, energy, finance advantages, or mandatory ERC standardization. They do not all use MaleCNS; bind our claims to [the actual dataset/release](https://male-cns.janelia.org/).
 

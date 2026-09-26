@@ -1,9 +1,9 @@
 # BioAgent runtimes
 
-| Implementation | Responsibility |
-| --- | --- |
-| `browser/arena.js` | GUI decisions, competition, experience, and Q-learning |
-| `__init__.py` | Independent threshold model for the Python API scaffold |
+| Implementation        | Responsibility                                                                                                          |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `browser/arena.js`    | GUI decisions, competition, experience, and Q-learning                                                                  |
+| `__init__.py`         | Independent threshold model for the Python API scaffold                                                                 |
 | `full/`, `full_apps/` | Separate full-neuron model and application runtime; see the [full model guide](../../docs/design/malecns-full-local.md) |
 
 ## Browser runtime

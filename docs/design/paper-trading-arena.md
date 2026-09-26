@@ -19,7 +19,7 @@ One collector should distribute identical snapshots to all agents, not independe
 
 ## Initial round proposal
 
-One chain,5–10 common candidates, three agents, equal virtual USDC, spot-only buy/hold/sell/skip, initially one position and discrete sizes. Match starting funds, costs, risk limits, and observation times. Candidate removal must not erase holdings; missing valuations remain unavailable. Continue marking holdings during learning.
+One chain, 5–10 common candidates, three agents, equal virtual USDC, spot-only buy/hold/sell/skip, initially one position and discrete sizes. Match starting funds, costs, risk limits, and observation times. Candidate removal must not erase holdings; missing valuations remain unavailable. Continue marking holdings during learning.
 
 ## Paper execution
 

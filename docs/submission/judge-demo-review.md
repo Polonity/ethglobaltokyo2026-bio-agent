@@ -1,55 +1,42 @@
-# 共通Fly Lab — 審査員向け動作確認
+# Shared Fly Lab — judge-demo verification
 
-2026-09-26。[日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) / [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en)。
+Recorded2026-09-26. [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) · [Japanese](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja).
 
-**初期環境、危険エリア、刺激、餌の追加がTXに結び付いたデモです。** AnvilとSepoliaは同じ画面と判断・学習処理を使います。生物由来モデルの性能優位を実証したという意味ではありません。
+Initial world, hazards, stimuli, and added food are tied to TXs. Anvil/Sepolia share UI and decision/learning code. This demonstrates integration, not biological superiority.
 
-## 確認できたこと
+| Check         | Observed result                                                                                        |
+| ------------- | ------------------------------------------------------------------------------------------------------ |
+| World update  | Hazards remain unchanged while pending; new position/radius applies after confirmation                 |
+| Food addition | One food after confirmed positive stimulus; none pending or duplicated                                 |
+| Consumption   | Removes food without refill; consumption history persisted                                             |
+| Missing world | Stops rather than substituting synthetic defaults                                                      |
+| Learning      | Uses a confirmed-world copy without modifying the visible world                                        |
+| Full runtime  | Full166, 700-neuron and7-neuron checks each used four steps, TX-derived hazards, and two stimulus TXs  |
+| Public page   | English/Japanese, 390 px mobile, no JS exceptions; HTML/CSS/JS byte-match shared build                 |
+| Scheduled TX  | The real TX below increased open-page food/history3→4                                                  |
+| Retry         | Same-period retry returned the same hash; interruptions/restarts/concurrency tested on dedicated Anvil |
 
-| 項目 | 実行結果 |
-| --- | --- |
-| Anvilの環境更新 | 保留中は危険エリアが変化せず、確定後だけ新しい位置・半径へ切り替わった |
-| 餌の追加 | 保留中は増えず、正の刺激TX確定後に1個追加。重複受信では増えない |
-| 消費 | 食べた餌を削除し、自動補充しない。消費履歴を保存する |
-| 初期環境なし | 合成値で代替せず停止する |
-| 学習 | 確認済み環境のコピーを使い、表示中の環境を変更しない |
-| 全神経版 | 166,700神経・7神経それぞれ4stepの実計算で、環境TX由来の危険エリアと2件の刺激TXを確認 |
-| 公開ページ | 日英・390pxモバイル表示、JavaScript例外なし。HTML・CSS・JSが共通ビルドとbyte単位で一致 |
-| Cloudflare定期TX | 下記の実TXが成功し、開いたままの画面で餌と履歴が3→4へ増えた |
-| 再試行 | 同じ時間帯の再実行では同じhashを確認。中断・再起動・同時起動も専用Anvilで検証 |
+## Public-chain evidence
 
-## 公開チェーンの証拠
+- [World TX](https://sepolia.etherscan.io/tx/0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc).
+- [Scheduled TX](https://sepolia.etherscan.io/tx/0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd): block 11785418, gas34, 209, fee0.000034342273782621 Sepolia ETH.
+- Signer:`0x0d01a92bae0E01754f7102466936397F609D67C3`; recorded post-check balance0.016363387080355746 ETH, not a live balance quote.
+- Hourly checks, at least one-hour send interval, configured24-hour maximum0.00432 ETH. No completed24-hour endurance test.
 
-- [初期環境TX](https://sepolia.etherscan.io/tx/0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc)
-- [Cloudflare定期送信TX](https://sepolia.etherscan.io/tx/0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd)：block **11785418**、gas **34,209**、手数料 **0.000034342273782621 Sepolia ETH**。
-- 署名者：`0x0d01a92bae0E01754f7102466936397F609D67C3`。確認後残高 **0.016363387080355746 ETH**。
-- 毎時Cronと最低1時間の送信間隔。設定上の24時間最大額 **0.00432 ETH**。24時間の連続試験は未実施。
+## Scope and reproduction
 
-## 実装の範囲
+External environment inputs are onchain; body/position/learning are computed internal state. Food coordinates derive from TX hash and recorded seed. Consumption/learning are not written back onchain and bodies are not synchronized across browsers.
 
-外部の環境入力はすべてオンチェーン。位置・身体・学習状態は、その入力からランタイムが計算する内部状態です。餌の位置はTX hashと記録済みseedから決まります。消費や学習結果をチェーンへ書き込む構成ではなく、ブラウザー間で身体状態を同期するデモではありません。
-
-公開デモは7神経の部分回路、提出動画は既存のAnvil＋全神経版。以前の専用Sepolia画面で得た学習比較の数値を、現在の共通UIの測定値として流用しません。[研究比較](../research/bioagent-adaptation/README.md)は独立した実験として扱います。
-
-## 再現と記録
+Public uses the reduced model; the submission uses local full-neuron execution. Do not reuse old dedicated-Sepolia learning numbers as measurements of the current shared UI. [Research](../research/bioagent-adaptation/README.md) is independent.
 
 ```sh
-npm run local:up      # 別ターミナルで起動
-npm run test:local    # 環境TX・刺激TX・reorgの実ブラウザ試験
-npm run test:sepolia  # 送信journalと共通入力のテスト
+npm run local:up
+# Another terminal:
+npm run test:local
+npm run test:sepolia
 npm run test:sepolia:public
 ```
 
-[検証要約JSON](sepolia-evidence.json)。生の試験出力は`artifacts/local-chain/verification.json`、`artifacts/sepolia/shared-ui-public/`、`artifacts/sepolia/cron-verification.json`、`artifacts/sepolia/full-runtime-environment.json`。削除した旧専用監査スクリプトには依存しません。
+[Summary JSON](sepolia-evidence.json). Raw outputs: `artifacts/local-chain/verification.json`, `artifacts/sepolia/shared-ui-public/`, `cron-verification.json`, and `full-runtime-environment.json`. No dependency on the removed old audit script.
 
-## 説明資料に沿った公開画面の追試
-
-[日英の実演確認](presenter-kit/public-walkthrough.json)では、ウォレットなしで初期環境TXを開き、日英の説明を切り替え、選択個体の学習を完了しました。今回の再生スコアは13.8943→13.8401で、候補を採用せず元の方策を維持しました。比較機構の動作確認であり、性能比較の追加実験ではありません。TX送信は0件です。
-
-現行の配信ファイルは共通ビルドと一致し、英語の説明に日本語が残らないことと390px表示を確認しました。公開版の操作原稿は[日本語](presenter-kit/walkthrough-ja.md)／[English](presenter-kit/walkthrough-en.md)。
-
-## English
-
-The live demo now shows a verifiable input path: an initial environment TX defines hazards and field settings; confirmed positive stimulus TXs add food. Pending or duplicated TXs do not add food, and consumed food does not respawn. Local Anvil and public Sepolia serve identical UI assets and use the same decision and learning code.
-
-A real Cloudflare-scheduled Sepolia TX increased visible food from **3 to 4** without reloading. It consumed **34,209 gas**. Full-neuron and reduced Anvil runtime checks also consumed recorded environment inputs. These checks demonstrate integration and input provenance, not biological superiority, trading performance or 24-hour uptime.
+[Public walkthrough](presenter-kit/public-walkthrough.json) opened environment evidence, switched languages, and completed learning without a wallet or TX submission. Replay score13.8943→13.8401 rejected the candidate. This verifies the comparison mechanism, not a new performance experiment. Assets matched shared build; English copy and390 px layout were checked. Scripts: [English](presenter-kit/walkthrough-en.md) / [Japanese](presenter-kit/walkthrough-ja.md).

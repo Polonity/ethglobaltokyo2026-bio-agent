@@ -34,9 +34,9 @@ npm run test:swaps
 npm run demo:swaps
 ```
 
-FORGE/ANVIL accept absolute paths. The script owns Anvil18545 and stops only that process; it refuses an occupied port and does not use GUI8545. Output: `artifacts/swap-demo/evidence.json` with registry, schema, source/input TXs, reactions, and positions.
+FORGE/ANVIL accept absolute paths. The script owns Anvil 18545 and stops only that process; it refuses an occupied port and does not use GUI 8545. Output: `artifacts/swap-demo/evidence.json` with registry, schema, source/input TXs, reactions, and positions.
 
-Recorded sequence: baseline → curious (+2099bps) → cautious (−1735bps), verified for three agents, including fixed-point rounding. **SwapEventFixture emits synthetic events, not actual Uniswap pool swaps.** Transactions/receipts are real local EVM operations but not evidence of a live Uniswap integration or different policy quality.
+Recorded sequence: baseline → curious (+2099 bps) → cautious (−1735 bps), verified for three agents, including fixed-point rounding. **SwapEventFixture emits synthetic events, not actual Uniswap pool swaps.** Transactions/receipts are real local EVM operations but not evidence of a live Uniswap integration or different policy quality.
 
 ## Remaining work at this milestone
 

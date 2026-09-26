@@ -16,17 +16,17 @@ A wallet records an agent's Status onchain. A running agent receives the event a
 
 The existing browser path polls local Worker APIs and runs Arena at 5 Hz. The shared Runtime → Backend → SSE path remains a proposal. The initial 24-agent target was also a proposal, distinct from the historical three-agent local and twelve-agent browser modes.
 
-| Topic | v0.1 design |
-| --- | --- |
-| Chain | Ethereum Sepolia (11155111); Foundry/Anvil locally |
-| Deployment | One registry containing multiple agent records |
-| Identity | `(chainId, registryAddress, agentId)` |
-| IBioAgent | Onchain Status interface; separate offchain runtime contract |
-| Status | External conditions/stimuli, distinct from computed RuntimeState |
-| Authority | Registering owner; no ownership transfer or delegated writes in the base design |
-| Event intake | Shared ChainListener routes inputs to agents |
-| GUI | Proposed runtime/backend/SSE pipeline with continuous browser rendering |
-| Learning | Separate from event delivery; pin model versions and retain replayable inputs |
+| Topic        | v0.1 design                                                                     |
+| ------------ | ------------------------------------------------------------------------------- |
+| Chain        | Ethereum Sepolia (11155111); Foundry/Anvil locally                              |
+| Deployment   | One registry containing multiple agent records                                  |
+| Identity     | `(chainId, registryAddress, agentId)`                                           |
+| IBioAgent    | Onchain Status interface; separate offchain runtime contract                    |
+| Status       | External conditions/stimuli, distinct from computed RuntimeState                |
+| Authority    | Registering owner; no ownership transfer or delegated writes in the base design |
+| Event intake | Shared ChainListener routes inputs to agents                                    |
+| GUI          | Proposed runtime/backend/SSE pipeline with continuous browser rendering         |
+| Learning     | Separate from event delivery; pin model versions and retain replayable inputs   |
 
 ## Documents and implementation mapping
 

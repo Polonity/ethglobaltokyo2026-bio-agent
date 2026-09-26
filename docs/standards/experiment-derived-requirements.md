@@ -2,7 +2,6 @@
 
 2026-09-26. Design proposal, not a deployed ABI change or full conformance claim. [Preregistered protocol](../research/bioagent-study-20260926/protocol.json); detailed runs/failures: `artifacts/bioagent-study-20260926/`.
 
-
 These are proposed requirements derived from the experiments, not a new deployed ABI or a claim of full conformance.
 
 - Report objectives **and adverse effects**, with units, direction, constraints and explicit adoption rules. More food with more contacts is not automatically an improvement.
@@ -16,8 +15,6 @@ These are proposed requirements derived from the experiments, not a new deployed
 The minimum common boundary should cover identity and provenance, input acceptance, optional learning capabilities, evaluation records, artifact compatibility, and environment scheduling. Learning algorithms remain task-specific. A UI snapshot, policy artifact and complete replay checkpoint are distinct capabilities.
 
 Solidity `IBioAgent` is implemented by the Registry and consumed by applications; it is not their runtime superclass. The three JavaScript subclasses share an observation/execution/view loop but all wrap the same foraging engine. Paper-market and Aqua learning remain separate implementations. Full-profile interoperability is still unproven.
-
-
 
 ## Evaluation record semantics
 
@@ -38,4 +35,4 @@ This is not a finalized wire encoding. Declare trainable scope without forcing o
 
 The opt-in [BioAgent Framework](../../packages/bioagent-framework/README.md) now implements a common foraging/Aqua lifecycle, compatibility-bound policy restore, shared Arena clock, and RPC-to-decision provenance. [Follow-up findings](../research/bioagent-adaptation/README.md) motivated an optional minimum final-energy adoption constraint.
 
-These capabilities do not imply full proposed TypeScript-profile conformance. The package uses the7-neuron slice; full Python remains separate. Cross-task skills, cryptographic RPC proofs, transaction execution by this package, and measured platform growth are not established.
+These capabilities do not imply full proposed TypeScript-profile conformance. The package uses the 7-neuron slice; full Python remains separate. Cross-task skills, cryptographic RPC proofs, transaction execution by this package, and measured platform growth are not established.

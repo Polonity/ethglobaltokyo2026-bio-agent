@@ -32,11 +32,11 @@ The [quote API](https://developers.uniswap.org/docs/api-reference/aggregator_quo
 
 ## Provenance
 
-| Source | Record |
-| --- | --- |
-| chain-log | chainId, registry, TX, block/log/revision |
+| Source      | Record                                                               |
+| ----------- | -------------------------------------------------------------------- |
+| chain-log   | chainId, registry, TX, block/log/revision                            |
 | uniswap-api | chain, pair, amount, requestId, receive time, query, rawResponseHash |
-| fixture | Explicit fixed test input, never live TX evidence |
+| fixture     | Explicit fixed test input, never live TX evidence                    |
 
 API observedAt is server receive time, not block time. Raw-response SHA-256 is integrity, not a Uniswap signature/proof. Do not invent TX hashes or mined labels for API data. If later anchoring observations, keep source and anchor provenance separate; this adapter does not automatically write Status.
 
@@ -48,7 +48,7 @@ Registration/getAgent tuples and Status events remain compatible through a separ
 
 ## Usage and verification
 
-```sh
+```js
 import { fetchUniswapObservation } from './services/backend/adapters/uniswap-quote.mjs';
 const observation = await fetchUniswapObservation({
   apiKey: process.env.UNISWAP_API_KEY,
@@ -59,16 +59,16 @@ priceAgent.observe(observation);
 priceAgent.step();
 ```
 
-```sh
+```solidity
 getAgentWallet(uint256 agentId) returns (address)
 setAgentWallet(uint256 agentId, address smartWallet)
 // event BioAgentWalletUpdated(agentId, previousWallet, smartWallet)
 ```
 
 ```sh
-npm run demo:agents   # 固定データだけ。API・RPC・wallet操作なし
-npm run test:agents  # Runtime・見積もりアダプターの固定応答テスト
-make contracts-test # wallet設定権限と既存契約の回帰テスト
+npm run demo:agents
+npm run test:agents
+make contracts-test
 ```
 
 The examples' token addresses/TXs are fixtures. Verified: foraging adapter, price mapping, runtime application, duplicates/freshness/order/pair/quantity, quote-only HTTP, wallet permissions/events, and Status separation (19 Foundry and four runtime tests at this milestone).

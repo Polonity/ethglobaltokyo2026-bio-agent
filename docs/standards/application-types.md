@@ -4,17 +4,17 @@
 
 ## Files and checks
 
-| File under packages/shared/ | Responsibility |
-| --- | --- |
-| types/primitives.ts | Precision-preserving integer strings, hashes/addresses, bounded constructors |
-| types/core.ts | Identity, origin, sourced inputs, body/time, view/checkpoint/learning/runtime contracts |
-| types/foraging.ts | Conditions, observations, actions, outcomes, views, transitions |
-| types/market.ts | Market inputs, observations, decisions, paper orders/fills/valuation/transitions |
-| types/legacy.ts | Explicit existing Status/action/energy conversions |
-| examples/two-apps.ts | Synthetic examples using shared types |
-| examples/type-boundaries.ts | Compile-time rejection of semantic mixups |
+| File under packages/shared/ | Responsibility                                                                          |
+| --------------------------- | --------------------------------------------------------------------------------------- |
+| types/primitives.ts         | Precision-preserving integer strings, hashes/addresses, bounded constructors            |
+| types/core.ts               | Identity, origin, sourced inputs, body/time, view/checkpoint/learning/runtime contracts |
+| types/foraging.ts           | Conditions, observations, actions, outcomes, views, transitions                         |
+| types/market.ts             | Market inputs, observations, decisions, paper orders/fills/valuation/transitions        |
+| types/legacy.ts             | Explicit existing Status/action/energy conversions                                      |
+| examples/two-apps.ts        | Synthetic examples using shared types                                                   |
+| examples/type-boundaries.ts | Compile-time rejection of semantic mixups                                               |
 
-`npm run test:types` runs strict TypeScript and constructor/conversion Node tests, using Node22.14+ type stripping. Example IDs/hashes/URIs/body states are fixtures, not measured evidence.
+`npm run test:types` runs strict TypeScript and constructor/conversion Node tests, using Node 22.14+ type stripping. Example IDs/hashes/URIs/body states are fixtures, not measured evidence.
 
 ## Common types
 
@@ -24,11 +24,11 @@ InputEnvelope includes inputId, source, sourceTimeMs, receivedAtMs, payload. Cha
 
 Clock separates tick, simulationTimeMs, dtMs, wallTimeMs, and pausePolicy. Wall/receive times are Unix ms; source time is Unix ms for chain/API and episode time for simulation. Fixtures declare their time domain. Never compare timestamps from different domains for freshness. Adapters convert chain seconds and handle missing values.
 
-| Body kind | Fields | Meaning |
-| --- | --- | --- |
-| unmodeled | None | No body model |
-| legacy-energy-only | activityEnergy | Only actual legacy energy; satiety/mass unknown |
-| embodied | model, activityEnergy, satiety, reserves, massRatio | First three numeric states0–1; massRatio relative to declared baseline |
+| Body kind          | Fields                                              | Meaning                                                                |
+| ------------------ | --------------------------------------------------- | ---------------------------------------------------------------------- |
+| unmodeled          | None                                                | No body model                                                          |
+| legacy-energy-only | activityEnergy                                      | Only actual legacy energy; satiety/mass unknown                        |
+| embodied           | model, activityEnergy, satiety, reserves, massRatio | First three numeric states0–1; massRatio relative to declared baseline |
 
 Unknown satiety is not zero hunger. Type definitions alone do not implement metabolism. Full validators must enforce finite positive mass and model units/equations.
 
@@ -38,15 +38,15 @@ Transition binds before/after checkpoints, consumed input IDs/provenance/payload
 
 ## Foraging profile
 
-| Type | Content |
-| --- | --- |
-| ForagingConditions | mode, energySupply, stimulusIntensity |
-| ForagingInput | Conditions, food-contact, or hazard-contact plus source |
+| Type                | Content                                                                |
+| ------------------- | ---------------------------------------------------------------------- |
+| ForagingConditions  | mode, energySupply, stimulusIntensity                                  |
+| ForagingInput       | Conditions, food-contact, or hazard-contact plus source                |
 | ForagingObservation | Conditions, food direction/distance, hazard direction, pre-action body |
-| ForagingAction | move(direction0–7) or rest |
-| ForagingOutcome | Post-action position, food/contact events, foraging-score reward |
-| ForagingState | Position, score, collection/contact counts |
-| ForagingTransition | Common transition specialized as foraging.v1 |
+| ForagingAction      | move(direction0–7) or rest                                             |
+| ForagingOutcome     | Post-action position, food/contact events, foraging-score reward       |
+| ForagingState       | Position, score, collection/contact counts                             |
+| ForagingTransition  | Common transition specialized as foraging.v1                           |
 
 Coordinates/distances use arena units. Descriptor defines speed/environment updates. Feeding is a contact effect, not a newly learned eat action.
 
@@ -54,18 +54,18 @@ Legacy mapping: Activity0/1/2→rest/explore/forage; Status.energy→supply, dis
 
 ## Market profile
 
-| Type | Content |
-| --- | --- |
-| MarketInput | Discriminated confirmed Swap, API quote, or fixture |
-| SwapPrice | Pool/tokens, sqrtPriceX96, liquidity, tick, token1-per-token0 direction |
-| ExecutableQuote | Quantity-specific amountIn/out, expiry, provenance; no future-fill guarantee |
-| MarketRef | Pool or fixed-amount quote pair; do not mislabel a multihop route as one pool |
-| MarketObservation | Price/baseline/change bps, attention, body, cash/holdings |
-| MarketAction | hold/skip/buy/sell; trades specify spend and receive token |
-| PaperOrder | Decision tick/time, earliest fill, action |
-| PaperExecution | no-order/pending/rejected/filled |
-| PortfolioValuation | unavailable or valued with equity and net/realized/unrealized PnL |
-| MarketTransition | market-paper.v1 specialization |
+| Type               | Content                                                                       |
+| ------------------ | ----------------------------------------------------------------------------- |
+| MarketInput        | Discriminated confirmed Swap, API quote, or fixture                           |
+| SwapPrice          | Pool/tokens, sqrtPriceX96, liquidity, tick, token1-per-token0 direction       |
+| ExecutableQuote    | Quantity-specific amountIn/out, expiry, provenance; no future-fill guarantee  |
+| MarketRef          | Pool or fixed-amount quote pair; do not mislabel a multihop route as one pool |
+| MarketObservation  | Price/baseline/change bps, attention, body, cash/holdings                     |
+| MarketAction       | hold/skip/buy/sell; trades specify spend and receive token                    |
+| PaperOrder         | Decision tick/time, earliest fill, action                                     |
+| PaperExecution     | no-order/pending/rejected/filled                                              |
+| PortfolioValuation | unavailable or valued with equity and net/realized/unrealized PnL             |
+| MarketTransition   | market-paper.v1 specialization                                                |
 
 High attention permits hold/skip. Spot price is not a size-specific quote; filled requires quote and cost model. TokenRef includes chain/address/decimals. Amounts are base-unit decimal strings (atoms); only PnL is signed. Use no floating-point token arithmetic. Separate included fees/impact from additional gas/slippage deductions.
 

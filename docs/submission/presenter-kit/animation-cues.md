@@ -1,62 +1,51 @@
-# 刺激から行動へ — アニメーションと読み上げ
+# Stimulus-to-action animation cues
 
-本番は英語の本人音声。日本語は理解用。台本の0:55から42秒の説明アニメーションを挿入し、その後GUIに戻す。各段階のセリフは [英語台本](documentary-script-en.md) と [日本語対訳](documentary-script-ja.md) に記載。収録音声に合わせて各段階の尺を調整する。行動評価の段階だけ12秒、他は6秒ずつのリハーサル用。
+Production narration is the presenter's English voice; Japanese is for understanding. Insert the 42-second animation at 0: 55, then return to GUI. Read [English script](documentary-script-en.md) or [Japanese translation](documentary-script-ja.md). Rehearsal stages are6 seconds each except12 seconds for action evaluation; adjust to the actual recording when necessary.
 
-[ブラウザで再生・日本語切り替え](visuals/stimulus-to-action.html)。シークで各場面を確認可能。
+[Interactive animation with language switch/seek](visuals/stimulus-to-action.html).
 
-| 図の時刻 | 見せる変化 | 説明する実装 |
-|---|---|---|
-| 0–6秒 | 確定receiptから環境データへ | TX由来の餌・危険エリアの座標を取得 |
-| 6–12秒 | 16個の入力ノードと右向きの接続を表示 | 環境と身体状態から16次元のdrivesを構成 |
-| 12–18秒 | MaleCNSの再帰接続を強調 | MaleCNSの接続で4ステップ更新し、神経群ごとの平均活動を抽出 |
-| 18–30秒 | 9本の予測スコア、最大値を強調 | 接続を固定した軽量な行動評価を目的に採用した理由を説明し、Ridge Regressionで行動ごとの即時報酬を予測。実行可能な行動から選択 |
-| 30–36秒 | 左方向の行動でハエのx座標が変化 | JavaScriptが座標を更新し、GUIが描画 |
-| 36–42秒 | 経験を保存して学習へ戻す | 特徴量・行動・報酬をSQLiteに保存し、別の学習フェーズでreadoutを更新 |
+| Animation time | Highlight                     | Implementation                                                                                                                             |
+| -------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0–6 s          | Confirmed receipt→world       | TX-derived food/hazard coordinates                                                                                                         |
+| 6–12 s         | 16 inputs and rightward links | Environment/body→16 drives                                                                                                                 |
+| 12–18 s        | Recurrent MaleCNS connections | Four fixed-graph updates and population summaries                                                                                          |
+| 18–30 s        | Nine predicted scores/max     | Explain choosing lightweight readout learning with fixed wiring, then ridge regression for immediate action rewards; select allowed action |
+| 30–36 s        | Left action changes x         | JavaScript updates coordinates; GUI renders                                                                                                |
+| 36–42 s        | Experience→learning           | SQLite stores features/actions/rewards; a separate phase fits the readout                                                                  |
 
-図は説明用。入力値・スコア・移動は模式例であり、実測の神経活動や記録済みMOMOの再生ではない。冒頭から画面に明記する。環境入力はTX由来だが、身体状態・座標更新・神経計算はオフチェーン。最後の学習矢印は毎フレーム学習する意味ではない。
+Label schematic examples from the start. Values/scores/movement are not recorded MOMO neural activity. World inputs are TX-derived; body, motion, and inference are offchain. The learning arrow does not mean per-frame training.
 
-## 実装との照合
+## Implementation correspondence
 
-- `services/full-apps/foraging.mjs` の `observe()`：9行動の方向入力＋energy、satiety、reserves、stimulus、world energy、distance、定数の計16入力。`apply()`：8方向＋休息の行動を座標へ変換。
-- `packages/bio_agent/full_apps/brain.py` の `infer()`：16感覚群へ入力、固定接続で4ステップ、感覚群・運動群・superclassの平均活動を特徴量化。
-- `packages/bio_agent/full_apps/learning.py`：標準化した特徴量で行動別リッジ回帰。L2係数0.1、切片0.001。収集経験の先頭70%で学習、残り30%で報酬予測を確認。
-- `.local/presenter-long/experience.sqlite3` の採用済みforaging policy：MOMO・SORAとも `full`, version 2, `algorithm: ridge-linear` を確認。コードには回帰木候補もあるが、今回採用された手法ではない。
-- `packages/bio_agent/full_apps/action_selection.py`：許可された行動から最大スコアを選択。同点はseed付き乱択。経験収集時は探索あり。
-- 内部モデルIDは `malecns-full-positive-rate-v1`、元データは `male-cns:v1.0`。データセットと今回の実行モデルを区別する。
+- `services/full-apps/foraging.mjs`: observe builds9 action-direction drives plus energy, satiety, reserves, stimulus, world energy, distance, constant =16 inputs. apply maps8 directions/rest to movement.
+- `packages/bio_agent/full_apps/brain.py`: infer drives16 sensory groups, computes4 steps, summarizes sensory/motor/superclass activity.
+- `packages/bio_agent/full_apps/learning.py`: standardized per-action ridge regression, L2=0.1, intercept=0.001; chronological70% fit/30% prediction check.
+- `.local/presenter-long/experience.sqlite3`: adopted MOMO/SORA full-mode v2 policies use ridge-linear. Tree candidates exist in code but were not adopted here.
+- `packages/bio_agent/full_apps/action_selection.py`: choose maximum score among allowed actions, seeded tie-breaking, exploration during collection.
+- Runtime ID:`malecns-full-positive-rate-v1`; source dataset:`male-cns:v1.0`. Distinguish model from dataset.
 
-## ハードウェアと表記
+## Hardware and names
 
-2026-09-26に現在の実行ホストで確認：`lscpu` は **AMD Ryzen 9 9950X 16-Core Processor**。`nvidia-smi` は **NVIDIA RTX PRO 6000 Blackwell Workstation Edition**。コードの計算経路はNumPy／SciPyのCPU処理で、CUDAを使っていない。GPUの製品名を学習環境の主役として出さない。過去の各試行でハードウェア構成を保存した証拠とは区別する。
+Host inspection on 2026-09-26 found AMD Ryzen9 9950X16-Core Processor and NVIDIA RTX PRO6000 Blackwell Workstation Edition. This path uses NumPy/SciPy on CPU, not CUDA. This host check does not retroactively prove every historical run's configuration.
 
-画面表記：`AMD Ryzen 9 9950X · CPU execution · NumPy / SciPy`。
+Onscreen: `AMD Ryzen 9 9950X · CPU execution · NumPy / SciPy`. Use formal [1inch Aqua Protocol](https://1inch.com/aqua) and [Uniswap v3](https://developers.uniswap.org/docs/protocols/v3/overview); show ERC-20 transfers in receipts.
 
-パートナー表記は公式の **[1inch Aqua Protocol](https://1inch.com/aqua)** と **[Uniswap v3](https://developers.uniswap.org/docs/protocols/v3/overview)** に統一。ERC-20トークンの移動はreceiptで見せる。
+## Render and closing design
 
-## 再生成
+`node scripts/submission/render-protocol-animation.mjs` produces `artifacts/protocol-animation/stimulus-to-action-{en,ja}.mp4`: 1280×720, 42 seconds, silent. These are narration assets, not finished submissions. [Credits](video-credits.md).
 
-`node scripts/submission/render-protocol-animation.mjs`
+Show the [24-second design animation](visuals/protocol-design.html) from 3: 26, highlighting IBioAgent→IBioAgentStimulus→framework→application for 6 seconds each. Keep credits visible for the last12 seconds and subtitles in a separate band.
 
-出力：`artifacts/protocol-animation/stimulus-to-action-en.mp4` と `stimulus-to-action-ja.mp4`。1280×720、42秒、無音。人の英語ナレーションを収録するための説明映像素材であり、完成版サブミッション動画ではない。出典全体は最終動画の [クレジット](video-credits.md) に表示する。
+- IBioAgent getStatus/updateStatus describes input conditions, not neural-state writeback.
+- IBioAgentRegistry extends IBioAgent for identity/model registration; BioAgentRegistry also implements IBioAgentWallet.
+- IBioAgentStimulus submitStimulus(agentId, expectedNonce, schema, payload) is implemented by the extending BioAgentStimulusRegistry. Dataflow arrows do not imply all interfaces inherit one another.
+- IBioAgentWallet is an owner-declared association, not execution delegation; no authority arrow to app execution.
+- The full Python/Node path does not inherit the separate JavaScript IBioAgentRuntime class.
 
-## 最後の24秒：今回の設計
+Render with `node scripts/submission/render-protocol-animation.mjs protocol-design`; outputs protocol-design-{en, ja}.mp4 in the same artifact directory.
 
-[設計アニメーション](visuals/protocol-design.html)を3:26から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は後半12秒間フッターに表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
+## Progressive disclosure
 
-- `IBioAgent`：`getStatus()` / `updateStatus()`。入力条件の共通化であり、計算済みの神経状態を書き戻すAPIではない。
-- `IBioAgentRegistry extends IBioAgent`：個体・モデルの登録。`BioAgentRegistry`はこのinterfaceと`IBioAgentWallet`を実装。
-- `IBioAgentStimulus`：`submitStimulus(agentId, expectedNonce, schema, payload)`。`BioAgentStimulusRegistry`が既存Registryを拡張して実装する。図はデータフローであり、すべてのinterfaceがIBioAgentを継承するという図ではない。
-- `IBioAgentWallet`：所有者が宣言するウォレットの関連付け。実行権限を委譲するものではないため、アプリ実行への矢印は付けない。
-- off-chainの共有処理とアプリの接続を示す。全神経版のPython/Node.js経路を示しており、別のJavaScriptクラス`IBioAgentRuntime`を全神経版が継承するとは表現しない。
+Current stage is opaque; completed stages remain at 24–25% opacity. Hide unexplained text/arrows, showing only faint future boxes. Fade over 0.55 seconds and introduce supporting text sequentially. Credits appear at 12 seconds and remain through the end.
 
-再生成：`node scripts/submission/render-protocol-animation.mjs protocol-design`。
-出力：`artifacts/protocol-animation/protocol-design-en.mp4` と `protocol-design-ja.mp4`。
-
-## 表示の順序
-
-説明中のグループは不透明、説明済みは約24–25%の不透明度で残す。未説明の文字・矢印は隠し、処理図の先の段階は薄い枠だけ表示する。切り替えは0.55秒のフェード。各段階の補足文も順に表示し、冒頭から読み切る必要がない構成にする。設計図の出典はMaleCNSを説明する12秒地点で表示し、最後まで約12秒間確保する。
-
-## 通し動画
-
-`node scripts/submission/render-documentary.mjs` で日英の3分56秒の編集確認版を再生成する。映像・字幕・出典を結合するが、本人音声は未収録。`artifacts/documentary/production.json` に元映像のSHA-256、切り出し範囲、再生倍率と完成ファイルを記録する。
-
-処理図は左から右へ並ぶ層形式へ更新。MaleCNS部分は再帰接続として描く。図内の矢印はデータの受け渡しであり、全体が誤差逆伝播で学習するフィードフォワードネットワークであることを意味しない。
+Use left-to-right layers with recurrent connections inside MaleCNS. Arrows show data transfer, not end-to-end backpropagation through a feedforward network. `render-documentary.mjs` assembles the silent3: 56review; [the audio step](documentary-production.md) adds the recorded voice separately.
