@@ -7,6 +7,8 @@ import { EvmBioAgentSource, readProvider, connectWallet, sendStatus, registerAge
 const $ = (id) => document.getElementById(id);
 const en = {
   connect: 'Connect wallet',
+  'start-learning': 'Try learning in 1 min · no wallet ↓',
+  'start-hint': 'Compare the results, then watch the agent above act.',
   title: 'On-chain inputs. A fly in motion.',
   'video-scope':
     'Submission video: Anvil + full neuron population. This public page: Sepolia + the seven-neuron subgraph.',
@@ -79,12 +81,21 @@ let config,
   ticking = false,
   generation = 0;
 const short = (value) => (value ? `${value.slice(0, 8)}…${value.slice(-6)}` : '—');
-const message = (value) => {
+const message = (value, context = 'info') => {
   $('notice').textContent = value;
+  $('notice').dataset.context = context;
 };
-const error = (e) => {
-  message(t('処理を完了できません: ', 'Could not complete: ') + (e.shortMessage || e.message));
+const error = (e, context = 'action') => {
+  message(t('処理を完了できません: ', 'Could not complete: ') + (e.shortMessage || e.message), context);
 };
+const connectedMessage = () =>
+  message(
+    t(
+      'Sepoliaの実データを受信しました。ブラウザー内で実行しています。',
+      'Live Sepolia state received. The connectome is running in your browser.',
+    ),
+  );
+
 const storageKey = () =>
   `sepolia-policy:${config.chainId}:${config.registryAddress.toLowerCase()}:${selectedId}`;
 function translate() {
@@ -131,12 +142,23 @@ async function loadAgent(id) {
   if (!/^[1-9]\d{0,30}$/.test(String(id))) throw Error('Invalid agent ID');
   const token = ++generation;
   runner = null;
+  source = null;
   agent = null;
   input = null;
   lastDecision = null;
   evaluation = null;
   $('live').textContent = 'CONNECTING';
   document.body.dataset.ready = 'false';
+  for (const key of ['agentId', 'revision', 'policy', 'ticks']) delete document.body.dataset[key];
+  for (const id of ['action', 'food', 'body-energy', 'policy', 'revision', 'block', 'owner', 'observed'])
+    $(id).textContent = '—';
+  $('block').removeAttribute('href');
+  $('owner').removeAttribute('title');
+  for (const id of ['arena', 'graph']) {
+    const canvas = $(id);
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+  }
+  $('learning-result').textContent = (language === 'ja' ? ja : en)['learn-empty'];
   renderButtons();
   const nextSource = new EvmBioAgentSource(provider, {
     chainId: config.chainId,
@@ -144,7 +166,21 @@ async function loadAgent(id) {
     agentId: id,
     confirmations: 0,
   });
-  const nextInput = await nextSource.read();
+  let nextInput;
+  try {
+    nextInput = await nextSource.read();
+  } catch (e) {
+    if (token !== generation) return;
+    $('live').textContent = 'UNAVAILABLE';
+    if (e.code === 'CALL_EXCEPTION')
+      throw Error(
+        t(
+          `Agent ID ${id} は見つかりません。ID 1を読み込むとデモに戻れます。`,
+          `Agent ID ${id} was not found. Load ID 1 to return to the demo.`,
+        ),
+      );
+    throw e;
+  }
   if (token !== generation) return;
   const nextAgent = new LearningBioAgent({ id: String(id), owner: nextInput.owner }, new ForagingBackend());
   const nextRunner = new ChainDecisionRunner(nextAgent, {
@@ -187,12 +223,7 @@ async function loadAgent(id) {
     : (language === 'ja' ? ja : en)['learn-empty'];
   renderInput();
   await tick();
-  message(
-    t(
-      'Sepoliaの実データを受信しました。ブラウザー内で実行しています。',
-      'Live Sepolia state received. The connectome is running in your browser.',
-    ),
-  );
+  connectedMessage();
 }
 async function poll() {
   if (polling || !source || !runner) return;
@@ -206,8 +237,9 @@ async function poll() {
     currentRunner.observe(fresh);
     input = fresh;
     renderInput();
+    if (['chain', 'runtime'].includes($('notice').dataset.context)) connectedMessage();
   } catch (e) {
-    if (token === generation) error(e);
+    if (token === generation) error(e, 'chain');
   } finally {
     polling = false;
   }
@@ -234,11 +266,12 @@ async function tick() {
     document.body.dataset.ticks = String(Math.round(state.runtime.time * 5));
     drawArena(state.runtime);
     drawGraph();
+    if ($('notice').dataset.context === 'runtime') connectedMessage();
     renderButtons();
   } catch (e) {
     $('live').textContent = 'PAUSED';
     document.body.dataset.ready = 'false';
-    error(e);
+    error(e, 'runtime');
   } finally {
     ticking = false;
   }

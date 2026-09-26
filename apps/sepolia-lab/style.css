@@ -433,3 +433,27 @@ select:focus-visible {
     font-size: 12px;
   }
 }
+
+.demo-start {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 20px;
+}
+.primary-link {
+  display: inline-block;
+  background: #bbf17b;
+  color: #182713;
+  border-radius: 8px;
+  padding: 11px 15px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.primary-link:hover {
+  background: #d7ffab;
+  text-decoration: none;
+}
+#learning {
+  scroll-margin-top: 20px;
+}
