@@ -40,7 +40,7 @@
 
 ## 最後の24秒：今回の設計
 
-[設計アニメーション](visuals/protocol-design.html)を3:21から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は24秒間フッターに常時表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
+[設計アニメーション](visuals/protocol-design.html)を3:21から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は後半12秒間フッターに表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
 
 - `IBioAgent`：`getStatus()` / `updateStatus()`。入力条件の共通化であり、計算済みの神経状態を書き戻すAPIではない。
 - `IBioAgentRegistry extends IBioAgent`：個体・モデルの登録。`BioAgentRegistry`はこのinterfaceと`IBioAgentWallet`を実装。
@@ -50,3 +50,7 @@
 
 再生成：`node scripts/submission/render-protocol-animation.mjs protocol-design`。
 出力：`artifacts/protocol-animation/protocol-design-en.mp4` と `protocol-design-ja.mp4`。
+
+## 表示の順序
+
+説明中のグループは不透明、説明済みは約24–25%の不透明度で残す。未説明の文字・矢印は隠し、処理図の先の段階は薄い枠だけ表示する。切り替えは0.55秒のフェード。各段階の補足文も順に表示し、冒頭から読み切る必要がない構成にする。設計図の出典はMaleCNSを説明する12秒地点で表示し、最後まで約12秒間確保する。

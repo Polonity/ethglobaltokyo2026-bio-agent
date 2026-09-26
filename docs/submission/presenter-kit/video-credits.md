@@ -9,7 +9,7 @@ Connectome data: MaleCNS v1.0
 male-cns.janelia.org
 ```
 
-Closing design animation footer (24 seconds; preserve separate space for the English speech captions):
+Closing design animation footer (final 12 seconds; preserve separate space for the English speech captions):
 
 ```text
 Connectome data: MaleCNS v1.0
