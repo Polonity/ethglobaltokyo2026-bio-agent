@@ -34,9 +34,8 @@ contract SharedFlyMarketTest is Test {
     }
 
     function ship() internal returns (bytes memory strategy) {
-        strategy = abi.encode(
-            SharedAquaFlyApp.Strategy(1, 1, 10, 2 ether, block.timestamp + 90, model, bytes32(0))
-        );
+        strategy =
+            abi.encode(SharedAquaFlyApp.Strategy(1, 1, 10, 2 ether, block.timestamp + 90, model, bytes32(0)));
         address[] memory tokens = new address[](2);
         tokens[0] = address(a);
         tokens[1] = address(b);
