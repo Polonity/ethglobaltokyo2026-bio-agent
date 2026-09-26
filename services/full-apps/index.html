@@ -1,612 +1,135 @@
 <!doctype html>
 <html lang="en">
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>
-    BioAgent · Full Brain Applications
-  </title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f3f7ef;
-      color: #224d40;
-      max-width: 1240px;
-      margin: auto;
-      padding: 24px;
-    }
-    h1 {
-      font-size: clamp(26px, 4vw, 42px);
-      margin: 8px 0;
-    }
-    h2 {
-      font-size: 19px;
-    }
-    p {
-      line-height: 1.6;
-    }
-    .top,
-    .controls,
-    nav {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .top {
-      justify-content: space-between;
-    }
-    button,
-    select {
-      font: inherit;
-      padding: 10px 16px;
-      border: 1px solid #a9c5b5;
-      border-radius: 12px;
-      background: white;
-      color: inherit;
-      cursor: pointer;
-    }
-    button.active,
-    button.primary {
-      background: #285b49;
-      color: white;
-    }
-    button:disabled {
-      opacity: 0.5;
-      cursor: wait;
-    }
-    .panel {
-      background: white;
-      border: 1px solid #dce7d8;
-      border-radius: 20px;
-      padding: 20px;
-      margin: 18px 0;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 18px;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .card {
-      background: #eef5e9;
-      padding: 16px;
-      border-radius: 15px;
-    }
-    .card:nth-child(2) {
-      background: #eef0fc;
-    }
-    .number {
-      font-size: 26px;
-      font-weight: 800;
-    }
-    .muted {
-      color: #657c70;
-      font-size: 13px;
-    }
-    .tag {
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      font-weight: 800;
-    }
-    canvas {
-      width: 100%;
-      height: 330px;
-      background: #f0f6e7;
-      border-radius: 16px;
-    }
-    #status {
-      font-weight: 800;
-    }
-    progress {
-      width: 100%;
-      height: 12px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      font-size: 12px;
-    }
-    td,
-    th {
-      padding: 7px;
-      border-bottom: 1px solid #e3ebdf;
-      text-align: left;
-    }
-    a {
-      color: #366f57;
-    }
-    #tx {
-      max-height: 200px;
-      overflow: auto;
-      font-family: monospace;
-      font-size: 12px;
-    }
-    .bubble {
-      background: white;
-      border-radius: 12px;
-      padding: 8px;
-      margin: 8px 0;
-    }
-    #error {
-      color: #a73131;
-      white-space: pre-wrap;
-    }
-    @media (max-width: 750px) {
-      body {
-        padding: 14px;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .cards {
-        grid-template-columns: 1fr;
-      }
-      canvas {
-        height: 260px;
-      }
-    }
-  </style>
-  <header>
-    <div class="top">
-      <span class="tag">BIOAGENT / FULL MALECNS</span
-      ><select id="language">
-        <option value="system" data-t="system">System</option>
-        <option value="en">English</option>
-        <option value="ja">日本語</option>
-      </select>
-    </div>
-    <h1 data-t="title"></h1>
-    <p data-t="intro"></p>
-  </header>
-  <nav>
-    <button data-app="foraging" data-t="foraging"></button><button data-app="market" data-t="market"></button
-    ><button data-app="aqua" data-t="aqua"></button>
-  </nav>
-  <div class="panel controls">
-    <select id="variant">
-      <option value="full" data-t="fullModel">Full MaleCNS · 166,700 neurons</option>
-      <option value="legacy" data-t="smallModel">Legacy encoder · 7 neurons</option></select
-    ><button class="primary" id="live" data-t="live"></button><button id="learn" data-t="learn"></button
-    ><button id="stop" data-t="stop"></button
-    ><label id="stimulus-control"
-      ><span data-t="stimulus"></span>
-      <input
-        id="stimulus"
-        type="range"
-        min="0"
-        max="1"
-        step="0.05"
-        value="0.5"
-        aria-label="Foraging stimulus" /></label
-    ><span id="connection" class="muted"></span>
-  </div>
-  <div class="grid">
-    <section class="panel">
-      <div class="top">
-        <h2 id="app-title"></h2>
-        <span id="mode" class="tag"></span>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fly Lab · Living worlds</title>
+    <link rel="stylesheet" href="/experience.css" />
+    <link rel="stylesheet" href="/guides/guide.css" />
+  </head>
+  <body data-app="foraging">
+    <header class="app-header">
+      <a href="/" class="brand"><img src="/assets/bioagent.png" alt="" />FLY <span>LAB</span></a>
+      <nav aria-label="Applications">
+        <button data-app="foraging"></button><button data-app="market"></button
+        ><button data-app="aqua"></button>
+      </nav>
+      <div class="header-tools">
+        <span class="network">● Anvil · local</span
+        ><select id="language" aria-label="Language">
+          <option value="system">System</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option></select
+        ><button id="open-details" class="icon-button" aria-label="Details">ⓘ</button>
       </div>
-      <p id="status" role="status"></p>
-      <progress id="progress" value="0" max="1"></progress>
-      <p id="error" role="alert"></p>
-      <p><a href="#app-guide" data-t="guideLink"></a></p>
-      <canvas id="arena" width="780" height="400"></canvas>
-      <p id="neural" class="muted"></p>
-      <div class="cards" id="cards"></div>
-      <section id="app-guide" data-bio-guide data-app="foraging" data-mode="full"></section>
-    </section>
-    <aside>
-      <section class="panel">
-        <h2 data-t="loop"></h2>
-        <p data-t="how"></p>
-        <p id="summary"></p>
-        <div style="overflow: auto">
-          <table>
-            <thead>
-              <tr>
-                <th data-t="model"></th>
-                <th data-t="before"></th>
-                <th data-t="after"></th>
-                <th data-t="test"></th>
-              </tr>
-            </thead>
-            <tbody id="comparison"></tbody>
-          </table>
+    </header>
+    <main id="world">
+      <canvas id="arena" width="1440" height="850" role="img"></canvas>
+      <section class="floating world-heading">
+        <p class="eyebrow" id="eyebrow"></p>
+        <h1 id="app-title"></h1>
+        <p id="intro"></p>
+        <p class="status-line"><span class="status-dot"></span><span id="status" role="status"></span></p>
+        <p id="progress-label" class="subtle"></p>
+        <progress id="progress" value="0" max="1"></progress>
+      </section>
+      <section class="floating scoreboard" aria-label="Scores">
+        <div class="section-heading">
+          <h2 id="score-heading"></h2>
+          <button class="icon-button" data-detail="scores" aria-label="Score details">ⓘ</button>
         </div>
+        <p id="score-context"></p>
+        <div id="cards" class="cards"></div>
+        <p id="proxy-caption" class="proxy-caption" hidden></p>
       </section>
-      <section class="panel">
-        <h2 data-t="chain"></h2>
-        <p data-t="chainInfo"></p>
-        <div id="tx"></div>
+      <section id="battle-panel" class="floating battle-panel" hidden>
+        <div class="section-heading">
+          <h2 id="battle-heading"></h2>
+          <span id="battle-unit"></span>
+        </div>
+        <div id="battle-bars"></div>
+        <p id="battle-caption"></p>
       </section>
-    </aside>
-  </div>
-  <footer class="muted">
-    <p data-t="limits"></p>
-    <p>
-      Powered by Aqua — © Degensoft Ltd 2025. MaleCNS: FlyEM / HHMI Janelia, Cambridge, MRC LMB, Google ·
-      CC-BY-4.0.
-    </p>
-    <a href="http://127.0.0.1:8800/" data-t="original">Original browser applications</a> ·
-    <a href="http://127.0.0.1:8810/" data-t="laboratory">Full population laboratory</a>
-  </footer>
-  <link rel="stylesheet" href="/guides/guide.css" />
-  <script type="module" src="/guides/guide.mjs"></script>
-  <script>
-    const words = {
-      en: {
-        guideLink: 'What do the food, states and TXs mean?',
-        system: 'System',
-        fullModel: 'Full MaleCNS · 166,700 neurons',
-        smallModel: 'Reduced encoder · 7 neurons',
-        original: 'Original browser applications',
-        laboratory: 'Full population laboratory',
-        actions: {
-          foraging: [
-            'East',
-            'South-east',
-            'South',
-            'South-west',
-            'West',
-            'North-west',
-            'North',
-            'North-east',
-            'Rest',
-          ],
-          market: ['Hold', 'Buy', 'Sell'],
-          aqua: ['Tight quote', 'Wide quote', 'Withdraw'],
-        },
-        title: 'A full brain. A lesson from every action.',
-        intro:
-          'Foraging, paper trading and Aqua share full-neuron inference and an experience-based learning loop.',
-        foraging: 'Foraging',
-        market: 'Paper market',
-        aqua: 'Aqua liquidity',
-        live: 'Run with current policy',
-        learn: 'Collect → learn → evaluate',
-        stop: 'Stop',
-        loop: 'Observe. Learn. Improve.',
-        how: 'Record real action outcomes, train a small readout, evaluate on a new run, and adopt only if observed reward improves. Each fly keeps its own policy.',
-        model: 'Encoder',
-        before: 'Before',
-        after: 'Candidate',
-        test: 'New test',
-        chain: 'Onchain evidence',
-        chainInfo:
-          'Dedicated Anvil · click a transaction to inspect its receipt. Market quotes are pinned to confirmed historical blocks.',
-        limits:
-          'Full classified MaleCNS topology; artificial positive rate dynamics and engineered input/output mappings. Market trades are paper-only. Aqua test-token fills are real; valuation uses a declared replayed-price proxy and a simulated taker acceptance rule. No biological fidelity or financial profitability claim.',
-        ready: 'Ready',
-        collect: 'Collecting action outcomes',
-        training: 'Training recorded experience',
-        stimulus: 'Foraging stimulus',
-        selection: 'Evaluating behavior',
-        testPhase: 'Testing adopted policy on new inputs',
-        livePhase: 'Running adopted policy',
-        complete: 'Complete',
-        stopped: 'Stopped',
-        error: 'Error',
-        neurons: 'neurons / fly',
-        action: 'Action',
-        policy: 'Policy',
-        reward: 'Reward',
-      },
-      ja: {
-        guideLink: '食べ物・状態・TXの意味を見る ↓',
-        system: 'システム',
-        fullModel: '全MaleCNS · 166,700神経',
-        smallModel: '省略版encoder · 7神経',
-        original: '元のブラウザー版',
-        laboratory: '全神経の実験室',
-        actions: {
-          foraging: ['東へ', '南東へ', '南へ', '南西へ', '西へ', '北西へ', '北へ', '北東へ', '休息'],
-          market: ['待機', '買う', '売る'],
-          aqua: ['狭いスプレッド', '広いスプレッド', '撤回'],
-        },
-        title: '全神経で動き、行動から学ぶ。',
-        intro: '採餌・ペーパートレード・Aquaを、全神経の判断と経験学習の共通ループで動かします。',
-        foraging: '採餌',
-        market: 'ペーパー市場',
-        aqua: 'Aqua流動性',
-        live: '現在の方策で動かす',
-        learn: '収集 → 学習 → 評価',
-        stop: '停止',
-        loop: '動作から学び、改善を確かめる',
-        how: '実際の行動結果を記録してreadoutを学習し、別の実行で報酬が改善した候補だけを採用します。方策は個体ごとに保存します。',
-        model: 'モデル',
-        before: '学習前',
-        after: '候補',
-        test: '別条件',
-        chain: 'ブロックチェーンの証拠',
-        chainInfo:
-          '専用Anvil。TXをクリックするとreceiptを確認できます。市場quoteは確認済みの過去ブロックに固定します。',
-        limits:
-          'MaleCNSの全分類付き神経の接続構造を利用。発火モデル・感覚変換・出力変換は人工的です。市場はペーパートレード。Aquaは実テストトークンを約定しますが、評価には価格再生による代理指標と人工的な注文成立ルールを使います。生物学的再現や収益性の証明ではありません。',
-        ready: '準備完了',
-        collect: '行動結果を収集中',
-        training: '記録した経験を学習中',
-        stimulus: '採餌の刺激',
-        selection: '別の実行で行動を評価中',
-        testPhase: '採用した方策を新しい条件で試験中',
-        livePhase: '現在の方策で動作中',
-        complete: '完了',
-        stopped: '停止',
-        error: 'エラー',
-        neurons: '神経 / 個体',
-        action: '行動',
-        policy: '方策',
-        reward: '報酬',
-      },
-    };
-    const $ = (id) => document.getElementById(id);
-    let app = location.pathname.slice(1) || 'foraging',
-      lang = 'en',
-      state = null,
-      lastFrame = 0;
-    const prices = [];
-    if (!['foraging', 'market', 'aqua'].includes(app)) app = 'foraging';
-    function translate() {
-      lang =
-        $('language').value === 'system'
-          ? navigator.language.startsWith('ja')
-            ? 'ja'
-            : 'en'
-          : $('language').value;
-      document.documentElement.lang = lang;
-      document.querySelectorAll('[data-t]').forEach((e) => (e.textContent = words[lang][e.dataset.t]));
-      render();
-    }
-    $('language').value = localStorage.getItem('full-app-language') || 'system';
-    $('language').onchange = () => {
-      localStorage.setItem('full-app-language', $('language').value);
-      translate();
-    };
-    for (const b of document.querySelectorAll('[data-app]'))
-      b.onclick = () => {
-        app = b.dataset.app;
-        history.replaceState({}, '', `/${app}`);
-        prices.length = 0;
-        render();
-      };
-    function render() {
-      document
-        .querySelectorAll('[data-app]')
-        .forEach((b) => b.classList.toggle('active', b.dataset.app === app));
-      $('app-title').textContent = words[lang][app];
-      $('stimulus-control').hidden = app !== 'foraging';
-      window.dispatchEvent(
-        new CustomEvent('bio-guide-state', {
-          detail: {
-            app,
-            lang,
-            mode: $('variant').value === 'legacy' ? 'reduced' : 'full',
-            p: state?.latest[app],
-          },
-        }),
-      );
-      if (!state) return;
-      const p = state.latest[app];
-      const origin =
-        app === 'market'
-          ? { label: 'Uniswap pool', address: state.chain.market.pool }
-          : { label: 'BioAgent registry', address: state.chain.registries[$('variant').value][app] };
-      $('connection').textContent = `Anvil 31337 · ${origin.label} ${origin.address.slice(0, 10)}…`;
-      for (const id of ['live', 'learn']) $(id).disabled = Boolean(state.busy);
-      $('stop').disabled = !state.busy;
-      $('mode').textContent = p?.variant || $('variant').value;
-      const phases = { test: 'testPhase', live: 'livePhase' };
-      $('status').textContent = words[lang][phases[p?.phase] || p?.phase || 'ready'] || p?.phase;
-      $('progress').max = p?.total || 1;
-      $('progress').value = p?.tick || 0;
-      $('error').textContent = p?.error || '';
-      $('neural').textContent = p?.neural
-        ? `${p.neural.neuronsPerIndividual.toLocaleString()} ${words[lang].neurons} · ${(p.neural.connections || 0).toLocaleString()} edges · ${p.neural.inferenceMs.toFixed(1)} ms / decision · neural tick ${p.neural.tick}`
-        : '';
-      $('cards').replaceChildren();
-      for (let i = 0; i < 2; i++) {
-        const f = p?.snapshot?.flies[i],
-          d = p?.decisions?.[i];
-        const card = document.createElement('div');
-        card.className = 'card';
-        const names = ['MOMO', 'SORA'];
-        card.innerHTML = `<strong>${names[i]}</strong><p class="bubble">${words[lang].policy} v${d?.policyVersion || 1} · ${words[lang].action} ${words[lang].actions[app][d?.action] ?? '—'}</p><div class="number">${Number(f?.reward || 0).toFixed(3)}</div><small>${lang === 'ja' ? { foraging: '累積報酬', market: '累積PnL（仮想）', aqua: '累積代理報酬' }[app] : { foraging: 'Cumulative reward', market: 'Cumulative paper PnL', aqua: 'Cumulative proxy reward' }[app]}</small>`;
-        if (f) {
-          const body = document.createElement('p');
-          body.className = 'muted';
-          body.textContent =
-            lang === 'ja'
-              ? `活動エネルギー ${Math.round(f.energy * 100)}% · 満腹度 ${Math.round(f.satiety * 100)}% · 蓄え ${Math.round(f.reserves * 100)}%`
-              : `Energy ${Math.round(f.energy * 100)}% · Fullness ${Math.round(f.satiety * 100)}% · Reserves ${Math.round(f.reserves * 100)}%`;
-          card.append(body);
-          if (app === 'foraging') {
-            const food = document.createElement('p');
-            food.textContent =
-              lang === 'ja'
-                ? `集めた蜜 ${f.score}個 / 危険への接触 ${f.collisions}回`
-                : `Nectar ${f.score} / Hazard contacts ${f.collisions}`;
-            card.append(food);
-          }
-        }
-        $('cards').append(card);
-      }
-      $('comparison').replaceChildren();
-      for (const variant of ['full', 'legacy']) {
-        const r = state.reports[`${app}:${variant}`];
-        if (!r) continue;
-        const row = document.createElement('tr');
-        for (const text of [
-          variant,
-          r.before.map((x) => x.toFixed(2)).join(' / '),
-          r.after.map((x) => x.toFixed(2)).join(' / '),
-          r.test.map((x) => x.toFixed(2)).join(' / '),
-        ]) {
-          const td = document.createElement('td');
-          td.textContent = text;
-          row.append(td);
-        }
-        $('comparison').append(row);
-      }
-      $('summary').textContent = p?.report
-        ? `v${p.report.versions.join(' / v')} · adopted ${p.report.adopted.join(' / ')} · fit ${p.report.trainingMs.map((x) => x.toFixed(1)).join(' / ')} ms`
-        : '';
-      $('tx').replaceChildren();
-      const links = [];
-      if (p?.snapshot?.lastEvent) links.push(p.snapshot.lastEvent);
-      for (const o of p?.outcomes || []) {
-        for (const tx of o.metrics?.transactions || []) links.push(tx);
-        for (const tx of o.source?.statuses || []) links.push(tx);
-        for (const key of ['decision', 'fill', 'mark']) if (o.source?.[key]) links.push(o.source[key]);
-      }
-      for (const tx of links.slice(-14)) {
-        if (!/^0x[0-9a-f]{64}$/i.test(tx.transactionHash || '')) continue;
-        const a = document.createElement('a');
-        a.href = '/tx/' + tx.transactionHash;
-        a.target = '_blank';
-        a.textContent = `#${tx.blockNumber} ${tx.transactionHash.slice(0, 18)}…`;
-        const div = document.createElement('div');
-        div.append(a);
-        $('tx').append(div);
-      }
-      const price = p?.snapshot?.lastEvent?.price;
-      if (price && prices.at(-1) !== price) {
-        prices.push(price);
-        if (prices.length > 100) prices.shift();
-      }
-    }
-    async function operation(operation) {
-      try {
-        const r = await fetch('/api/run', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            app,
-            variant: $('variant').value,
-            operation,
-            stimulus: Number($('stimulus').value),
-          }),
-        });
-        const data = await r.json();
-        if (!r.ok) throw Error(data.error);
-        await poll();
-      } catch (e) {
-        $('error').textContent = e.message;
-      }
-    }
-    $('variant').onchange = render;
-    $('live').onclick = () => operation('live');
-    $('learn').onclick = () => operation('learn');
-    $('stop').onclick = () =>
-      fetch('/api/stop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
-    function fly(ctx, x, y, color, learning = false) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.fillStyle = 'white';
-      for (const dx of [-15, 15]) {
-        ctx.beginPath();
-        ctx.ellipse(dx, -12, 18, 10, dx * 0.02, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.fillStyle = color;
-      ctx.strokeStyle = '#3c5b4d';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, 23, 20, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-      ctx.fillStyle = '#294838';
-      ctx.beginPath();
-      ctx.ellipse(-8, -3, 2, 3, 0, 0, Math.PI * 2);
-      ctx.ellipse(8, -3, 2, 3, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(0, 4, 5, 0, Math.PI);
-      ctx.stroke();
-      if (learning) {
-        ctx.fillStyle = 'white';
-        ctx.fillRect(-12, -58, 24, 26);
-        ctx.fillStyle = '#294838';
-        ctx.font = '20px system-ui';
-        ctx.fillText('?', -5, -39);
-      }
-      ctx.restore();
-    }
-    function draw(now) {
-      requestAnimationFrame(draw);
-      if (now - lastFrame < 1000 / 30) return;
-      lastFrame = now;
-      const c = $('arena'),
-        ctx = c.getContext('2d'),
-        p = state?.latest[app],
-        s = p?.snapshot;
-      ctx.clearRect(0, 0, c.width, c.height);
-      const learning = p?.phase === 'training';
-      if (app === 'foraging' && s) {
-        for (const h of s.world.hazards) {
-          ctx.fillStyle = '#edc6af';
-          ctx.beginPath();
-          ctx.arc((h.x / 36) * c.width, (h.y / 22) * c.height, (h.radius / 36) * c.width, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        for (const f of s.world.foods) {
-          ctx.fillStyle = '#dfad40';
-          ctx.beginPath();
-          ctx.arc((f.x / 36) * c.width, (f.y / 22) * c.height, 8, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        for (const [i, f] of s.flies.entries())
-          fly(ctx, (f.x / 36) * c.width, (f.y / 22) * c.height, ['#fff2cf', '#dedfff'][i], learning);
-      } else {
-        if (prices.length > 1) {
-          const lo = Math.min(...prices),
-            hi = Math.max(...prices);
-          ctx.strokeStyle = '#5c997b';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          prices.forEach((v, i) => {
-            const x = 20 + (i * 740) / (prices.length - 1),
-              y = 180 - ((v - lo) / Math.max(0.0001, hi - lo)) * 120;
-            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-          });
-          ctx.stroke();
-        }
-        for (let i = 0; i < 2; i++) {
-          const f = s?.flies?.[i];
-          fly(
-            ctx,
-            230 + i * 300,
-            280 + (learning ? 0 : Math.sin(now / 300 + i) * 5),
-            ['#fff2cf', '#dedfff'][i],
-            learning,
-          );
-          ctx.fillStyle = '#294838';
-          ctx.font = '15px system-ui';
-          ctx.fillText(
-            app === 'market'
-              ? `PnL ${Number(f?.pnl || 0) / 1e18}`
-              : `fees ${Number(f?.fees || 0).toFixed(3)}`,
-            160 + i * 300,
-            340,
-          );
-        }
-      }
-    }
-    async function poll() {
-      try {
-        const r = await fetch('/api/state');
-        state = await r.json();
-        render();
-      } catch (e) {
-        $('error').textContent = e.message;
-      }
-    }
-    translate();
-    requestAnimationFrame(draw);
-    poll();
-    setInterval(poll, 500);
-  </script>
+      <div id="idle-note" class="idle-note"></div>
+      <section class="floating control-panel">
+        <div class="control-caption">
+          <strong id="control-title"></strong
+          ><button class="icon-button" data-detail="controls" aria-label="Control details">ⓘ</button>
+        </div>
+        <div class="control-row">
+          <label id="stimulus-control"
+            ><span id="stimulus-label"></span
+            ><input id="stimulus" type="range" min="0" max="1" step="0.05" value="0.5" /><output
+              id="stimulus-value"
+              >50%</output
+            ></label
+          ><button id="live" class="primary"></button><button id="stop"></button><button id="learn"></button>
+        </div>
+        <p id="control-help"></p>
+        <p id="error" role="alert"></p>
+      </section>
+      <div class="scene-legend" id="scene-legend"></div>
+    </main>
+    <dialog id="details-dialog" aria-labelledby="details-title">
+      <div class="dialog-header">
+        <h2 id="details-title"></h2>
+        <button id="close-details" class="icon-button" aria-label="Close">×</button>
+      </div>
+      <div class="detail-tabs" role="tablist">
+        <button data-pane="help" role="tab"></button><button data-pane="evidence" role="tab"></button
+        ><button data-pane="learning" role="tab"></button>
+      </div>
+      <div class="dialog-content">
+        <section id="pane-help" role="tabpanel">
+          <div id="metric-help"></div>
+          <section id="app-guide" data-bio-guide data-app="foraging" data-mode="full"></section>
+        </section>
+        <section id="pane-evidence" role="tabpanel" hidden>
+          <h3 id="evidence-heading"></h3>
+          <p id="connection"></p>
+          <p id="evidence-help"></p>
+          <div id="tx"></div>
+          <div id="aqua-proof"></div>
+          <h3 id="model-heading"></h3>
+          <p id="neural"></p>
+          <p id="model-limits"></p>
+          <a id="model-link" href="/models/full/foraging" target="_blank" rel="noopener"></a>
+        </section>
+        <section id="pane-learning" role="tabpanel" hidden>
+          <h3 id="learning-heading"></h3>
+          <p id="learning-help"></p>
+          <label id="variant-label"
+            ><select id="variant">
+              <option value="full">Full MaleCNS · 166,700</option>
+              <option value="legacy">7 neurons · comparison</option>
+            </select></label
+          >
+          <p id="summary"></p>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th id="th-model"></th>
+                  <th id="th-before"></th>
+                  <th id="th-after"></th>
+                  <th id="th-test"></th>
+                </tr>
+              </thead>
+              <tbody id="comparison"></tbody>
+            </table>
+          </div>
+          <p id="learning-unit"></p>
+        </section>
+      </div>
+    </dialog>
+    <dialog id="receipt-dialog" aria-labelledby="receipt-title">
+      <div class="dialog-header">
+        <h2 id="receipt-title"></h2>
+        <button id="close-receipt" class="icon-button" aria-label="Close">×</button>
+      </div>
+      <div id="receipt-body" class="dialog-content"></div>
+    </dialog>
+    <script type="module" src="/guides/guide.mjs"></script>
+    <script type="module" src="/experience.mjs"></script>
+  </body>
 </html>

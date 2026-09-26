@@ -9,6 +9,26 @@ const brain = new BrainClient(),
   chain = new FullChain();
 const descriptor = await brain.call('describe');
 await chain.setup(descriptor);
+const tokenInfo = async (address) => {
+  const { Contract } = await import('ethers');
+  const token = new Contract(
+    address,
+    ['function symbol() view returns(string)', 'function decimals() view returns(uint8)'],
+    chain.provider,
+  );
+  return { address, symbol: await token.symbol(), decimals: Number(await token.decimals()) };
+};
+const display = {
+  market: await Promise.all([await chain.harness.token0(), await chain.harness.token1()].map(tokenInfo)),
+  aqua: Object.fromEntries(
+    await Promise.all(
+      ['full', 'legacy'].map(async (variant) => [
+        variant,
+        await Promise.all(chain.config.aquaApps[variant].tokens.map(tokenInfo)),
+      ]),
+    ),
+  ),
+};
 const tape = JSON.parse(await readFile('artifacts/full-apps/market-tape.json', 'utf8'));
 await chain.validateTape(tape);
 const apps = ['foraging', 'market', 'aqua'];
@@ -112,6 +132,20 @@ const server = http.createServer(async (req, res) => {
       return reply(403, { error: 'Loopback host required' });
     const url = new URL(req.url, base);
     if (req.method === 'GET') {
+      if (url.pathname === '/experience.mjs' || url.pathname === '/experience.css')
+        return reply(
+          200,
+          await readFile('services/full-apps' + url.pathname, 'utf8'),
+          url.pathname.endsWith('.css') ? 'text/css' : 'text/javascript',
+        );
+      if (
+        /^\/assets\/(terrarium|bioagent|sugar-crystal|market-garden-v1|aqua-garden-v1)\.png$/.test(
+          url.pathname,
+        )
+      ) {
+        res.writeHead(200, { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=3600' });
+        return res.end(await readFile('services/full-apps' + url.pathname));
+      }
       const guideFiles = {
         '/guides/guide.mjs': 'text/javascript',
         '/guides/content.mjs': 'text/javascript',
@@ -137,6 +171,16 @@ const server = http.createServer(async (req, res) => {
           reports,
           descriptor,
           chain: chain.config,
+          display,
+          aquaState: Object.fromEntries(
+            ['full', 'legacy'].map((variant) => [
+              variant,
+              {
+                wallet: chain.config.owner,
+                strategies: chain.apps[variant].active,
+              },
+            ]),
+          ),
         });
       if (url.pathname === '/api/history') return reply(200, await brain.call('summary'));
       if (/^\/tx\/0x[0-9a-f]{64}$/i.test(url.pathname))

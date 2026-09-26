@@ -1,0 +1,37 @@
+{
+  "generatedWith": "built-in image_gen",
+  "generatedAt": "2026-09-26",
+  "restoredFrom": "/home/polonity/workspace/test/bio-agent/frontend/public/assets/game-v1",
+  "purpose": "Decorative context only; live metrics and choices are rendered from runtime data",
+  "assets": [
+    {
+      "file": "aqua-garden-v1.png",
+      "sha256": "c49d135ce65739107e5fe05b573c65ef7a9e922c727dae48a8615d5ec6ffe59c",
+      "origin": "image_gen 2026-09-26"
+    },
+    {
+      "file": "bioagent.png",
+      "sha256": "18ab5fe863f310d346223f4f958764e8c903723d58cd0694787beb1710efaeb8",
+      "origin": "restored original image_gen 2026-09-23"
+    },
+    {
+      "file": "market-garden-v1.png",
+      "sha256": "44e4b674244eee77ca3b4ea9bc1df4b69de789c3b87f87ea237887059452ae4b",
+      "origin": "image_gen 2026-09-26"
+    },
+    {
+      "file": "terrarium.png",
+      "sha256": "25d24bc51ff2e9e87efb5b13ed4e29d2b5d2ee71b52319bb7f6de67a460cf725",
+      "origin": "restored original image_gen 2026-09-23"
+    },
+    {
+      "file": "sugar-crystal.png",
+      "sha256": "1bf4a39919e5e278177b48f97392c266102c3d2ac5843a804705e694a196c948",
+      "origin": "restored original image_gen 2026-09-23"
+    }
+  ],
+  "generationBriefs": {
+    "market-garden-v1.png": "Top-down botanical trading garden with two leaf-and-brass exchange stalls, golden/lavender token trays at edges, dark quiet center for real PnL and sprites. No labels or numerical results.",
+    "aqua-garden-v1.png": "Top-down botanical water laboratory, one shared brass/glass wallet reservoir linked to two offering docks. Quiet center for live choices. No labels or data."
+  }
+}
