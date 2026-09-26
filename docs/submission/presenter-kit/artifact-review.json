@@ -1,38 +1,68 @@
 {
-  "reviewedAt": "2026-09-26T08:13:38.557054+00:00",
-  "reviewType": "Assistant visual inspection of all six rendered PDF pages, plus PDF parsing and HTML browser checks; unchanged video review retained by hash",
+  "reviewedAt": "2026-09-26T10:26:21.039390+00:00",
+  "reviewType": "Current four-page bilingual Q&A and six-slide bilingual explanation: PDFium render review, PDF extraction, PPTX structure/notes and HTML browser checks. Unchanged video review retained by hash.",
   "pdfs": [
     {
       "file": "qa-cheatsheet-ja.pdf",
-      "pages": 3,
-      "sha256": "c0e8de36b4c2feb2740a59e8ade3debac55cb99dde2fc42ea499f62bf350d41b",
+      "pages": 4,
+      "sha256": "560c420825b52179baa09117db23023b5a97212b6b3a7d8c61cb0246bf8f52f3",
       "textCharacters": [
-        1347,
-        1748,
-        1603
+        845,
+        1373,
+        1760,
+        1635
       ]
     },
     {
       "file": "qa-cheatsheet-en.pdf",
-      "pages": 3,
-      "sha256": "cf5a48d02c6999f377a484c92cf6f602ba401a1624a1d59f094674fcdd7fb58e",
+      "pages": 4,
+      "sha256": "9f7d033a8d7c94e8eb8a89e54b9f48d624be070fca7af593b488ca539e50a2c5",
       "textCharacters": [
-        3072,
-        3272,
-        3223
+        1957,
+        3148,
+        3388,
+        3284
       ]
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
-      "pages": 6,
-      "sha256": "cd6693a337a73847eb97892cf13d76d5ab491508241122a44c6d2ca59d3c89a8",
+      "pages": 8,
+      "sha256": "3af8c3d6aa0b3121cfc1ec69aee082396ff0d4513488b483ea5c733d9e0dc985",
       "textCharacters": [
-        1347,
-        1748,
-        1603,
-        3072,
-        3272,
-        3223
+        844,
+        1372,
+        1759,
+        1635,
+        1957,
+        3148,
+        3388,
+        3284
+      ]
+    },
+    {
+      "file": "explanation-ja.pdf",
+      "pages": 6,
+      "sha256": "f99eddadc5537f6ac3de3426114b02e6184a351ea374108cbac6acef40b29f54",
+      "textCharacters": [
+        146,
+        150,
+        155,
+        152,
+        179,
+        177
+      ]
+    },
+    {
+      "file": "explanation-en.pdf",
+      "pages": 6,
+      "sha256": "3cb8bef982d08f9c3d8331a74b9cd7486a841c1e38f9ca5e17c7f262522a516e",
+      "textCharacters": [
+        310,
+        307,
+        314,
+        316,
+        342,
+        349
       ]
     }
   ],
@@ -43,7 +73,9 @@
       3,
       4,
       5,
-      6
+      6,
+      7,
+      8
     ],
     "videoLanguages": [
       "ja",
@@ -60,11 +92,29 @@
     "readableCaptions": true,
     "receiptAndModelScenesReadable": true,
     "allFourAgentsVisible": true,
-    "pdfTextNotClipped": true
+    "pdfTextNotClipped": true,
+    "explanationPagesReviewed": {
+      "ja": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "en": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
   },
-  "scope": "This update reviews the bilingual AI-comparison pages and the complete regenerated PDFs. Video files are unchanged and their earlier review is retained after SHA-256 verification. Visual review does not establish energy savings, biological superiority or improved trading performance.",
+  "scope": "Current common Fly Lab explanation; full-market video and independent research results labelled separately. No new energy or model-performance experiment. PowerPoint native rendering not tested.",
   "sourceFrames": {
-    "pdf": "Local, Git-ignored artifacts/submission-presenter-20260926/ai-comparison/qa-page-*.jpg",
+    "pdf": "Local artifacts/submission-presenter-current/*-page-*.png",
     "video": "Local, Git-ignored artifacts/submission-presenter-20260926/playback-*.jpg"
   },
   "videoReviewedAt": "2026-09-26T07:48:27.006523+00:00",

@@ -1,5 +1,7 @@
 # BioAgent 成果説明スライド / Explanation slides
 
+> **履歴資料 / Historical snapshot.** 現行実装の説明には[最新の日英スライド・実演手順・Q&A](../submission/presenter-kit/README.md)を使用してください。このディレクトリの旧スライドは作成時点の保存資料で、Sepolia配置前の記述や未実装の提案を含みます。Use the current presenter kit; these older proposals are not a current implementation guide.
+
 2026-09-26の保存済み受入記録と現行ソースを根拠にした、理解・質疑応答用の資料です。
 日本語版と英語版は同じスライド番号・構成です。性能値は新たに測定したものではありません。
 

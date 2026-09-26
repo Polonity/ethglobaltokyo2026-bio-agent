@@ -1,0 +1,87 @@
+{
+  "auditedAt": "2026-09-26T10:22:53.141994+00:00",
+  "pdfs": [
+    {
+      "file": "qa-cheatsheet-ja.pdf",
+      "pages": 4,
+      "sha256": "560c420825b52179baa09117db23023b5a97212b6b3a7d8c61cb0246bf8f52f3",
+      "textCharacters": [
+        845,
+        1373,
+        1760,
+        1635
+      ]
+    },
+    {
+      "file": "qa-cheatsheet-en.pdf",
+      "pages": 4,
+      "sha256": "9f7d033a8d7c94e8eb8a89e54b9f48d624be070fca7af593b488ca539e50a2c5",
+      "textCharacters": [
+        1957,
+        3148,
+        3388,
+        3284
+      ]
+    },
+    {
+      "file": "qa-cheatsheet-ja-en.pdf",
+      "pages": 8,
+      "sha256": "3af8c3d6aa0b3121cfc1ec69aee082396ff0d4513488b483ea5c733d9e0dc985",
+      "textCharacters": [
+        844,
+        1372,
+        1759,
+        1635,
+        1957,
+        3148,
+        3388,
+        3284
+      ]
+    },
+    {
+      "file": "explanation-ja.pdf",
+      "pages": 6,
+      "sha256": "f99eddadc5537f6ac3de3426114b02e6184a351ea374108cbac6acef40b29f54",
+      "textCharacters": [
+        146,
+        150,
+        155,
+        152,
+        179,
+        177
+      ]
+    },
+    {
+      "file": "explanation-en.pdf",
+      "pages": 6,
+      "sha256": "3cb8bef982d08f9c3d8331a74b9cd7486a841c1e38f9ca5e17c7f262522a516e",
+      "textCharacters": [
+        310,
+        307,
+        314,
+        316,
+        342,
+        349
+      ]
+    }
+  ],
+  "pptx": [
+    {
+      "file": "explanation-ja.pptx",
+      "slides": 6,
+      "speakerNotes": 6,
+      "editableText": true,
+      "sha256": "40e351c34c62fcbe278c22a7cad5c70bfd8b14cf659118ec0bc1c2e2815c3867"
+    },
+    {
+      "file": "explanation-en.pptx",
+      "slides": 6,
+      "speakerNotes": 6,
+      "editableText": true,
+      "sha256": "1bd9048062181eafa866a1fb0e300a7a3d6496d85ec5e698d84650a6180678fc"
+    }
+  ],
+  "visualReview": "Assistant inspected all 8 Q&A pages and 12 slide pages rendered with PDFium; no clipped text or overlaps observed.",
+  "nativePowerPointRendering": false,
+  "visualReviewedAt": "2026-09-26T10:26:21.039390+00:00"
+}

@@ -1,134 +1,50 @@
-# Submission package — BioAgent
+# BioAgent — 提出・説明資料 / Submission materials
 
-**Latest presenter kit:** [51.5-second full-population video, Japanese/English Q&A and evidence](presenter-kit/README.md). Four agents, canonical Aqua and Uniswap V3 on Anvil; 12 new settlements verified. [English MP4](presenter-kit/bioagent-submission-en.mp4) / [Japanese MP4](presenter-kit/bioagent-submission-ja.mp4) / [bilingual Q&A PDF](presenter-kit/qa-cheatsheet-ja-en.pdf).
+**何をしたいか：生物由来の判断モデルをアプリで使い、学習効果と計算資源を比較できるフレームワークをつくる。** まずオンチェーン入力の箱庭で、入力・判断・学習のつながりを確かめます。生物回路の性能優位は未確認です。
 
-**Live judge demo:** [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) / [日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja). This is **Ethereum Sepolia + the measured 7-neuron / 19-edge subgraph**. The submission video remains **Anvil + the full 166,700-neuron runtime**. [Guide and execution boundaries](../deployment/sepolia.md) / [real transaction and browser evidence](sepolia-evidence.json).
+**Purpose: build a framework to use biologically derived decision models in applications and compare learning effects and resource use.** The onchain-input playground makes the input–decision–learning path inspectable. Biological superiority remains unproven.
 
-**[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
-Prepared 2026-09-26. This is a local prototype and a specification proposal, not an assigned EIP. The text below is ready to adapt to the submission form. No external form has been submitted.
+## まず開く資料 / Start here
 
-## Full-population local track
+| 用途 / Use | 日本語 | English |
+| --- | --- | --- |
+| 約1分・6枚の説明 / Six-slide explanation | [PDF](presenter-kit/explanation-ja.pdf) · [PPTX](presenter-kit/explanation-ja.pptx) | [PDF](presenter-kit/explanation-en.pdf) · [PPTX](presenter-kit/explanation-en.pptx) |
+| 段階別の原稿・操作 / Script & walkthrough | [日本語](presenter-kit/walkthrough-ja.md) | [English](presenter-kit/walkthrough-en.md) |
+| 手元のQ&A・4ページ / Four-page Q&A | [PDF](presenter-kit/qa-cheatsheet-ja.pdf) | [PDF](presenter-kit/qa-cheatsheet-en.pdf) |
+| 提出動画・51.5秒 / Submitted video | [MP4](presenter-kit/bioagent-submission-ja.mp4) | [MP4](presenter-kit/bioagent-submission-en.mp4) |
 
-The local GUI at `http://127.0.0.1:8812/` runs two individuals with all 166,700 classified MaleCNS neurons and 25,582,938 internal connections. Each application records actual action outcomes, trains a readout, evaluates new behavior, and adopts only improved candidates. [Reproduction, evidence and comparison boundaries](full-apps-acceptance.md). The public Worker and the original lightweight browser apps remain separate; the full neural computation runs locally in Python.
+[資料一式と検証記録 / Presenter kit](presenter-kit/README.md) · [目的と設計意図 / Rationale](bioagent-thesis.md)
 
-## Demo hook
+## 説明する順番 / Explanation sequence
 
-**An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.**
+1. **目的 / Purpose:** 小さい判断モデルが適応に役立つ条件を検証する。
+2. **入力 / Inputs:** 初期環境・危険エリアをTXに記録し、正の刺激TXで餌を追加する。
+3. **判断 / Decisions:** 記録済み環境と内部状態を感覚へ変換し、回路から行動を選ぶ。
+4. **学習 / Learning:** 経験と確認済み環境を再生し、候補と旧方策を比較する。
+5. **検証 / Evidence:** 実装が動く証拠と、別の対照実験による効果を分けて示す。
+6. **次の課題 / Next:** 同じ仕事で小型AIと比較し、適応・失敗率・計算資源を測る。
 
-Visitors change recorded stimuli and observe simulated individuals. The chain holds registrations and input records; the browser runs behavior, body state and learning. Present the playful experiment first, then inspect its transactions and model assumptions, and explain why these descriptions should travel across applications. Foraging, market and Aqua all require measured MaleCNS connectivity; application mappings and dynamics remain engineered.
+## 公開デモと動画の範囲 / Demo boundaries
 
-## Short description
+[公開デモ：日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) · [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en)
 
-**From verifiable events to biologically grounded action.** BioAgent proposes a profile for agents that use connectome-derived structure to generate actions. It connects onchain input provenance with model origin, sensory mappings, body state and learning history. Three apps — foraging, paper trading and Aqua — use measured MaleCNS connectivity and application-specific learned readouts.
-
-## Motivation and standardization position
-
-Biomimicry provides the engineering motivation: sharkskin-inspired aircraft surfaces and burr-inspired fasteners show how biological structures can become useful products. We explore the same approach for action-generating circuits. Faster adaptation and efficient computation are hypotheses to test, with engineering utility and biological fidelity evaluated separately. See [examples, primary sources and comparison plan](biomimicry-positioning.md).
-
-Onchain records give independent participants a shared reference for the source and history of inputs. Agent infrastructure is developing around ERC-8004, which remains a Draft at the time of review. We build toward compatibility with common agent infrastructure, adding the information needed to interpret a model's biological origin and engineered assumptions. Current contracts do not implement ERC-8004.
-
-This is an extension profile, not a replacement for general agent identity, communication or wallets. Body state and learning are also useful to ordinary AI agents. The stronger rationale is the source-to-circuit correspondence and the ability to distinguish measured structure, artificial sensory/motor mappings and learned components. Independent ERC status requires further interoperability evidence.
-
-See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source research and design judgment](../standards/why-bioagent.md). A separate [Circuit Lab](../design/circuit-evidence.md) now executes a measured seven-neuron MaleCNS topology with explicitly artificial dynamics and readout. All three apps now require MaleCNS; no biological fidelity or performance advantage is established. See the [goal audit](goal-audit.md) for remaining work.
-
-## Aqua Connectome: official-fork submission
-
-The dedicated Aqua reproduction uses **two full-population MaleCNS individuals and canonical Aqua on an Ethereum local fork**. Use [the 1inch-specific form text, requirement map, evidence and reproduction guide](1inch-aqua.md). This two-maker reproduction is supporting evidence; the latest presenter video above uses the four-agent shared market.
-
-### Earlier lightweight browser experiment
-
-**Powered by Aqua — © Degensoft Ltd 2025.** Three registered simulation instances use a seven-neuron measured topology with artificial dynamics to control shared liquidity. Confirmed synthetic risk stimuli drive a smaller offer or withdrawal through `@1inch/aqua-sdk@0.3.4`. The upstream Aqua contract runs on Anvil, alongside a custom test-token AquaApp. Inspect real ship/dock receipts and execute a test fill while the maker retains custody until settlement. This uses a fixed topology with a learned gain calibrated on a synthetic risk curriculum, not a full brain, live MEV detector, learned portfolio, gasless withdrawal, or cross-chain router.
-
-See [architecture, corrections to the proposal and reproduction](../design/aqua-connectome.md). Use the new official-fork English video generated by `npm run test:submission:aqua` for the 1inch demonstration. Earlier integrated videos do not prove use of the canonical deployment.
-
-## What we built
-
-In Fly Lab, a user sends an onchain stimulus to one of three registered agents. The browser consumes its event and the agent responds. Eating changes fullness and energy reserves; the changing belly visualizes state that actually enters the policy observation. Lower-performing flies pause with a question bubble, train a candidate and return after evaluation.
-
-In Market Meadow, price controls execute test-token swaps against locally deployed Uniswap V3 core. Three registered flies see the same Swap events but use different initial policies and seeded exploration. Paper orders fill only on later blocks using size-specific pool quotes. The leaderboard includes pool fees, price impact and an explicit assumed gas cost. A learning fly stops deciding while its holdings remain exposed.
-
-Both apps share typed identity, body, input and runtime-view concepts. Their profiles specialize the action space and outcome: food and movement versus paper trades and PnL. The UI exposes source transactions, live connection state, model references, actual encoded observations and learning outcomes.
-
-## Evidence for the biological-source claim
-
-Circuit Lab binds a common descriptor to three onchain simulation instances. It preserves seven original MaleCNS neuron IDs and 19 connection counts, verifies local artifact hashes against the registered descriptor, and shows a real status transaction driving the graph-based calculation and an advance/wait action. A graph-removal control isolates dependence on the connections. An independent Python implementation matches the exported traces within 1e-12 absolute tolerance.
-
-This is a topology-derived engineering model, with artificial excitatory dynamics and an engineered decoder. It has no learning or body simulation, and is not a whole-brain or biologically validated fly model. The games now use this MaleCNS topology as a required feature encoder, with learned action readouts.
-
-## Why a BioAgent profile?
-
-Agent identity alone does not explain what a biological model represents or why an individual changed. Our proposed profile describes biological or synthetic origin, sensory and motor mappings, internal body dynamics, plasticity and reproducibility. It separates external stimulus from internal state and separates a readable view from a replay-capable checkpoint.
-
-We researched existing identity, state, AI and token standards before refining this scope. We do not claim those standards cannot carry the data. The contribution is the interpretation of biological/embodied state and learning across applications. NFT and SBT were analogies for a base specification and its derivatives; neither token feature is required or implemented.
-
-See [prior-art research](../standards/prior-art-and-bioagent.md), [design direction](../standards/bioagent-design-direction.md), [profile proposal](../standards/embodied-learning-profile.md), [Solidity draft](../standards/bio-agent-draft.md) and [application types](../standards/application-types.md).
-
-## How it works
-
-- **Contracts / Foundry:** owner-controlled registration, explicit input revision, full status events, optional schema-tagged stimulus payloads with independent nonces, optional declared wallet reference.
-- **Runtime:** browser-based MaleCNS encoding with foraging Q-learning and market reward estimation; shared synthetic body dynamics; deterministic foraging checkpoint restore including active training.
-- **Market source:** pinned Uniswap V3 core factory artifact, local pool and callback harness, verified Swap receipts and block-pinned quotes. The live demo does not call the Trading API.
-- **Frontend / hosting:** original procedural fly drawings, continuously parameterized bellies, emotional bubbles, English/Japanese/system language, local Cloudflare Workers.
-- **Common types:** strict TypeScript views and domain profiles, explicit units and string-encoded token amounts. Full cross-runtime protocol migration is still future work.
-
-## Demo script (two apps + circuit evidence)
-
-| Scene | Say / show |
+| 対象 / Track | 実装と証拠 / Implementation and evidence |
 | --- | --- |
-| Registered flies | “Three individuals, each linked to an onchain registry and a model reference.” |
-| Send a stimulus | Submit forage conditions; show the actual TX and event reaching its agent. |
-| Feed a fly | “Body state enters the observation, so the belly is more than decoration.” |
-| Open Market Meadow | “The same vocabulary, a different application: a real V3 pool on a local chain.” |
-| Run price sequence | Show independent buy/hold/sell decisions and paper PnL. |
-| Open source TX | Distinguish the real pool Swap from the simulated paper fill. |
-| Learning | Show stationary fly, question bubble, candidate selection and return. |
-| Open Circuit Lab | “A measured MaleCNS topology: seven neurons, nineteen connections, with artificial dynamics.” |
-| Send 0% then 100% | Show real transactions and wait→advance, compared with an edge-removal control. |
-| Inspect source | Show registered descriptor, provenance and engineered assumptions. |
-| Close | “Three MaleCNS-based applications and a circuit control experiment; biological validation and full portability remain future work.” |
+| 現在の共通Fly Lab | Sepolia・7神経／19接続・3個体。Anvilと同じUI・Q学習。初期環境・危険エリア・刺激・餌の外部入力をすべてTXで記録。身体・消費・判断・学習はオフチェーン。[実TXと画面確認](judge-demo-review.md) |
+| 全神経の提出動画 | Anvil fork・166,700神経×4個体。Aqua 1件、Uniswap V3 11件の成功決済を記録。readoutのオンライン更新を使用。[収録証拠](presenter-kit/capture-evidence.json) |
+| 独立した研究 | 合成採餌環境で学習・評価・対照比較。報酬改善は観測したが、直接入力モデルへの優位は未確認。[結果](../research/bioagent-adaptation/README.md) |
 
-Supplement: [Circuit Lab recording and checks](../design/circuit-evidence.md).
+The public page is a foraging demo; it does not send Aqua/Uniswap orders. The unchanged submitted video predates the current environment-TX changes. Its market learning and the independent research framework are distinct from public Q-learning. Use the live page for current input behavior and the video for full-population market execution.
 
-Earlier integrated video and reproduction: [English submission demo](../demo-video.md). Local output: `artifacts/submission-demo/bioagent-submission-english.mp4`, with `evidence.json` and exported circuit traces.
+公開版はウォレットなしで観察・学習できます。手動TXは所有者のみ。Workersは所有者EOAで毎時確認・最低1時間間隔の刺激送信を行います。1分の発表は記録済みTXを使い、次の定期TXを待つ構成にはしません。[操作・予算・配置](../deployment/sepolia.md)
 
-## Evidence and reproduction
+## 詳しい資料 / Supporting material
 
-Start with [local Anvil/Workers](../deployment/local-anvil.md), then [Market Meadow](../design/local-market-app.md). `local:market` creates a new market; do not use it to resume an existing competition. The current validation instance uses GUI port 8800, RPC 18547 and `.local/malecns`.
+- [AI Agent比較：期待・実測・次の測定](presenter-kit/ai-agent-comparison.md)
+- [全神経の共有市場](../apps/shared-market/README.md)
+- [独立JSフレームワーク](../../packages/bioagent-framework/README.md)
+- [共通UI・環境TXの構成](../architecture.md)
+- [1inch Aquaの個別提出資料](1inch-aqua.md)：公式Aqua forkと既存証拠。最新の4個体動画は上記を使用。
+- [以前の全神経アプリ受入記録](full-apps-acceptance.md)：別ランタイムの保存済み検証。
 
-| Claim | Check / evidence |
-| --- | --- |
-| Ownership, input bounds, revision/nonce and events | `forge test --root contracts`: 23 passing tests, including fuzz cases |
-| Common application types | `npm run test:types`: type compilation and 3 runtime tests |
-| Body affects observation/action; replay during training | `npm run test:body`: 4 passing controlled tests |
-| Paper fill timing, costs, failed-quote atomicity, learning exposure | `npm run test:paper`: 4 passing tests |
-| Foraging real TX → reaction → receipt | `LOCAL_STATE_DIR=.local/embodied LOCAL_GUI_URL=http://127.0.0.1:8799 npm run test:local`; `artifacts/local-chain/verification.json` |
-| Real pool swaps → 3 agents → paper fills / learning / receipt | `LOCAL_GUI_URL=http://127.0.0.1:8799 npm run test:market`; `artifacts/market-browser/evidence.json` |
-| System/en/ja and mobile | `LOCAL_STATE_DIR=.local/embodied npm run test:i18n`, market browser test |
-| Build / formatting | `npm run build`, `npm run format:check` |
-| Video integrity | Full ffmpeg decode, representative frames and Chrome MP4 playback |
-
-The combined arena, agent, swap, body, paper, circuit, explorer and translation unit suite passes 27 tests, in addition to the 3 shared-type runtime tests and 23 Foundry tests. Browser scripts write fresh evidence when run; generated artifacts are not committed.
-
-## Honest boundaries
-
-- All three apps now **require MaleCNS**. They use a small measured topology with artificial dynamics; none of these models establishes biologically validated physiology.
-- Learning candidate selection is visible and reproducible locally; it does not establish out-of-sample improvement, trading skill or profitability.
-- Market balances and orders are paper-only. The real onchain swaps use local test tokens.
-- Foraging checkpoint restore is a trusted local format. Cross-implementation replay, portable learning attestations and persistent reorg rollback are not implemented.
-- Wallet association is a declared address reference, not deployed smart-wallet control or spending authority.
-- A separate Sepolia Worker now runs the seven-neuron foraging demo against a deployed Registry. The full-neuron and Aqua / Uniswap transaction demonstrations remain on local Anvil; this public page does not replace those proofs.
-- No EIP number, standards approval or compliance certification is claimed.
-
-## Deliverables checklist
-
-- [x] Base concepts, explicit non-goals, prior-art review and two application profiles.
-- [x] Typed views used by both GUIs; Foundry registry and optional stimulus extension.
-- [x] Two playable local apps with blockchain provenance, current status and learning visibility.
-- [x] Body-state input, procedural belly and local deterministic checkpoint evidence.
-- [x] Real local Uniswap pool and three-agent paper competition.
-- [x] English demo recording, reproducible checks and submission narrative.
-- [x] Minimal measured-connectivity example, source/artifact binding and independent scalar replay check.
-- [ ] Full connectome integration into both games, biological validation and cross-application portability.
-- [ ] External submission form, team metadata and final hosted URL: fill in when the actual submission destination is selected.
-
-Current learning implementation and evidence: [MaleCNS required pipeline](../design/malecns-learning.md). Runtime integrity checks reject missing or altered artifacts. Accepted readouts apply to the next decision and persist per registered model/individual.
+外部フォームへの提出は未実施です。スポンサー要件と提出項目は提出時に公式ページで確認してください。これは研究用プロトタイプと仕様案で、承認済み標準や本番運用の性能保証ではありません。

@@ -1,8 +1,38 @@
+# BioAgent | From purpose to demo
+
+## What we want to achieve
+
+Build a framework for running biologically derived decision models on onchain inputs, adapting from experience, and comparing their effectiveness and resource use.
+
+For agent developers and researchers: reuse input validation, model provenance and learning records to discover when biological circuits are useful.
+
+## Explain the public demo in this order
+
+- **1 | Open** — Open Sepolia without a wallet and select the three agents. “Decisions use seven measured neurons and 19 connections.”
+- **2 | Trace the environment** — Open “Environment and food input TXs” and its initial TX. “Dimensions and hazards were recorded in this transaction.”
+- **3 | Follow stimulus to action** — Show a food source TX and behavior. “One confirmed positive stimulus adds one food; the model uses encoded observations to choose movement or rest.”
+- **4 | Inspect learning** — Select an agent and press “Start learning”. “It updates Q-values using experience and a copy of the confirmed environment, adopting only a higher-scoring candidate.”
+- **5 | Read the result** — Show before/candidate and adopt/keep. “This compares replays of the same environment. We study unseen-world effects in a separate controlled experiment.”
+
+The sender checks hourly, with at least one hour between sends. Use recorded TXs for a one-minute presentation. Manual writes require the owner. Once food is eaten, agents rest; there is no refill. No improvement is a valid result.
+
+## Use the three evidence tracks correctly
+
+- **Current public page** — Sepolia, 7 neurons, 3 agents: TX inputs, foraging and Q-learning.
+- **Submitted video** — Anvil, 166,700 neurons × 4 agents: Aqua/V3 settlement and readout updates. Recorded before the environment-TX change.
+- **Independent research** — Synthetic foraging controls: reward improved, but a biological advantage was not established.
+
+## A roughly one-minute script
+
+We are building a framework for using biological decision models in applications and testing whether learning helps. First, we record the environment, including hazards, in a transaction. A confirmed stimulus then adds food, and the agent chooses movement or rest. Learning replays that environment and experience, adopting an improved candidate. The demo lets us trace inputs, decisions and learning. A separate controlled experiment improved reward, but did not establish a biological advantage. Next, we will compare the same task against small AI models, measuring adaptation speed and resource use.
+
+---
+
 # BioAgent | Presenter Q&A
 
-Lead with the short answer, then give the evidence. Recording: 26 Sep 2026.
+Current shared Fly Lab. Recorded market results and independent research are labelled separately.
 
-## Your 30-second opening
+## Optional: introduce the full-market video
 
 BioAgent is an experimental platform that connects biologically derived circuits to traceable actions. Four agents, each using 166,700 neurons, make Aqua offers and trade through Uniswap. We verified real local settlement and learning updates. A separate foraging experiment improved behavior, but did not outperform a matched non-biological model. Our contribution is a working platform for testing these possibilities and their limits.
 
@@ -42,7 +72,7 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 6. Is it cheaper or more energy-efficient than an LLM?
 
-**We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.** The shared Python process peaked at 443.2 MiB RSS; the last four-agent neural pass took 333.3 ms. Power is unmeasured; these are not comparative savings. Page 3 gives the hypotheses, counterarguments and comparison conditions.
+**We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.** The shared Python process peaked at 443.2 MiB RSS; the last four-agent neural pass took 333.3 ms. Power is unmeasured; these are not comparative savings. Page 4 gives the hypotheses, counterarguments and comparison conditions.
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json)
 
@@ -54,15 +84,15 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 8. What does the shared BioAgent interface provide?
 
-**Reusable input interpretation, provenance and policy compatibility checks.** Solidity IBioAgent defines inputs. The separate seven-neuron JS framework shares validation, train/evaluate/adopt and save/restore, rejecting incompatible or worse candidates. The full Python market runtime is separate. Cross-task skill transfer and developer-time savings are not demonstrated.
+**A shared meaning for inputs and models, with reusable validation and learning components.** Solidity IBioAgent defines identity/Status; IBioAgentStimulus carries environment payloads. Anvil/Sepolia share UI and Q-learning. The independent JS framework and full Python market runtime have separate learners. This is not one universal learning engine or demonstrated skill transfer.
 
 [R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md)
 
 ## 9. What is onchain, and is inference trustless?
 
-**All external inputs to the playground come from onchain data.** The current playground records the initial field, hazards and stimuli in TXs, then derives sensory inputs from them. Body state and learning run offchain. The submitted Anvil-fork video shows settlement evidence. Hashes identify artifacts, not proof of correct neural computation.
+**All external inputs to the playground come from onchain data.** The initial TX includes hazards; each confirmed positive stimulus adds one food, removed when eaten. Position, body, consumption and learning run offchain. Browsers share inputs, not body state. Receipt checks do not establish finality or correct neural computation.
 
-[R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md)
+[R5: Public Sepolia demo and transaction evidence](../../deployment/sepolia.md) / [R6: Current environment-TX and scheduled sender evidence](../judge-demo-review.md)
 
 ## 10. Does PnL prove profit or safe autonomous trading?
 
@@ -72,7 +102,7 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 11. Does the public demo run the full population?
 
-**The public demo is Sepolia + 7 neurons; the video is Anvil + 166,700 neurons per agent.** Visitors can observe foraging, compare learning and submit Registry inputs. The public page does not send Aqua/Uniswap orders. The video shows four full-population agents and real local test-token swaps.
+**The public demo is Sepolia + 7 neurons; the video is Anvil + 166,700 neurons per agent.** The public page has three agents, Q-learning on confirmed-world replays, and a score-based adoption gate. The four-agent market video uses separate online readout updates and predates environment TXs. Public Sepolia does not trade on Aqua/Uniswap.
 
 [R5: Public Sepolia demo and transaction evidence](../../deployment/sepolia.md)
 
@@ -82,11 +112,11 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 [R3: Held-out experiment and negative results](../../research/bioagent-adaptation/README.md)
 
-## 13. Does it fit the prizes, and what remains?
+## 13. Who sends TXs? Can judges send them?
 
-**1inch permits local-fork transfers; V3 is within Uniswap’s listed stack.** Eligibility is not a prize guarantee. Requirements checked Sep 26 include a public repo, FEEDBACK.md and Uniswap’s Developer Feedback Form. This task did not submit the form or create FEEDBACK.md; publication of current commits still needs verification.
+**The owner EOA signs; Workers uses the same owner key for scheduled sends.** The key stays in a Cloudflare Secret. Hourly checks send to Agent #1 at least an hour apart, subject to gas and balance limits. Viewing and learning need no wallet; manual writes require the owner. This is not a smart wallet. Food never refills without a TX.
 
-[R6: ETHGlobal Tokyo: official prize requirements](https://ethglobal.com/events/tokyo2026/prizes)
+[R6: Current environment-TX and scheduled sender evidence](../judge-demo-review.md)
 
 Say: measured connectivity, successful settlement, observed learning updates. Do not claim: fly thoughts, biological superiority, profit, lower LLM cost, or equivalence of full and reduced runtimes.
 

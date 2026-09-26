@@ -4,7 +4,7 @@ export const sources = [
   ['R3', 'Held-out experiment and negative results', '../../research/bioagent-adaptation/README.md'],
   ['R4', 'Framework: API, validation and restore', '../../../packages/bioagent-framework/README.md'],
   ['R5', 'Public Sepolia demo and transaction evidence', '../../deployment/sepolia.md'],
-  ['R6', 'ETHGlobal Tokyo: official prize requirements', 'https://ethglobal.com/events/tokyo2026/prizes'],
+  ['R6', 'Current environment-TX and scheduled sender evidence', '../judge-demo-review.md'],
 ];
 
 export function content(e) {
@@ -17,8 +17,8 @@ export function content(e) {
     ja: {
       label: '日本語',
       title: 'BioAgent｜発表・質疑応答',
-      subtitle: '最初に短く答え、必要なら根拠を補足。2026-09-26収録版。',
-      pitchTitle: '最初の30秒',
+      subtitle: '現行の共通Fly Labに対応。市場動画・独立研究の結果は明示して区別。',
+      pitchTitle: '全神経動画を補足するとき（約30秒）',
       pitch:
         'BioAgentは、生物由来の神経回路で行動を決め、入力・学習・取引結果を追える実験基盤です。動画では4個体が各166,700神経で、Aquaの提示とUniswapの売買に関わります。実取引と学習更新を確認しました。別の採餌実験では行動が改善しましたが、通常モデルへの優位は未確認です。そこまで比較できる基盤を作ったことが成果です。',
       stats: [
@@ -62,7 +62,7 @@ export function content(e) {
         [
           'LLMより低コスト・低消費電力？',
           '定型判断の計算・更新を小さくし、電力・設備費・待ち時間を減らす可能性を調べています。',
-          `収録時のPythonプロセス全体のpeak RSSは${rss} MiB、最後の4個体分の神経計算は${neural} ms。電力は未測定で、比較優位の証拠ではありません。比較条件と想定反論は3ページ目にまとめています。`,
+          `収録時のPythonプロセス全体のpeak RSSは${rss} MiB、最後の4個体分の神経計算は${neural} ms。電力は未測定で、比較優位の証拠ではありません。比較条件と想定反論は4ページ目にまとめています。`,
           'R1',
         ],
         [
@@ -73,15 +73,15 @@ export function content(e) {
         ],
         [
           'IBioAgentを共通化するうまみは？',
-          '入力の解釈・出典・学習成果の互換性を、アプリごとに作り直す負担を減らせます。',
-          'SolidityのIBioAgentは入力インターフェースです。別の7神経JSフレームワークが入力検証、学習→評価→採用、保存・復元を共通化し、用途違いや悪化候補を拒否します。全神経Python市場版は別実装。技能の用途間転移や開発時間短縮は未測定です。',
+          '入力とモデルの意味を共通化し、検証・学習の処理を再利用することを目指します。',
+          'SolidityのIBioAgentは個体・Statusの共通API、IBioAgentStimulusは環境payloadを扱います。Anvil／Sepolia箱庭はUIとQ学習を共有。独立JSフレームワークの採用・復元APIや全神経Python市場版まで、単一の学習器に統合したわけではありません。',
           'R4',
         ],
         [
           '何がオンチェーン？ 判断も検証できる？',
           '箱庭の外部入力はすべてオンチェーンデータです。',
-          '現行の箱庭は初期環境・危険エリア・刺激をTXで記録し、そこから感覚入力を計算します。身体と学習はオフチェーンです。提出動画はAnvil forkの決済記録を示します。ハッシュは照合用で、神経計算の正しさを証明するものではありません。',
-          'R1, R4',
+          '初期環境TXに危険エリアも記録。正の刺激TX確定ごとに餌が1個増え、食べると消えます。位置・身体・消費・学習はオフチェーンで、ブラウザー間では入力を共有します。receipt確認は最終確定や神経計算の正しさの証明ではありません。',
+          'R5, R6',
         ],
         [
           'PnLは利益？ 安全に自動売買できる？',
@@ -92,7 +92,7 @@ export function content(e) {
         [
           '審査員が公開URLで試すものも全神経？',
           '公開ページはSepolia＋7神経、提出動画はAnvil＋全166,700神経です。',
-          '公開版では採餌・学習比較とRegistryへの実入力更新を試せます。公開ページからAqua／Uniswapの注文は送りません。動画では4個体と実際のテスト通貨交換を示します。',
+          '公開版は3個体で、確認済み環境を再生するQ学習です。新旧方策の比較スコアが改善した時だけ採用します。市場動画の4個体・readoutオンライン更新とは別。動画は環境TX対応前の記録です。',
           'R5',
         ],
         [
@@ -102,9 +102,9 @@ export function content(e) {
           'R3',
         ],
         [
-          'プライズ要件と残作業は？',
-          'ローカルfork上の実移動は1inch要件に沿い、V3利用はUniswapの対象スタックです。',
-          '受賞を保証するものではありません。公式要件（9/26確認）ではUniswapに公開リポジトリ、FEEDBACK.md、Developer Feedback Formが必要です。この作業ではフォーム未送信、FEEDBACK.md未作成、最新コミットの公開は別途確認が必要です。',
+          '誰がTXを送る？ 審査員も送れる？',
+          '所有者EOAが署名し、Workersも同じ所有者鍵で定期送信します。',
+          '鍵はCloudflare Secretに保管。毎時確認・最低1時間間隔でAgent #1に送信し、ガス・残高を制限します。観察と学習はウォレット不要。手動送信は所有者のみで、スマートウォレットではありません。餌はTX以外で自動補充しません。',
           'R6',
         ],
       ],
@@ -115,8 +115,9 @@ export function content(e) {
     en: {
       label: 'English',
       title: 'BioAgent | Presenter Q&A',
-      subtitle: 'Lead with the short answer, then give the evidence. Recording: 26 Sep 2026.',
-      pitchTitle: 'Your 30-second opening',
+      subtitle:
+        'Current shared Fly Lab. Recorded market results and independent research are labelled separately.',
+      pitchTitle: 'Optional: introduce the full-market video',
       pitch:
         'BioAgent is an experimental platform that connects biologically derived circuits to traceable actions. Four agents, each using 166,700 neurons, make Aqua offers and trade through Uniswap. We verified real local settlement and learning updates. A separate foraging experiment improved behavior, but did not outperform a matched non-biological model. Our contribution is a working platform for testing these possibilities and their limits.',
       stats: [
@@ -160,7 +161,7 @@ export function content(e) {
         [
           'Is it cheaper or more energy-efficient than an LLM?',
           'We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.',
-          `The shared Python process peaked at ${rss} MiB RSS; the last four-agent neural pass took ${neural} ms. Power is unmeasured; these are not comparative savings. Page 3 gives the hypotheses, counterarguments and comparison conditions.`,
+          `The shared Python process peaked at ${rss} MiB RSS; the last four-agent neural pass took ${neural} ms. Power is unmeasured; these are not comparative savings. Page 4 gives the hypotheses, counterarguments and comparison conditions.`,
           'R1',
         ],
         [
@@ -171,15 +172,15 @@ export function content(e) {
         ],
         [
           'What does the shared BioAgent interface provide?',
-          'Reusable input interpretation, provenance and policy compatibility checks.',
-          'Solidity IBioAgent defines inputs. The separate seven-neuron JS framework shares validation, train/evaluate/adopt and save/restore, rejecting incompatible or worse candidates. The full Python market runtime is separate. Cross-task skill transfer and developer-time savings are not demonstrated.',
+          'A shared meaning for inputs and models, with reusable validation and learning components.',
+          'Solidity IBioAgent defines identity/Status; IBioAgentStimulus carries environment payloads. Anvil/Sepolia share UI and Q-learning. The independent JS framework and full Python market runtime have separate learners. This is not one universal learning engine or demonstrated skill transfer.',
           'R4',
         ],
         [
           'What is onchain, and is inference trustless?',
           'All external inputs to the playground come from onchain data.',
-          'The current playground records the initial field, hazards and stimuli in TXs, then derives sensory inputs from them. Body state and learning run offchain. The submitted Anvil-fork video shows settlement evidence. Hashes identify artifacts, not proof of correct neural computation.',
-          'R1, R4',
+          'The initial TX includes hazards; each confirmed positive stimulus adds one food, removed when eaten. Position, body, consumption and learning run offchain. Browsers share inputs, not body state. Receipt checks do not establish finality or correct neural computation.',
+          'R5, R6',
         ],
         [
           'Does PnL prove profit or safe autonomous trading?',
@@ -190,7 +191,7 @@ export function content(e) {
         [
           'Does the public demo run the full population?',
           'The public demo is Sepolia + 7 neurons; the video is Anvil + 166,700 neurons per agent.',
-          'Visitors can observe foraging, compare learning and submit Registry inputs. The public page does not send Aqua/Uniswap orders. The video shows four full-population agents and real local test-token swaps.',
+          'The public page has three agents, Q-learning on confirmed-world replays, and a score-based adoption gate. The four-agent market video uses separate online readout updates and predates environment TXs. Public Sepolia does not trade on Aqua/Uniswap.',
           'R5',
         ],
         [
@@ -200,9 +201,9 @@ export function content(e) {
           'R3',
         ],
         [
-          'Does it fit the prizes, and what remains?',
-          '1inch permits local-fork transfers; V3 is within Uniswap’s listed stack.',
-          'Eligibility is not a prize guarantee. Requirements checked Sep 26 include a public repo, FEEDBACK.md and Uniswap’s Developer Feedback Form. This task did not submit the form or create FEEDBACK.md; publication of current commits still needs verification.',
+          'Who sends TXs? Can judges send them?',
+          'The owner EOA signs; Workers uses the same owner key for scheduled sends.',
+          'The key stays in a Cloudflare Secret. Hourly checks send to Agent #1 at least an hour apart, subject to gas and balance limits. Viewing and learning need no wallet; manual writes require the owner. This is not a smart wallet. Food never refills without a TX.',
           'R6',
         ],
       ],

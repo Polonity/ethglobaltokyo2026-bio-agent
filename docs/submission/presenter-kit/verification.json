@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-09-26T08:08:20.996Z",
+  "verifiedAt": "2026-09-26T10:21:40.552Z",
   "recordingModel": {
     "neurons": 166700,
     "connections": 25582938,
@@ -77,38 +77,38 @@
     },
     {
       "file": "qa-cheatsheet-ja.pdf",
-      "bytes": 714659,
-      "sha256": "c0e8de36b4c2feb2740a59e8ade3debac55cb99dde2fc42ea499f62bf350d41b"
+      "bytes": 751614,
+      "sha256": "560c420825b52179baa09117db23023b5a97212b6b3a7d8c61cb0246bf8f52f3"
     },
     {
       "file": "qa-cheatsheet-en.pdf",
-      "bytes": 96504,
-      "sha256": "cf5a48d02c6999f377a484c92cf6f602ba401a1624a1d59f094674fcdd7fb58e"
+      "bytes": 103472,
+      "sha256": "9f7d033a8d7c94e8eb8a89e54b9f48d624be070fca7af593b488ca539e50a2c5"
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
-      "bytes": 768579,
-      "sha256": "cd6693a337a73847eb97892cf13d76d5ab491508241122a44c6d2ca59d3c89a8"
+      "bytes": 811498,
+      "sha256": "3af8c3d6aa0b3121cfc1ec69aee082396ff0d4513488b483ea5c733d9e0dc985"
     },
     {
       "file": "qa-cheatsheet-ja.md",
-      "bytes": 12340,
-      "sha256": "f8d56350869b15f2bd792959fa8462f06da46d15b0b00f856733866c8c8acb73"
+      "bytes": 15249,
+      "sha256": "44140f2407260a552580172d577ff6a1d85491146642d93fe0e406e10fb1aa16"
     },
     {
       "file": "qa-cheatsheet-en.md",
-      "bytes": 11344,
-      "sha256": "d72e36b9e0ed1360ea4cc3846a5f4142dfd735c428e7d731d492e2d3a146adb5"
+      "bytes": 14031,
+      "sha256": "7e0d0060fda0274b0a0b5f6eab4372cfa8607e33b35dce7e992d512069c30891"
     },
     {
       "file": "qa-cheatsheet.html",
-      "bytes": 33019,
-      "sha256": "aa73bec9d2493b621cb7760680266be1011951bd68a8ee078dc13c923244df6f"
+      "bytes": 38496,
+      "sha256": "eeddaffcb38d66f83a972e0f048c2c85bd28903968506337d1c75cf0e7681aa9"
     },
     {
       "file": "ai-agent-comparison.md",
       "bytes": 15477,
-      "sha256": "f34995a6b14aec7ecf40a198741f4e51267364f797511c98c8f73944691175f3"
+      "sha256": "10b65e46b2f1cc4fef81abebc10bfcac19cc41087c7a9e40d1b546900ff12a62"
     },
     {
       "file": "resource-evidence.json",
@@ -178,13 +178,13 @@
   ],
   "cheatsheet": {
     "ja": {
-      "visiblePages": 3
+      "visiblePages": 4
     },
     "en": {
-      "visiblePages": 3
+      "visiblePages": 4
     },
     "all": {
-      "visiblePages": 6
+      "visiblePages": 8
     },
     "mobileNoHorizontalOverflow": true
   },

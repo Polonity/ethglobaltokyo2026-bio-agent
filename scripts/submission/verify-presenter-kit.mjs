@@ -152,9 +152,9 @@ try {
   const page = await browser.newPage({ viewport: { width: 1100, height: 1250 } });
   await page.goto(pathToFileURL(resolve(`${dir}/qa-cheatsheet.html`)).href);
   for (const [lang, count] of [
-    ['ja', 3],
-    ['en', 3],
-    ['all', 6],
+    ['ja', 4],
+    ['en', 4],
+    ['all', 8],
   ]) {
     await page.locator(`[data-select="${lang}"]`).click();
     assert.equal(await page.locator('.sheet:visible').count(), count);
