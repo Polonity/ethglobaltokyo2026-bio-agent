@@ -1,0 +1,105 @@
+{
+  "checkedAt": "2026-09-26T07:04:39.062Z",
+  "publicURL": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/",
+  "workerVersion": "a1397a66-421a-4d75-aaf4-5d9154c58fae",
+  "chainId": 11155111,
+  "registry": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+  "agentId": "1",
+  "modelHash": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+  "sourceVerification": {
+    "url": "https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+    "api": "https://sourcify.dev/server/v2/contract/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+    "creationMatch": "exact_match",
+    "runtimeMatch": "exact_match",
+    "verifiedAt": "2026-09-26T07:00:44Z"
+  },
+  "transactions": [
+    {
+      "hash": "0xc4a174f73f8d4dc3cc5900c70b111fa0b53414d6b3d6d7eb840abc760644f695",
+      "block": 11784549,
+      "gasUsed": "827139",
+      "feeETH": "0.000912344461032696",
+      "status": 1
+    },
+    {
+      "hash": "0x6d4569b951fa6663e0725f9bbb46747e4099b6e02550e1da4aba183d8ef26b73",
+      "block": 11784550,
+      "gasUsed": "192047",
+      "feeETH": "0.000198497404730892",
+      "status": 1
+    },
+    {
+      "hash": "0xfc30ece997bfedf28569f11b767b935fdf21afdbf589b2c7ce22a2f3387b8339",
+      "block": 11784552,
+      "gasUsed": "34208",
+      "feeETH": "0.00003604042147536",
+      "status": 1
+    },
+    {
+      "hash": "0xc12669f275cd300e08ae4db0c00fb8da18e1b799252998ae7cf74b6b88fc0e2e",
+      "block": 11784623,
+      "gasUsed": "34196",
+      "feeETH": "0.000034809699745056",
+      "status": 1
+    },
+    {
+      "hash": "0x280a2a5b1b6a3f3280428ef6f50e1a5dda28066a977ecd347e073da803f33402",
+      "block": 11784624,
+      "gasUsed": "34208",
+      "feeETH": "0.000032530024292256",
+      "status": 1
+    }
+  ],
+  "gasSpentETH": "0.00121422201127626",
+  "remainingTestETH": "0.01878577798872374",
+  "gasWallet": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+  "browser": {
+    "passed": true,
+    "initialRevision": "2",
+    "finalRevision": "4",
+    "restored": true,
+    "mobileOverflow": false,
+    "staleInputPauses": true,
+    "errors": [],
+    "failedRequests": [],
+    "walletBridge": "EIP-1193 browser bridge; signer in Node only, not a MetaMask UI test",
+    "learning": {
+      "accepted": true,
+      "before": {
+        "reward": 3.8930111794323596,
+        "food": 6.25,
+        "contacts": 9,
+        "rests": 177.75,
+        "finalEnergy": 0.5915999999999995,
+        "finalReserves": 0.5403750000000148
+      },
+      "after": {
+        "reward": 33.80955833155666,
+        "food": 12.5,
+        "contacts": 0.25,
+        "rests": 12,
+        "finalEnergy": 0.32584999999999903,
+        "finalReserves": 0.17660000000000384
+      }
+    }
+  },
+  "scope": {
+    "publicDemo": "Ethereum Sepolia + 7 measured neurons / 19 edges; browser foraging runtime",
+    "submissionVideo": "Anvil + full 166,700 classified neurons; separate existing runtime",
+    "onchain": "Registry identity and status only; no Aqua or Uniswap execution in this public demo"
+  },
+  "workerVersionAtTransactionTest": "f504a11b-caa2-4df8-9099-728dbbdf3cc7",
+  "finalReadOnlyCheck": {
+    "checkedAt": "2026-09-26T07:10:40.779Z",
+    "passed": true,
+    "restored": true,
+    "mobileOverflow": false,
+    "staleInputPauses": true,
+    "newTransactions": 0
+  },
+  "deploymentResume": {
+    "reusedReceipts": true,
+    "preservedSourceVerification": true,
+    "gasWalletNonceAfterResume": 5
+  }
+}

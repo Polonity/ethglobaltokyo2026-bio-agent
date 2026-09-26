@@ -1,5 +1,7 @@
 # ドキュメント案内
 
+**[審査員向けSepoliaデモ・日英操作案内・実TX証拠](deployment/sepolia.md)**。公開版は7神経・19接続、提出動画はAnvil＋全166,700神経版です。
+
 **[進行中: 全アプリでの全神経・経験学習・改善](design/full-app-learning.md)**。実験画面を越えて採餌・市場・Aquaへ統合し、省略版と比較するための完了条件と現状。
 
 **[ローカル全166,700神経モデル](design/malecns-full-local.md)**: 7神経への縮小理由、全規模の起動、計算時間とメモリ、比較と残る検証。ブラウザー向けの軽量学習デモと分けて運用します。
@@ -44,7 +46,7 @@
 | 判定・自己学習を理解する | [Fly Labモデル](design/fly-arena.md) |
 | テストして変更を引き継ぐ | [開発ガイド](development.md) |
 | 将来の常駐Runtimeを設計する | [イベント駆動設計](design/runtime-and-events.md) |
-| Sepoliaに備える | [Sepolia手順](deployment/sepolia.md) |
+| Sepolia公開デモを操作・検証する | [Sepolia手順](deployment/sepolia.md) |
 | 公開GUIを配信する | [Workers手順](deployment/workers.md) |
 | MaleCNSの取込方針を確認する | [データ出典](data-sources.md) |
 
@@ -55,7 +57,7 @@
 - **Registry**: Agentの定義と最新Statusを保持するコントラクト。interface自体をデプロイするわけではない。
 - **revision**: Statusの更新番号。学習によるpolicy versionとは別。
 - **policy version**: 改善したQ値の採用時に上がる、ブラウザー内の方策の版。
-- **modelHash**: モデルmanifestのバイト列に対するSHA-256。個体ごとの学習済みQ値を都度オンチェーン登録するものではない。
+- **modelHash**: 登録対象のモデル定義のSHA-256。Sepolia Labでは正確な部分グラフJSON、旧版ではモデルmanifestのバイト列を対象とします。個体ごとの学習済みQ値を都度オンチェーン登録するものではない。
 - **適用済み**: 受信したイベントがブラウザー内Agentの入力に反映された状態。一般のチェーンにおける最終確定の意味ではない。
 
 ## 実装の到達点
@@ -66,8 +68,8 @@
 | Anvilへの配置と3匹の登録 | `local:up` で実行 |
 | GUIから個体別Status送信・ログ受信 | ローカルAnvilモードで実装済み |
 | 2D競争・Q学習・候補評価・復帰 | ブラウザー内で実装済み |
-| 公開用Workers | 12匹のブラウザーデモ。オンチェーン入力は未接続 |
-| Sepolia | 配置スクリプトと手順を準備。未デプロイ |
+| 公開用Workers | 旧12匹のFly Labに加え、独立したSepolia Labを公開 |
+| Sepolia | Registry・個体1配置、入力更新の実TXと公開ブラウザー動作を検証済み |
 | SQLite Backend・Python学習 | 独立したひな型。GUI競争とは未接続 |
 | 採餌の身体状態・checkpoint復元 | ローカル再開と学習中の再現を検証済み |
 | 実V3 Pool・市場GUI・ペーパートレード | Anvilで実装・ブラウザー検証済み |

@@ -1,5 +1,7 @@
 # Bio Agent — ETHGlobal Tokyo 2026
 
+**審査員向け公開デモ:** [日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) / [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) — **Ethereum Sepolia＋7神経・19接続**。ウォレットなしで動作観察・学習比較できます。[操作・実TX・再現手順](docs/deployment/sepolia.md)。**サブミッション動画はAnvil＋全166,700神経版を使用します。**
+
 **[BioAgent Framework / 共通の判断・学習基盤](packages/bioagent-framework/README.md)** — モノレポ内の実験用フレームワークを追加しました。チェーン入力からコネクトーム判断、学習候補の評価・採用、保存・復元までを採餌とAquaで共通化。`npm run framework:lab` → http://127.0.0.1:8826/ 。[未使用条件での実験結果](docs/research/bioagent-adaptation/README.md)。
 
 **新しい共有市場（4匹）:** [説明書・実画面・実売買の検証](docs/apps/shared-market/README.md)。`npm run shared:dev` → http://127.0.0.1:8814/ 。MOMO/SORAが公式Aquaへ提示し、KOHARU/HINATAが同じ通貨のUniswap/Aquaを比較して実売買します。全166,700神経/個体、独立状態・オンラインreadout更新。ローカルフォーク専用です。
@@ -7,7 +9,7 @@
 **[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](docs/submission/1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。公開版は旧Q-learningモデルです。従来のローカル版（8800）は採餌・市場・Aquaの全用途でMaleCNS実測部分回路を必須とし、行動選択部分を学習します。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
+現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。公開版は旧Q-learningモデルです。従来のローカル版（8800）は採餌・市場・Aquaの全用途でMaleCNS実測部分回路を必須とし、行動選択部分を学習します。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。別の審査員向けSepolia LabではRegistryの配置とブラウザーからの実入力更新を確認済みです。
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
@@ -65,6 +67,8 @@ imagegenで生成。チェーン入力、取得・検証、コネクトーム実
 | パス | 役割 |
 | --- | --- |
 | `packages/bioagent-framework/` | チェーン入力検証、判断の出典、共通の学習・評価・採用・方策復元 |
+| `apps/sepolia-lab/` | 審査員向けの日英GUI。実Sepolia入力、縮小モデル、ローカル学習 |
+| `services/sepolia/` | 独立した公開WorkerとRegistry限定の読取RPC |
 | `apps/research-lab/` | フレームワークの操作・比較・EVM記録再生を確認する日英GUI |
 | `packages/bio_agent/` | Bio Agent 本体。刺激を受け取り内部状態・行動を出力 |
 | `packages/training/` | 学習基盤。実験実行、評価、モデル成果物の管理 |
@@ -129,11 +133,11 @@ Blockchain RPC / events
 保存済み入力 → 学習基盤: 学習・評価 → モデル成果物 → Bio Agent
 ```
 
-現在公開中の GUI はローカル入力 → ブラウザー内 Agent → 描画の構成です。学習室で更新した方策は評価後に適用されます。上記のチェーン・共有Backend経由の構成は次段階です。
+従来のFly Labはローカル入力 → ブラウザー内 Agent → 描画の構成です。Sepolia Labは実Sepoliaの状態を読み、共通フレームワーク経由で縮小モデルを動かします。学習室で更新した方策は評価後に適用されます。共有Backendを経由する常駐Runtimeは次段階です。
 
 ## コントラクト開発・Sepolia
 
-コントラクト開発は **Foundry** を使用します。[コントラクト README](contracts/README.md) に環境とテスト、[Sepolia 手順](docs/deployment/sepolia.md) に未送信の dry-run と将来のデプロイ操作をまとめています。
+コントラクト開発は **Foundry** を使用します。[コントラクト README](contracts/README.md) に環境とテスト、[Sepolia 手順](docs/deployment/sepolia.md) に公開URL・配置記録・実ブラウザー検証・同じガスウォレットの再利用手順をまとめています。
 
 ```sh
 git submodule update --init --recursive

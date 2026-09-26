@@ -1,5 +1,7 @@
 # Submission package — BioAgent
 
+**Live judge demo:** [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) / [日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja). This is **Ethereum Sepolia + the measured 7-neuron / 19-edge subgraph**. The submission video remains **Anvil + the full 166,700-neuron runtime**. [Guide and execution boundaries](../deployment/sepolia.md) / [real transaction and browser evidence](sepolia-evidence.json).
+
 **[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
 Prepared 2026-09-26. This is a local prototype and a specification proposal, not an assigned EIP. The text below is ready to adapt to the submission form. No external form has been submitted.
 
@@ -85,7 +87,7 @@ See [prior-art research](../standards/prior-art-and-bioagent.md), [design direct
 
 Supplement: [Circuit Lab recording and checks](../design/circuit-evidence.md).
 
-Latest integrated video and reproduction: [English submission demo](../demo-video.md). Local output: `artifacts/submission-demo/bioagent-submission-english.mp4`, with `evidence.json` and exported circuit traces.
+Earlier integrated video and reproduction: [English submission demo](../demo-video.md). Local output: `artifacts/submission-demo/bioagent-submission-english.mp4`, with `evidence.json` and exported circuit traces.
 
 ## Evidence and reproduction
 
@@ -112,7 +114,7 @@ The combined arena, agent, swap, body, paper, circuit, explorer and translation 
 - Market balances and orders are paper-only. The real onchain swaps use local test tokens.
 - Foraging checkpoint restore is a trusted local format. Cross-implementation replay, portable learning attestations and persistent reorg rollback are not implemented.
 - Wallet association is a declared address reference, not deployed smart-wallet control or spending authority.
-- No Sepolia deployment has been performed. Public Workers have not been updated to this two-app local version.
+- A separate Sepolia Worker now runs the seven-neuron foraging demo against a deployed Registry. The full-neuron and Aqua / Uniswap transaction demonstrations remain on local Anvil; this public page does not replace those proofs.
 - No EIP number, standards approval or compliance certification is claimed.
 
 ## Deliverables checklist

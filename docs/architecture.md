@@ -2,10 +2,13 @@
 
 現在の中心は **Anvilに登録した3匹へ、GUIから入力を送り、ブラウザー内で競争・学習させる構成** です。将来の常駐Runtimeと永続化は [別の設計](design/runtime-and-events.md) として扱います。
 
+**追加: 審査員向けSepolia Lab** — Browser wallet → Sepolia Registry → 読取専用Worker → EvmBioAgentSource → ChainDecisionRunner → LearningBioAgent → 採餌画面。7神経モデルの計算と学習はブラウザー内、ポリシーはlocalStorageへ保存します。[詳細・信頼の境界](deployment/sepolia.md)。提出動画のAnvil＋全166,700神経版とは別環境です。
+
 ## 実行モード
 
 | モード | 起動 | 入力経路 | 個体数 | 保存 |
 | --- | --- | --- | --- | --- |
+| Sepolia公開デモ | `npm run sepolia:dev` / 独立Worker | Wallet → Sepolia Registry → 読取Worker → 共通Framework | 選択した1個体 | 登録・入力はSepolia、ポリシーはlocalStorage |
 | Anvil接続 | `npm run local:up` | GUI → ローカルWorker → Registry → logs → GUI Runtime | 3 | 登録・入力はAnvil、競争・学習はタブ内 |
 | ブラウザーデモ | `npm run dev` / 公開用Worker | GUI → GUI Runtime | 12 | タブ内 |
 | Pythonひな型 | `make dev` | `/api/demo/step` → 閾値モデル | 1ステップずつ | SQLiteに模擬実行履歴 |
@@ -73,7 +76,7 @@ WorkerはAgentの行動を計算しません。チェーンに保存するのは
 
 ## 次に接続するもの
 
-- Sepolia: RPC・署名経路・確認深度・再編成方針を決定し、ローカル専用APIと分離して実装。
+- Sepoliaの継続運用: 現行デモの追加確認0・120秒鮮度検査を越えるfinality、状態復元と共有Runtimeを設計。
 - 共有Runtime: ブラウザーを閉じても稼働するプロセス、適用tick、checkpoint、入力履歴を保存。
 - Backend: 現在の模擬履歴用SQLiteから、イベント・session・モデル成果物のスキーマへ拡張。
 - MaleCNS: リリース・利用回路・入出力対応・モデル実装と評価を確定。

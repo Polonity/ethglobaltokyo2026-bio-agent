@@ -51,4 +51,4 @@ Foundry が PATH にない場合は `make ... FORGE=/absolute/path/forge ANVIL=/
 
 ## Experimental stimulus extension
 
-`BioAgentStimulusRegistry` extends the existing Registry with schema-tagged inputs and ERC-165 discovery. It does not tokenize agents. See [mailbox semantics](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the base Registry; the separate Swap fixture demo deploys the stimulus extension on its own Anvil. No Sepolia deployment has been performed.
+`BioAgentStimulusRegistry` extends the existing Registry with schema-tagged inputs and ERC-165 discovery. It does not tokenize agents. See [mailbox semantics](../docs/standards/bio-agent-draft.md). Existing deployment scripts still deploy the base Registry; the separate Swap fixture demo deploys the stimulus extension on its own Anvil. The base Registry has now been deployed to Ethereum Sepolia; see [the deployment and live demo guide](../docs/deployment/sepolia.md). The separate stimulus extension is still a local fixture.
