@@ -349,5 +349,18 @@
     "localLanguageSwitch": true,
     "publicBrowser": true,
     "fullNeuronRuntimeStepsPerVariant": 4
+  },
+  "presentationReview": {
+    "testedAt": "2026-09-26T10:28:20.953Z",
+    "passed": true,
+    "workerVersion": "066e5620-d1e5-4cde-88bf-eb6b694a4287",
+    "sourceCommit": "60f188c",
+    "assetHashes": {
+      "index.html": "6b2b67c0cdde4287d77665b0c5cb1d4a841dac288669d212dcf425d501234855",
+      "app.js": "9b97e0933b22bc0d92efabaa38149d222df12ebdd4e827e00a03e443e1b82e06",
+      "style.css": "0c45b70f98df83c2e5ebc64f3941597044e81a95097a43d1d9aa4d3a211404f7"
+    },
+    "evidence": "presenter-kit/public-walkthrough.json",
+    "scope": "Read-only walkthrough of current public UI, with local browser learning. The observed score is not an independent performance benchmark."
   }
 }

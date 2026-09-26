@@ -1,0 +1,47 @@
+{
+  "testedAt": "2026-09-26T10:28:20.953Z",
+  "url": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/",
+  "chainWrites": 0,
+  "languages": [
+    {
+      "lang": "ja",
+      "about": "×\n\nABOUT THE EXPERIMENT\n\n小さな判断の積み重ね。\n\nまず環境TXで危険エリアとフィールドを用意し、確定した刺激TXで蜜を追加します。3匹は蜜・危険・身体状態から移動や休息を選びます。\n\n「学習室へ」で、確認済み環境のコピーと経験からQ値を更新します。同じ環境の再生で新旧方策を比較し、改善した候補のみ採用。未知環境での効果や、復帰時の体力回復とは区別します。\n\nSepolia / 11155111 · 実測7神経・19接続。刺激TXで餌を追加し、行動選択を学習します。身体と動力学は人工設計です。\n\n観察をはじめる ↗",
+      "guidePresent": true
+    },
+    {
+      "lang": "en",
+      "about": "×\n\nABOUT THE EXPERIMENT\n\nLittle decisions add up.\n\nFirst, an environment TX defines the field and hazards; confirmed stimulus TXs add food. Three flies use food, danger and body state to choose movement or rest.\n\nStart learning updates Q-values using experience and a copy of the confirmed environment. Replay compares old and candidate policies; only improved candidates are adopted. This is separate from unseen-world performance and energy recovery on return.\n\nSepolia / 11155111 · Seven measured neurons and nineteen edges. Stimulus TXs add food; action choices are learned. Body and dynamics are engineered.\n\nStart watching ↗",
+      "guidePresent": true
+    }
+  ],
+  "environmentTx": "https://sepolia.etherscan.io/tx/0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc",
+  "learning": {
+    "schema": "bioagent.learning-result.v1",
+    "useCase": "foraging",
+    "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+    "baseVersion": 1,
+    "version": 1,
+    "before": 13.894323553939751,
+    "after": 13.840139666792505,
+    "samples": 6,
+    "updates": 960,
+    "adopted": false,
+    "metric": "replay of confirmed environment; not independent generalization",
+    "applies": "next-decision",
+    "changed": "action-readout-only",
+    "topology": "frozen MaleCNS v1.0",
+    "accepted": false,
+    "steps": 960
+  },
+  "assetHashes": {
+    "index.html": "6b2b67c0cdde4287d77665b0c5cb1d4a841dac288669d212dcf425d501234855",
+    "app.js": "9b97e0933b22bc0d92efabaa38149d222df12ebdd4e827e00a03e443e1b82e06",
+    "style.css": "0c45b70f98df83c2e5ebc64f3941597044e81a95097a43d1d9aa4d3a211404f7"
+  },
+  "passed": true,
+  "mobileNoOverflow": true,
+  "errors": [],
+  "sourceCommit": "60f188c",
+  "workerVersion": "066e5620-d1e5-4cde-88bf-eb6b694a4287",
+  "scope": "Read-only walkthrough of current public UI, with local browser learning. The observed score is not an independent performance benchmark."
+}

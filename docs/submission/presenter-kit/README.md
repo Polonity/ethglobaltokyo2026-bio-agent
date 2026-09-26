@@ -95,6 +95,12 @@ Local Anvil transactions have **no public Etherscan link**. The upstream chain i
 
 The video predates the environment-TX changes; use the current public page to demonstrate TX-derived hazards and food. The public page is a lightweight interactive entry point. It is not a hosted version of the full-population trading runtime. The seven-neuron framework’s evaluate/adopt gate is also separate from the full-market runtime’s experimental online readout updates.
 
+## 資料どおりに操作できるか / Walkthrough verification
+
+[公開ページでの確認記録](public-walkthrough.json)：初期環境TX、日英切替、学習完了、採用／維持の表示、390px画面、共通ビルドとの一致を確認しました。今回は候補のスコアが13.8943→13.8401へ下がり、元の方策を維持しました。TX送信は行っていません。
+
+The public walkthrough completed without a wallet or a chain write. A slightly lower-scoring candidate was correctly rejected. This verifies the explanation and adoption behavior, not generalization or a new performance result.
+
 ## 再生成 / Reproduction
 
 Repository root, existing Node/Chrome/ffmpeg dependencies. PDF generation uses installed Noto Sans CJK JP. The capture requires the existing shared market at `127.0.0.1:8814` and its Anvil fork at `127.0.0.1:18551`, paused with prior transactions. It resumes only its own local run, preserves learning/balances and restores the initial targets. Do not reset or redeploy a chain to view these delivered files.

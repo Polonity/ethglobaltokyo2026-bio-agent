@@ -42,6 +42,12 @@ npm run test:sepolia:public
 
 [検証要約JSON](sepolia-evidence.json)。生の試験出力は`artifacts/local-chain/verification.json`、`artifacts/sepolia/shared-ui-public/`、`artifacts/sepolia/cron-verification.json`、`artifacts/sepolia/full-runtime-environment.json`。削除した旧専用監査スクリプトには依存しません。
 
+## 説明資料に沿った公開画面の追試
+
+[日英の実演確認](presenter-kit/public-walkthrough.json)では、ウォレットなしで初期環境TXを開き、日英の説明を切り替え、選択個体の学習を完了しました。今回の再生スコアは13.8943→13.8401で、候補を採用せず元の方策を維持しました。比較機構の動作確認であり、性能比較の追加実験ではありません。TX送信は0件です。
+
+現行の配信ファイルは共通ビルドと一致し、英語の説明に日本語が残らないことと390px表示を確認しました。公開版の操作原稿は[日本語](presenter-kit/walkthrough-ja.md)／[English](presenter-kit/walkthrough-en.md)。
+
 ## English
 
 The live demo now shows a verifiable input path: an initial environment TX defines hazards and field settings; confirmed positive stimulus TXs add food. Pending or duplicated TXs do not add food, and consumed food does not respawn. Local Anvil and public Sepolia serve identical UI assets and use the same decision and learning code.
