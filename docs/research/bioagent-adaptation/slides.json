@@ -1,0 +1,41 @@
+[
+  {
+    "tag":{"ja":"01 / 動くフレームワークへ","en":"01 / A WORKING FRAMEWORK"},
+    "title":{"ja":"チェーン上のBioAgentから、根拠付きの判断へ","en":"From an on-chain BioAgent to traceable decisions"},
+    "lead":{"ja":"入力を受け、コネクトームで計算し、判断と学習成果を返す。","en":"Receive inputs, compute through a connectome, return decisions and learning artifacts."},
+    "cards":[
+      {"label":{"ja":"入力から判断まで","en":"INPUT TO DECISION"},"big":{"ja":"実Registry更新3件\n→ 2用途・6判断","en":"3 Registry updates\n→ 6 decisions / 2 tasks"},"body":{"ja":"ローカルEVMで確認。\n入力revisionと方策hashを記録。","en":"Verified on a local EVM.\nRecords input revision and policy hash."},"color":"087E74"},
+      {"label":{"ja":"共通の学習API","en":"SHARED LEARNING API"},"big":{"ja":"学習 → 評価 → 採用\n保存 → 復元","en":"Train → evaluate → adopt\nSave → restore"},"body":{"ja":"採餌とAquaで共通化。\n悪化した候補は採用しない。","en":"Shared by foraging and Aqua.\nReject candidates that fail the gate."},"color":"315B9E"},
+      {"label":{"ja":"モノレポ内で利用","en":"READY IN THE MONOREPO"},"big":{"ja":"独立パッケージ\n＋ 日英の操作画面","en":"Framework package\n+ bilingual Research Lab"},"body":{"ja":"入力検証・成果物の互換性・\n共有環境の時計を共通化。","en":"Shared input checks, artifact\ncompatibility and environment clock."},"color":"087E74"}
+    ],
+    "foot":{"ja":"今回の実装は実測7神経・19接続の部分回路。動力学と入出力は人工設計。判断までを提供。","en":"This release uses a measured 7-neuron / 19-edge slice with engineered dynamics and mappings. Decision output only."},
+    "notes":{"ja":"チェーン上のBioAgentを受けて、ハエ由来の回路で判断するフレームワークを作りました。採餌とAquaで、入力検証、学習の評価と採用、保存復元を共通化しています。実際のローカルEVMから判断まで確認しました。","en":"We built a framework connecting on-chain BioAgent inputs to fly-derived circuit decisions. Foraging and Aqua share validation, learning evaluation, adoption and save/restore. We verified the pipeline with actual local EVM transactions."},
+    "refs":"chain.json / browser.json / packages/bioagent-framework"
+  },
+  {
+    "tag":{"ja":"02 / 学習の効果と限界","en":"02 / EFFECTS AND LIMITATIONS"},
+    "title":{"ja":"学習は効いた。生物ならではの優位は未証明。","en":"Learning helped. Biological superiority remains unproven."},
+    "lead":{"ja":"同じ条件で比較し、改善と副作用の両方を残した。","en":"Matched comparisons expose both improvements and side effects."},
+    "cards":[
+      {"label":{"ja":"未使用60環境 × 5探索seed","en":"60 UNSEEN WORLDS × 5 SEARCH SEEDS"},"big":{"ja":"報酬\n18.79 → 56.12","en":"Reward\n18.79 → 56.12"},"body":{"ja":"餌 6.80 → 20.84\n接触 1.25 → 0.10（平均）","en":"Food 6.80 → 20.84\nContacts 1.25 → 0.10 (means)"},"color":"087E74"},
+      {"label":{"ja":"体力を使うトレードオフ","en":"AN ENERGY TRADEOFF"},"big":{"ja":"終了時エネルギー\n0.72 → 0.36","en":"Final energy\n0.72 → 0.36"},"body":{"ja":"報酬だけでは十分でない。\n体力の下限も採用条件へ。","en":"Reward alone is insufficient.\nAn optional energy floor can reject it."},"color":"A15F20"},
+      {"label":{"ja":"通常の入力モデルと比較","en":"MATCHED DIRECT-INPUT CONTROL"},"big":{"ja":"回路あり 56.12\n直接入力 56.08","en":"Connectome 56.12\nDirect input 56.08"},"body":{"ja":"差の95%区間は0を含む。\n回路の必要性は示せていない。","en":"The difference interval includes zero.\nA need for the circuit is unproven."},"color":"315B9E"}
+    ],
+    "foot":{"ja":"人工採餌・300stepの標準条件。学習は行動変換の3係数のみ。取引収益・省電力・LLMとの同等性は未検証。","en":"Synthetic foraging, 300-step default profile. Only 3 readout coefficients learned. No trading, energy-cost or LLM parity claim."},
+    "notes":{"ja":"未使用60環境では報酬が18.79から56.12へ改善し、接触も平均で減りました。ただし体力消費は増え、通常の入力モデルも同程度でした。生物の性能優位は未証明です。この副作用から、体力の下限も採用条件にできるようにしました。","en":"On sixty unseen worlds, reward rose from 18.79 to 56.12 and mean contacts fell. But body energy declined, and direct-input controls performed similarly. Biological superiority remains unproven. The framework can now reject candidates that violate an energy floor."},
+    "refs":"experiment.json / summary.json / body-audit.json"
+  },
+  {
+    "tag":{"ja":"03 / チームへ提供する価値","en":"03 / VALUE FOR INTEGRATING TEAMS"},
+    "title":{"ja":"判断モデルを、同じ基盤で試して確かめる","en":"Compare decision models through one reusable framework"},
+    "lead":{"ja":"Uniswap / Aquaへの提案：判断の評価と組み込みに使える研究基盤。","en":"For Uniswap / Aqua: a research framework for evaluating and integrating controllers."},
+    "cards":[
+      {"label":{"ja":"実装済み：比較と再利用","en":"IMPLEMENTED / COMPARE AND REUSE"},"big":{"ja":"同じ入力・APIで\nモデルを検証","en":"Test controllers with\nshared inputs and APIs"},"body":{"ja":"判断の出典を追い、\n学習成果を再学習なしに復元。","en":"Trace decisions to their inputs.\nRestore policies without retraining."},"color":"087E74"},
+      {"label":{"ja":"実装済み：採用を制御","en":"IMPLEMENTED / CONTROL ADOPTION"},"big":{"ja":"成果と副作用で\n採用・棄却","en":"Adopt or reject using\noutcomes and constraints"},"body":{"ja":"報酬、接触、体力など\n用途の目的を明示する。","en":"Make reward, contacts and\nenergy requirements explicit."},"color":"315B9E"},
+      {"label":{"ja":"次に測る：実際のアプリ価値","en":"NEXT / MEASURE APPLICATION VALUE"},"big":{"ja":"実行候補・見送り\n提示条件・撤回","en":"Candidate / hold\nQuote terms / withdraw"},"body":{"ja":"未使用データで固定ルール比較。\n利用・利益への効果は今後測る。","en":"Compare with rules on unseen data.\nAdoption and returns still need testing."},"color":"A15F20"}
+    ],
+    "foot":{"ja":"成果：動くフレームワーク、再現できる実験、適用限界。BioAgentの独自価値を確かめるための土台。","en":"Delivered: a working framework, reproducible experiments and explicit limits—a foundation for testing BioAgent-specific value."},
+    "notes":{"ja":"チームへ提供するのは、判断モデルを同じ基盤で比べ、悪い候補を止め、根拠を追える仕組みです。次は実行候補や見送りを固定ルールと比較し、アプリへの利益を測ります。","en":"Teams get shared integration, reproducible comparisons and controlled adoption. Next, we can compare candidate-or-hold decisions against rules and measure application outcomes. Router adoption and financial benefits are still hypotheses."},
+    "refs":"packages/bioagent-framework/README.md / findings-ja-en.md"
+  }
+]
