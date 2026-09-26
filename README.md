@@ -35,17 +35,18 @@ npm run framework:lab
 
 基本の流れは、**チェーン入力 → 検証 → コネクトームの計算 → 判断・学習 → アプリ**です。Anvil／Sepoliaの箱庭では、初期環境・危険エリア・餌・刺激の外部入力をすべてTXに記録します。身体状態と学習はオフチェーンで計算します。
 
-| ディレクトリ                                                          | 役割                                             |
-| --------------------------------------------------------------------- | ------------------------------------------------ |
-| [contracts/](contracts/README.md)                                     | 個体の登録、モデル参照、入力状態の管理           |
-| [packages/bioagent-framework/](packages/bioagent-framework/README.md) | 入力検証、学習候補の評価・採用、方策の保存・復元 |
-| [packages/bio_agent/](packages/bio_agent/README.md)                   | コネクトーム、身体状態、用途別の実行エンジン     |
-| [apps/](apps/)                                                        | 個体の行動や学習結果を観察するGUI                |
-| [services/](services/)                                                | GUI配信、チェーン接続、ローカル実行サービス      |
+| ディレクトリ | 主な言語 | 役割 |
+| --- | --- | --- |
+| [contracts/](contracts/README.md) | Solidity | 個体・モデル参照・入力と権限 |
+| [packages/bioagent-framework/](packages/bioagent-framework/README.md) | JavaScript | 入力検証、学習評価・採用、方策保存・復元 |
+| [packages/bio_agent/](packages/bio_agent/README.md) | JavaScript / Python | ブラウザーの部分回路／ローカルの全神経計算 |
+| [packages/shared/](packages/shared/README.md) | TypeScript | 共通データ型の仕様案 |
+| [apps/](apps/) | JavaScript / HTML / CSS | 行動・学習を観察するGUI |
+| [services/](services/) | JavaScript | Workersで配信・入力検証、Node.jsで全神経実行を制御 |
 
 公開デモとJavaScriptフレームワークは7神経・19接続の部分回路、全規模モデルは別のPythonランタイムを使います。接続構造は実測データに由来し、動力学と入出力変換は人工設計です。
 
-[レイヤ構成図とAPI](packages/bioagent-framework/README.md#レイヤ構造) · [データ出典](docs/data-sources.md) · [実験結果と限界](docs/research/bioagent-adaptation/README.md)
+[実行境界・通信・保存先](docs/architecture.md) · [レイヤ構成図とAPI](packages/bioagent-framework/README.md#レイヤ構造) · [データ出典](docs/data-sources.md) · [実験結果と限界](docs/research/bioagent-adaptation/README.md)
 
 ## 開発
 

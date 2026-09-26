@@ -8,7 +8,7 @@
 
 | 用途 / Use | 日本語 | English |
 | --- | --- | --- |
-| 約1分・6枚の説明 / Six-slide explanation | [PDF](presenter-kit/explanation-ja.pdf) · [PPTX](presenter-kit/explanation-ja.pptx) | [PDF](presenter-kit/explanation-en.pdf) · [PPTX](presenter-kit/explanation-en.pptx) |
+| 約1分6枚＋構成付録 / Six slides + architecture | [PDF](presenter-kit/explanation-ja.pdf) · [PPTX](presenter-kit/explanation-ja.pptx) | [PDF](presenter-kit/explanation-en.pdf) · [PPTX](presenter-kit/explanation-en.pptx) |
 | 段階別の原稿・操作 / Script & walkthrough | [日本語](presenter-kit/walkthrough-ja.md) | [English](presenter-kit/walkthrough-en.md) |
 | 手元のQ&A・4ページ / Four-page Q&A | [PDF](presenter-kit/qa-cheatsheet-ja.pdf) | [PDF](presenter-kit/qa-cheatsheet-en.pdf) |
 | 提出動画・57.1秒 / Submitted video | [MP4](presenter-kit/bioagent-submission-ja.mp4) | [MP4](presenter-kit/bioagent-submission-en.mp4) |
@@ -43,7 +43,7 @@ The public page is a foraging demo; it does not send Aqua/Uniswap orders. The ne
 - [AI Agent比較：期待・実測・次の測定](presenter-kit/ai-agent-comparison.md)
 - [全神経の共有市場](../apps/shared-market/README.md)
 - [独立JSフレームワーク](../../packages/bioagent-framework/README.md)
-- [共通UI・環境TXの構成](../architecture.md)
+- [実行境界・実装言語・データの流れ](../architecture.md) · [English](../architecture.en.md)
 - [1inch Aquaの個別提出資料](1inch-aqua.md)：公式Aqua forkと既存証拠。最新の4個体動画は上記を使用。
 - [以前の全神経アプリ受入記録](full-apps-acceptance.md)：別ランタイムの保存済み検証。
 

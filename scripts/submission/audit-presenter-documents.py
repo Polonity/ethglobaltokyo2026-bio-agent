@@ -15,7 +15,7 @@ dir = root / 'docs/submission/presenter-kit'
 out = root / 'artifacts/submission-presenter-current'
 out.mkdir(parents=True, exist_ok=True)
 report = {'auditedAt': datetime.now(timezone.utc).isoformat(), 'pdfs': [], 'pptx': [], 'visualReview': 'Pending assistant inspection of rendered PDF pages', 'nativePowerPointRendering': False}
-for name, pages in [('qa-cheatsheet-ja',4),('qa-cheatsheet-en',4),('qa-cheatsheet-ja-en',8),('explanation-ja',6),('explanation-en',6)]:
+for name, pages in [('qa-cheatsheet-ja',4),('qa-cheatsheet-en',4),('qa-cheatsheet-ja-en',8),('explanation-ja',7),('explanation-en',7)]:
     file = dir / (name+'.pdf')
     reader = PdfReader(file)
     assert len(reader.pages) == pages, (name,len(reader.pages))
@@ -41,12 +41,15 @@ for name, pages in [('qa-cheatsheet-ja',4),('qa-cheatsheet-en',4),('qa-cheatshee
 for lang in ('ja','en'):
     file=dir / f'explanation-{lang}.pptx'
     deck=Presentation(file)
-    assert len(deck.slides)==6
+    assert len(deck.slides)==7
     assert all(len(s.notes_slide.notes_text_frame.text)>150 for s in deck.slides)
+    tables = [s for s in deck.slides[-1].shapes if s.has_table]
+    assert len(tables)==1 and len(tables[0].table.rows)==7
+    assert tables[0].top + tables[0].height < int(6.33*914400), 'Architecture table overlaps the boundary note'
     with zipfile.ZipFile(file) as z:
         assert z.testzip() is None
         for name in z.namelist():
             if name.endswith(('.xml','.rels')): ET.fromstring(z.read(name))
-    report['pptx'].append({'file':file.name,'slides':6,'speakerNotes':6,'editableText':True,'sha256':hashlib.sha256(file.read_bytes()).hexdigest()})
+    report['pptx'].append({'file':file.name,'slides':7,'speakerNotes':7,'editableText':True,'sha256':hashlib.sha256(file.read_bytes()).hexdigest()})
 (dir / 'document-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({'pdfs':len(report['pdfs']),'pdfPages':sum(p['pages'] for p in report['pdfs']),'pptx':report['pptx']},ensure_ascii=False))

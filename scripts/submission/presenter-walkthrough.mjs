@@ -1,3 +1,4 @@
+import { architecture } from './presenter-architecture.mjs';
 // One source for the opening sheet, presentation slides and speaking notes.
 const base = {
   ja: {
@@ -230,5 +231,9 @@ export function walkthroughFor(capture) {
   const d = structuredClone(base);
   d.ja.slides[4][2][1] = `動画：全神経4個体、Aqua ${capture.newRoutes.Aqua}件・V3 ${capture.newRoutes['Uniswap V3']}件の決済`;
   d.en.slides[4][2][1] = `Video: four full agents, ${capture.newRoutes.Aqua} Aqua and ${capture.newRoutes['Uniswap V3']} V3 settlements`;
+  for (const lang of ['ja', 'en']) {
+    const a = architecture[lang];
+    d[lang].slides.push([a.tag, a.title, a.bullets, a.boundary, a.notes]);
+  }
   return d;
 }

@@ -17,7 +17,7 @@
 ## 設計を理解する
 
 - [フレームワークのレイヤ構成図とAPI](../packages/bioagent-framework/README.md#レイヤ構造)
-- [チェーン接続・サービス構成・保存先](architecture.md)
+- [実行境界・実装言語・通信・保存先](architecture.md) · [English](architecture.en.md)
 - [BioAgentの目的と設計方針](standards/bioagent-design-direction.md)
 - [なぜBioAgentを定義するか](standards/why-bioagent.md)、[既存規格との比較](standards/prior-art-and-bioagent.md)
 - [身体・学習profile案](standards/embodied-learning-profile.md)、[用途別の型と単位](standards/application-types.md)

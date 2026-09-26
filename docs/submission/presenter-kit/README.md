@@ -5,7 +5,7 @@
 | 用途 / Use | 日本語 | English |
 | --- | --- | --- |
 | 提出動画 / Video | [日本語字幕 MP4](bioagent-submission-ja.mp4) | [English captions MP4](bioagent-submission-en.mp4) |
-| 説明スライド・6枚 / Six slides | [PDF](explanation-ja.pdf) · [PPTX](explanation-ja.pptx) | [PDF](explanation-en.pdf) · [PPTX](explanation-en.pptx) |
+| 説明6枚＋構成付録1枚 / Six slides + appendix | [PDF](explanation-ja.pdf) · [PPTX](explanation-ja.pptx) | [PDF](explanation-en.pdf) · [PPTX](explanation-en.pptx) |
 | 原稿・操作手順 / Walkthrough | [日本語](walkthrough-ja.md) · [HTML](explanation-ja.html) | [English](walkthrough-en.md) · [HTML](explanation-en.html) |
 | Q&A・4ページ / Four-page Q&A | [PDF](qa-cheatsheet-ja.pdf) · [原稿](qa-cheatsheet-ja.md) | [PDF](qa-cheatsheet-en.pdf) · [Text](qa-cheatsheet-en.md) |
 
@@ -14,6 +14,8 @@
 動画は **57.1秒、1920×1080、30fps、H.264、音声なし**。英語の実画面に日英それぞれの字幕を焼き込んでいます。[日本語SRT](captions-ja.srt) / [English SRT](captions-en.srt)。字幕は画面下の専用帯に配置しています。
 
 Both masters use the same newly recorded browser footage. Setup, navigation and long learning/settlement waits are cut; each included segment runs at its original speed. The learning-wait cut is explicitly captioned. Raw capture lasted 243.1 seconds. Receipt excerpts are labelled and derived from actual logs; no result data or balances are inserted.
+
+7枚目は質疑応答用の構成付録です。境界ごとの言語・役割・通信を一覧化しています。詳しい保存先・署名権限・実装リンクは[日本語アーキテクチャ](../../architecture.md) / [English architecture](../../architecture.en.md)へ。1分説明は先頭6枚を使います。
 
 ## 何を伝えるか / Purpose
 
@@ -65,6 +67,7 @@ The video includes current environment TXs. The public page remains a lightweigh
 | R4 | [JSフレームワーク](../../../packages/bioagent-framework/README.md) |
 | R5 | [Sepoliaの配置・操作](../../deployment/sepolia.md) · [公開ページの実演確認](public-walkthrough.json) |
 | R6 | [現行の環境TXと定期送信の検証](../judge-demo-review.md) |
+| R8 | [実行境界・実装言語](../../architecture.md) / [English](../../architecture.en.md) |
 | R7 | [AI Agent比較：期待・実測・未実施の計画](ai-agent-comparison.md) |
 | 検証 | [全編デコード・Chrome再生・SHA-256](verification.json) · [目視確認](artifact-review.json) · [PDF/PPTX監査](document-audit.json) |
 | 編集 | [元映像と編集後の時刻](render-metadata.json) · [収録方針](production-plan.md) |

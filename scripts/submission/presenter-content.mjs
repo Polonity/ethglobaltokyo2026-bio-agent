@@ -5,6 +5,7 @@ export const sources = [
   ['R4', 'Framework: API, validation and restore', '../../../packages/bioagent-framework/README.md'],
   ['R5', 'Public Sepolia demo and transaction evidence', '../../deployment/sepolia.md'],
   ['R6', 'Current environment-TX and scheduled sender evidence', '../judge-demo-review.md'],
+  ['R8', 'Architecture, languages and trust boundaries', '../../architecture.md'],
 ];
 
 export function content(e) {
@@ -74,8 +75,8 @@ export function content(e) {
         [
           'IBioAgentを共通化するうまみは？',
           '入力とモデルの意味を共通化し、検証・学習の処理を再利用することを目指します。',
-          'SolidityのIBioAgentは個体・Statusの共通API、IBioAgentStimulusは環境payloadを扱います。Anvil／Sepolia箱庭はUIとQ学習を共有。独立JSフレームワークの採用・復元APIや全神経Python市場版まで、単一の学習器に統合したわけではありません。',
-          'R4',
+          'Solidityは入力・権限、公開JavaScriptは判断・Q学習、Workersは取得検証。全神経版はNode.jsの制御とPythonの神経計算をJSON Linesで接続します。独立JSフレームワークとTypeScriptの共有型仕様は別です。構成はスライド付録へ。',
+          'R4, R8',
         ],
         [
           '何がオンチェーン？ 判断も検証できる？',
@@ -110,7 +111,7 @@ export function content(e) {
       ],
       boundary:
         '言い切る：実接続を使う・取引が成立・学習更新を確認。言い切らない：ハエの思考・生物優位・利益・LLMより安い・フル版と縮小版の同等性。',
-      footer: 'R1〜R6の参照先は下記リンク／同梱README。公開デモと動画の範囲を混同しない。',
+      footer: 'R1〜R8の参照先は下記リンク／同梱README。公開デモと動画の範囲を混同しない。',
     },
     en: {
       label: 'English',
@@ -173,8 +174,8 @@ export function content(e) {
         [
           'What does the shared BioAgent interface provide?',
           'A shared meaning for inputs and models, with reusable validation and learning components.',
-          'Solidity IBioAgent defines identity/Status; IBioAgentStimulus carries environment payloads. Anvil/Sepolia share UI and Q-learning. The independent JS framework and full Python market runtime have separate learners. This is not one universal learning engine or demonstrated skill transfer.',
-          'R4',
+          'Solidity handles inputs/authority; public JavaScript runs Q-learning, while Workers verifies inputs. Full mode uses Node.js control and Python computation over JSON Lines. The independent JS framework and proposed TypeScript types remain separate. See the architecture appendix.',
+          'R4, R8',
         ],
         [
           'What is onchain, and is inference trustless?',
@@ -210,7 +211,7 @@ export function content(e) {
       boundary:
         'Say: measured connectivity, successful settlement, observed learning updates. Do not claim: fly thoughts, biological superiority, profit, lower LLM cost, or equivalence of full and reduced runtimes.',
       footer:
-        'R1–R6: links below / companion README. Keep the public demo and recorded full runtime distinct.',
+        'R1–R8: links below / companion README. Keep the public demo and recorded full runtime distinct.',
     },
   };
 }
