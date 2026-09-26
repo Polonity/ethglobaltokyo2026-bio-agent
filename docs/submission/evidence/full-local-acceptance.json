@@ -1,0 +1,48 @@
+{
+  "schema": "bioagent.full-local-acceptance.v1",
+  "verifiedAt": "2026-09-26T00:26:26.585Z",
+  "scope": "Local full-classified MaleCNS, two independent agents, interactive stimuli, approximately 30 animation updates per second",
+  "verdict": "passed",
+  "dataset": "male-cns:v1.0",
+  "neuronsPerAgent": 166700,
+  "connections": 25582938,
+  "agents": 2,
+  "graphHash": "0x5002da20c708af9f9363c85758b98020876d673c057c1d56899ea7f7536af0c3",
+  "runtimeHash": "0xbeaafed41d91f5e6e858680dbdc2141e7fa80423e2fb47506f82b13df58e1e13",
+  "browserSourceSha256": "0x93b4fc928c5d1ad405887cc55db9c3c581146cd147e93f839dca842194b4bc2f",
+  "sourceArtifacts": [
+    {
+      "uri": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+      "sha256": "0x2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2"
+    },
+    {
+      "uri": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+      "sha256": "0xe35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+    }
+  ],
+  "measuredRates": {
+    "neuralStepsPerSecond": 25.5,
+    "renderUpdatesPerSecond": 30.1
+  },
+  "continuousRequestSteps": 4,
+  "changedStimulus": [
+    1,
+    0
+  ],
+  "checkpointReplay": "exact",
+  "stopVerifiedAtTick": 420,
+  "unitTestsPassed": 7,
+  "languages": [
+    "system",
+    "en",
+    "ja"
+  ],
+  "mobileOverflow": false,
+  "browserErrors": [],
+  "limits": [
+    "All classified neurons and their internal edges; not all unclassified segments.",
+    "Artificial positive rate dynamics; biological fidelity is not validated.",
+    "Render rate counts animation callbacks, not GPU paints.",
+    "Existing blockchain apps and their training still use the lightweight model."
+  ]
+}

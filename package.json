@@ -37,7 +37,8 @@
     "full:dev": ".local/connectome-tools/bin/python -m packages.bio_agent.full",
     "test:full": ".local/connectome-tools/bin/python -m unittest discover -s tests/full -v",
     "test:full:browser": "node scripts/full/check-browser.mjs",
-    "full:scaling": ".local/connectome-tools/bin/python scripts/full/scaling.py"
+    "full:scaling": ".local/connectome-tools/bin/python scripts/full/scaling.py",
+    "verify:full": "npm run test:full && npm run test:full:browser"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

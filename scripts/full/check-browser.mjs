@@ -44,12 +44,43 @@ try {
     null,
     { timeout: 15000 },
   );
-  await page.waitForTimeout(3500);
+  // Keep the real calculation running, then change inputs through actual controls.
+  await page.waitForTimeout(10000);
+  await page.locator('#input0').focus();
+  await page.locator('#input0').press('End');
+  await page.locator('#input1').focus();
+  await page.locator('#input1').press('Home');
+  await page.waitForResponse(async (response) => {
+    if (response.url() !== base + '/api/advance' || response.status() !== 200) return false;
+    const result = (await response.json()).last;
+    if (result.stimuli[0] === 1 && result.stimuli[1] === 0) {
+      evidence.changedStimulus = result;
+      return true;
+    }
+    return false;
+  });
+  assert.equal(evidence.changedStimulus.steps, 4);
+  await page.waitForTimeout(3000);
   evidence.continuousRates = await page.locator('#rates').textContent();
   evidence.continuousTick = (await (await page.request.get(base + '/api/state')).json()).last.tick;
   assert.ok(evidence.continuousTick > replay.tick + 30);
   await page.locator('#continuous').click();
   await page.waitForFunction(() => !document.querySelector('#advance').disabled);
+  const stopped = (await (await page.request.get(base + '/api/state')).json()).last.tick;
+  await page.waitForTimeout(500);
+  assert.equal((await (await page.request.get(base + '/api/state')).json()).last.tick, stopped);
+  evidence.stopVerifiedAtTick = stopped;
+  const rates = evidence.continuousRates.match(/neural ([0-9.]+).*render ([0-9.]+)/);
+  assert.ok(rates);
+  evidence.measuredRates = {
+    neuralStepsPerSecond: Number(rates[1]),
+    renderUpdatesPerSecond: Number(rates[2]),
+  };
+  assert.ok(
+    evidence.measuredRates.renderUpdatesPerSecond >= 28 &&
+      evidence.measuredRates.renderUpdatesPerSecond <= 32,
+  );
+  evidence.verifiedAt = new Date().toISOString();
   await page.screenshot({ path: out + '/full-local-en.png', fullPage: true });
   await page.locator('#lang').selectOption('ja');
   assert.equal(await page.locator('html').getAttribute('lang'), 'ja');

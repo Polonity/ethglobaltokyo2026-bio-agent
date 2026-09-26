@@ -413,7 +413,7 @@
             stimuli: Array.from({ length: agents }, (_, i) => i).map(
               (i) => Number($('input' + i).value) / 100,
             ),
-            steps: running ? 1 : Number($('steps').value),
+            steps: running ? 4 : Number($('steps').value),
             channel: $('channel').value,
           }),
         });

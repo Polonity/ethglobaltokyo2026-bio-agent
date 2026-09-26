@@ -54,6 +54,15 @@ class FullRuntimeTests(unittest.TestCase):
         b.advance([.3,.8], steps=32)
         np.testing.assert_allclose(a.activity, b.activity, atol=1e-14, rtol=0)
 
+    def test_four_step_delivery_preserves_every_neural_update(self):
+        whole = FullCircuit(self.root, agents=2)
+        chunks = FullCircuit(self.root, agents=2)
+        whole.advance([.2,.8], steps=32)
+        for _ in range(8):
+            chunks.advance([.2,.8], steps=4)
+        np.testing.assert_array_equal(whole.activity, chunks.activity)
+        self.assertEqual(whole.tick, chunks.tick)
+
     def test_checkpoint_replay_and_rejection(self):
         self.model.advance(steps=8)
         path = self.root/'checkpoint.npz'
