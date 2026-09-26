@@ -1,0 +1,61 @@
+{
+  "reviewedAt": "2026-09-26T07:48:27.006523+00:00",
+  "reviewType": "Assistant visual inspection of generated images, plus PDF parsing and browser playback",
+  "pdfs": [
+    {
+      "file": "qa-cheatsheet-ja.pdf",
+      "pages": 2,
+      "sha256": "b9cc92f0cc75fe501c5b0c1ec77c815c1c568ada43f54134c08e66fdf80d619e",
+      "textCharacters": [
+        1361,
+        1748
+      ]
+    },
+    {
+      "file": "qa-cheatsheet-en.pdf",
+      "pages": 2,
+      "sha256": "d8f6aa643ae4c866490cfca114aa2b3985e3e71f2c1f7151204004d516c714cd",
+      "textCharacters": [
+        3088,
+        3272
+      ]
+    },
+    {
+      "file": "qa-cheatsheet-ja-en.pdf",
+      "pages": 4,
+      "sha256": "65e31df0258334a2030384f25e38d4ddbf163011d443cc169a2e24c63c0c3a38",
+      "textCharacters": [
+        1361,
+        1748,
+        3088,
+        3272
+      ]
+    }
+  ],
+  "visualChecks": {
+    "pdfPagesReviewed": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "videoLanguages": [
+      "ja",
+      "en"
+    ],
+    "representativeSeconds": [
+      0.8,
+      22,
+      28,
+      35,
+      42,
+      49
+    ],
+    "readableCaptions": true,
+    "receiptAndModelScenesReadable": true,
+    "allFourAgentsVisible": true,
+    "pdfTextNotClipped": true
+  },
+  "scope": "Visual review is separate from automated checks. It does not establish biological fidelity or improved trading performance.",
+  "sourceFrames": "Local, Git-ignored artifacts/submission-presenter-20260926/playback-*.jpg and qa-page-*.jpg"
+}

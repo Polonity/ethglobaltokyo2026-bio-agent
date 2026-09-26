@@ -1,0 +1,182 @@
+{
+  "verifiedAt": "2026-09-26T07:46:36.227Z",
+  "recordingModel": {
+    "neurons": 166700,
+    "connections": 25582938,
+    "normalization": "incoming",
+    "stepsPerDecision": 4,
+    "state": "persistent per application/session/individual",
+    "inputMapping": "all sensory neurons sorted by body ID; round-robin across 16 drives",
+    "readout": "16 input-population means + 16 motor-population means + every superclass mean"
+  },
+  "successfulLocalReceipts": 12,
+  "newRoutes": {
+    "Aqua": 1,
+    "Uniswap V3": 11
+  },
+  "learning": [
+    {
+      "name": "MOMO",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": true,
+      "policyHashAtLastDecision": "0x1fb5aaad8f826cf1c135e107cf6b021d2fcc8bec0d1ea9113e488cb4d9d73d1b"
+    },
+    {
+      "name": "SORA",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": false,
+      "policyHashAtLastDecision": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca"
+    },
+    {
+      "name": "KOHARU",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": true,
+      "policyHashAtLastDecision": "0x6575f22ce12b0eed0e7e64cc6bbd8bc4e539263cb47830132191e014bb81bac2"
+    },
+    {
+      "name": "HINATA",
+      "updatesBefore": 37,
+      "updatesAfter": 43,
+      "weightsChanged": true,
+      "policyHashAtLastDecision": "0x1e2439cd93b0179e3afe7a1b55265690c08afc4e659473880cae4e6ea5da26b0"
+    }
+  ],
+  "files": [
+    {
+      "file": "bioagent-submission-en.mp4",
+      "bytes": 8566177,
+      "sha256": "9a767dd067b695629f8ddb589cc1c5084b3d3f89daaa6f54462ad7081b02059b"
+    },
+    {
+      "file": "bioagent-submission-ja.mp4",
+      "bytes": 8604771,
+      "sha256": "0c3f20c91185dfd1dc1ec1b1508e4a66c9de5ef80d54e2b5d1357ab9cf36fbb8"
+    },
+    {
+      "file": "captions-en.srt",
+      "bytes": 1128,
+      "sha256": "5f9fb36452c5a5c32b3ad796230253613dc1269261395ca1c50ff02be241f568"
+    },
+    {
+      "file": "captions-ja.srt",
+      "bytes": 1327,
+      "sha256": "6797ddcccc870912324ba03ab49e7e4a2e97060187e2640a514d993f8896c0a6"
+    },
+    {
+      "file": "capture-evidence.json",
+      "bytes": 21457,
+      "sha256": "7d6386233a39ada56c3d3f7f9880668fb1daa3bae3c205a119f901ba7979b611"
+    },
+    {
+      "file": "settlement-evidence.json",
+      "bytes": 106759,
+      "sha256": "c7452887553feee049fd5dda569af5ae38578e4180b98f4a585d4f67bce7a180"
+    },
+    {
+      "file": "qa-cheatsheet-ja.pdf",
+      "bytes": 605815,
+      "sha256": "b9cc92f0cc75fe501c5b0c1ec77c815c1c568ada43f54134c08e66fdf80d619e"
+    },
+    {
+      "file": "qa-cheatsheet-en.pdf",
+      "bytes": 80216,
+      "sha256": "d8f6aa643ae4c866490cfca114aa2b3985e3e71f2c1f7151204004d516c714cd"
+    },
+    {
+      "file": "qa-cheatsheet-ja-en.pdf",
+      "bytes": 647937,
+      "sha256": "65e31df0258334a2030384f25e38d4ddbf163011d443cc169a2e24c63c0c3a38"
+    },
+    {
+      "file": "qa-cheatsheet-ja.md",
+      "bytes": 8078,
+      "sha256": "d383b18736906ec1f085f6c2fe15f251c123065ed9de2e3995d891e9a222ab2b"
+    },
+    {
+      "file": "qa-cheatsheet-en.md",
+      "bytes": 7442,
+      "sha256": "0777895dbd18fa78252087daeee84ffc1e9c8b134bbc932da2668d1257ddd661"
+    },
+    {
+      "file": "qa-cheatsheet.html",
+      "bytes": 21987,
+      "sha256": "9cc1ddcbaec1e1749c98b676ed66f200531db6966122f6709285c81713af6365"
+    }
+  ],
+  "videos": [
+    {
+      "language": "en",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "30/1"
+          }
+        ],
+        "format": {
+          "duration": "51.500000",
+          "size": "8566177"
+        }
+      },
+      "fullDecode": true,
+      "browserPlayback": {
+        "ended": true,
+        "duration": 51.5,
+        "time": 51.5,
+        "error": null,
+        "frames": 1545
+      },
+      "seekScenes": 6,
+      "browserErrors": []
+    },
+    {
+      "language": "ja",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "30/1"
+          }
+        ],
+        "format": {
+          "duration": "51.500000",
+          "size": "8604771"
+        }
+      },
+      "fullDecode": true,
+      "browserPlayback": {
+        "ended": true,
+        "duration": 51.5,
+        "time": 51.5,
+        "error": null,
+        "frames": 1545
+      },
+      "seekScenes": 6,
+      "browserErrors": []
+    }
+  ],
+  "cheatsheet": {
+    "ja": {
+      "visiblePages": 2
+    },
+    "en": {
+      "visiblePages": 2
+    },
+    "all": {
+      "visiblePages": 4
+    },
+    "mobileNoHorizontalOverflow": true
+  },
+  "visualReview": "Not automated: review generated playback frames and all PDF pages separately."
+}
