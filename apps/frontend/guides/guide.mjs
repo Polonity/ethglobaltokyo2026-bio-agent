@@ -116,11 +116,11 @@ function mount(root, app, lang, mode, sheet = false) {
           aqua:
             mode === 'browser'
               ? '光る図はMaleCNS部分回路の人工的な活動です。下の応答を戦略案へ変換します。'
-              : '個体の位置・ラベルを、選択された提示または撤回と一緒に見ます。戦略選択は次の実TXにつながります。',
+              : '線は入力に使ったUniswap価格履歴です。feesは約定の手数料相当額。ハエの上下動は演出で、戦略は下のAction欄に表示されます。',
         }[app],
         mode === 'browser'
           ? '画面に表示された身体状態・保有状態・戦略を読みます。吹き出しは状態や行動の表現で、思考を直接読み取ったものではありません。'
-          : 'Policy＝使った方策、Action＝選んだ行動。Energy＝活動エネルギー、Fullness＝満腹度、Reserves＝蓄え。下の数値は各ゲームの成績です。',
+          : '方策（Policy）＝使った方策、行動（Action）＝選んだ行動。Energy＝活動エネルギー、Fullness＝満腹度、Reserves＝蓄え。下の数値は各ゲームの成績です。',
         'ブロック・コントラクト・TXで入力や適用の出典を確認します。TXリンクを開くとreceiptを確認できます。ローカルAnvilの証拠です。',
       ]
     : [
@@ -137,7 +137,7 @@ function mount(root, app, lang, mode, sheet = false) {
           aqua:
             mode === 'browser'
               ? 'The glowing diagram shows artificial activity in a MaleCNS subcircuit. Its response is decoded into a strategy proposal.'
-              : 'Read each individual’s position and label alongside its offer or withdrawal choice. Strategy choices lead to actual transactions.',
+              : 'The line is input Uniswap price history; fees show gross fill differences. Fly bobbing is decorative. Read the chosen strategy in the Action card below.',
         }[app],
         mode === 'browser'
           ? 'Read body state, holdings or strategy here. Bubbles express state or actions, not directly decoded thoughts.'

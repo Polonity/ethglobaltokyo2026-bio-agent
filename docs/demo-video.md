@@ -1,4 +1,29 @@
-# 最新版: 2アプリ + Circuit Lab 統合デモ（英語）
+# 最新版：全MaleCNS・3アプリ別の英語デモ
+
+2026-09-26の画像付きゲーム説明書を含む全神経GUIを、実際に操作して収録しています。英語GUI・英語字幕、音声なし、1600×1100 H.264 / faststart。各動画は約1分です。
+
+| 動画 | 見どころ |
+| --- | --- |
+| `artifacts/full-app-demos-20260926/foraging-english.mp4` | 刺激0.75の入力、蜜・危険・身体、2個体の行動、StatusのTX |
+| `artifacts/full-app-demos-20260926/market-english.mp4` | ローカルUniswap価格履歴、ペーパー売買・PnL、価格入力のTX |
+| `artifacts/full-app-demos-20260926/aqua-english.mp4` | 流動性の提示・撤回、実テストトークンTX、代理報酬 |
+
+各動画は、説明書 → 実画面付きガイド → 現在の方策で実行 → 個体の状態 → 入力から行動の履歴 → receipt → 保存済み学習評価、の順です。1個体166,700神経・25,582,938接続のMaleCNS構造を使います。動力学・入出力変換は人工設計です。市場売買はペーパー、Aqua評価は価格代理指標であり、実資金運用や収益性を示しません。
+
+学習評価表は以前に完了した実験の保存結果です。この録画で学習を新規実行したとは説明せず、字幕でも区別しています。画像付き説明書の写真も撮影時の例であり、現在の数値とは区別します。
+
+```sh
+node scripts/record-full-app-demos.mjs
+node scripts/verify-full-app-demos.mjs
+```
+
+ローカルGUI `http://127.0.0.1:8812` とそのAnvil、Chrome、ffmpeg、npm依存が必要です。録画はGUI経由で通常実行を起動してローカルTXを送ります。同じチェーンで他の実験・学習ジョブを同時実行しないでください。既存ジョブがある場合は開始を拒否します。`FULL_APPS_URL` と `DEMO_OUTPUT` でURLと保存先を指定できます。
+
+`*-evidence.json` に実際の入力・出力、神経数、TX、保存済み評価、字幕時刻とブラウザー例外を記録します。`verification.json` は全フレームデコードとChrome再生・シークの検証結果です。収録スクリプトは説明字幕・スクロールに加え、receiptの取得済み実フィールドを動画用に拡大整形します（その旨も画面表示）。Agentの結果やTXデータを注入・変更しません。再収録時は同名MP4と証拠ファイルを更新します。
+
+---
+
+# 旧版: 2アプリ + Circuit Lab 統合デモ（英語）
 
 提出用の統合版は `artifacts/submission-demo/bioagent-submission-english.mp4`。英語GUI・英語字幕、音声なし、約1分30秒、1600×1100 H.264 / faststart。
 
