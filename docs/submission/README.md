@@ -2,6 +2,10 @@
 
 Prepared 2026-09-26. This is a local prototype and a specification proposal, not an assigned EIP. The text below is ready to adapt to the submission form. No external form has been submitted.
 
+## Full-population local track
+
+The local GUI at `http://127.0.0.1:8812/` runs two individuals with all 166,700 classified MaleCNS neurons and 25,582,938 internal connections. Each application records actual action outcomes, trains a readout, evaluates new behavior, and adopts only improved candidates. [Reproduction, evidence and comparison boundaries](full-apps-acceptance.md). The public Worker and the original lightweight browser apps remain separate; the full neural computation runs locally in Python.
+
 ## Demo hook
 
 **An onchain stimulus playground. Send a transaction. Watch the flies react. Trace the response.**

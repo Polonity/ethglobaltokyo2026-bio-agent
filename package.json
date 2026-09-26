@@ -44,7 +44,10 @@
     "full:apps:compare": "node scripts/full/compare-apps.mjs",
     "test:full:apps": ".local/connectome-tools/bin/python -m unittest discover -s tests/full_apps -v",
     "test:full:apps:browser": "node scripts/full/check-apps-browser.mjs",
-    "full:apps:ablation": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/check-readout-ablation.py"
+    "full:apps:ablation": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/check-readout-ablation.py",
+    "test:full:apps:ui": "node scripts/full/check-apps-ui.mjs",
+    "test:full:apps:resume": "node scripts/full/check-apps-resume.mjs",
+    "full:apps:audit": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/audit-apps.py"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

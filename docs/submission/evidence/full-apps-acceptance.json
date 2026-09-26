@@ -1,0 +1,752 @@
+{
+  "schema": "bioagent.full-app-acceptance.v1",
+  "brain": {
+    "schema": "bioagent.app-brain.v1",
+    "dataset": "male-cns:v1.0",
+    "fullGraph": "0x5002da20c708af9f9363c85758b98020876d673c057c1d56899ea7f7536af0c3",
+    "fullRuntime": "0xbeaafed41d91f5e6e858680dbdc2141e7fa80423e2fb47506f82b13df58e1e13",
+    "encoder": "0xa0b82b540ee3d8498ca9bfd38639b0a86f5fd851ffae64b8ff83d7979dadb662",
+    "inputs": 16,
+    "applicationAdapters": {
+      "foraging": "0xd6e3de0bb9b164152d58b424fe0a7b5df089382c0fe584f5083c8ddca4a962f0",
+      "market": "0xc5af206ba7f8bb0e13305c8ae2be827f629d3464e16f7969ebdc91381b1480f1",
+      "aqua": "0xcbd3b15ad26e79b90f261945f24f3f2343857efbb2e7451a51909fd7d1b94eba"
+    },
+    "full": {
+      "neurons": 166700,
+      "connections": 25582938,
+      "normalization": "incoming",
+      "stepsPerDecision": 4,
+      "state": "persistent per application/session/individual",
+      "inputMapping": "all sensory neurons sorted by body ID; round-robin across 16 drives",
+      "readout": "16 input-population means + 16 motor-population means + every superclass mean"
+    },
+    "legacy": {
+      "neurons": 7,
+      "connections": 19,
+      "stepsPerDecision": 32,
+      "state": "zero-state trial per input channel as in previous browser encoder",
+      "graph": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987"
+    },
+    "limitations": [
+      "Positive artificial rate dynamics; not validated neurophysiology.",
+      "Legacy/full comparison includes encoding and temporal-state differences, not just neuron count."
+    ],
+    "brainHash": "0xafc2d89a77c2624fa9f81feac7c162e613089644198d586de900455c1eb7d33a",
+    "actions": {
+      "foraging": 9,
+      "market": 3,
+      "aqua": 3
+    }
+  },
+  "gui": {
+    "foraging:full": {
+      "app": "foraging",
+      "variant": "full",
+      "before": [
+        -1.254487705476747,
+        1.109900980713319
+      ],
+      "after": [
+        13.164031479493284,
+        -2.277551792330993
+      ],
+      "test": [
+        18.8625667263386,
+        -4.739960562157693
+      ],
+      "adopted": [
+        true,
+        false
+      ],
+      "versions": [
+        2,
+        1
+      ],
+      "trainingMs": [
+        11.773428006563336,
+        9.028232016135007
+      ],
+      "neurons": 166700,
+      "inferenceMs": 152.15284167534264
+    },
+    "foraging:legacy": {
+      "app": "foraging",
+      "variant": "legacy",
+      "before": [
+        -1.254487705476747,
+        1.109900980713319
+      ],
+      "after": [
+        14.774005910532022,
+        6.621086866674103
+      ],
+      "test": [
+        2.113618908927592,
+        -2.1961004101528703
+      ],
+      "adopted": [
+        true,
+        true
+      ],
+      "versions": [
+        2,
+        2
+      ],
+      "trainingMs": [
+        11.103194003226236,
+        10.033700993517414
+      ],
+      "neurons": 7,
+      "inferenceMs": 0.1611163970665075
+    },
+    "market:full": {
+      "app": "market",
+      "variant": "full",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        -1.896320935176912,
+        2.38718736788967
+      ],
+      "test": [
+        0,
+        -0.01627242331327705
+      ],
+      "adopted": [
+        false,
+        true
+      ],
+      "versions": [
+        1,
+        2
+      ],
+      "trainingMs": [
+        22.10708099300973,
+        21.62090700585395
+      ],
+      "neurons": 166700,
+      "inferenceMs": 154.52219213511853
+    },
+    "market:legacy": {
+      "app": "market",
+      "variant": "legacy",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        11.930947043479726,
+        2.28234660238237
+      ],
+      "test": [
+        1.2572195847539835,
+        2.1030066039289412
+      ],
+      "adopted": [
+        true,
+        true
+      ],
+      "versions": [
+        2,
+        2
+      ],
+      "trainingMs": [
+        15.239831001963466,
+        14.6751279826276
+      ],
+      "neurons": 7,
+      "inferenceMs": 0.16480523845530115
+    },
+    "aqua:full": {
+      "app": "aqua",
+      "variant": "full",
+      "before": [
+        -1.4231150471170362,
+        -1.4231150471170362
+      ],
+      "after": [
+        1.5686864229059068,
+        1.554302969796252
+      ],
+      "test": [
+        1.8642366332237363,
+        1.8443742247840116
+      ],
+      "adopted": [
+        true,
+        true
+      ],
+      "versions": [
+        2,
+        2
+      ],
+      "trainingMs": [
+        13.169478974305093,
+        10.653411998646334
+      ],
+      "neurons": 166700,
+      "inferenceMs": 155.48522267490625
+    },
+    "aqua:legacy": {
+      "app": "aqua",
+      "variant": "legacy",
+      "before": [
+        -1.4231150471170362,
+        -1.4231150471170362
+      ],
+      "after": [
+        1.5684714128375354,
+        1.631302969796252
+      ],
+      "test": [
+        1.8138654545656188,
+        1.760104911362904
+      ],
+      "adopted": [
+        true,
+        true
+      ],
+      "versions": [
+        2,
+        2
+      ],
+      "trainingMs": [
+        18.622481991769746,
+        10.266162978950888
+      ],
+      "neurons": 7,
+      "inferenceMs": 0.22779234968766104
+    }
+  },
+  "resume": {
+    "schema": "bioagent.full-app-resume.v1",
+    "applications": [
+      {
+        "app": "foraging",
+        "versions": [
+          2,
+          1
+        ],
+        "stoppedAfterTick": 25,
+        "neurons": 166700,
+        "policyHashes": [
+          "0xb6ee1bafd158d9eb59094f21ca29f715532fad1e7c791c33d8558e1512664982",
+          "0x23b39895cb06f56486485f5e259e6c854a75acfca6512922b067d1be889d71fa"
+        ],
+        "stimulus": 9000
+      },
+      {
+        "app": "market",
+        "versions": [
+          1,
+          2
+        ],
+        "stoppedAfterTick": 25,
+        "neurons": 166700,
+        "policyHashes": [
+          "0x87980a9c9fa7ea0c6dd1c1e496ba5cf0670f39808628dd58ded98102caebaaf5",
+          "0xe3e6e5df82878560b06704a35dbe1e0c34036a99ca95d8cfb5b80365f627cc18"
+        ],
+        "stimulus": null
+      },
+      {
+        "app": "aqua",
+        "versions": [
+          2,
+          2
+        ],
+        "stoppedAfterTick": 25,
+        "neurons": 166700,
+        "policyHashes": [
+          "0x007f8f4fdf67f378e81cce7f69f8dab94a9d8ce144077fb11a2c040d07926234",
+          "0xa5f5b582dd783d3a85265b1652b5c4b612660a5852a1a25c67c94ef4e9e60bf3"
+        ],
+        "stimulus": null
+      }
+    ]
+  },
+  "ablation": {
+    "brainHash": "0xafc2d89a77c2624fa9f81feac7c162e613089644198d586de900455c1eb7d33a",
+    "inputSeed": 93481,
+    "cases": [
+      {
+        "app": "foraging",
+        "samplesPerIndividual": 32,
+        "changedArgmax": [
+          7,
+          0
+        ],
+        "maxFeatureDelta": 0.490967702833872,
+        "maxScoreDelta": 12.386976868179751,
+        "limitation": "Unmasked action argmax on artificial input probes, not application performance."
+      },
+      {
+        "app": "market",
+        "samplesPerIndividual": 32,
+        "changedArgmax": [
+          0,
+          29
+        ],
+        "maxFeatureDelta": 0.491477274412644,
+        "maxScoreDelta": 1.128307341687592,
+        "limitation": "Unmasked action argmax on artificial input probes, not application performance."
+      },
+      {
+        "app": "aqua",
+        "samplesPerIndividual": 32,
+        "changedArgmax": [
+          12,
+          2
+        ],
+        "maxFeatureDelta": 0.4934741427704866,
+        "maxScoreDelta": 0.8609160924788548,
+        "limitation": "Unmasked action argmax on artificial input probes, not application performance."
+      }
+    ]
+  },
+  "ui": {
+    "systemJapanese": true,
+    "englishPersists": true,
+    "japanese": true,
+    "mobile": {
+      "scroll": 390,
+      "client": 390
+    },
+    "crossOriginMutationStatus": 403,
+    "browserErrors": []
+  },
+  "marketGuards": {
+    "chainId": 31337,
+    "address": "0x5d423e3eb3948873aC1b86F18dC47B4Ec4557482",
+    "zeroRejected": true,
+    "above50Rejected": true,
+    "nonOwnerRejected": true,
+    "validSwapStaticCall": true
+  },
+  "comparison": [
+    {
+      "app": "foraging",
+      "variant": "full",
+      "runs": 3,
+      "meanRewardPerIndividual": 0.222337024311934,
+      "minReward": -9.392055770038613,
+      "maxReward": 12.357994604491067,
+      "neuralMsPerJointDecision": 157.5591402801365,
+      "endToEndMsPerJointDecision": 177.79469172083333,
+      "processPeakRSSMiB": 444.44140625,
+      "seeds": [
+        71203,
+        71209,
+        71233
+      ],
+      "offsets": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "app": "foraging",
+      "variant": "legacy",
+      "runs": 3,
+      "meanRewardPerIndividual": -3.3481402019097772,
+      "minReward": -9.882792744384483,
+      "maxReward": 3.3526161615604093,
+      "neuralMsPerJointDecision": 0.18017186412180308,
+      "endToEndMsPerJointDecision": 18.623836679166683,
+      "processPeakRSSMiB": 444.56640625,
+      "seeds": [
+        71203,
+        71209,
+        71233
+      ],
+      "offsets": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "app": "market",
+      "variant": "full",
+      "runs": 2,
+      "meanRewardPerIndividual": 0.3669753394991959,
+      "minReward": 0,
+      "maxReward": 1.4679013579967837,
+      "neuralMsPerJointDecision": 155.20809906884097,
+      "endToEndMsPerJointDecision": 172.53133026250003,
+      "processPeakRSSMiB": 444.69140625,
+      "seeds": [
+        71203,
+        71209
+      ],
+      "offsets": [
+        620,
+        810
+      ]
+    },
+    {
+      "app": "market",
+      "variant": "legacy",
+      "runs": 2,
+      "meanRewardPerIndividual": 4.019066983046246,
+      "minReward": -0.5475677199857326,
+      "maxReward": 9.04711941801307,
+      "neuralMsPerJointDecision": 0.18033108917734353,
+      "endToEndMsPerJointDecision": 17.777539312499904,
+      "processPeakRSSMiB": 444.69140625,
+      "seeds": [
+        71203,
+        71209
+      ],
+      "offsets": [
+        620,
+        810
+      ]
+    },
+    {
+      "app": "aqua",
+      "variant": "full",
+      "runs": 2,
+      "meanRewardPerIndividual": 1.534293148400406,
+      "minReward": 1.3988423654399487,
+      "maxReward": 1.6240458564616065,
+      "neuralMsPerJointDecision": 156.44691942452482,
+      "endToEndMsPerJointDecision": 1064.852085975,
+      "processPeakRSSMiB": 444.69140625,
+      "seeds": [
+        71203,
+        71209
+      ],
+      "offsets": [
+        620,
+        810
+      ]
+    },
+    {
+      "app": "aqua",
+      "variant": "legacy",
+      "runs": 2,
+      "meanRewardPerIndividual": 1.590203514221444,
+      "minReward": 1.5009715498575318,
+      "maxReward": 1.711523967051902,
+      "neuralMsPerJointDecision": 0.23738600120850606,
+      "endToEndMsPerJointDecision": 945.0269435687502,
+      "processPeakRSSMiB": 444.69140625,
+      "seeds": [
+        71203,
+        71209
+      ],
+      "offsets": [
+        620,
+        810
+      ]
+    }
+  ],
+  "originalReference": [
+    {
+      "app": "foraging",
+      "seed": 71203,
+      "ticks": 400,
+      "elapsedMs": 113.08914299996104,
+      "flies": [
+        {
+          "score": 12,
+          "collisions": 3,
+          "version": 3,
+          "activeTicks": 380,
+          "trainingCount": 2
+        },
+        {
+          "score": 13,
+          "collisions": 0,
+          "version": 3,
+          "activeTicks": 380,
+          "trainingCount": 2
+        }
+      ],
+      "metric": "Original food score and collisions, not new adapter reward. Original auto-learning enabled."
+    },
+    {
+      "app": "foraging",
+      "seed": 71209,
+      "ticks": 400,
+      "elapsedMs": 71.0097020000103,
+      "flies": [
+        {
+          "score": 12,
+          "collisions": 23,
+          "version": 3,
+          "activeTicks": 380,
+          "trainingCount": 2
+        },
+        {
+          "score": 12,
+          "collisions": 0,
+          "version": 3,
+          "activeTicks": 380,
+          "trainingCount": 2
+        }
+      ],
+      "metric": "Original food score and collisions, not new adapter reward. Original auto-learning enabled."
+    },
+    {
+      "app": "foraging",
+      "seed": 71233,
+      "ticks": 400,
+      "elapsedMs": 64.75293900002725,
+      "flies": [
+        {
+          "score": 12,
+          "collisions": 23,
+          "version": 3,
+          "activeTicks": 380,
+          "trainingCount": 2
+        },
+        {
+          "score": 12,
+          "collisions": 6,
+          "version": 3,
+          "activeTicks": 380,
+          "trainingCount": 2
+        }
+      ],
+      "metric": "Original food score and collisions, not new adapter reward. Original auto-learning enabled."
+    },
+    {
+      "app": "market",
+      "offset": 620,
+      "events": 161,
+      "elapsedMs": 845.9078349999618,
+      "flies": [
+        {
+          "pnl": 10.653546424294317,
+          "version": 1,
+          "trades": 24,
+          "learningReport": {
+            "schema": "bioagent.learning-result.v1",
+            "useCase": "market",
+            "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+            "baseVersion": 1,
+            "version": 1,
+            "before": 0.052272663893052414,
+            "after": 0.052272663893052414,
+            "samples": 3,
+            "updates": 36,
+            "adopted": false,
+            "metric": "chronological selection reward-prediction MSE; not held-out PnL",
+            "applies": "next-decision",
+            "changed": "action-readout-only",
+            "topology": "frozen MaleCNS v1.0",
+            "trainingSamples": 3,
+            "selectionSamples": 2
+          }
+        },
+        {
+          "pnl": -5.560292147949655,
+          "version": 10,
+          "trades": 21,
+          "learningReport": {
+            "schema": "bioagent.learning-result.v1",
+            "useCase": "market",
+            "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+            "baseVersion": 10,
+            "version": 10,
+            "before": 0.07194294773226612,
+            "after": 0.07217861186539908,
+            "samples": 108,
+            "updates": 1296,
+            "adopted": false,
+            "metric": "chronological selection reward-prediction MSE; not held-out PnL",
+            "applies": "next-decision",
+            "changed": "action-readout-only",
+            "topology": "frozen MaleCNS v1.0",
+            "trainingSamples": 108,
+            "selectionSamples": 47
+          }
+        }
+      ],
+      "metric": "Original event cadence and live auto-learning; same confirmed input interval, different decision schedule."
+    },
+    {
+      "app": "market",
+      "offset": 810,
+      "events": 161,
+      "elapsedMs": 754.6876840000041,
+      "flies": [
+        {
+          "pnl": 6.567971810002192,
+          "version": 1,
+          "trades": 38,
+          "learningReport": null
+        },
+        {
+          "pnl": -3.8750216279948666,
+          "version": 9,
+          "trades": 18,
+          "learningReport": {
+            "schema": "bioagent.learning-result.v1",
+            "useCase": "market",
+            "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+            "baseVersion": 9,
+            "version": 9,
+            "before": 0.02345111187509603,
+            "after": 0.02347291977049275,
+            "samples": 108,
+            "updates": 1296,
+            "adopted": false,
+            "metric": "chronological selection reward-prediction MSE; not held-out PnL",
+            "applies": "next-decision",
+            "changed": "action-readout-only",
+            "topology": "frozen MaleCNS v1.0",
+            "trainingSamples": 108,
+            "selectionSamples": 47
+          }
+        }
+      ],
+      "metric": "Original event cadence and live auto-learning; same confirmed input interval, different decision schedule."
+    },
+    {
+      "app": "aqua",
+      "agentId": 1,
+      "elapsedMs": 7.565517999988515,
+      "version": 2,
+      "learningReport": {
+        "schema": "bioagent.learning-result.v1",
+        "useCase": "aqua",
+        "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+        "baseVersion": 1,
+        "version": 2,
+        "before": 0.0030933844936140388,
+        "after": 4.608929690785094e-05,
+        "samples": 192,
+        "updates": 192,
+        "adopted": true,
+        "metric": "synthetic risk-target selection MSE; not market returns",
+        "applies": "next-decision",
+        "changed": "action-readout-only",
+        "topology": "frozen MaleCNS v1.0",
+        "selectionSamples": 64,
+        "curriculum": "risk-target-0.24-v1"
+      },
+      "actionCounts": {
+        "ship": 13,
+        "cautious": 17,
+        "dock": 50
+      },
+      "metric": "Unchanged synthetic-risk learning and neural controller. No observed-PnL learning exists in this baseline; not interchangeable with new Aqua reward."
+    },
+    {
+      "app": "aqua",
+      "agentId": 2,
+      "elapsedMs": 8.1520100000198,
+      "version": 2,
+      "learningReport": {
+        "schema": "bioagent.learning-result.v1",
+        "useCase": "aqua",
+        "model": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+        "baseVersion": 1,
+        "version": 2,
+        "before": 0.0012368981779613739,
+        "after": 0.000132779077367484,
+        "samples": 192,
+        "updates": 192,
+        "adopted": true,
+        "metric": "synthetic risk-target selection MSE; not market returns",
+        "applies": "next-decision",
+        "changed": "action-readout-only",
+        "topology": "frozen MaleCNS v1.0",
+        "selectionSamples": 64,
+        "curriculum": "risk-target-0.24-v1"
+      },
+      "actionCounts": {
+        "ship": 12,
+        "cautious": 16,
+        "dock": 52
+      },
+      "metric": "Unchanged synthetic-risk learning and neural controller. No observed-PnL learning exists in this baseline; not interchangeable with new Aqua reward."
+    }
+  ],
+  "invariants": {
+    "completeOutcomes": true,
+    "immutablePolicyHashes": true,
+    "evaluationExcludedFromTraining": true,
+    "adoptedPoliciesUsedInSubsequentActions": true
+  },
+  "experienceCounts": [
+    {
+      "app": "aqua",
+      "variant": "full",
+      "decisions": 1250,
+      "outcomes": 1250
+    },
+    {
+      "app": "aqua",
+      "variant": "legacy",
+      "decisions": 1200,
+      "outcomes": 1200
+    },
+    {
+      "app": "foraging",
+      "variant": "full",
+      "decisions": 1540,
+      "outcomes": 1540
+    },
+    {
+      "app": "foraging",
+      "variant": "legacy",
+      "decisions": 1360,
+      "outcomes": 1360
+    },
+    {
+      "app": "market",
+      "variant": "full",
+      "decisions": 1250,
+      "outcomes": 1250
+    },
+    {
+      "app": "market",
+      "variant": "legacy",
+      "decisions": 1200,
+      "outcomes": 1200
+    }
+  ],
+  "limits": [
+    "Engineering benchmark on scripted test inputs, not a generalization or financial-performance claim.",
+    "Full/legacy share environment and readout learner; encoding, temporal state, and neural step count differ.",
+    "Original browser engines remain unchanged; cadence, initial priors, and learning/adoption rules differ, so their metrics are a separate reference."
+  ],
+  "artifacts": {
+    "aqua-full-latest.json": "sha256:6e24a2fba94fa6a48ba3b1a5577a890021697750d8f22f2fb02a347d69513aaa",
+    "aqua-legacy-latest.json": "sha256:04b01854f5528be2fb36326079c85ce85e06734892089dfc70fa18d28301fe09",
+    "browser-verification.json": "sha256:0922f4c983cf5d9eaf8cf82e1d20462e92c61c0c7ede21b2ea81e8cfa46eaf7a",
+    "comparison.json": "sha256:9b94f8e9ffec61f6e4bed5564d33cdf410743af20201294174b8ee403822cb5b",
+    "foraging-full-latest.json": "sha256:172c57cd6ff5ae6bd14966a51de2cfa6cd535df38136c2c7705516c538fde34d",
+    "foraging-legacy-latest.json": "sha256:9d04536f757f584322e89d6dbd62597ba66eb253690caa8d852ca7599ee5cef3",
+    "market-full-latest.json": "sha256:4e2c4d636bb76c5f5a765c73fce294839bd9213b39598f1dac56553ebe36ec35",
+    "market-guards.json": "sha256:1312cf1cb867cde0b253c49ee67fc123b75b0e8b0ef1229181329b26de74f4bf",
+    "market-legacy-latest.json": "sha256:7bb9c56d13437d6faca4f7f078111d0726602195eaeb934b49c9f3222e4ecda5",
+    "market-tape.json": "sha256:87bb149ee2338e08528778def92b226ad01f0557565c460b559d9960518bba36",
+    "readout-ablation.json": "sha256:71e68298f45ca990d6155b9819b7ab8df553d80e01ffff312107c91c6e847354",
+    "resume-verification.json": "sha256:dc71bae7afc77806bbae5992eac248271f37f244c5ab03ec03bf4ff031d35874",
+    "ui-verification.json": "sha256:4ec4dcb97928a6f0da53c14f045bb5b240c7894b503cb08f2dc3468d305ec590"
+  },
+  "implementationHashes": {
+    "packages/bio_agent/full_apps/__init__.py": "sha256:36e83cacbcfd5099ab915f4eca89f583a10904012d9b770c821e28df5f249fdd",
+    "packages/bio_agent/full_apps/__main__.py": "sha256:dc63769e86995a301530d2652d58a74d48cfba593721633ecb48e9e959f061dc",
+    "packages/bio_agent/full_apps/brain.py": "sha256:a0b82b540ee3d8498ca9bfd38639b0a86f5fd851ffae64b8ff83d7979dadb662",
+    "packages/bio_agent/full_apps/learning.py": "sha256:1b206b24a840b7eafc18718bb87e855350704655d87bb9ce0d53f55cf6ec73d2",
+    "packages/bio_agent/full_apps/readout.py": "sha256:0ec1c514e68c2ea0f9762254e6f4c1cf7bfbbd05b7d19ca32de08e63cba0b503",
+    "services/full-apps/aqua.mjs": "sha256:cbd3b15ad26e79b90f261945f24f3f2343857efbb2e7451a51909fd7d1b94eba",
+    "services/full-apps/chain.mjs": "sha256:6ae6ae51eac66baa3abf7a8905a1f0e24683be0474bab5b245b4ee53d2f4887e",
+    "services/full-apps/experiment.mjs": "sha256:1ca5318b08c1a7d2604a2be647ebea5a69e068be372fa4d6ca9b9d8b02448a5d",
+    "services/full-apps/foraging.mjs": "sha256:d6e3de0bb9b164152d58b424fe0a7b5df089382c0fe584f5083c8ddca4a962f0",
+    "services/full-apps/lock.mjs": "sha256:dc231dfd6058f379e42cd32c06f0e7b89184cf9588612be8e3c2a0b505f99ec6",
+    "services/full-apps/market.mjs": "sha256:c5af206ba7f8bb0e13305c8ae2be827f629d3464e16f7969ebdc91381b1480f1",
+    "services/full-apps/server.mjs": "sha256:067e612bb950f5497115d393e7d943b4c3ca52e4dbc201f860e495ea023cdd86",
+    "services/full-apps/index.html": "sha256:01e04cca6ebf170d7444fed283e640cffd9008d727f4afc787d8ef888063e865"
+  }
+}

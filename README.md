@@ -2,19 +2,19 @@
 
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
-現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。公開版は旧Q-learningモデルです。現行ローカル版は採餌・市場・Aquaの全用途でMaleCNS実測部分回路を必須とし、行動選択部分を学習します。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
+現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。公開版は旧Q-learningモデルです。従来のローカル版（8800）は採餌・市場・Aquaの全用途でMaleCNS実測部分回路を必須とし、行動選択部分を学習します。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
 
 **[Fly Lab を開く](https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev)**
 
 **提出物の設計軸:** 生物モデルの出典、身体状態を含む個体、刺激から反応・学習への変化を共通形式で追う。[思想と設計方針](docs/standards/bioagent-design-direction.md) / [既存ERC調査](docs/standards/prior-art-and-bioagent.md) / [審査員向け説明案](docs/submission/bioagent-thesis.md)。NFT/SBT機能追加は要件ではなく、採餌と市場観測を用途別profileとして整理しています。共通型を両GUIで使用し、profile全体の相互運用性は今後検証します。
 
-**[提出パッケージ・英語説明・検証索引](docs/submission/README.md)** / **[最新2アプリ英語動画](docs/demo-video.md)**
+**[提出パッケージ・英語説明・検証索引](docs/submission/README.md)** / **[ブラウザー2アプリ英語動画](docs/demo-video.md)**
 
 **[ドキュメント一覧](docs/README.md)** — 起動、構成、API、学習、デモ、開発・検証の入口。
 
 ## 全166,700神経をローカルで動かす
 
-**3用途の経験学習GUI:** `http://127.0.0.1:8812/`。2個体で採餌・市場・Aquaの全神経判断を動かし、行動結果からreadoutを学習、別実行で改善した候補だけを採用します。[起動手順と検証・比較の境界](docs/submission/full-apps-acceptance.md)。`npm run full:apps:dev`。総合受入検証を進めています。
+**3用途の経験学習GUI:** `http://127.0.0.1:8812/`。2個体で採餌・市場・Aquaの全神経判断を動かし、行動結果からreadoutを学習、別実行で改善した候補だけを採用します。[起動手順と検証・比較の境界](docs/submission/full-apps-acceptance.md)。`npm run full:apps:dev`。3用途のGUI実行・学習・復元・省略版比較を確認済みです。
 
 **[全規模モデルの起動・実測・縮小判断](docs/design/malecns-full-local.md)**。MaleCNSの全分類付き166,700神経・25,582,938接続をCPUで計算する専用ランタイムを追加しました。`npm run full:dev` → http://127.0.0.1:8810/ 。初回のデータ準備はリンク先を参照してください。初期設定は2個体で、数値計算単体では約30step/秒。1〜3個体に変更でき、描画更新は別周期です。ブラウザー向けの7神経デモと区別し、全規模を比較の基準として残します。全脳の生物学的挙動を再現したという主張ではありません。
 
