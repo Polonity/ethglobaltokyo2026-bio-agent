@@ -35,7 +35,10 @@ function fixture(canonical = true) {
   const chain = {
     provider: {
       getTransactionReceipt: async () => ({ status: 1, blockHash: hash }),
-      getBlock: async () => ({ hash: canonical ? hash : '0x' + '00'.repeat(32) }),
+      getBlock: async (number) => {
+        assert.equal(typeof number, 'number');
+        return { hash: canonical ? hash : '0x' + '00'.repeat(32) };
+      },
     },
     configureForaging: async () => {
       writes++;

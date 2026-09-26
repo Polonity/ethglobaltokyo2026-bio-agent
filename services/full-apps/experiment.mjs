@@ -28,7 +28,7 @@ export async function rollout({
     // The same seed with new TX hashes would move the food and confound policy comparison.
     for (const event of [replayForaging.environment, ...replayForaging.statuses]) {
       const receipt = await chain.provider.getTransactionReceipt(event.transactionHash);
-      const block = await chain.provider.getBlock(event.blockNumber);
+      const block = await chain.provider.getBlock(Number(event.blockNumber));
       if (
         !receipt ||
         receipt.status !== 1 ||
