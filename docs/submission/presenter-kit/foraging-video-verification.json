@@ -1,0 +1,51 @@
+{
+  "verifiedAt": "2026-09-26T13:06:25.002Z",
+  "videos": [
+    {
+      "file": "bioagent-foraging-validated-ja.mp4",
+      "sha256": "ff7c353aa30b6fecb272eacb61500aab628fdb61c70c35b1c4afbf67c1f8d60f",
+      "bytes": 6539356,
+      "fullDecode": true,
+      "playback": {
+        "ended": true,
+        "currentTime": 40.333333,
+        "duration": 40.333333
+      }
+    },
+    {
+      "file": "bioagent-foraging-validated-en.mp4",
+      "sha256": "6862e44a38adfa62432c0f8daa2c9c4a87564b8b38a01bc24767f7c5c5dabbc4",
+      "bytes": 6535193,
+      "fullDecode": true,
+      "playback": {
+        "ended": true,
+        "currentTime": 40.333333,
+        "duration": 40.333333
+      }
+    }
+  ],
+  "liveFoodCollected": 2,
+  "confirmedInputReceipts": [
+    {
+      "hash": "0x31b032edf9358791fe21e47c4f09e1370ede2cefbbc3441b6e75b956306dc05a",
+      "status": 1,
+      "blockHash": "0x5dc987c2c241ad3caacf094ba1018830ea55d542ac2b50587356c85e10ea8ee6"
+    },
+    {
+      "hash": "0x692afa443ed79811bee0ee6a98c81202dc17004fab4037dca7091c7822e58299",
+      "status": 1,
+      "blockHash": "0xe8e62f993d0aa7d2f8231f5702422421bb0ba379d3ad9f4a87196a7b6a1b9aa6"
+    },
+    {
+      "hash": "0x3f27cc575c861705b65a765f8d7cc00c0da5ae65ab65471995d01b15d4c3cf00",
+      "status": 1,
+      "blockHash": "0x5a34ad8934ad7a5e9523e05604dac66d589b5e09977353fe4a1e18149b23cf04"
+    }
+  ],
+  "livePolicyVersions": [
+    2,
+    2
+  ],
+  "visualReview": "Japanese full-scene contact sheet and 0.25x replay sequence reviewed; English replay frame reviewed. Both agents approach confirmed food, both counts reach one, subtitles are legible, and the final slide discloses failed safety criterion.",
+  "source": "Actual browser run; final slide explicitly presents previously recorded held-out results."
+}

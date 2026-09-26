@@ -66,9 +66,9 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 5. What improved beyond simply running the demo?
 
-**A separate seven-neuron foraging experiment improved held-out reward: 18.79 → 56.12.** A matched direct-input learner scored 56.08, so biological superiority was not established. Mean contacts fell 1.25 → 0.10, but final energy fell 0.722 → 0.361. Five search seeds and 60 unseen worlds per profile; these are not market results.
+**Full model: 24/24 food; 91.9% of moves approached food.** Same TX inputs, 12 unseen worlds: direct ridge 23/24, random 4/24. Full model: 7 hazard steps; safety criterion failed. One training run. Biological superiority and trading gains remain unproven.
 
-[R3: Held-out experiment and negative results](../../research/bioagent-adaptation/README.md)
+[R9: Full foraging validation](foraging-validation.md)
 
 ## 6. Is it cheaper or more energy-efficient than an LLM?
 

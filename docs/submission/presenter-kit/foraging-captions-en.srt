@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:01,233
+Revised foraging | Learn to approach food from experience
+
+2
+00:00:01,233 --> 00:00:14,700
+Actual learned v2 run | Confirmed TX inputs; fixed connectome, learned readout
+
+3
+00:00:14,700 --> 00:00:25,066
+Same action replayed at 0.25x | Approach and collect; not an inference-speed measurement
+
+4
+00:00:25,066 --> 00:00:31,066
+12 collection worlds → 6 selection worlds → 12 held-out test worlds
+
+5
+00:00:31,066 --> 00:00:40,333
+24/24 food; 91.9% toward food. Direct input: 23/24. Safety criterion failed; no superiority claim.

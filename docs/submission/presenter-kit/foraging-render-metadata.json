@@ -1,0 +1,80 @@
+{
+  "schema": "bioagent.presenter-edit.v2",
+  "duration": 40.333334,
+  "rawCaptureSeconds": 32.528,
+  "speedWithinShots": "See explicitly labelled per-shot playbackRate",
+  "audio": false,
+  "presentation": "English UI; separate Japanese and English burned-in captions",
+  "cutsOmit": "Setup, navigation and long learning/settlement waits. Learning wait omission explicitly captioned.",
+  "resultDataEdited": false,
+  "shots": [
+    {
+      "id": "purpose",
+      "start": 0,
+      "end": 1.233333,
+      "ja": [
+        "修正版｜経験から餌へ近づく行動を学習"
+      ],
+      "en": [
+        "Revised foraging | Learn to approach food from experience"
+      ],
+      "rawStart": 1.7249999999999999,
+      "rawEnd": 2.9890000000000003
+    },
+    {
+      "id": "learned-live",
+      "start": 1.233333,
+      "end": 14.7,
+      "ja": [
+        "学習済みv2の実行｜環境・餌は確定TXから。神経接続は固定"
+      ],
+      "en": [
+        "Actual learned v2 run | Confirmed TX inputs; fixed connectome, learned readout"
+      ],
+      "rawStart": 2.9890000000000003,
+      "rawEnd": 16.427999999999997
+    },
+    {
+      "id": "approach-slow-replay",
+      "start": 14.7,
+      "end": 25.066667,
+      "videoStart": 3.9,
+      "videoEnd": 6.5,
+      "playbackRate": 0.25,
+      "ja": [
+        "同じ行動の0.25倍速リプレイ｜餌へ近づき回収（推論速度の測定ではありません）"
+      ],
+      "en": [
+        "Same action replayed at 0.25x | Approach and collect; not an inference-speed measurement"
+      ],
+      "rawStart": 3.9,
+      "rawEnd": 6.5
+    },
+    {
+      "id": "evaluation",
+      "start": 25.066667,
+      "end": 31.066667,
+      "ja": [
+        "12配置で収集 → 6配置で採用判定 → 未使用12配置で最終テスト"
+      ],
+      "en": [
+        "12 collection worlds → 6 selection worlds → 12 held-out test worlds"
+      ],
+      "rawStart": 16.939,
+      "rawEnd": 22.942
+    },
+    {
+      "id": "results",
+      "start": 31.066667,
+      "end": 40.333334,
+      "ja": [
+        "餌24/24、接近91.9%。直接入力も23/24。安全基準は未達、生物優位は未確定"
+      ],
+      "en": [
+        "24/24 food; 91.9% toward food. Direct input: 23/24. Safety criterion failed; no superiority claim."
+      ],
+      "rawStart": 23.173,
+      "rawEnd": 32.458999999999996
+    }
+  ]
+}

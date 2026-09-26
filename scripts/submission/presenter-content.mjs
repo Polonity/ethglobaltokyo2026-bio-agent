@@ -1,4 +1,5 @@
 export const sources = [
+  ['R9', 'Full foraging validation', 'foraging-validation.md'],
   ['R1', 'Capture: receipts, model and learning deltas', 'capture-evidence.json'],
   ['R2', 'Shared market: actions, execution and limits', '../../apps/shared-market/README.md'],
   ['R3', 'Held-out experiment and negative results', '../../research/bioagent-adaptation/README.md'],
@@ -56,9 +57,9 @@ export function content(e) {
         ],
         [
           '動いただけでなく、改善効果はある？',
-          '別の7神経・人工採餌実験では、未使用環境で報酬が18.79→56.12へ改善しました。',
-          '同予算の直接入力モデルも56.08で、生物優位は確認できませんでした。接触は平均1.25→0.10、終了時エネルギーは0.722→0.361に低下。5探索seed・60テスト環境／条件の結果で、動画の市場成績とは別です。',
-          'R3',
+          '修正後の全神経版は未使用12配置で餌24/24を回収し、移動の91.9%が餌へ近づきました。',
+          '同じ経験の直接入力ridgeは23/24、ランダムは4/24。危険域滞在は全神経7ステップで事前安全基準は未達。1回の学習・12配置の比較です。生物固有の優位や市場成績を示す結果ではありません。',
+          'R9',
         ],
         [
           'LLMより低コスト・低消費電力？',
@@ -155,9 +156,9 @@ export function content(e) {
         ],
         [
           'What improved beyond simply running the demo?',
-          'A separate seven-neuron foraging experiment improved held-out reward: 18.79 → 56.12.',
-          'A matched direct-input learner scored 56.08, so biological superiority was not established. Mean contacts fell 1.25 → 0.10, but final energy fell 0.722 → 0.361. Five search seeds and 60 unseen worlds per profile; these are not market results.',
-          'R3',
+          'Full model: 24/24 food; 91.9% of moves approached food.',
+          'Same TX inputs, 12 unseen worlds: direct ridge 23/24, random 4/24. Full model: 7 hazard steps; safety criterion failed. One training run. Biological superiority and trading gains remain unproven.',
+          'R9',
         ],
         [
           'Is it cheaper or more energy-efficient than an LLM?',

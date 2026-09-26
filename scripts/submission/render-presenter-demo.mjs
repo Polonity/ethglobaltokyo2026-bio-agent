@@ -34,8 +34,12 @@ export async function renderPresenterDemo({
   const timeline = [];
   for (const [i, c] of evidence.cues.entries()) {
     if (!(c.end > c.start)) throw Error('Each scene requires a recorded start and end');
-    const rawStart = c.start + clockOffset,
-      rawEnd = c.end + clockOffset;
+    const rawStart = c.videoStart ?? c.start + clockOffset,
+      rawEnd = c.videoEnd ?? c.end + clockOffset;
+    const playbackRate = c.playbackRate ?? 1;
+    if (![1, 0.25].includes(playbackRate)) throw Error('Unsupported playback rate');
+    if (playbackRate !== 1 && ![...c.ja, ...c.en].every((x) => x.includes('0.25')))
+      throw Error('Slow replay must be labelled in both languages');
     if (rawStart < 0 || rawEnd > Number(rawProbe.format.duration))
       throw Error('Scene is outside the raw video timeline');
     const file = `${out}/cuts/${String(i).padStart(2, '0')}.mp4`;
@@ -45,7 +49,8 @@ export async function renderPresenterDemo({
       '-i',
       raw,
       '-t',
-      String(c.end - c.start),
+      String((rawEnd - rawStart) / playbackRate),
+      ...(playbackRate === 1 ? [] : ['-vf', `setpts=(PTS-STARTPTS)/${playbackRate}`]),
       '-an',
       '-r',
       '30',
@@ -120,7 +125,9 @@ export async function renderPresenterDemo({
         schema: 'bioagent.presenter-edit.v2',
         duration: offset,
         rawCaptureSeconds: evidence.end,
-        speedWithinShots: 1,
+        speedWithinShots: timeline.every((c) => (c.playbackRate ?? 1) === 1)
+          ? 1
+          : 'See explicitly labelled per-shot playbackRate',
         audio: false,
         presentation: 'English UI; separate Japanese and English burned-in captions',
         cutsOmit:

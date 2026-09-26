@@ -1,6 +1,6 @@
 {
-  "reviewedAt": "2026-09-26T11:14:17.265222+00:00",
-  "reviewType": "Architecture update: fresh PDFium page review, browser desktop/mobile layout checks and PPTX structure/notes/table bounds. Video review retained by matching SHA-256.",
+  "reviewedAt": "2026-09-26T13:03:11.304826+00:00",
+  "reviewType": "Fresh Q&A PDF page review after full foraging validation; unchanged slide and integrated-video review retained.",
   "videos": [
     {
       "file": "bioagent-submission-ja.mp4",
@@ -43,37 +43,37 @@
     {
       "file": "qa-cheatsheet-ja.pdf",
       "pages": 4,
-      "sha256": "7aeae833baf812ac035c435bb7d99b47b37fa6a59684356678b7392a1fe1ac98",
+      "sha256": "7d8f1959fcc6b76c1d613021fc8cb720099e431c4ca6ce7fa787ad2b2351c9fb",
       "textCharacters": [
         841,
-        1384,
-        1821,
+        1374,
+        1851,
         1636
       ]
     },
     {
       "file": "qa-cheatsheet-en.pdf",
       "pages": 4,
-      "sha256": "ab3774477ba4b332626ed8632505aa66e26ca11a7a872d72af87f9e99782466c",
+      "sha256": "08b5e86dc0c52fb65edea4bb577274faf7b1e369551f02b516b6e7cd7a4091ba",
       "textCharacters": [
         1959,
-        3200,
-        3502,
+        3126,
+        3532,
         3309
       ]
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
       "pages": 8,
-      "sha256": "a7c1e6bc010141918f71c8b2c2cab9f77f19114fbc4ac6971f441e3dca4306bc",
+      "sha256": "9f04f74abf9b7cb74fbdd0e3ea9af8bbab1bd85af7edb5abb077f60cfc2d3f70",
       "textCharacters": [
         840,
-        1383,
-        1820,
+        1373,
+        1850,
         1635,
         1959,
-        3200,
-        3502,
+        3126,
+        3532,
         3309
       ]
     },

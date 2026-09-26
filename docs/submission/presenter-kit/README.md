@@ -1,5 +1,13 @@
 # BioAgent — 提出動画・発表資料 / Presenter kit
 
+**最新の採餌検証 / Latest foraging validation:** [日本語動画](bioagent-foraging-validated-ja.mp4) · [English video](bioagent-foraging-validated-en.mp4) · [日英の結果・限界](foraging-validation.md)。未使用12配置で24/24回収、接近91.9%。安全基準は未達、Bio Agent固有の優位は未確定です。
+
+新しい採餌動画は40.3秒。通常速度の実行と、同じ動作の明示付き0.25倍速リプレイを収録しています。[再生・TX検証記録](foraging-video-verification.json)。
+The new foraging clip is 40.3 seconds: a full-speed run plus an explicitly labelled 0.25x replay of the same actions.
+
+以下の57秒統合動画は修正前の記録です。採餌の説明には上の新動画を使用してください。市場の決済証拠は引き続き有効です。
+The 57-second integrated video below predates the foraging fix. Use the new clip above for foraging; its market settlement evidence remains historical evidence.
+
 2026-09-26再収録。**目的 → 環境TX → 行動 → 学習比較 → 市場の決済 → 次の検証**を約1分で示します。
 
 | 用途 / Use | 日本語 | English |

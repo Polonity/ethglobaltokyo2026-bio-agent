@@ -1,5 +1,5 @@
 """Fit a non-neural control from the identical recorded collection actions/rewards."""
-import argparse,json,sqlite3,hashlib
+import argparse,json,sqlite3
 from pathlib import Path
 import numpy as np
 p=argparse.ArgumentParser();p.add_argument('database');p.add_argument('output');a=p.parse_args()

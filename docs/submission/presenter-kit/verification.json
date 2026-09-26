@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-09-26T11:12:33.565Z",
+  "verifiedAt": "2026-09-26T13:00:32.184Z",
   "recordingModel": {
     "neurons": 166700,
     "connections": 25582938,
@@ -82,33 +82,33 @@
     },
     {
       "file": "qa-cheatsheet-ja.pdf",
-      "bytes": 756319,
-      "sha256": "7aeae833baf812ac035c435bb7d99b47b37fa6a59684356678b7392a1fe1ac98"
+      "bytes": 762572,
+      "sha256": "7d8f1959fcc6b76c1d613021fc8cb720099e431c4ca6ce7fa787ad2b2351c9fb"
     },
     {
       "file": "qa-cheatsheet-en.pdf",
-      "bytes": 104423,
-      "sha256": "ab3774477ba4b332626ed8632505aa66e26ca11a7a872d72af87f9e99782466c"
+      "bytes": 102664,
+      "sha256": "08b5e86dc0c52fb65edea4bb577274faf7b1e369551f02b516b6e7cd7a4091ba"
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
-      "bytes": 817191,
-      "sha256": "a7c1e6bc010141918f71c8b2c2cab9f77f19114fbc4ac6971f441e3dca4306bc"
+      "bytes": 823915,
+      "sha256": "9f04f74abf9b7cb74fbdd0e3ea9af8bbab1bd85af7edb5abb077f60cfc2d3f70"
     },
     {
       "file": "qa-cheatsheet-ja.md",
-      "bytes": 15421,
-      "sha256": "22c305c2025b055ce711ba0001085ffe4efd434f268cd642cd60c21bd17a1962"
+      "bytes": 15375,
+      "sha256": "f8199371c027c8a7b87eda7348b08b1380495bfe400ed62a489480156e8bf70f"
     },
     {
       "file": "qa-cheatsheet-en.md",
-      "bytes": 14242,
-      "sha256": "6638a1f76031b6f4baf3a13b3ffd329cd093be39984b76e9e85708a54c0660da"
+      "bytes": 14122,
+      "sha256": "3c12a4ac269b14b8806cb313547a9f7876aaf04d40c380e08d066d591454cb2d"
     },
     {
       "file": "qa-cheatsheet.html",
-      "bytes": 38985,
-      "sha256": "0d5547f3d2e6ab8c43c572f85f0cf1eecc2405762d078a70e041ef7fadb794dc"
+      "bytes": 38987,
+      "sha256": "75140698343b7a58220550a4222424211bb57f16e90eadafb8c631f4274c18ee"
     },
     {
       "file": "ai-agent-comparison.md",
