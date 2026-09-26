@@ -5,6 +5,7 @@ script = "script"
 out = "out"
 libs = ["lib", "../node_modules"]
 allow_paths = ["../node_modules"]
+fs_permissions = [{ access = "read", path = "../node_modules/@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json" }]
 solc_version = "0.8.30"
 evm_version = "cancun"
 optimizer = true
