@@ -40,6 +40,10 @@ Both masters use the same newly recorded browser footage. Setup, navigation and 
 
 ## 今回の証拠 / This recording
 
+**採餌性能の再評価：受入未達。** 冒頭に未学習の一方向選択があり、経験収集は100%ランダムです。別配置テストでは2個体とも餌の取得0でした。[日英の再評価と改善条件](foraging-behavior-review.md)。動画は接続・学習工程の証拠で、安定した刺激追従の実証ではありません。
+
+**Foraging acceptance is not met:** the opening includes untrained directional bias, collection is fully random, and both agents collect zero food on the subsequent different-layout test. See the [behavior review](foraging-behavior-review.md).
+
 - **前半：全神経の採餌2個体。** 初期環境TXに寸法・seed・危険エリアを記録。確定した刺激TXから餌を追加。新旧方策に同じ確認済み環境・刺激TXを再生し、比較結果に従って採用／維持します。今回はMOMOが維持（5.20→−1.54）、SORAが採用（4.08→8.64）。別条件のテスト報酬は−6.29／−12.79で、汎化の改善は示していません。身体・判断・学習はオフチェーンです。
 - **後半：全神経の市場4個体。** 14周期で新規 **Aqua 2件・Uniswap V3 25件**。全27件の成功receipt、ERC20 Transfer、対応するコントラクトイベントをRPCで確認しました。市場の累積表示には前の収録分も含みます。
 - 市場では4個体すべてに14回のreadout更新があり、3個体の保存重みが変化しました。更新数の差分は[収録記録](capture-evidence.json)に保存しています。これは学習経路の動作であり、収益改善の証明ではありません。

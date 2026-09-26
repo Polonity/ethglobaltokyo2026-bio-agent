@@ -1,0 +1,213 @@
+{
+  "scope": "Read-only diagnosis of the submitted recording, not a new experiment",
+  "captureRecordedAt": "2026-09-26T10:56:03.288Z",
+  "behaviorAcceptanceMet": false,
+  "definition": "Toward/away compares distance to the target observed before each moving action; stationary/clamped movement can be neither.",
+  "stages": {
+    "collection": [
+      {
+        "steps": 200,
+        "actions": {
+          "0": 32,
+          "3": 30,
+          "7": 16,
+          "6": 10,
+          "2": 19,
+          "8": 22,
+          "5": 29,
+          "4": 16,
+          "1": 26
+        },
+        "moveWithTarget": 178,
+        "toward": 97,
+        "away": 80,
+        "distanceGain": 7.699477676610822,
+        "collected": 1,
+        "hazardSteps": 0,
+        "reward": 1.3098433029832466,
+        "policyVersions": [
+          1
+        ]
+      },
+      {
+        "steps": 200,
+        "actions": {
+          "2": 18,
+          "7": 25,
+          "6": 15,
+          "5": 26,
+          "0": 32,
+          "1": 28,
+          "4": 21,
+          "8": 20,
+          "3": 15
+        },
+        "moveWithTarget": 180,
+        "toward": 90,
+        "away": 90,
+        "distanceGain": -0.06695025702556201,
+        "collected": 0,
+        "hazardSteps": 0,
+        "reward": -6.317037474589168,
+        "policyVersions": [
+          2
+        ]
+      }
+    ],
+    "before": [
+      {
+        "steps": 80,
+        "actions": {
+          "0": 15,
+          "8": 65
+        },
+        "moveWithTarget": 15,
+        "toward": 15,
+        "away": 0,
+        "distanceGain": 12.500527069068845,
+        "collected": 1,
+        "hazardSteps": 0,
+        "reward": 5.198158120720654,
+        "policyVersions": [
+          1
+        ]
+      },
+      {
+        "steps": 80,
+        "actions": {
+          "1": 5,
+          "0": 4,
+          "6": 6,
+          "8": 65
+        },
+        "moveWithTarget": 15,
+        "toward": 12,
+        "away": 2,
+        "distanceGain": 9.194499861354819,
+        "collected": 1,
+        "hazardSteps": 0,
+        "reward": 4.078349958406445,
+        "policyVersions": [
+          2
+        ]
+      }
+    ],
+    "after": [
+      {
+        "steps": 80,
+        "actions": {
+          "8": 70,
+          "2": 1,
+          "1": 6,
+          "3": 3
+        },
+        "moveWithTarget": 10,
+        "toward": 7,
+        "away": 3,
+        "distanceGain": 2.861918478205313,
+        "collected": 0,
+        "hazardSteps": 0,
+        "reward": -1.5414244565384068,
+        "policyVersions": [
+          2
+        ]
+      },
+      {
+        "steps": 80,
+        "actions": {
+          "0": 8,
+          "1": 1,
+          "6": 7,
+          "7": 5,
+          "8": 59
+        },
+        "moveWithTarget": 21,
+        "toward": 21,
+        "away": 0,
+        "distanceGain": 15.131947251023096,
+        "collected": 2,
+        "hazardSteps": 0,
+        "reward": 8.63558417530693,
+        "policyVersions": [
+          3
+        ]
+      }
+    ],
+    "test": [
+      {
+        "steps": 80,
+        "actions": {
+          "0": 80
+        },
+        "moveWithTarget": 80,
+        "toward": 0,
+        "away": 15,
+        "distanceGain": -12.954074273076008,
+        "collected": 0,
+        "hazardSteps": 0,
+        "reward": -6.286222281922801,
+        "policyVersions": [
+          1
+        ]
+      },
+      {
+        "steps": 80,
+        "actions": {
+          "2": 20,
+          "3": 3,
+          "6": 4,
+          "4": 5,
+          "0": 47,
+          "8": 1
+        },
+        "moveWithTarget": 79,
+        "toward": 22,
+        "away": 27,
+        "distanceGain": -6.07635442158951,
+        "collected": 0,
+        "hazardSteps": 5,
+        "reward": -12.792906326476855,
+        "policyVersions": [
+          3
+        ]
+      }
+    ]
+  },
+  "openingLive": [
+    {
+      "steps": 27,
+      "actions": {
+        "0": 27
+      },
+      "moveWithTarget": 27,
+      "toward": 10,
+      "away": 8,
+      "distanceGain": 1.277182239760819,
+      "collected": 0,
+      "hazardSteps": 0,
+      "reward": -0.4268453280717548,
+      "policyVersions": [
+        1
+      ]
+    },
+    {
+      "steps": 27,
+      "actions": {
+        "1": 9,
+        "3": 1,
+        "6": 3,
+        "0": 14
+      },
+      "moveWithTarget": 27,
+      "toward": 4,
+      "away": 9,
+      "distanceGain": -1.9289686463797695,
+      "collected": 0,
+      "hazardSteps": 0,
+      "reward": -1.388690593913931,
+      "policyVersions": [
+        2
+      ]
+    }
+  ]
+}
