@@ -89,3 +89,5 @@
 ## 実Uniswapの市場アプリ
 
 [Market Meadowの起動・仕組み・検証](design/local-market-app.md)。ローカルの実V3 Pool、登録済み3匹、紙約定・PnL・学習・receiptをGUIで確認できます。
+
+- [全3アプリの全神経・経験学習GUI、再現手順と比較](submission/full-apps-acceptance.md)

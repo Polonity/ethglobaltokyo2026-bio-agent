@@ -178,4 +178,4 @@ class ExperienceStore:
           FROM decisions d LEFT JOIN outcomes o ON o.decision_id=d.id WHERE d.brain_hash=?
           GROUP BY d.app,d.variant,d.agent,d.phase''',(self.brain_hash,)).fetchall()
         return {'experiences':[dict(zip(['app','variant','agent','phase','decisions','outcomes','reward'],r)) for r in rows],
-                'learningRuns':[json.loads(r[0]) for r in self.db.execute('SELECT artifact FROM learning_runs ORDER BY created DESC LIMIT 30')]}
+                'learningRuns':[json.loads(r[0]) for r in self.db.execute("SELECT artifact FROM learning_runs WHERE json_extract(artifact,'$.brainHash')=? ORDER BY created DESC LIMIT 30",(self.brain_hash,))]}

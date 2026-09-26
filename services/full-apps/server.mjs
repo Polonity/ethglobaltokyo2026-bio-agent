@@ -43,10 +43,17 @@ async function start({ app, variant, operation, stimulus = 0.5 }) {
   (async () => {
     try {
       if (operation === 'learn') {
+        const history = await brain.call('summary');
+        const collected =
+          history.experiences.find(
+            (e) => e.app === app && e.variant === variant && e.agent === 0 && e.phase === 'collect',
+          )?.decisions || 0;
+        const collectionSeed = 51027 + Math.floor(collected / 200);
         const report = await trainApplication({
           client: brain,
           chain,
           tape: tape.events,
+          collectionSeed,
           app,
           variant,
           onProgress,

@@ -60,6 +60,12 @@ export async function rollout({
         answer.decisions,
       );
       for (const [agent, d] of answer.decisions.entries()) {
+        outcomes[agent].source ||= {
+          kind: 'foraging-transition',
+          statuses: initialStatus,
+          seed,
+          tick: env.tick,
+        };
         await client.call('outcome', {
           decisionId: d.id,
           reward: outcomes[agent].reward,
@@ -113,7 +119,15 @@ export async function rollout({
     await client.call('reset', { session });
   }
 }
-export async function trainApplication({ client, chain, tape, app, variant, onProgress = () => {} }) {
+export async function trainApplication({
+  client,
+  chain,
+  tape,
+  app,
+  variant,
+  collectionSeed = 51027,
+  onProgress = () => {},
+}) {
   const collection = await rollout({
     client,
     chain,
@@ -121,7 +135,7 @@ export async function trainApplication({ client, chain, tape, app, variant, onPr
     app,
     variant,
     phase: 'collect',
-    seed: 51027,
+    seed: collectionSeed,
     steps: 200,
     onProgress,
   });

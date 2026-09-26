@@ -38,7 +38,13 @@
     "test:full": ".local/connectome-tools/bin/python -m unittest discover -s tests/full -v",
     "test:full:browser": "node scripts/full/check-browser.mjs",
     "full:scaling": ".local/connectome-tools/bin/python scripts/full/scaling.py",
-    "verify:full": "npm run test:full && npm run test:full:browser"
+    "verify:full": "npm run test:full && npm run test:full:browser",
+    "full:apps:collect": "node scripts/full/collect-market.mjs",
+    "full:apps:dev": "node services/full-apps/server.mjs",
+    "full:apps:compare": "node scripts/full/compare-apps.mjs",
+    "test:full:apps": ".local/connectome-tools/bin/python -m unittest discover -s tests/full_apps -v",
+    "test:full:apps:browser": "node scripts/full/check-apps-browser.mjs",
+    "full:apps:ablation": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/check-readout-ablation.py"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

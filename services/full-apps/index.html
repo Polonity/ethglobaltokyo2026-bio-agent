@@ -155,7 +155,7 @@
     <div class="top">
       <span class="tag">BIOAGENT / FULL MALECNS</span
       ><select id="language">
-        <option value="system">System</option>
+        <option value="system" data-t="system">System</option>
         <option value="en">English</option>
         <option value="ja">日本語</option>
       </select>
@@ -169,8 +169,8 @@
   </nav>
   <div class="panel controls">
     <select id="variant">
-      <option value="full">Full MaleCNS · 166,700 neurons</option>
-      <option value="legacy">Legacy encoder · 7 neurons</option></select
+      <option value="full" data-t="fullModel">Full MaleCNS · 166,700 neurons</option>
+      <option value="legacy" data-t="smallModel">Legacy encoder · 7 neurons</option></select
     ><button class="primary" id="live" data-t="live"></button><button id="learn" data-t="learn"></button
     ><button id="stop" data-t="stop"></button
     ><label id="stimulus-control"
@@ -230,12 +230,32 @@
       Powered by Aqua — © Degensoft Ltd 2025. MaleCNS: FlyEM / HHMI Janelia, Cambridge, MRC LMB, Google ·
       CC-BY-4.0.
     </p>
-    <a href="http://127.0.0.1:8800/">Original browser applications</a> ·
-    <a href="http://127.0.0.1:8810/">Full population laboratory</a>
+    <a href="http://127.0.0.1:8800/" data-t="original">Original browser applications</a> ·
+    <a href="http://127.0.0.1:8810/" data-t="laboratory">Full population laboratory</a>
   </footer>
   <script>
     const words = {
       en: {
+        system: 'System',
+        fullModel: 'Full MaleCNS · 166,700 neurons',
+        smallModel: 'Reduced encoder · 7 neurons',
+        original: 'Original browser applications',
+        laboratory: 'Full population laboratory',
+        actions: {
+          foraging: [
+            'East',
+            'South-east',
+            'South',
+            'South-west',
+            'West',
+            'North-west',
+            'North',
+            'North-east',
+            'Rest',
+          ],
+          market: ['Hold', 'Buy', 'Sell'],
+          aqua: ['Tight quote', 'Wide quote', 'Withdraw'],
+        },
         title: 'A full brain. A lesson from every action.',
         intro:
           'Foraging, paper trading and Aqua share full-neuron inference and an experience-based learning loop.',
@@ -272,6 +292,16 @@
         reward: 'Reward',
       },
       ja: {
+        system: 'システム',
+        fullModel: '全MaleCNS · 166,700神経',
+        smallModel: '省略版encoder · 7神経',
+        original: '元のブラウザー版',
+        laboratory: '全神経の実験室',
+        actions: {
+          foraging: ['東へ', '南東へ', '南へ', '南西へ', '西へ', '北西へ', '北へ', '北東へ', '休息'],
+          market: ['待機', '買う', '売る'],
+          aqua: ['狭いスプレッド', '広いスプレッド', '撤回'],
+        },
         title: '全神経で動き、行動から学ぶ。',
         intro: '採餌・ペーパートレード・Aquaを、全神経の判断と経験学習の共通ループで動かします。',
         foraging: '採餌',
@@ -364,7 +394,7 @@
         const card = document.createElement('div');
         card.className = 'card';
         const names = ['MOMO', 'SORA'];
-        card.innerHTML = `<strong>${names[i]}</strong><p class="bubble">${words[lang].policy} v${d?.policyVersion || 1} · ${words[lang].action} ${d?.action ?? '—'}</p><div class="number">${Number(f?.reward || 0).toFixed(3)}</div><small>${words[lang].reward}</small>`;
+        card.innerHTML = `<strong>${names[i]}</strong><p class="bubble">${words[lang].policy} v${d?.policyVersion || 1} · ${words[lang].action} ${words[lang].actions[app][d?.action] ?? '—'}</p><div class="number">${Number(f?.reward || 0).toFixed(3)}</div><small>${words[lang].reward}</small>`;
         $('cards').append(card);
       }
       $('comparison').replaceChildren();
