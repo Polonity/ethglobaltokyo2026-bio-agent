@@ -11,6 +11,8 @@
     <title>FLY LAB — Bio Agent Arena</title>
     <link rel="stylesheet" href="/style.css" />
     <script type="module" src="/app.js"></script>
+    <link rel="stylesheet" href="/guides/guide.css" />
+    <script type="module" src="/guides/guide.mjs"></script>
   </head>
   <body>
     <header class="topbar">
@@ -37,6 +39,9 @@
       <div class="edition"><span class="live-dot"></span>ETHGLOBAL TOKYO <b>2026</b></div>
     </header>
     <main>
+      <p data-no-i18n>
+        <a href="#app-guide" style="color: inherit">画面・刺激・コネクトームの関係 / How this app works ↓</a>
+      </p>
       <section class="intro">
         <div>
           <p class="eyebrow">BIO AGENT EXPERIMENT / 001</p>
@@ -238,6 +243,7 @@
         <p>Bio Agent · ETHGlobal Tokyo 2026</p>
         <span>MaleCNS実測7神経・19接続 / 学習するのは行動選択</span>
       </footer>
+      <section id="app-guide" data-bio-guide data-no-i18n data-app="foraging" data-mode="browser"></section>
     </main>
     <dialog id="transaction-dialog" aria-labelledby="transaction-title">
       <button id="close-transaction" class="dialog-close" aria-label="取引詳細を閉じる">×</button>

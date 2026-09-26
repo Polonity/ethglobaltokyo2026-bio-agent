@@ -88,3 +88,7 @@ await build({
   outfile: 'dist/aqua.js',
 });
 for (const file of ['aqua.html', 'aqua.css']) await copyFile('apps/frontend/' + file, 'dist/' + file);
+
+await mkdir('dist/guides', { recursive: true });
+for (const file of ['content.mjs', 'guide.mjs', 'guide.css', 'sheet.html'])
+  await copyFile('apps/frontend/guides/' + file, 'dist/guides/' + file);

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Fly Lab · Market meadow</title>
     <link rel="stylesheet" href="/market.css" />
+    <link rel="stylesheet" href="/guides/guide.css" />
+    <script type="module" src="/guides/guide.mjs"></script>
   </head>
   <body>
     <header>
@@ -20,6 +22,9 @@
       >
     </header>
     <main>
+      <p data-no-i18n>
+        <a href="#app-guide" style="color: inherit">画面・刺激・コネクトームの関係 / How this app works ↓</a>
+      </p>
       <section class="hero">
         <div>
           <small>BIO AGENT EXPERIMENT / 02</small>
@@ -86,6 +91,7 @@
           利益による食事はゲーム上の比喩です。身体・学習・台帳はブラウザー内で動作し、ページを再読込すると新しい競争が始まります。
         </p>
       </details>
+      <section id="app-guide" data-bio-guide data-no-i18n data-app="market" data-mode="browser"></section>
     </main>
     <dialog id="receipt">
       <button id="close-receipt">閉じる</button>

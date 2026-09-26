@@ -1,0 +1,171 @@
+.bio-guide {
+  font:
+    14px/1.65 system-ui,
+    sans-serif;
+  color: #24473e;
+  background: #f5f8ef;
+  border: 1px solid #ceddcc;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 16px 0;
+  text-align: left;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.bio-guide * {
+  box-sizing: border-box;
+}
+.bio-guide h2,
+.bio-guide h3 {
+  color: #24473e;
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+.bio-guide p {
+  margin: 8px 0;
+}
+.bio-guide .guide-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #526b55;
+  letter-spacing: 0.02em;
+}
+.bio-guide a {
+  color: #155c53;
+  text-decoration: underline;
+}
+.bio-guide .guide-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 185px), 1fr));
+  gap: 12px;
+}
+.bio-guide .guide-legend article {
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+}
+.bio-guide .guide-legend p {
+  font-size: 13px;
+}
+.bio-guide .guide-flow {
+  padding-left: 24px;
+  margin: 10px 0;
+}
+.bio-guide .guide-flow li {
+  margin-bottom: 10px;
+}
+.bio-guide .guide-flow strong {
+  display: block;
+}
+.bio-guide details {
+  border-top: 1px solid #ccd9c7;
+  margin-top: 12px;
+  padding-top: 10px;
+}
+.bio-guide summary {
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 32px;
+}
+.bio-guide dl {
+  margin: 8px 0;
+}
+.bio-guide dt {
+  font-weight: 700;
+  margin-top: 12px;
+}
+.bio-guide dd {
+  margin: 3px 0 8px;
+}
+.bio-guide .guide-trace {
+  padding: 12px;
+  background: #e5eee1;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+.bio-guide .guide-trace ol {
+  padding-left: 22px;
+  margin: 0;
+}
+.bio-guide .guide-trace li {
+  margin: 6px 0;
+}
+.bio-guide .guide-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.guide-sheet {
+  max-width: 880px;
+  margin: 30px auto;
+  padding: 0 18px;
+  background: #fff;
+  color: #24473e;
+  font:
+    16px/1.65 system-ui,
+    sans-serif;
+}
+.guide-sheet nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.guide-sheet button,
+.guide-sheet select {
+  font: inherit;
+  padding: 8px;
+  border: 1px solid #c7d5c6;
+  border-radius: 8px;
+  background: white;
+  color: #24473e;
+}
+.guide-sheet .bio-guide {
+  border: 0;
+  background: #fff;
+  padding: 0;
+  font-size: 15px;
+}
+.guide-sheet .guide-links {
+  display: none;
+}
+.guide-sheet .guide-legend article {
+  background: #f5f8ef;
+}
+.guide-sheet .guide-trace {
+  display: none;
+}
+@media print {
+  .guide-sheet {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+  }
+  .guide-sheet nav,
+  .guide-sheet .guide-controls {
+    display: none;
+  }
+  .bio-guide {
+    font-size: 10pt !important;
+    border: 0;
+  }
+  .bio-guide details {
+    break-inside: auto;
+  }
+  .bio-guide article,
+  .bio-guide dt,
+  .bio-guide h2,
+  .bio-guide h3 {
+    break-after: avoid;
+  }
+  .bio-guide a {
+    color: inherit;
+    text-decoration: none;
+  }
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+}

@@ -112,6 +112,14 @@ const server = http.createServer(async (req, res) => {
       return reply(403, { error: 'Loopback host required' });
     const url = new URL(req.url, base);
     if (req.method === 'GET') {
+      const guideFiles = {
+        '/guides/guide.mjs': 'text/javascript',
+        '/guides/content.mjs': 'text/javascript',
+        '/guides/guide.css': 'text/css',
+        '/guides/sheet.html': 'text/html',
+      };
+      if (guideFiles[url.pathname])
+        return reply(200, await readFile('apps/frontend' + url.pathname, 'utf8'), guideFiles[url.pathname]);
       if (url.pathname === '/' || apps.some((a) => url.pathname === '/' + a))
         return reply(200, await readFile('services/full-apps/index.html', 'utf8'), 'text/html');
       if (url.pathname.startsWith('/models/')) return reply(200, descriptor);

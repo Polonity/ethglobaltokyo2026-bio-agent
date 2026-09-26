@@ -47,7 +47,9 @@
     "full:apps:ablation": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/check-readout-ablation.py",
     "test:full:apps:ui": "node scripts/full/check-apps-ui.mjs",
     "test:full:apps:resume": "node scripts/full/check-apps-resume.mjs",
-    "full:apps:audit": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/audit-apps.py"
+    "full:apps:audit": "PYTHONPATH=. .local/connectome-tools/bin/python scripts/full/audit-apps.py",
+    "docs:apps": "node scripts/build-app-guides.mjs",
+    "test:guides": "node scripts/check-app-guides.mjs"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

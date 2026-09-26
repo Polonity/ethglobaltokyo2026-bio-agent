@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Aqua Connectome · BioAgent</title>
     <link rel="stylesheet" href="/aqua.css" />
+    <link rel="stylesheet" href="/guides/guide.css" />
+    <script type="module" src="/guides/guide.mjs"></script>
   </head>
   <body>
     <header>
@@ -19,6 +21,9 @@
       </nav>
     </header>
     <main>
+      <p data-no-i18n>
+        <a href="#app-guide" style="color: inherit">画面・刺激・コネクトームの関係 / How this app works ↓</a>
+      </p>
       <div class="eyebrow">AQUA CONNECTOME · LOCAL EXPERIMENT</div>
       <h1 data-t="title"></h1>
       <p class="intro" data-t="intro"></p>
@@ -81,6 +86,7 @@
         <a href="https://github.com/1inch/aqua">Aqua source</a> ·
         <a href="https://male-cns.janelia.org/">MaleCNS source</a>
       </footer>
+      <section id="app-guide" data-bio-guide data-no-i18n data-app="aqua" data-mode="browser"></section>
     </main>
     <dialog id="receipt">
       <h2 data-t="receipt"></h2>

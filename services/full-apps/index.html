@@ -194,9 +194,11 @@
       <p id="status" role="status"></p>
       <progress id="progress" value="0" max="1"></progress>
       <p id="error" role="alert"></p>
+      <p><a href="#app-guide" data-t="guideLink"></a></p>
       <canvas id="arena" width="780" height="400"></canvas>
       <p id="neural" class="muted"></p>
       <div class="cards" id="cards"></div>
+      <section id="app-guide" data-bio-guide data-app="foraging" data-mode="full"></section>
     </section>
     <aside>
       <section class="panel">
@@ -233,9 +235,12 @@
     <a href="http://127.0.0.1:8800/" data-t="original">Original browser applications</a> ·
     <a href="http://127.0.0.1:8810/" data-t="laboratory">Full population laboratory</a>
   </footer>
+  <link rel="stylesheet" href="/guides/guide.css" />
+  <script type="module" src="/guides/guide.mjs"></script>
   <script>
     const words = {
       en: {
+        guideLink: 'What do the food, states and TXs mean?',
         system: 'System',
         fullModel: 'Full MaleCNS · 166,700 neurons',
         smallModel: 'Reduced encoder · 7 neurons',
@@ -292,6 +297,7 @@
         reward: 'Reward',
       },
       ja: {
+        guideLink: '食べ物・状態・TXの意味を見る ↓',
         system: 'システム',
         fullModel: '全MaleCNS · 166,700神経',
         smallModel: '省略版encoder · 7神経',
@@ -373,9 +379,23 @@
         .forEach((b) => b.classList.toggle('active', b.dataset.app === app));
       $('app-title').textContent = words[lang][app];
       $('stimulus-control').hidden = app !== 'foraging';
+      window.dispatchEvent(
+        new CustomEvent('bio-guide-state', {
+          detail: {
+            app,
+            lang,
+            mode: $('variant').value === 'legacy' ? 'reduced' : 'full',
+            p: state?.latest[app],
+          },
+        }),
+      );
       if (!state) return;
       const p = state.latest[app];
-      $('connection').textContent = `Anvil 31337 · ${state.chain.market.pool.slice(0, 10)}…`;
+      const origin =
+        app === 'market'
+          ? { label: 'Uniswap pool', address: state.chain.market.pool }
+          : { label: 'BioAgent registry', address: state.chain.registries[$('variant').value][app] };
+      $('connection').textContent = `Anvil 31337 · ${origin.label} ${origin.address.slice(0, 10)}…`;
       for (const id of ['live', 'learn']) $(id).disabled = Boolean(state.busy);
       $('stop').disabled = !state.busy;
       $('mode').textContent = p?.variant || $('variant').value;
@@ -394,7 +414,24 @@
         const card = document.createElement('div');
         card.className = 'card';
         const names = ['MOMO', 'SORA'];
-        card.innerHTML = `<strong>${names[i]}</strong><p class="bubble">${words[lang].policy} v${d?.policyVersion || 1} · ${words[lang].action} ${words[lang].actions[app][d?.action] ?? '—'}</p><div class="number">${Number(f?.reward || 0).toFixed(3)}</div><small>${words[lang].reward}</small>`;
+        card.innerHTML = `<strong>${names[i]}</strong><p class="bubble">${words[lang].policy} v${d?.policyVersion || 1} · ${words[lang].action} ${words[lang].actions[app][d?.action] ?? '—'}</p><div class="number">${Number(f?.reward || 0).toFixed(3)}</div><small>${lang === 'ja' ? { foraging: '累積報酬', market: '累積PnL（仮想）', aqua: '累積代理報酬' }[app] : { foraging: 'Cumulative reward', market: 'Cumulative paper PnL', aqua: 'Cumulative proxy reward' }[app]}</small>`;
+        if (f) {
+          const body = document.createElement('p');
+          body.className = 'muted';
+          body.textContent =
+            lang === 'ja'
+              ? `活動エネルギー ${Math.round(f.energy * 100)}% · 満腹度 ${Math.round(f.satiety * 100)}% · 蓄え ${Math.round(f.reserves * 100)}%`
+              : `Energy ${Math.round(f.energy * 100)}% · Fullness ${Math.round(f.satiety * 100)}% · Reserves ${Math.round(f.reserves * 100)}%`;
+          card.append(body);
+          if (app === 'foraging') {
+            const food = document.createElement('p');
+            food.textContent =
+              lang === 'ja'
+                ? `集めた蜜 ${f.score}個 / 危険への接触 ${f.collisions}回`
+                : `Nectar ${f.score} / Hazard contacts ${f.collisions}`;
+            card.append(food);
+          }
+        }
         $('cards').append(card);
       }
       $('comparison').replaceChildren();
@@ -460,6 +497,7 @@
         $('error').textContent = e.message;
       }
     }
+    $('variant').onchange = render;
     $('live').onclick = () => operation('live');
     $('learn').onclick = () => operation('learn');
     $('stop').onclick = () =>
