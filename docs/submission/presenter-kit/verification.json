@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-09-26T07:46:36.227Z",
+  "verifiedAt": "2026-09-26T08:08:20.996Z",
   "recordingModel": {
     "neurons": 166700,
     "connections": 25582938,
@@ -77,33 +77,43 @@
     },
     {
       "file": "qa-cheatsheet-ja.pdf",
-      "bytes": 605815,
-      "sha256": "b9cc92f0cc75fe501c5b0c1ec77c815c1c568ada43f54134c08e66fdf80d619e"
+      "bytes": 714659,
+      "sha256": "c0e8de36b4c2feb2740a59e8ade3debac55cb99dde2fc42ea499f62bf350d41b"
     },
     {
       "file": "qa-cheatsheet-en.pdf",
-      "bytes": 80216,
-      "sha256": "d8f6aa643ae4c866490cfca114aa2b3985e3e71f2c1f7151204004d516c714cd"
+      "bytes": 96504,
+      "sha256": "cf5a48d02c6999f377a484c92cf6f602ba401a1624a1d59f094674fcdd7fb58e"
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
-      "bytes": 647937,
-      "sha256": "65e31df0258334a2030384f25e38d4ddbf163011d443cc169a2e24c63c0c3a38"
+      "bytes": 768579,
+      "sha256": "cd6693a337a73847eb97892cf13d76d5ab491508241122a44c6d2ca59d3c89a8"
     },
     {
       "file": "qa-cheatsheet-ja.md",
-      "bytes": 8078,
-      "sha256": "d383b18736906ec1f085f6c2fe15f251c123065ed9de2e3995d891e9a222ab2b"
+      "bytes": 12340,
+      "sha256": "f8d56350869b15f2bd792959fa8462f06da46d15b0b00f856733866c8c8acb73"
     },
     {
       "file": "qa-cheatsheet-en.md",
-      "bytes": 7442,
-      "sha256": "0777895dbd18fa78252087daeee84ffc1e9c8b134bbc932da2668d1257ddd661"
+      "bytes": 11344,
+      "sha256": "d72e36b9e0ed1360ea4cc3846a5f4142dfd735c428e7d731d492e2d3a146adb5"
     },
     {
       "file": "qa-cheatsheet.html",
-      "bytes": 21987,
-      "sha256": "9cc1ddcbaec1e1749c98b676ed66f200531db6966122f6709285c81713af6365"
+      "bytes": 33019,
+      "sha256": "aa73bec9d2493b621cb7760680266be1011951bd68a8ee078dc13c923244df6f"
+    },
+    {
+      "file": "ai-agent-comparison.md",
+      "bytes": 15477,
+      "sha256": "f34995a6b14aec7ecf40a198741f4e51267364f797511c98c8f73944691175f3"
+    },
+    {
+      "file": "resource-evidence.json",
+      "bytes": 1866,
+      "sha256": "10feb3fcc463cabfc2626ca4059ac1da87e8b982e92cd3e58b4eadb1beedc09b"
     }
   ],
   "videos": [
@@ -168,15 +178,17 @@
   ],
   "cheatsheet": {
     "ja": {
-      "visiblePages": 2
+      "visiblePages": 3
     },
     "en": {
-      "visiblePages": 2
+      "visiblePages": 3
     },
     "all": {
-      "visiblePages": 4
+      "visiblePages": 6
     },
     "mobileNoHorizontalOverflow": true
   },
-  "visualReview": "Not automated: review generated playback frames and all PDF pages separately."
+  "visualReview": "Not automated: review generated playback frames and all PDF pages separately.",
+  "videoVerificationAt": "2026-09-26T07:46:36.227Z",
+  "videoVerificationReused": true
 }

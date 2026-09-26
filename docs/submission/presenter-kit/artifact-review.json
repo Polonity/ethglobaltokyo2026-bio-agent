@@ -1,34 +1,38 @@
 {
-  "reviewedAt": "2026-09-26T07:48:27.006523+00:00",
-  "reviewType": "Assistant visual inspection of generated images, plus PDF parsing and browser playback",
+  "reviewedAt": "2026-09-26T08:13:38.557054+00:00",
+  "reviewType": "Assistant visual inspection of all six rendered PDF pages, plus PDF parsing and HTML browser checks; unchanged video review retained by hash",
   "pdfs": [
     {
       "file": "qa-cheatsheet-ja.pdf",
-      "pages": 2,
-      "sha256": "b9cc92f0cc75fe501c5b0c1ec77c815c1c568ada43f54134c08e66fdf80d619e",
+      "pages": 3,
+      "sha256": "c0e8de36b4c2feb2740a59e8ade3debac55cb99dde2fc42ea499f62bf350d41b",
       "textCharacters": [
-        1361,
-        1748
+        1347,
+        1748,
+        1603
       ]
     },
     {
       "file": "qa-cheatsheet-en.pdf",
-      "pages": 2,
-      "sha256": "d8f6aa643ae4c866490cfca114aa2b3985e3e71f2c1f7151204004d516c714cd",
+      "pages": 3,
+      "sha256": "cf5a48d02c6999f377a484c92cf6f602ba401a1624a1d59f094674fcdd7fb58e",
       "textCharacters": [
-        3088,
-        3272
+        3072,
+        3272,
+        3223
       ]
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
-      "pages": 4,
-      "sha256": "65e31df0258334a2030384f25e38d4ddbf163011d443cc169a2e24c63c0c3a38",
+      "pages": 6,
+      "sha256": "cd6693a337a73847eb97892cf13d76d5ab491508241122a44c6d2ca59d3c89a8",
       "textCharacters": [
-        1361,
+        1347,
         1748,
-        3088,
-        3272
+        1603,
+        3072,
+        3272,
+        3223
       ]
     }
   ],
@@ -37,7 +41,9 @@
       1,
       2,
       3,
-      4
+      4,
+      5,
+      6
     ],
     "videoLanguages": [
       "ja",
@@ -56,6 +62,11 @@
     "allFourAgentsVisible": true,
     "pdfTextNotClipped": true
   },
-  "scope": "Visual review is separate from automated checks. It does not establish biological fidelity or improved trading performance.",
-  "sourceFrames": "Local, Git-ignored artifacts/submission-presenter-20260926/playback-*.jpg and qa-page-*.jpg"
+  "scope": "This update reviews the bilingual AI-comparison pages and the complete regenerated PDFs. Video files are unchanged and their earlier review is retained after SHA-256 verification. Visual review does not establish energy savings, biological superiority or improved trading performance.",
+  "sourceFrames": {
+    "pdf": "Local, Git-ignored artifacts/submission-presenter-20260926/ai-comparison/qa-page-*.jpg",
+    "video": "Local, Git-ignored artifacts/submission-presenter-20260926/playback-*.jpg"
+  },
+  "videoReviewedAt": "2026-09-26T07:48:27.006523+00:00",
+  "videoReviewReused": true
 }

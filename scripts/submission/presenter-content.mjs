@@ -61,8 +61,8 @@ export function content(e) {
         ],
         [
           'LLMより低コスト・低消費電力？',
-          '小さな計算環境で動く可能性は示せますが、比較優位はまだ言えません。',
-          `収録時のPythonプロセス全体のpeak RSSは${rss} MiB、最後の4個体分の神経計算は${neural} ms。全システムのメモリーや電力ではありません。LLMの必要RAMはモデル等で変わり、一律256 GBではありません。同一課題での比較が必要です。`,
+          '定型判断の計算・更新を小さくし、電力・設備費・待ち時間を減らす可能性を調べています。',
+          `収録時のPythonプロセス全体のpeak RSSは${rss} MiB、最後の4個体分の神経計算は${neural} ms。電力は未測定で、比較優位の証拠ではありません。比較条件と想定反論は3ページ目にまとめています。`,
           'R1',
         ],
         [
@@ -159,8 +159,8 @@ export function content(e) {
         ],
         [
           'Is it cheaper or more energy-efficient than an LLM?',
-          'The resource footprint is measurable; comparative savings are not yet established.',
-          `The shared Python process peaked at ${rss} MiB RSS; the last four-agent neural pass took ${neural} ms. These are not whole-system memory or energy measurements. LLM RAM depends on the model and configuration, not a universal 256 GB requirement. We need a matched-task benchmark.`,
+          'We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.',
+          `The shared Python process peaked at ${rss} MiB RSS; the last four-agent neural pass took ${neural} ms. Power is unmeasured; these are not comparative savings. Page 3 gives the hypotheses, counterarguments and comparison conditions.`,
           'R1',
         ],
         [

@@ -42,7 +42,7 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 6. Is it cheaper or more energy-efficient than an LLM?
 
-**The resource footprint is measurable; comparative savings are not yet established.** The shared Python process peaked at 443.2 MiB RSS; the last four-agent neural pass took 333.3 ms. These are not whole-system memory or energy measurements. LLM RAM depends on the model and configuration, not a universal 256 GB requirement. We need a matched-task benchmark.
+**We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.** The shared Python process peaked at 443.2 MiB RSS; the last four-agent neural pass took 333.3 ms. Power is unmeasured; these are not comparative savings. Page 3 gives the hypotheses, counterarguments and comparison conditions.
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json)
 
@@ -89,3 +89,48 @@ BioAgent is an experimental platform that connects biologically derived circuits
 [R6: ETHGlobal Tokyo: official prize requirements](https://ethglobal.com/events/tokyo2026/prizes)
 
 Say: measured connectivity, successful settlement, observed learning updates. Do not claim: fly thoughts, biological superiority, profit, lower LLM cost, or equivalence of full and reduced runtimes.
+
+## AI agent comparison: expected benefits
+
+Scope: repeated choices among a few actions from numeric inputs, not equivalent general language ability.
+
+We aim to keep routine decisions running within a small compute budget. A fixed circuit and a small readout may reduce memory, processing and update costs. Lower energy use, cost and latency are hypotheses; a matched comparison must establish the benefit.
+
+| Dimension | Expected benefit and mechanism | Evidence and limits |
+| --- | --- | --- |
+| Energy / cost | Bounded CPU work could lower always-on energy use or repeated inference-API charges. | Savings would accrue to agent operators. Power/cost are unmeasured; gas and RPC costs remain. |
+| Memory | Share one fixed sparse graph across individuals; keep separate states and readouts. | 443.2 MiB is peak RSS of the four-agent Python process, not whole-system RAM or proof of microcontroller deployment. |
+| Latency | Four circuit steps can lead to an action without generating text or calling an external inference API. | Four-agent neural processing: 333–492 ms in 6 recorded cycles. This is not a real-time guarantee. |
+| Adaptation | Refit only 180 readout coefficients per agent; keep the circuit fixed. | Task-specific flexibility. Small conventional models can do this too; LLMs can adapt via context without retraining. |
+
+### 14. Does every LLM need 256 GB?
+
+**No: model size, precision and context determine memory.** For an 8B model, weights alone are about 16 GB at FP16 or an ideal 4 GB at 4-bit (decimal). KV cache and overhead are extra. API clients do not host those weights. Compare equivalent tasks.
+
+[S1: HF: weight quantization](https://huggingface.co/docs/transformers/main/en/quantization/overview) / [S2: HF: KV cache and generation](https://huggingface.co/docs/transformers/main/en/kv_cache) / [S5: HF: hosted inference](https://huggingface.co/docs/inference-providers/index)
+
+### 15. How much electricity does it save?
+
+**We have no measured savings ratio; RAM does not determine watts.** Measure system power and joules per decision at matched quality and workload. Electricity cost = average W × operating hours / 1,000 × tariff. Add API, hardware and training costs separately.
+
+[S3: MLCommons: whole-system power](https://mlcommons.org/benchmarks/inference-edge/) / [R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
+
+### 16. Does 333 ms mean a completed trade?
+
+**Neural processing and settlement latency are different.** Four-agent neural computation plus features took 333–492 ms; cycles including local transactions/RPC took 2.58–3.09 s. The loop targets roughly 4 s. These are neither single-agent response times nor public-chain finality.
+
+[R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
+
+### 17. Why not a small AI model or a reservoir?
+
+**They are essential controls; efficiency alone is not uniquely biological.** Fixed circuits with learned readouts already exist. We must compare biological wiring against random circuits and small models for temporal decisions. The seven-neuron foraging experiment did not establish an advantage over direct inputs.
+
+[R3: Held-out experiment and negative results](../../research/bioagent-adaptation/README.md) / [S4: ESN primary paper, §2.1](https://www.ai.rug.nl/minds/uploads/techreport2.pdf)
+
+### 18. What makes the comparison fair?
+
+**Match inputs, actions, quality, request rate and measurement scope.** Compare rules, small MLP/RNNs, LLMs and BioAgent on unseen data. Measure usable-action p50/p95, failures, RAM and joules/decision. LLM planning plus a small action controller is another future option.
+
+[R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
+
+Distinguish hypotheses from measurements. AI agents are not limited to LLMs. R7 contains the protocol.

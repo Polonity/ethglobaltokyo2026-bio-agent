@@ -42,7 +42,7 @@ BioAgentは、生物由来の神経回路で行動を決め、入力・学習・
 
 ## 6. LLMより低コスト・低消費電力？
 
-**小さな計算環境で動く可能性は示せますが、比較優位はまだ言えません。** 収録時のPythonプロセス全体のpeak RSSは443.2 MiB、最後の4個体分の神経計算は333.3 ms。全システムのメモリーや電力ではありません。LLMの必要RAMはモデル等で変わり、一律256 GBではありません。同一課題での比較が必要です。
+**定型判断の計算・更新を小さくし、電力・設備費・待ち時間を減らす可能性を調べています。** 収録時のPythonプロセス全体のpeak RSSは443.2 MiB、最後の4個体分の神経計算は333.3 ms。電力は未測定で、比較優位の証拠ではありません。比較条件と想定反論は3ページ目にまとめています。
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json)
 
@@ -89,3 +89,48 @@ BioAgentは、生物由来の神経回路で行動を決め、入力・学習・
 [R6: ETHGlobal Tokyo: official prize requirements](https://ethglobal.com/events/tokyo2026/prizes)
 
 言い切る：実接続を使う・取引が成立・学習更新を確認。言い切らない：ハエの思考・生物優位・利益・LLMより安い・フル版と縮小版の同等性。
+
+## AI Agent比較：期待する効果
+
+対象は、数値入力から少数の行動を繰り返し選ぶ処理。汎用的な言語能力との比較ではありません。
+
+狙いは、定型的な判断を小さい計算予算で継続することです。固定回路と小さなreadoutで、メモリー・計算時間・更新負荷を抑える可能性を調べています。低電力・低コスト・低遅延は期待する効果で、比較優位の実証はこれからです。
+
+| 比較軸 | 期待する効果と理由（仮説） | 実測・制約 |
+| --- | --- | --- |
+| 電力・費用 | CPU上の限られた計算で済めば、常時動作の電力や推論API費用を減らせる可能性。 | 節約先はAgent実行側。電力・費用は未測定で、ガス代・RPC等は別。 |
+| メモリー | 固定の疎なグラフを個体間で共有し、個別状態と行動readoutを保持。 | 443.2 MiBは4個体を動かすPythonプロセスのpeak RSS。PC全体のRAMや組込機器での実績ではない。 |
+| 反応速度 | 4stepの回路処理から行動へ進むため、毎回の文章生成や外部推論APIの往復を省ける。 | 収録6周期で神経処理は4個体合計333–492 ms。実行期限の保証ではない。 |
+| 適応・更新 | 固定回路は維持し、readoutの180係数／個体だけを再適合できる。 | 柔軟性は対象課題の範囲内。小型AIも可能。LLMも文脈・指示から適応でき、重み更新が必須ではない。 |
+
+### 14. LLMは256 GB必要だから、圧倒的に小さい？
+
+**必要量はモデル・精度・文脈で変わります。** 8Bモデルの重みだけならFP16で約16 GB、4bitで理論上約4 GB（十進）。KV cache等は別です。API利用側はモデルを載せません。同等の能力・仕事を揃えて比較します。
+
+[S1: HF: weight quantization](https://huggingface.co/docs/transformers/main/en/quantization/overview) / [S2: HF: KV cache and generation](https://huggingface.co/docs/transformers/main/en/kv_cache) / [S5: HF: hosted inference](https://huggingface.co/docs/inference-providers/index)
+
+### 15. 電気代は何分の一になる？
+
+**倍率は未測定です。RAMから消費電力は換算できません。** 同じ品質・判断数で機器全体のWとJ/判断を測ります。料金試算は平均W×稼働時間÷1,000×単価。API費・設備費・学習費も別に合算します。
+
+[S3: MLCommons: whole-system power](https://mlcommons.org/benchmarks/inference-edge/) / [R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
+
+### 16. 333 msなら取引もその速さで終わる？
+
+**神経処理の時間と、取引成立までの時間は別です。** 4個体の神経計算＋特徴抽出は333–492 ms。RPC・ローカル取引等を含む周期は2.58–3.09秒、ループは約4秒間隔。1個体の応答時間や公開チェーンの確定時間ではありません。
+
+[R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
+
+### 17. 普通の小型AIやreservoirでよいのでは？
+
+**有力な対照です。軽量化だけでは生物固有の価値になりません。** 固定回路＋学習readoutは既存研究にもあります。生物接続が時間的な判断へ役立つかを、ランダム回路・小型モデルと比較します。7神経の採餌実験では直接入力対照への優位は未確認です。
+
+[R3: Held-out experiment and negative results](../../research/bioagent-adaptation/README.md) / [S4: ESN primary paper, §2.1](https://www.ai.rug.nl/minds/uploads/techreport2.pdf)
+
+### 18. 何を揃えれば、公平な比較になる？
+
+**入力・行動・品質・頻度・測定範囲を揃えます。** 固定ルール、小型MLP/RNN、LLM、BioAgentを未使用データで比較。行動が使えるまでのp50/p95、失敗率、RAM、J/判断を測ります。LLMで計画し小型モデルで実行する分業も今後の候補です。
+
+[R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
+
+期待効果と実測を分ける。AI AgentはLLMに限らない。出典・比較条件はR7。

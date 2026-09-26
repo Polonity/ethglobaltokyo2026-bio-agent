@@ -3,7 +3,7 @@
 **[最新版の動画・回答集・根拠一覧](submission/presenter-kit/README.md)**。2026-09-26収録、51.5秒、1920×1080、音声なし。Anvil＋全166,700神経／個体の4匹版です。
 
 - [英語字幕 MP4](submission/presenter-kit/bioagent-submission-en.mp4) / [日本語字幕 MP4](submission/presenter-kit/bioagent-submission-ja.mp4)
-- [日英Q&A・4ページPDF](submission/presenter-kit/qa-cheatsheet-ja-en.pdf) / [ブラウザー版](submission/presenter-kit/qa-cheatsheet.html)
+- [日英Q&A・6ページPDF（AI比較を追加）](submission/presenter-kit/qa-cheatsheet-ja-en.pdf) / [ブラウザー版](submission/presenter-kit/qa-cheatsheet.html)
 
 収録中のAqua 1件・V3 11件を全receiptで確認。4個体に各6回の学習更新が入り、3個体の重みが変化しました。全編デコード・Chrome再生とPDF全ページを確認しています。以下の既存動画は過去の収録記録です。
 
