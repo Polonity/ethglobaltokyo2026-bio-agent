@@ -58,7 +58,15 @@
     "test:framework:chain": "node scripts/research/bioagent-adaptation/check-chain.mjs",
     "test:framework:browser": "node scripts/research/bioagent-adaptation/check-browser.mjs",
     "framework:lab": "node scripts/research/bioagent-adaptation/serve.mjs",
-    "research:adaptation": "node scripts/research/bioagent-adaptation/experiment.mjs && node scripts/research/bioagent-adaptation/summarize.mjs"
+    "research:adaptation": "node scripts/research/bioagent-adaptation/experiment.mjs && node scripts/research/bioagent-adaptation/summarize.mjs",
+    "sepolia:prepare": "node scripts/sepolia/prepare.mjs",
+    "sepolia:deploy": "node scripts/sepolia/deploy.mjs --broadcast",
+    "sepolia:build": "node scripts/sepolia/build.mjs",
+    "sepolia:dev": "node scripts/sepolia/build.mjs && node scripts/sepolia/serve.mjs",
+    "sepolia:publish": "node scripts/sepolia/build.mjs && node scripts/cloudflare.mjs deploy --config wrangler.sepolia.jsonc",
+    "test:sepolia": "node --test tests/sepolia/*.test.mjs",
+    "test:sepolia:browser": "node scripts/sepolia/check-browser.mjs",
+    "test:sepolia:public": "node scripts/sepolia/check-browser.mjs --url https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",
