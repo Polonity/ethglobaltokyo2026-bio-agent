@@ -72,8 +72,7 @@ contract FlyV3Router {
         quoting = true;
         try pool.swap(address(this), direction, int256(amount), limit(direction), "") {
             revert("expected revert");
-        }
-        catch (bytes memory reason) {
+        } catch (bytes memory reason) {
             quoting = false;
             require(reason.length == 36 && bytes4(reason) == Quoted.selector, "quote failed");
             assembly { output := mload(add(reason, 36)) }
