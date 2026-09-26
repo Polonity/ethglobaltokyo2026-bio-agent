@@ -1,97 +1,64 @@
-# ドキュメント案内
+# ドキュメント
 
-**[審査員向けSepoliaデモ・日英操作案内・実TX証拠](deployment/sepolia.md)**。公開版は7神経・19接続、提出動画はAnvil＋全166,700神経版です。
+[プロジェクト概要](../README.md)から一歩進んで、実行環境・実装・研究結果を調べるための索引です。
 
-**[進行中: 全アプリでの全神経・経験学習・改善](design/full-app-learning.md)**。実験画面を越えて採餌・市場・Aquaへ統合し、省略版と比較するための完了条件と現状。
+## 使う
 
-**[ローカル全166,700神経モデル](design/malecns-full-local.md)**: 7神経への縮小理由、全規模の起動、計算時間とメモリ、比較と残る検証。ブラウザー向けの軽量学習デモと分けて運用します。
+| 目的                          | ガイド                                                                        |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| 判断・学習・保存復元を試す    | [BioAgent Framework / Research Lab](../packages/bioagent-framework/README.md) |
+| 公開デモでチェーン入力を試す  | [Sepolia Lab](deployment/sepolia.md)                                          |
+| ローカルチェーンとGUIを動かす | [Anvil + Workers](deployment/local-anvil.md)                                  |
+| 全166,700神経のモデルを動かす | [全規模ランタイム](design/malecns-full-local.md)                              |
+| 全神経版のアプリを動かす      | [3用途の起動・学習・検証](submission/full-apps-acceptance.md)                 |
+| 4個体の共有市場を動かす       | [共有市場の操作と実装](apps/shared-market/README.md)                          |
+| 画面や個体の状態を理解する    | [アプリ説明シート](apps/README.md)、[GUIガイド](design/demo-experience.md)    |
 
-現在の実装を把握する入口です。最終照合: 2026-09-26。
+## 設計を理解する
 
-## 現在の必須実装
+- [フレームワークのレイヤ構成図とAPI](../packages/bioagent-framework/README.md#レイヤ構造)
+- [チェーン接続・サービス構成・保存先](architecture.md)
+- [BioAgentの目的と設計方針](standards/bioagent-design-direction.md)
+- [なぜBioAgentを定義するか](standards/why-bioagent.md)、[既存規格との比較](standards/prior-art-and-bioagent.md)
+- [身体・学習profile案](standards/embodied-learning-profile.md)、[用途別の型と単位](standards/application-types.md)
+- [IBioAgent・Registryの設計](design/README.md)、[オンチェーン設計](design/onchain-contracts.md)、[ERC形式の草案](standards/bio-agent-draft.md)
+- [イベント駆動Runtimeの設計案](design/runtime-and-events.md)、[Agent・walletの拡張案](design/agent-types-and-wallets.md)
 
-[MaleCNS必須・3用途の学習・即時反映](design/malecns-learning.md)。以前の「2ゲームはsynthetic」「Aquaは学習なし」という記録を更新します。全脳ではなく実測部分回路です。
+## 研究・検証を読む
 
-## 現在の仕様検討の入口
+- [学習実験の結論・対照比較・副作用](research/bioagent-adaptation/README.md)
+- [実験から導いたフレームワークの要件](standards/experiment-derived-requirements.md)
+- [MaleCNSのデータ出典・帰属・変更点](data-sources.md)
+- [生物模倣の背景と比較計画](submission/biomimicry-positioning.md)
+- [全規模モデルの実測と縮小判断](design/malecns-full-local.md)
+- [部分回路の入出力検証](design/circuit-evidence.md)、[合成Swapイベントの初期検証](design/swap-event-game.md)
+- [学習基盤の設計](design/malecns-learning.md)、[全神経アプリの開発計画](design/full-app-learning.md)
+- [採餌モデル](design/fly-arena.md)、[身体状態とcheckpoint](design/embodied-foraging.md)
+- [ペーパートレード設計案](design/paper-trading-arena.md)、[実装の到達点と制約](submission/goal-audit.md)
 
-[生物模倣からBioAgentへ](submission/biomimicry-positioning.md): 鮫肌など4つの製品事例、神経回路を借りる理由、性能仮説と比較計画。
+## 開発・運用
 
-[なぜBioAgentを定義するか — オンチェーン入力・ERC動向・コネクトーム研究](standards/why-bioagent.md)。共通Agent基盤に生物由来モデルを解釈するprofileを追加する方針です。
+- [開発環境・検証コマンド](development.md)
+- [コントラクト開発](../contracts/README.md)
+- [ローカルAPI](reference/local-api.md)、[表示言語・翻訳](i18n.md)
+- [Workersへの配信](deployment/workers.md)、[Sepoliaへの配置と検証](deployment/sepolia.md)
+- [外部プロトコルとの連携・パートナー向け資料](integrations.md)
 
-[BioAgentの思想・設計方針](standards/bioagent-design-direction.md) → [既存ERCとの差分調査](standards/prior-art-and-bioagent.md) → [身体・学習profile案](standards/embodied-learning-profile.md) → [提出説明案](submission/bioagent-thesis.md)。NFT/SBTは派生構造の比喩であり、機能追加要件ではありません。実装では通常のRegistryと任意の刺激拡張を用います。
+## 動画・発表資料
 
-[最新の達成状況監査](submission/goal-audit.md) / [MaleCNS部分グラフのCircuit Lab](design/circuit-evidence.md)。
-
-## Aqua Connectome
-
-[実Aquaと実測接続を使う第3の箱庭](design/aqua-connectome.md)。共有ウォレット・刺激→判断→ship/dock・実テスト交換。専用アプリ形式であり、既存2アプリの共通型への完全統合は今後の課題です。
-
-## 2アプリの型
-
-[採餌・市場アプリの型定義と単位](standards/application-types.md): 共通coreと用途別profileをTypeScript化。型検査と基本値検証を実装し、両GUIのViewへ接続済み。完全な共通Runtimeへの移行は未完了。
-
-## 目的から読む
-
-| やりたいこと | 読む文書 |
-| --- | --- |
-| まず3匹を動かす | [Anvil + ローカル Workers](deployment/local-anvil.md) |
-| 全体構成と保存先を理解する | [アーキテクチャ](architecture.md) |
-| 表示言語を切り替える・翻訳を追加する | [i18n](i18n.md) |
-| デモを説明・操作する | [GUIデモガイド](design/demo-experience.md) |
-| デモ動画を見る・再収録する | [動画と再収録](demo-video.md) |
-| GUIとWorkerをつなぐ | [ローカルAPIリファレンス](reference/local-api.md) |
-| 型・権限・イベントを変更する | [オンチェーン設計](design/onchain-contracts.md)、[Foundry開発](../contracts/README.md) |
-| 第2ゲームのペーパートレード案を読む | [Paper Trading Arena（設計案）](design/paper-trading-arena.md) |
-| Agentの種類・価格入力・walletを拡張する | [Agent拡張設計](design/agent-types-and-wallets.md) |
-| 判定・自己学習を理解する | [Fly Labモデル](design/fly-arena.md) |
-| テストして変更を引き継ぐ | [開発ガイド](development.md) |
-| 将来の常駐Runtimeを設計する | [イベント駆動設計](design/runtime-and-events.md) |
-| Sepolia公開デモを操作・検証する | [Sepolia手順](deployment/sepolia.md) |
-| 公開GUIを配信する | [Workers手順](deployment/workers.md) |
-| MaleCNSの取込方針を確認する | [データ出典](data-sources.md) |
+- [日英の提出動画・発表用Q&A・根拠データ](submission/presenter-kit/README.md)
+- [動画の再収録手順と過去の収録](demo-video.md)
+- [成果説明スライド](presentation/README.md)
+- [提出説明・検証索引](submission/README.md)、[設計思想の説明](submission/bioagent-thesis.md)
 
 ## 用語
 
-- **BioAgentStatus**: チェーンへ保存する入力条件。Activity、energy、stimulusとrevisionを持つ。
-- **Runtime**: 入力と内部状態から行動を計算する実行環境。現在はブラウザー内。
-- **Registry**: Agentの定義と最新Statusを保持するコントラクト。interface自体をデプロイするわけではない。
-- **revision**: Statusの更新番号。学習によるpolicy versionとは別。
-- **policy version**: 改善したQ値の採用時に上がる、ブラウザー内の方策の版。
-- **modelHash**: 登録対象のモデル定義のSHA-256。Sepolia Labでは正確な部分グラフJSON、旧版ではモデルmanifestのバイト列を対象とします。個体ごとの学習済みQ値を都度オンチェーン登録するものではない。
-- **適用済み**: 受信したイベントがブラウザー内Agentの入力に反映された状態。一般のチェーンにおける最終確定の意味ではない。
-
-## 実装の到達点
-
-| 機能 | 現状 |
-| --- | --- |
-| IBioAgent / Registry / Status / イベント | Foundryで実装・テスト済み |
-| Anvilへの配置と3匹の登録 | `local:up` で実行 |
-| GUIから個体別Status送信・ログ受信 | ローカルAnvilモードで実装済み |
-| 2D競争・Q学習・候補評価・復帰 | ブラウザー内で実装済み |
-| 公開用Workers | 旧12匹のFly Labに加え、独立したSepolia Labを公開 |
-| Sepolia | Registry・個体1配置、入力更新の実TXと公開ブラウザー動作を検証済み |
-| SQLite Backend・Python学習 | 独立したひな型。GUI競争とは未接続 |
-| 採餌の身体状態・checkpoint復元 | ローカル再開と学習中の再現を検証済み |
-| 実V3 Pool・市場GUI・ペーパートレード | Anvilで実装・ブラウザー検証済み |
-| サーバー共有Runtime・SSE・互換checkpoint | 設計案 |
-| MaleCNS部分グラフ実行 | Circuit Labで7神経・19接続を人工動力学で計算。生物学的検証・2ゲームへの統合は未実装 |
-
-「ローカル版の完了」と「最終プロダクトの完成」は別です。検証記録は各手順の実行日付き記録を参照し、過去の結果を現在の稼働保証として扱わないでください。
-
-## 提出パッケージ
-
-[英語の提出文・デモ台本・検証索引](submission/README.md)を参照してください。[ERC形式の草案](standards/bio-agent-draft.md)は未提出・番号未付与です。NFT/SBT実装と依存は削除済み。ERC-8004準拠や実行証明は主張しません。
-
-[合成Swapイベントの小規模テスト](design/swap-event-game.md)も残しています。現在の市場GUIは別途、実Uniswap V3コアをローカル配置して動作します。
-
-## 採餌モデル v2
-
-[身体入力・可変なお腹・学習中の再開検証](design/embodied-foraging.md)を実装。新manifestを登録した独立Anvil/WorkersでGUI検証済み。満腹度・蓄えは実際の観測に入ります。
-
-## 実Uniswapの市場アプリ
-
-[Market Meadowの起動・仕組み・検証](design/local-market-app.md)。ローカルの実V3 Pool、登録済み3匹、紙約定・PnL・学習・receiptをGUIで確認できます。
-
-- [全3アプリの全神経・経験学習GUI、再現手順と比較](submission/full-apps-acceptance.md)
-
-- [3アプリの説明シート：見た目・状態・オンチェーン・MaleCNSの関係](apps/README.md)
+| 用語           | 意味                                                                           |
+| -------------- | ------------------------------------------------------------------------------ |
+| BioAgentStatus | 活動・エネルギー供給・刺激など、チェーンへ記録する入力条件                     |
+| Registry       | 個体の定義と最新の入力状態を保持するコントラクト                               |
+| Runtime        | 入力と内部状態から行動を計算する実行環境。用途に応じてブラウザーやPythonで動作 |
+| revision       | 入力状態の更新番号                                                             |
+| policy version | 学習済み方策の版。入力revisionとは別に管理                                     |
+| modelHash      | 登録対象のモデル成果物を照合するSHA-256。対象ファイルは実装ごとに定義          |
+| 適用済み       | 受け取った入力をAgentへ反映した状態。チェーンの最終確定とは別                  |
