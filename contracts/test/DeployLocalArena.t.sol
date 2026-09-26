@@ -12,6 +12,7 @@ contract DeployLocalArenaTest is Test {
         vm.setEnv("DEPLOYER_ADDRESS", "0x000000000000000000000000000000000000bEEF");
         vm.setEnv("LOCAL_MODEL_HASH", "0x1111111111111111111111111111111111111111111111111111111111111111");
         vm.setEnv("LOCAL_GUI_URL", "http://127.0.0.1:8798");
+        vm.setEnv("LOCAL_WORLD_INPUT", "{\"world\":\"local-test\"}");
         BioAgentRegistry registry = new DeployLocalArena().run();
         assertEq(registry.nextAgentId(), 4);
         for (uint256 id = 1; id <= 3; id++) {
