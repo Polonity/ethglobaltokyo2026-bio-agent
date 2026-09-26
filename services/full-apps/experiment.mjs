@@ -13,6 +13,7 @@ export async function rollout({
   offset = 0,
   candidates = [null, null],
   stimulus = null,
+  replayForaging = null,
   onProgress = () => {},
 }) {
   const session = `${app}-${variant}-${phase}-${seed}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -22,11 +23,27 @@ export async function rollout({
       : app === 'market'
         ? new MarketEnvironment(chain, tape.slice(offset))
         : new AquaEnvironment(chain, tape.slice(offset), variant);
-  if (chain && app === 'foraging') env.applyWorld(await chain.configureForaging(variant, seed));
+  if (replayForaging) {
+    if (!chain || app !== 'foraging') throw Error('Foraging replay requires a chain');
+    // The same seed with new TX hashes would move the food and confound policy comparison.
+    for (const event of [replayForaging.environment, ...replayForaging.statuses]) {
+      const receipt = await chain.provider.getTransactionReceipt(event.transactionHash);
+      const block = await chain.provider.getBlock(event.blockNumber);
+      if (
+        !receipt ||
+        receipt.status !== 1 ||
+        receipt.blockHash !== event.blockHash ||
+        block?.hash !== event.blockHash
+      )
+        throw Error('Foraging replay input is no longer canonical');
+    }
+  }
+  if (chain && app === 'foraging')
+    env.applyWorld(replayForaging?.environment || (await chain.configureForaging(variant, seed)));
   const inputStimulus = stimulus ?? 0.55;
   if (!chain && app === 'foraging') env.world.stimulus = inputStimulus;
-  const initialStatus = [];
-  if (chain && app === 'foraging')
+  const initialStatus = replayForaging ? structuredClone(replayForaging.statuses) : [];
+  if (!replayForaging && chain && app === 'foraging')
     for (let agent = 0; agent < 2; agent++)
       initialStatus.push(await chain.stimulus(app, variant, agent, inputStimulus));
   if (initialStatus.length) {
@@ -178,6 +195,10 @@ export async function trainApplication({
     steps: 80,
     offset: 450,
     candidates: candidates.map((c) => c.candidateHash),
+    replayForaging:
+      app === 'foraging' && chain
+        ? { environment: before.environmentInput, statuses: before.inputEvents }
+        : null,
     onProgress,
   });
   const adoption = [];

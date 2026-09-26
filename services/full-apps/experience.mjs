@@ -719,7 +719,28 @@ function renderDetails() {
     contract.rel = 'noopener';
     official.append(contract);
   }
-  const links = [];
+  const worldSource = app === 'foraging' ? p?.snapshot?.world?.worldSource : null;
+  const worldProof = $('environment-proof');
+  worldProof.replaceChildren();
+  if (worldSource) {
+    const w = worldSource.configuration;
+    worldProof.append(
+      node('h3', t('環境TXで設定した箱庭', 'Environment recorded in a TX')),
+      node(
+        'p',
+        `${w.width} × ${w.height} · seed ${w.seed} · ${w.hazards.length} ${t('危険エリア', 'hazards')}`,
+      ),
+      node('p', w.hazards.map((h) => `(${h.x}, ${h.y}) radius ${h.radius}`).join(' / ')),
+      node(
+        'p',
+        t(
+          '初期環境と危険エリアは以下のTX由来。正の刺激TXごとに餌を追加し、自動補充はしません。',
+          'The field and hazards come from the TX below. Positive stimulus TXs add food; there is no refill.',
+        ),
+      ),
+    );
+  }
+  const links = worldSource ? [worldSource] : [];
   if (p?.snapshot?.lastEvent) links.push(p.snapshot.lastEvent);
   for (const o of p?.outcomes || []) {
     links.push(...(o.metrics?.transactions || []), ...(o.source?.statuses || []));
@@ -738,7 +759,8 @@ function renderDetails() {
       ).values(),
     ];
     for (const x of unique) {
-      const a = node('a', `Block ${x.blockNumber} · ${x.transactionHash}`);
+      const kind = x.name === 'BioAgentStimulusAccepted' ? t('初期環境', 'Environment') + ' · ' : '';
+      const a = node('a', `${kind}Block ${x.blockNumber} · ${x.transactionHash}`);
       a.href = '/tx/' + x.transactionHash;
       a.onclick = (e) => {
         e.preventDefault();
