@@ -1,13 +1,13 @@
 # 1inch submission — BioAgent Aqua
 
-> 追加実装: [4匹の共有市場・実画面・検証](../apps/shared-market/README.md)（8814）。同じERC20ペアで、2匹のAqua提示と2匹の実注文を接続しました。[新しい4個体の60秒デモ](evidence/shared-market-demo-en.mp4)も用意しました。この文書の従来動画・8813の証拠は2個体デモのものです。
+> 追加実装: [4匹の共有市場・実画面・検証](../apps/shared-market/README.md)（8814）。同じERC20ペアで、2匹のAqua提示と2匹の実注文を接続しました。[最新版の4個体・51.5秒動画と日英Q&A](presenter-kit/README.md)も用意しました。この文書の従来動画・8813の証拠は2個体デモのものです。
 
 **提出の要点：MOMOとSORAのMaleCNSベースの判断が、同じ自己管理ウォレットに結び付く2つのAqua戦略を更新する。公式AquaのEthereum配置をlocal forkで利用し、テストトークンの実決済を示す。**
 
 ## 今回の確認結果と提出リンク
 
 - **コード**：[Polonity/ethglobaltokyo2026-bio-agent](https://github.com/Polonity/ethglobaltokyo2026-bio-agent)
-- **最新の説明付き英語デモ（61.04秒）**：[現在のAqua UIと実決済](evidence/aqua-current-demo-en.mp4)。[この収録の検証結果](evidence/aqua-current-demo-verification.json)
+- **2個体版の説明付き英語デモ（61.04秒）**：[現在のAqua UIと実決済](evidence/aqua-current-demo-en.mp4)。[この収録の検証結果](evidence/aqua-current-demo-verification.json)
 - **初回の証拠収録（46.84秒）**：[公式Aqua forkでの判断と実決済](evidence/aqua-official-fork-en.mp4)
 - **固定fork**：Ethereum block **26,058,941**。[ブロック・コードhash](evidence/upstream.json)
 - **実GUI**：MOMO/SORAが各166,700神経で19ステップ。10件の交換、70件のship/dockイベントを確認。

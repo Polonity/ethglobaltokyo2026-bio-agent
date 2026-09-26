@@ -1,5 +1,7 @@
 # Submission package — BioAgent
 
+**Latest presenter kit:** [51.5-second full-population video, Japanese/English Q&A and evidence](presenter-kit/README.md). Four agents, canonical Aqua and Uniswap V3 on Anvil; 12 new settlements verified. [English MP4](presenter-kit/bioagent-submission-en.mp4) / [Japanese MP4](presenter-kit/bioagent-submission-ja.mp4) / [bilingual Q&A PDF](presenter-kit/qa-cheatsheet-ja-en.pdf).
+
 **Live judge demo:** [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) / [日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja). This is **Ethereum Sepolia + the measured 7-neuron / 19-edge subgraph**. The submission video remains **Anvil + the full 166,700-neuron runtime**. [Guide and execution boundaries](../deployment/sepolia.md) / [real transaction and browser evidence](sepolia-evidence.json).
 
 **[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
@@ -31,7 +33,7 @@ See the [Japanese/English pitch](bioagent-thesis.md) and [primary-source researc
 
 ## Aqua Connectome: official-fork submission
 
-The 1inch submission uses **two full-population MaleCNS individuals and canonical Aqua on an Ethereum local fork**. Use [the 1inch-specific form text, requirement map, evidence and reproduction guide](1inch-aqua.md). This is the current submission path.
+The dedicated Aqua reproduction uses **two full-population MaleCNS individuals and canonical Aqua on an Ethereum local fork**. Use [the 1inch-specific form text, requirement map, evidence and reproduction guide](1inch-aqua.md). This two-maker reproduction is supporting evidence; the latest presenter video above uses the four-agent shared market.
 
 ### Earlier lightweight browser experiment
 

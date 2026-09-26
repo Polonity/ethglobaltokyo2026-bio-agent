@@ -1,5 +1,7 @@
 # Bio Agent — ETHGlobal Tokyo 2026
 
+**[提出動画・発表用チートシート（日英）](docs/submission/presenter-kit/README.md)** — 全166,700神経×4個体の実収録、51.5秒。日英字幕動画と各2ページのQ&A・根拠データ。
+
 **審査員向け公開デモ:** [日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) / [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en) — **Ethereum Sepolia＋7神経・19接続**。ウォレットなしで動作観察・学習比較できます。[操作・実TX・再現手順](docs/deployment/sepolia.md)。**サブミッション動画はAnvil＋全166,700神経版を使用します。**
 
 **[BioAgent Framework / 共通の判断・学習基盤](packages/bioagent-framework/README.md)** — モノレポ内の実験用フレームワークを追加しました。チェーン入力からコネクトーム判断、学習候補の評価・採用、保存・復元までを採餌とAquaで共通化。`npm run framework:lab` → http://127.0.0.1:8826/ 。[未使用条件での実験結果](docs/research/bioagent-adaptation/README.md)。
@@ -15,7 +17,7 @@
 
 **提出物の設計軸:** 生物モデルの出典、身体状態を含む個体、刺激から反応・学習への変化を共通形式で追う。[思想と設計方針](docs/standards/bioagent-design-direction.md) / [既存ERC調査](docs/standards/prior-art-and-bioagent.md) / [審査員向け説明案](docs/submission/bioagent-thesis.md)。NFT/SBT機能追加は要件ではなく、採餌と市場観測を用途別profileとして整理しています。共通型を両GUIで使用し、profile全体の相互運用性は今後検証します。
 
-**[提出パッケージ・英語説明・検証索引](docs/submission/README.md)** / **[ブラウザー2アプリ英語動画](docs/demo-video.md)**
+**[提出パッケージ・英語説明・検証索引](docs/submission/README.md)** / **[デモ動画一覧・旧版アーカイブ](docs/demo-video.md)**
 
 **[アプリ説明シート](docs/apps/README.md)** — 蜜・状態・吹き出し・価格・TXとMaleCNSのつながり。画面内と日英の印刷シートでも読めます。
 
@@ -33,7 +35,7 @@
 
 ## Aqua Connectome — 共有流動性の箱庭
 
-**1inch提出用は全166,700神経・2個体の公式Aqua fork版です。** `npm run submission:aqua` → <http://127.0.0.1:8813/aqua>。以下は既存の軽量ブラウザー版の説明です。
+**1inch向けの2個体・全166,700神経の公式Aqua forkデモも利用できます。** `npm run submission:aqua` → <http://127.0.0.1:8813/aqua>。以下は既存の軽量ブラウザー版の説明です。
 
 **Powered by Aqua — © Degensoft Ltd 2025.** 実測7神経・19接続の人工rate modelを公式Aqua SDKへ接続。3個体が同じウォレットから仮想残高を提示し、人工刺激に応じて縮小・撤回します。実Aqua本体と独自AquaAppをAnvilに配置し、実TX・テストトークン交換を確認できます。実測接続を固定し、行動変換を学習します。全脳・ガスレス撤回・クロスチェーンではありません。
 
