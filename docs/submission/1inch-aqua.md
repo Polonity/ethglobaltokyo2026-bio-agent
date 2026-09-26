@@ -17,6 +17,8 @@
 
 ![成功した交換TXの実ERC20移動](evidence/token-transfers-en.png)
 
+**[誰が取引し、何が利益になるのか](../design/aqua-market-flow.md)** — 現在のテストbot、別通貨ペア、固定参照レートと、未実装の同時取引案を区別しています。
+
 ## 応募欄に使う英語
 
 BioAgent Aqua turns measured biological connectivity into an onchain liquidity controller. MOMO and SORA each run a model using all 166,700 classified MaleCNS neurons. Application-specific learned readouts choose a tight offer, a wide offer, or withdrawal. The two strategies share a single maker wallet through Aqua's virtual balances; shipping an offer does not escrow the wallet's tokens.

@@ -139,6 +139,7 @@ function openDetails(pane = 'help', section) {
   if (section) setTimeout(() => $(section)?.scrollIntoView({ block: 'start' }), 50);
 }
 $('open-details').onclick = () => openDetails();
+$('flow-help').onclick = () => openDetails('help', 'market-flow');
 $('close-details').onclick = () => $('details-dialog').close();
 $('close-receipt').onclick = () => $('receipt-dialog').close();
 for (const b of document.querySelectorAll('[data-detail]')) b.onclick = () => openDetails('help');
@@ -468,6 +469,21 @@ function render() {
       `Price proxy: Uniswap ${baseUnit()} price changes value ${aquaTokens()[0].symbol}.`,
     ),
   );
+  $('market-context').hidden = app === 'foraging';
+  $('flow-help').hidden = app === 'foraging';
+  put(
+    'market-context',
+    app === 'aqua'
+      ? t(
+          '取引相手はテストbot。提示だけでは収入は発生しません。',
+          'A test bot takes the offers. Offers alone earn no trading income.',
+        )
+      : t(
+          `${units()}はデモ通貨。${baseUnit()}の仮想売買で競います。`,
+          `${units()} is demo money. Flies compete in paper trades of ${baseUnit()}.`,
+        ),
+  );
+  put('flow-help', t('誰が取引している？ ⓘ', 'Who is trading? ⓘ'));
   $('battle-panel').hidden = app !== 'market';
   put('battle-heading', t('スタートから、どれだけ増減？', 'Change since the start'));
   put('battle-unit', units());
@@ -541,6 +557,105 @@ function renderDetails() {
     }[b.dataset.pane];
     b.setAttribute('aria-selected', String(selectedPane === b.dataset.pane));
     $('pane-' + b.dataset.pane).hidden = selectedPane !== b.dataset.pane;
+  }
+  const flow = $('market-flow');
+  flow.hidden = app === 'foraging';
+  const flowKey = `${app}:${lang}:${baseUnit()}:${units()}:${aquaTokens()
+    .map((x) => x.symbol)
+    .join('/')}`;
+  if (flow.dataset.key !== flowKey) {
+    flow.dataset.key = flowKey;
+    flow.replaceChildren(node('h3', t('このデモで、誰が何をしている？', 'Who does what in this demo?')));
+    const steps =
+      app === 'aqua'
+        ? [
+            [
+              t('① Uniswap：価格の刺激を作る', '① Uniswap: produce price inputs'),
+              t(
+                `ローカルの${baseUnit()} / ${units()}プールをテスト用プログラムが動かし、確認済みSwapログを保存しています。今はその履歴を再生しています。`,
+                `A test program trades the local ${baseUnit()} / ${units()} pool. Confirmed Swap logs are saved and replayed as inputs.`,
+              ),
+            ],
+            [
+              t('② MOMO・SORA：交換条件を提示する', '② MOMO & SORA: offer liquidity'),
+              t(
+                '2匹とも同じmakerウォレットの提示を管理する側です。MaleCNSと学習済みreadoutが「狭い提示・広い提示・撤回」を選び、Aquaに登録します。2匹同士の売買ではありません。',
+                'Both flies manage offers backed by one maker wallet. MaleCNS and learned readouts choose tight, wide or withdraw, then register with Aqua. The flies do not trade against each other.',
+              ),
+            ],
+            [
+              t('③ テストbot：条件に応じて交換する', '③ Test bot: accept selected offers'),
+              t(
+                '別のtakerウォレットが交換相手です。狭い提示は受け入れ、広い提示は観測した価格変化の絶対値が2%以上の場合に受け入れます。外部のお客さんではなく、人工的な需要です。',
+                'A separate taker wallet is the counterparty. It accepts tight offers and accepts wide offers when the observed absolute price change is at least 2%. This is scripted demand, not external customers.',
+              ),
+            ],
+            [
+              t('④ Aqua：テスト通貨を実際に受け渡す', '④ Aqua: settle real test-token transfers'),
+              t(
+                `${aquaTokens()
+                  .map((x) => x.symbol)
+                  .join(
+                    ' / ',
+                  )}は、このデモで作った別のテスト通貨です。交換レートは1:1を基準に提示幅を引く固定ルールで、Uniswap価格と連動する交換レートではありません。成立したTXでpush/pullによる受け渡しを確認できます。`,
+                `${aquaTokens()
+                  .map((x) => x.symbol)
+                  .join(
+                    ' / ',
+                  )} are separate tokens created for this demo. The exchange rate uses a fixed 1:1 reference minus the spread; it does not track the Uniswap quote. Accepted swaps settle through Aqua push/pull.`,
+              ),
+            ],
+          ]
+        : [
+            [
+              t('① デモ通貨の実プール', '① A real pool of demo tokens'),
+              t(
+                `Uniswap V3に${baseUnit()} / ${units()}のテストプールを作り、プログラムによる交換で価格を動かします。公開市場の取引ではありません。`,
+                `A local Uniswap V3 ${baseUnit()} / ${units()} test pool produces price changes through scripted swaps, not public-market trading.`,
+              ),
+            ],
+            [
+              t('② ハエの売買はペーパー', '② The flies trade on paper'),
+              t(
+                `各個体は仮想資金100 ${units()}で開始。${baseUnit()}の売買を見積もりで計算するだけで、AquaにもUniswapにも実注文を送りません。`,
+                `Each fly starts with 100 virtual ${units()}. Its ${baseUnit()} trades are calculated from quotes; the flies submit no real orders to Aqua or Uniswap.`,
+              ),
+            ],
+            [
+              t('③ 損益を比べる', '③ Compare paper PnL'),
+              t(
+                '売却した場合の評価額と現金を合計し、初期資金との差を表示します。NECTAR（蜜）やPOLLEN（花粉）はテスト通貨の名前で、ETHや現金ではありません。',
+                'PnL compares cash plus liquidation value against the starting balance. NECTAR and POLLEN are test-token names, not ETH or real money.',
+              ),
+            ],
+          ];
+    const list = node('ol', undefined, 'market-flow-steps');
+    for (const [title, detail] of steps) {
+      const item = node('li');
+      item.append(node('strong', title), node('p', detail));
+      list.append(item);
+    }
+    flow.append(list);
+    if (app === 'aqua')
+      flow.append(
+        node(
+          'p',
+          t(
+            '約定なし＝交換による収入なし。約定しても利益とは限りません。画面のptは約定ごとの増減を代理価格で評価した点数で、保有資産全体の含み損益やgasを含む純利益ではありません。',
+            'No fills means no trading income. A fill is not guaranteed profit. Points value each fill using a price proxy; they are not total portfolio PnL or net profit after gas.',
+          ),
+          'help-box',
+        ),
+      );
+    flow.append(
+      node(
+        'p',
+        t(
+          '現在、取引バトルとAquaはつながっていません。同時に起動しても、ペーパー注文はAquaに流れません。',
+          'The paper battle and Aqua are currently separate. Running both does not route paper orders into Aqua.',
+        ),
+      ),
+    );
   }
   const explanation =
     app === 'foraging'

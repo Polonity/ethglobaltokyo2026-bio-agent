@@ -804,3 +804,33 @@ body[data-app='aqua'] #world {
   font: 12px/1.6 monospace;
   overflow-wrap: anywhere;
 }
+
+.market-context {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #dceccf;
+}
+.flow-help {
+  padding: 6px 10px;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.market-flow-steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.market-flow-steps li {
+  padding: 16px;
+  border: 1px solid #cbdaca;
+  border-radius: 12px;
+  background: #f1f6ec;
+}
+.market-flow-steps strong {
+  color: #24473e;
+}
+.market-flow-steps p {
+  margin: 8px 0 0;
+  line-height: 1.65;
+}
