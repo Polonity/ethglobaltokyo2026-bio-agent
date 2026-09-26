@@ -1,0 +1,14 @@
+# Project conventions
+
+- JavaScript is ESM with semicolons and two-space indentation; selected source is enforced by Prettier via `npm run format:check`. Prefer existing module boundaries and explicit imports over introducing a new framework.
+- Frontend build entrypoints are `apps/frontend/app.js`, `market.js`, `circuit.js`, and `aqua.js`; shared/runtime logic belongs under `packages/`, while Worker files stay focused on delivery/API boundaries.
+- Generated artifacts are derived from source: `dist/` is rebuilt by `scripts/build-frontend.mjs`; model manifests, body/paper references, circuit/Aqua outputs, and contract ABI should be regenerated using project scripts rather than edited manually.
+- Contract semantics: `Activity` is Rest=0/Explore=1/Forage=2; energy/stimulus are 0..10000; initial revision is 1; updates provide the current revision and increment it on success. Registration emits registration plus initial status; status updates emit the full input.
+- Registry access: anyone can register; the registering address owns the Agent; only the owner updates its Agent Status. `modelHash` is nonzero and `metadataURI` is 1..512 bytes. Registry does not tokenize, upgrade, or delegate agent control.
+- Local-chain safety: local write path is intentionally Anvil-only and uses an unlocked account; it must not become an arbitrary RPC proxy or accept private-key input. `local:up` refuses non-Anvil RPC and keeps state inside the workspace.
+- Chain/session behavior: poll events from the deployment block, deduplicate by `eventId`, resync when revisions are discontinuous, and reset browser competition from a fresh snapshot on detected reorg. Do not treat a successful transaction submission as an applied behavior input before the mined event arrives.
+- Model boundaries: browser foraging, market paper trading, and Aqua each have a profile/manifest; they share MaleCNS measured partial-circuit requirements but use different readouts/learning objectives. Python calibration artifacts are training-only and are not auto-applied.
+- Type boundaries: `packages/shared/types/` is the proposed common TypeScript representation for provenance, model/body/clock/checkpoint/learning transitions and foraging/market profiles; examples are synthetic compile-time fixtures, not external JSON validation.
+- Python style is standard-library-first with dataclasses and explicit environment-variable configuration; the backend is single-process/demo-only and has no auth, concurrency, or schema migration layer.
+- Documentation is part of the implementation contract. Update the relevant design/deployment/reference document with behavior changes, especially contract ABI, local ports, model hashes, and lifecycle semantics.
+- Keep secrets, RPC URLs, private keys, large datasets, generated artifacts, `.local/`, `dist/`, and `data/` out of commits. Use small focused commits and inspect `git diff --check`.

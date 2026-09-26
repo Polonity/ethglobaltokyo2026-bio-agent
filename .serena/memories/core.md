@@ -1,0 +1,24 @@
+# Project core
+
+- Primary local path: `npm run local:up` starts a fresh Anvil chain (31337), deploys `BioAgentRegistry`, registers 3 agents (MOMO/SORA/KIKI), writes `.local/deployment.json`, then starts `services/worker/local.js` and serves the GUI (default 8798).
+- Local data flow: Browser GUI -> local Worker validation/write -> Registry Status event -> browser `ChainSession` polling/re-sync -> browser Arena/learning. The Worker does not calculate agent behavior; Arena owns position, energy, score, experience, and Q updates.
+- `npm run dev` is the public-style 12-agent browser demo using `services/worker/index.js`; it is separate from the 3-agent Anvil path. The Python server is an independent mock API/storage scaffold, not the local Anvil backend.
+- Source map:
+  - `apps/frontend/`: entry pages, UI, chain event/session handling, i18n and drawing.
+  - `packages/bio_agent/browser/`: foraging Arena, body model, manifest.
+  - `packages/bio_agent/runtime/`: extensible runtime agents and market paper arena.
+  - `packages/training/browser/`: shared MaleCNS-backed learning/readout; `packages/training/` also has a synthetic Python calibration job.
+  - `packages/shared/types/`: TypeScript core/foraging/market types and legacy boundary helpers.
+  - `services/worker/`: public asset/health Worker and local Anvil Worker.
+  - `services/backend/`: standard-library HTTP + SQLite mock API.
+  - `contracts/src/`, `contracts/test/`, `contracts/script/`, `contracts/abi/`: Foundry contracts, tests, deployment scripts, generated public ABI.
+  - `scripts/`: build, local orchestration, demos, checks, model/ABI generation.
+  - `docs/`: architecture, design, deployment, data sources, standards, submission notes.
+  - `data/`: local execution data and learning artifacts, not Git-managed.
+- Cross-component invariants:
+  - Source changes to Solidity require ABI regeneration with `make contracts-abi`, and a running local Anvil environment must be redeployed; old `.local/deployment.json` is not compatible with new deployment code.
+  - Browser model manifest bytes are hashed and compared against on-chain `modelHash`; manifest edits require new registration/deployment.
+  - Local GUI applies successful inputs only after mined `BioAgentStatusUpdated` events; `revision` is the chain input version and is independent of browser policy version/learning adoption.
+  - Local/runtime learning paths require the measured MaleCNS v1.0 partial graph; no silent fallback. The Python threshold model is explicitly a separate scaffold.
+  - Agent definition/Status/events live in the current Anvil; browser dynamics live only in a tab; Python mock history persists in SQLite; `.local/`, `dist/`, and artifacts are generated/local state.
+- For dependencies and versions read `mem:tech_stack`; for commands and side effects read `mem:suggested_commands`; for style and invariants read `mem:conventions`; for change verification read `mem:task_completion`.
