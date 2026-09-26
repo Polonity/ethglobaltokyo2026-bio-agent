@@ -19,7 +19,7 @@ The sender checks hourly, with at least one hour between sends. Use recorded TXs
 ## Use the three evidence tracks correctly
 
 - **Current public page** — Sepolia, 7 neurons, 3 agents: TX inputs, foraging and Q-learning.
-- **Submitted video** — Anvil, 166,700 neurons × 4 agents: Aqua/V3 settlement and readout updates. Recorded before the environment-TX change.
+- **Submitted video** — Anvil, 166,700 neurons per agent: two-agent environment TX and learning comparison, then four-agent Aqua/V3 settlement.
 - **Independent research** — Synthetic foraging controls: reward improved, but a biological advantage was not established.
 
 ## A roughly one-minute script
@@ -34,11 +34,11 @@ Current shared Fly Lab. Recorded market results and independent research are lab
 
 ## Optional: introduce the full-market video
 
-BioAgent is an experimental platform that connects biologically derived circuits to traceable actions. Four agents, each using 166,700 neurons, make Aqua offers and trade through Uniswap. We verified real local settlement and learning updates. A separate foraging experiment improved behavior, but did not outperform a matched non-biological model. Our contribution is a working platform for testing these possibilities and their limits.
+BioAgent is an experimental platform that connects biologically derived circuits to traceable actions. The video first shows full-neuron environment TXs and learning comparison, then four agents making Aqua offers and Uniswap trades. We verified real local settlement and learning updates. A separate foraging experiment improved behavior, but did not outperform a matched non-biological model. Our contribution is a working platform for testing these possibilities and their limits.
 
 - **166,700** — neurons per agent × 4 agents
-- **12** — new settlements: 1 Aqua · 11 V3
-- **6 × 4** — learning updates; 3 agents changed weights
+- **27** — new settlements: 2 Aqua · 25 V3
+- **14 × 4** — learning updates; 3 agents changed weights
 
 ## 1. How is this different from an ordinary AI agent?
 
@@ -58,9 +58,9 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 [R2: Shared market: actions, execution and limits](../../apps/shared-market/README.md) / [R3: Held-out experiment and negative results](../../research/bioagent-adaptation/README.md)
 
-## 4. What learns during the video?
+## 4. What learns in the market scenes?
 
-**The action readout updates from confirmed outcomes; neural connections stay fixed.** All four agents received 6 outcome updates; 3 changed saved weights. Rewards reflect offer fills or progress toward target holdings. This full-market runtime updates online, without a held-out adoption gate. Updates alone do not establish a better trading policy.
+**The action readout updates from confirmed outcomes; neural connections stay fixed.** All four agents received 14 outcome updates; 3 changed saved weights. Rewards reflect offer fills or progress toward target holdings. This full-market runtime updates online, without a held-out adoption gate. Updates alone do not establish a better trading policy.
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R2: Shared market: actions, execution and limits](../../apps/shared-market/README.md)
 
@@ -72,7 +72,7 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 6. Is it cheaper or more energy-efficient than an LLM?
 
-**We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.** The shared Python process peaked at 443.2 MiB RSS; the last four-agent neural pass took 333.3 ms. Power is unmeasured; these are not comparative savings. Page 4 gives the hypotheses, counterarguments and comparison conditions.
+**We aim to reduce the compute and update costs of routine decisions, potentially saving energy, hardware and time.** The shared Python process peaked at 443.1 MiB RSS; the last four-agent neural pass took 317.4 ms. Power is unmeasured; these are not comparative savings. Page 4 gives the hypotheses, counterarguments and comparison conditions.
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json)
 
@@ -102,7 +102,7 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 11. Does the public demo run the full population?
 
-**The public demo is Sepolia + 7 neurons; the video is Anvil + 166,700 neurons per agent.** The public page has three agents, Q-learning on confirmed-world replays, and a score-based adoption gate. The four-agent market video uses separate online readout updates and predates environment TXs. Public Sepolia does not trade on Aqua/Uniswap.
+**The public demo is Sepolia + 7 neurons; the video is Anvil + 166,700 neurons per agent.** The public page has three agents, Q-learning on confirmed-world replays, and a score-based adoption gate. The new video shows two full-foraging agents comparing readouts, then four market agents updating online. Both full foraging and public mode use environment TXs. Public Sepolia does not trade on Aqua/Uniswap.
 
 [R5: Public Sepolia demo and transaction evidence](../../deployment/sepolia.md)
 
@@ -129,8 +129,8 @@ We aim to keep routine decisions running within a small compute budget. A fixed 
 | Dimension | Expected benefit and mechanism | Evidence and limits |
 | --- | --- | --- |
 | Energy / cost | Bounded CPU work could lower always-on energy use or repeated inference-API charges. | Savings would accrue to agent operators. Power/cost are unmeasured; gas and RPC costs remain. |
-| Memory | Share one fixed sparse graph across individuals; keep separate states and readouts. | 443.2 MiB is peak RSS of the four-agent Python process, not whole-system RAM or proof of microcontroller deployment. |
-| Latency | Four circuit steps can lead to an action without generating text or calling an external inference API. | Four-agent neural processing: 333–492 ms in 6 recorded cycles. This is not a real-time guarantee. |
+| Memory | Share one fixed sparse graph across individuals; keep separate states and readouts. | 443.1 MiB is peak RSS of the four-agent Python process, not whole-system RAM or proof of microcontroller deployment. |
+| Latency | Four circuit steps can lead to an action without generating text or calling an external inference API. | Four-agent neural processing: 304–349 ms in 14 recorded cycles. This is not a real-time guarantee. |
 | Adaptation | Refit only 180 readout coefficients per agent; keep the circuit fixed. | Task-specific flexibility. Small conventional models can do this too; LLMs can adapt via context without retraining. |
 
 ### 14. Does every LLM need 256 GB?
@@ -145,9 +145,9 @@ We aim to keep routine decisions running within a small compute budget. A fixed 
 
 [S3: MLCommons: whole-system power](https://mlcommons.org/benchmarks/inference-edge/) / [R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
 
-### 16. Does 333 ms mean a completed trade?
+### 16. Does neural processing time include settlement?
 
-**Neural processing and settlement latency are different.** Four-agent neural computation plus features took 333–492 ms; cycles including local transactions/RPC took 2.58–3.09 s. The loop targets roughly 4 s. These are neither single-agent response times nor public-chain finality.
+**Neural processing and settlement latency are different.** Four-agent neural computation plus features took 304–349 ms; cycles including local transactions/RPC took 7.68–9.35 s. The 4 s target extends for slower cycles. These are neither single-agent response times nor public-chain finality.
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R7: Comparison rationale, measurements and protocol](ai-agent-comparison.md)
 

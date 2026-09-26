@@ -25,7 +25,7 @@ The sender checks hourly, with at least one hour between sends. Use recorded TXs
 ## Use the three evidence tracks correctly
 
 - **Current public page** — Sepolia, 7 neurons, 3 agents: TX inputs, foraging and Q-learning.
-- **Submitted video** — Anvil, 166,700 neurons × 4 agents: Aqua/V3 settlement and readout updates. Recorded before the environment-TX change.
+- **Submitted video** — Anvil, 166,700 neurons per agent: two-agent environment TX and learning comparison, then four-agent Aqua/V3 settlement.
 - **Independent research** — Synthetic foraging controls: reward improved, but a biological advantage was not established.
 
 ## 1. Make biological decision models usable and testable
@@ -71,12 +71,12 @@ The wiring stays fixed. Training copies never add visible food. Recovery on retu
 ## 5. Separate working integration from improved behavior
 
 - Public: a scheduled TX increased food from 3 to 4
-- Video: four full agents, 1 Aqua and 11 V3 settlements
+- Video: four full agents, 2 Aqua and 25 V3 settlements
 - Research: reward 18.79 → 56.12; direct-input control 56.08
 
 **Integration and learning work; biological superiority is unproven.**
 
-These are saved observations from three different tracks. Research used five search seeds and 60 unseen worlds per profile; final body energy also fell. The video predates the environment-TX implementation.
+These are saved observations from three different tracks. Research used five search seeds and 60 unseen worlds per profile; final body energy also fell. The new recording includes current environment TXs. Full-foraging readouts are separate from public Q-learning.
 
 ## 6. Measure useful decisions within a small budget
 

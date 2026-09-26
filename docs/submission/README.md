@@ -11,7 +11,7 @@
 | 約1分・6枚の説明 / Six-slide explanation | [PDF](presenter-kit/explanation-ja.pdf) · [PPTX](presenter-kit/explanation-ja.pptx) | [PDF](presenter-kit/explanation-en.pdf) · [PPTX](presenter-kit/explanation-en.pptx) |
 | 段階別の原稿・操作 / Script & walkthrough | [日本語](presenter-kit/walkthrough-ja.md) | [English](presenter-kit/walkthrough-en.md) |
 | 手元のQ&A・4ページ / Four-page Q&A | [PDF](presenter-kit/qa-cheatsheet-ja.pdf) | [PDF](presenter-kit/qa-cheatsheet-en.pdf) |
-| 提出動画・51.5秒 / Submitted video | [MP4](presenter-kit/bioagent-submission-ja.mp4) | [MP4](presenter-kit/bioagent-submission-en.mp4) |
+| 提出動画・57.1秒 / Submitted video | [MP4](presenter-kit/bioagent-submission-ja.mp4) | [MP4](presenter-kit/bioagent-submission-en.mp4) |
 
 [資料一式と検証記録 / Presenter kit](presenter-kit/README.md) · [目的と設計意図 / Rationale](bioagent-thesis.md)
 
@@ -31,10 +31,10 @@
 | 対象 / Track | 実装と証拠 / Implementation and evidence |
 | --- | --- |
 | 現在の共通Fly Lab | Sepolia・7神経／19接続・3個体。Anvilと同じUI・Q学習。初期環境・危険エリア・刺激・餌の外部入力をすべてTXで記録。身体・消費・判断・学習はオフチェーン。[実TXと画面確認](judge-demo-review.md) |
-| 全神経の提出動画 | Anvil fork・166,700神経×4個体。Aqua 1件、Uniswap V3 11件の成功決済を記録。readoutのオンライン更新を使用。[収録証拠](presenter-kit/capture-evidence.json) |
+| 全神経の提出動画 | Anvil・166,700神経／個体。前半は2個体の環境TXと学習比較、後半は4個体の市場。新規Aqua 2件・V3 25件の成功決済とreadout更新を記録。[収録証拠](presenter-kit/capture-evidence.json) |
 | 独立した研究 | 合成採餌環境で学習・評価・対照比較。報酬改善は観測したが、直接入力モデルへの優位は未確認。[結果](../research/bioagent-adaptation/README.md) |
 
-The public page is a foraging demo; it does not send Aqua/Uniswap orders. The unchanged submitted video predates the current environment-TX changes. Its market learning and the independent research framework are distinct from public Q-learning. Use the live page for current input behavior and the video for full-population market execution.
+The public page is a foraging demo; it does not send Aqua/Uniswap orders. The newly recorded video shows current environment TXs and readout comparison with two full-foraging agents, then four full-market agents settling on Aqua/V3. Full-foraging selection, market online updates and the independent research framework are distinct from public Q-learning. Long waits are omitted; each shown segment remains at its original speed.
 
 公開版はウォレットなしで観察・学習できます。手動TXは所有者のみ。Workersは所有者EOAで毎時確認・最低1時間間隔の刺激送信を行います。1分の発表は記録済みTXを使い、次の定期TXを待つ構成にはしません。[操作・予算・配置](../deployment/sepolia.md)
 

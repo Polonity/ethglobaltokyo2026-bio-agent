@@ -35,7 +35,7 @@ The public browser model uses seven measured MaleCNS neurons and 19 connections 
 ## 5. 何が確認できたかを示す / State the evidence
 
 - **現在の公開版：** 初期環境TX、危険エリア、定期刺激TXから画面への反映。実確認では餌が3→4へ増えた。[検証記録](judge-demo-review.md)
-- **全神経動画：** Anvil上で4個体、Aqua 1件・V3 11件の決済と学習更新。環境TX対応前の市場記録。[収録証拠](presenter-kit/capture-evidence.json)
+- **全神経動画：** Anvil・各166,700神経。2個体の初期環境TX・同一入力での採餌学習比較に続き、市場4個体の新規Aqua 2件・V3 25件の決済と学習更新を収録。[収録証拠](presenter-kit/capture-evidence.json)
 - **独立研究：** 合成採餌課題の報酬18.79→56.12、直接入力対照56.08。生物優位は未確認で、体力の悪化も観測。[比較実験](../research/bioagent-adaptation/README.md)
 
 Public integration evidence, full-market recording and independent research answer different questions. The public app shares its UI and Q-learning between Anvil and Sepolia. The full Python market uses separate online readout updates, and the independent JS framework has its own learning/evaluation/adoption API. Cross-application skill transfer is not demonstrated.

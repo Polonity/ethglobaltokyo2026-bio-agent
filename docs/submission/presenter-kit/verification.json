@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-09-26T10:21:40.552Z",
+  "verifiedAt": "2026-09-26T10:58:46.682Z",
   "recordingModel": {
     "neurons": 166700,
     "connections": 25582938,
@@ -9,111 +9,116 @@
     "inputMapping": "all sensory neurons sorted by body ID; round-robin across 16 drives",
     "readout": "16 input-population means + 16 motor-population means + every superclass mean"
   },
-  "successfulLocalReceipts": 12,
+  "successfulLocalReceipts": 27,
   "newRoutes": {
-    "Aqua": 1,
-    "Uniswap V3": 11
+    "Aqua": 2,
+    "Uniswap V3": 25
   },
   "learning": [
     {
       "name": "MOMO",
-      "updatesBefore": 37,
-      "updatesAfter": 43,
+      "updatesBefore": 6,
+      "updatesAfter": 20,
       "weightsChanged": true,
-      "policyHashAtLastDecision": "0x1fb5aaad8f826cf1c135e107cf6b021d2fcc8bec0d1ea9113e488cb4d9d73d1b"
+      "policyHashAtLastDecision": "0x220b23a0be6c29e36152ad3b752ebd2aff806594cd8f2f65d9c3a154deba6b86"
     },
     {
       "name": "SORA",
-      "updatesBefore": 37,
-      "updatesAfter": 43,
+      "updatesBefore": 6,
+      "updatesAfter": 20,
       "weightsChanged": false,
-      "policyHashAtLastDecision": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca"
+      "policyHashAtLastDecision": "0xa7e02d0b10e61b0e2ed626d642b7638cdd55df62e16f87f79723f2edb8de181e"
     },
     {
       "name": "KOHARU",
-      "updatesBefore": 37,
-      "updatesAfter": 43,
+      "updatesBefore": 6,
+      "updatesAfter": 20,
       "weightsChanged": true,
-      "policyHashAtLastDecision": "0x6575f22ce12b0eed0e7e64cc6bbd8bc4e539263cb47830132191e014bb81bac2"
+      "policyHashAtLastDecision": "0x7b42ae1abb9ce6c107a99ddb9bc054ddbbc21e69eb10c3162b63a559b8920372"
     },
     {
       "name": "HINATA",
-      "updatesBefore": 37,
-      "updatesAfter": 43,
+      "updatesBefore": 6,
+      "updatesAfter": 20,
       "weightsChanged": true,
-      "policyHashAtLastDecision": "0x1e2439cd93b0179e3afe7a1b55265690c08afc4e659473880cae4e6ea5da26b0"
+      "policyHashAtLastDecision": "0x8592b89b15d9e0c503c8a7177e183f297c5119efad15898638718f2f2526a285"
     }
   ],
   "files": [
     {
       "file": "bioagent-submission-en.mp4",
-      "bytes": 8566177,
-      "sha256": "9a767dd067b695629f8ddb589cc1c5084b3d3f89daaa6f54462ad7081b02059b"
+      "bytes": 7277805,
+      "sha256": "fb945fb3c1092d7858d279350b2002cd65ba69d7efce467b6f04eb76eaf3f64e"
     },
     {
       "file": "bioagent-submission-ja.mp4",
-      "bytes": 8604771,
-      "sha256": "0c3f20c91185dfd1dc1ec1b1508e4a66c9de5ef80d54e2b5d1357ab9cf36fbb8"
+      "bytes": 7281904,
+      "sha256": "9f5054f17daca18a6ed2afec4ec88115b5ab52f81ce90d49b3315641e7e1291d"
     },
     {
       "file": "captions-en.srt",
-      "bytes": 1128,
-      "sha256": "5f9fb36452c5a5c32b3ad796230253613dc1269261395ca1c50ff02be241f568"
+      "bytes": 1490,
+      "sha256": "d82431e58b7455f8b6f9aaa91ac0999f301749fbc26da20a8ec4d553f127d93e"
     },
     {
       "file": "captions-ja.srt",
-      "bytes": 1327,
-      "sha256": "6797ddcccc870912324ba03ab49e7e4a2e97060187e2640a514d993f8896c0a6"
+      "bytes": 1786,
+      "sha256": "83026d5525fbead4ceaefc4597eec642dd43fff452367d8706967512967e4277"
     },
     {
       "file": "capture-evidence.json",
-      "bytes": 21457,
-      "sha256": "7d6386233a39ada56c3d3f7f9880668fb1daa3bae3c205a119f901ba7979b611"
+      "bytes": 165215,
+      "sha256": "047c592e25a2608c825169860ff3e33595c960c77fbf54976ca94acb5ee70fe9"
     },
     {
       "file": "settlement-evidence.json",
-      "bytes": 106759,
-      "sha256": "c7452887553feee049fd5dda569af5ae38578e4180b98f4a585d4f67bce7a180"
+      "bytes": 240212,
+      "sha256": "074e5f342a2e39b06730caa0a60825dd27f83bca65a698e71ac5c5057c364fb5"
+    },
+    {
+      "file": "render-metadata.json",
+      "bytes": 5341,
+      "sha256": "76070ed6190eeb297a9b6f51d21e37f72b271877d45727e747b3a4d25e9d2b84"
     },
     {
       "file": "qa-cheatsheet-ja.pdf",
-      "bytes": 751614,
-      "sha256": "560c420825b52179baa09117db23023b5a97212b6b3a7d8c61cb0246bf8f52f3"
+      "bytes": 755574,
+      "sha256": "e92da54ed736e839124ecd2e6fe529f01a219f029440c5b616bb79c6a3c936c9"
     },
     {
       "file": "qa-cheatsheet-en.pdf",
-      "bytes": 103472,
-      "sha256": "9f7d033a8d7c94e8eb8a89e54b9f48d624be070fca7af593b488ca539e50a2c5"
+      "bytes": 103761,
+      "sha256": "ff23d12c844aa596f18e1e8dcae0267db6db027d6b98248e4b6e046546ff3591"
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
-      "bytes": 811498,
-      "sha256": "3af8c3d6aa0b3121cfc1ec69aee082396ff0d4513488b483ea5c733d9e0dc985"
+      "bytes": 816035,
+      "sha256": "41a6b588f8675d84e11ad94bf75c40218cc067566766d6a2af8f5abcbc35deea"
     },
     {
       "file": "qa-cheatsheet-ja.md",
-      "bytes": 15249,
-      "sha256": "44140f2407260a552580172d577ff6a1d85491146642d93fe0e406e10fb1aa16"
+      "bytes": 15357,
+      "sha256": "ce287ef87c3cbc5030a89941ff0303b8aa405affee56f8a01d65c383e888cc51"
     },
     {
       "file": "qa-cheatsheet-en.md",
-      "bytes": 14031,
-      "sha256": "7e0d0060fda0274b0a0b5f6eab4372cfa8607e33b35dce7e992d512069c30891"
+      "bytes": 14176,
+      "sha256": "c47896a1512090ee12e86d451475f46034d5b317d4835b1643368c5143558720"
     },
     {
       "file": "qa-cheatsheet.html",
-      "bytes": 38496,
-      "sha256": "eeddaffcb38d66f83a972e0f048c2c85bd28903968506337d1c75cf0e7681aa9"
+      "bytes": 38749,
+      "sha256": "b058fa8c8e70ec6c198bb493ef0a7866ebbaa25f4e5d398a72c0676bf03475e7"
     },
     {
       "file": "ai-agent-comparison.md",
-      "bytes": 15477,
-      "sha256": "10b65e46b2f1cc4fef81abebc10bfcac19cc41087c7a9e40d1b546900ff12a62"
+      "bytes": 15542,
+      "sha256": "2a0730af2efc86dc563063300a57cd0698474f699caaf3620c076eda09e37698"
     },
     {
       "file": "resource-evidence.json",
-      "bytes": 1866,
-      "sha256": "10feb3fcc463cabfc2626ca4059ac1da87e8b982e92cd3e58b4eadb1beedc09b"
+      "bytes": 1865,
+      "sha256": "25801c9c314b613e4d9567163a7e2bbbbadbd617a435ee304ae9129c9ceea23b"
     }
   ],
   "videos": [
@@ -131,19 +136,19 @@
           }
         ],
         "format": {
-          "duration": "51.500000",
-          "size": "8566177"
+          "duration": "57.066667",
+          "size": "7277805"
         }
       },
       "fullDecode": true,
       "browserPlayback": {
         "ended": true,
-        "duration": 51.5,
-        "time": 51.5,
+        "duration": 57.066667,
+        "time": 57.066667,
         "error": null,
-        "frames": 1545
+        "frames": 1712
       },
-      "seekScenes": 6,
+      "seekScenes": 10,
       "browserErrors": []
     },
     {
@@ -160,19 +165,19 @@
           }
         ],
         "format": {
-          "duration": "51.500000",
-          "size": "8604771"
+          "duration": "57.066667",
+          "size": "7281904"
         }
       },
       "fullDecode": true,
       "browserPlayback": {
         "ended": true,
-        "duration": 51.5,
-        "time": 51.5,
+        "duration": 57.066667,
+        "time": 57.066667,
         "error": null,
-        "frames": 1545
+        "frames": 1712
       },
-      "seekScenes": 6,
+      "seekScenes": 10,
       "browserErrors": []
     }
   ],
@@ -189,6 +194,6 @@
     "mobileNoHorizontalOverflow": true
   },
   "visualReview": "Not automated: review generated playback frames and all PDF pages separately.",
-  "videoVerificationAt": "2026-09-26T07:46:36.227Z",
+  "videoVerificationAt": "2026-09-26T10:57:32.889Z",
   "videoVerificationReused": true
 }

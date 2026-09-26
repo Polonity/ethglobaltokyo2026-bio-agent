@@ -1,39 +1,49 @@
 1
-00:00:00,000 --> 00:00:02,712
-BioAgent | 4 × 166,700 neurons
-One market. Real local settlement.
+00:00:00,000 --> 00:00:04,033
+BioAgent | Test biological decision models
+Anvil · full 166,700-neuron runtime. Inputs, actions and learning.
 
 2
-00:00:02,712 --> 00:00:10,214
-Two makers. One self-custodied wallet.
-MOMO and SORA publish, widen or withdraw offers through official Aqua.
+00:00:04,033 --> 00:00:10,033
+1 | Initialize the world with a transaction
+Dimensions, seed and hazard areas are recorded onchain.
 
 3
-00:00:10,214 --> 00:00:17,715
-Two traders. The same token pair.
-KOHARU and HINATA choose buy, hold or sell. Code compares executable quotes.
+00:00:10,033 --> 00:00:14,066
+Verify the actual environment receipt
+Local Anvil success. No public-chain transaction.
 
 4
-00:00:17,715 --> 00:00:27,058
-Confirmed outcomes feed learning
-Readout weights update after each cycle. The measured connectome stays fixed.
+00:00:14,066 --> 00:00:20,066
+2 | Observe actions and collect experience
+Confirmed stimuli add food. The fixed circuit feeds a learned action readout.
 
 5
-00:00:27,058 --> 00:00:32,394
-Measured structure. Engineered dynamics.
-Full neural workload, resource use and per-agent learning history are inspectable.
+00:00:20,066 --> 00:00:27,066
+3 | Compare before adopting · learning wait omitted
+Same confirmed input TXs for both policies. Keep an unchanged or worse candidate out.
 
 6
-00:00:32,394 --> 00:00:39,061
-Aqua | Actual token settlement
-A fresh successful transaction. Inspect ERC20 transfers and official Aqua events.
+00:00:27,066 --> 00:00:32,066
+Full measured connectivity, engineered dynamics
+166,700 neurons per agent. Body state and learning run offchain.
 
 7
-00:00:39,061 --> 00:00:45,696
-Uniswap V3 | Actual swap settlement
-The same tokens flow through the V3 pool. Gas is recorded separately in ETH.
+00:00:32,066 --> 00:00:40,066
+4 | Apply the full model to a shared market
+Four agents: Aqua offers and V3 trades. Confirmed outcomes update readouts.
 
 8
-00:00:45,696 --> 00:00:51,498
-A testbed for bio-inspired agents
-Trace inputs, learning and settlement. Artificial demand; no profitability claim.
+00:00:40,066 --> 00:00:46,033
+Aqua | A freshly confirmed local settlement
+Actual token transfers and contract events. Test tokens on an Anvil fork.
+
+9
+00:00:46,033 --> 00:00:52,033
+Uniswap V3 | A freshly confirmed local settlement
+Actual token transfers and contract events. Test tokens on an Anvil fork.
+
+10
+00:00:52,033 --> 00:00:57,066
+A framework for testing benefits and limits
+Learning updates work. Biological superiority and energy savings remain unproven.

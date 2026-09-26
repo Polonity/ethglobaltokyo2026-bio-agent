@@ -23,19 +23,19 @@ BioAgentの実装は、生きたハエの消費電力を利用する装置では
 
 ## 現在の実測を正確に使う
 
-[収録6周期の生データ](settlement-evidence.json)から[集計JSON](resource-evidence.json)を生成しています。新たな負荷試験や消費電力測定を行ったものではありません。
+[収録14周期の生データ](settlement-evidence.json)から[集計JSON](resource-evidence.json)を生成しています。新たな負荷試験や消費電力測定を行ったものではありません。
 
 | 指標 | 観測値 | 範囲 |
 | --- | --- | --- |
 | 対象 | 4個体 × 166,700神経、25,582,938接続／個体 | 接続グラフは共有、神経状態は個別 |
-| peak RSS | 443.2 MiB | Pythonプロセスの生存期間中の最大値。PC全体・1個体分・準備処理の最大値ではない |
-| 神経処理 | 333.3–492.1 ms、中央値348.5 ms | 6周期。4個体合計・各4step＋特徴抽出。行動readout・IPC・RPC等を除く |
-| アプリの1周期 | 2.582–3.093秒、中央値2.750秒 | ローカルRPC・取引・学習更新を含む。次の周期までの待機を除く |
+| peak RSS | 443.1 MiB | Pythonプロセスの生存期間中の最大値。PC全体・1個体分・準備処理の最大値ではない |
+| 神経処理 | 304.1–349.5 ms、中央値324.0 ms | 14周期。4個体合計・各4step＋特徴抽出。行動readout・IPC・RPC等を除く |
+| アプリの1周期 | 7.679–9.354秒、中央値8.642秒 | ローカルRPC・取引・学習更新を含む。次の周期までの待機を除く |
 | 実行間隔 | 約4秒を目標 | 遅い周期では延長。計算時間とは別のアプリ設定 |
 | 学習対象 | 180係数／個体（3行動 × bias込み60特徴） | 保存readoutを確認。25,582,938接続全体を学習しているわけではない |
 | 消費電力・J/判断 | 未測定 | 生物モデルとLLMの比較結果も未取得 |
 
-神経処理時間を4で割って「1個体の応答時間」と呼んだり、6周期からp95の実運用保証を出したりしません。GPUを必要としないこの計算経路が存在する、という説明はできます。スマートフォン、マイコン、専用低電力機器への移植・最低RAM・連続運転の電力は別途確認が必要です。全規模データの準備に必要なメモリーは、この推論プロセスのRSSとは別です。
+神経処理時間を4で割って「1個体の応答時間」と呼んだり、14周期からp95の実運用保証を出したりしません。GPUを必要としないこの計算経路が存在する、という説明はできます。スマートフォン、マイコン、専用低電力機器への移植・最低RAM・連続運転の電力は別途確認が必要です。全規模データの準備に必要なメモリーは、この推論プロセスのRSSとは別です。
 
 1個体のfloat64状態ベクトルだけなら `166,700 × 8 bytes ≈ 1.27 MiB` ですが、グラフ・索引・作業領域・ランタイムを含みません。「モデル全体が1.27 MiB」「4個体でも約600 bytes」とは言いません。約600 bytesという過去の値は別の7神経実験の保存方策JSONです。
 
@@ -58,9 +58,9 @@ API型のLLMは、クライアント側が重みを保持しません。小さ�
 
 RAPL等のCPU package値は、壁コンセントでの全機器電力と同じではありません。現在はどちらも測っていないため、仮のWや削減倍率を実測値として載せません。
 
-### 「333 msで取引完了？」「LLMより必ず速い？」
+### 「神経計算の時間で取引完了？」「LLMより必ず速い？」
 
-333 msは今回の最終周期の**4個体分の神経計算と特徴抽出**です。readout計算やプロセス間通信まで含む「利用可能な行動が返るまでの遅延」は別に計測します。取引のreceiptまで、さらにチェーンの最終確定までを分け、Anvilの即時採掘からSepolia/mainnetの時間を推定しません。
+今回の神経計算は304.1–349.5 msで、**4個体分の神経計算と特徴抽出**です。readout計算やプロセス間通信まで含む「利用可能な行動が返るまでの遅延」は別に計測します。取引のreceiptまで、さらにチェーンの最終確定までを分け、Anvilの即時採掘からSepolia/mainnetの時間を推定しません。
 
 LLMと比べるなら最初のトークンが出る時間だけではなく、必要な行動が確定して利用できる時点までを測ります。LLMも短い構造化出力にでき、キャッシュ等で生成を効率化できます。常に遅い相手を仮定しません。[Hugging Face：生成とcache](https://huggingface.co/docs/transformers/main/en/kv_cache)。
 
@@ -84,7 +84,7 @@ LLMと比べるなら最初のトークンが出る時間だけではなく、�
 
 Potential savings would accrue to the agent operator, not automatically to a protocol’s gas or operating costs. Easier deployment could encourage adoption, but that business effect is unmeasured.
 
-**Current observations.** Six recorded cycles used four full-population agents. Python peak RSS was 443.2 MiB. Neural computation plus feature extraction took 333.3–492.1 ms, median 348.5 ms, for all four agents. Complete local cycles took 2.582–3.093 s, median 2.750 s, before the cadence wait; the loop targets approximately four seconds. No power, energy, single-agent latency or production p95 was measured. Sources: [raw cycles](settlement-evidence.json), [resource summary](resource-evidence.json).
+**Current observations.** 14 recorded cycles used four full-population agents. Python peak RSS was 443.1 MiB. Neural computation plus feature extraction took 304.1–349.5 ms, median 324.0 ms, for all four agents. Complete local cycles took 7.679–9.354 s, median 8.642 s, before the cadence wait; the loop targets four seconds but extends for slower cycles. No power, energy, single-agent latency or production p95 was measured. Sources: [raw cycles](settlement-evidence.json), [resource summary](resource-evidence.json).
 
 **Why the architecture might help.** One fixed sparse graph is shared across agents; each has separate state and 180 learned readout coefficients (three actions, 60 features including bias). This limits the component being refitted. It does not make the entire model 180 parameters: 25,582,938 fixed connections still participate. The current NumPy/SciPy implementation updates all neuron states, not an event-driven spiking or biological device. A state vector alone is about 1.27 MiB; that excludes the graph, workspace and runtime. The historical ~600-byte policy belongs to a separate seven-neuron experiment.
 
@@ -92,7 +92,7 @@ Potential savings would accrue to the agent operator, not automatically to a pro
 
 **“How much electricity do you save?”** We do not have a savings ratio. Measure whole-system power and energy at matched quality, rate and completed work; the wall-power scope follows the principle described by [MLCommons](https://mlcommons.org/benchmarks/inference-edge/), without claiming MLPerf compliance. Report gross and idle-subtracted energy separately, include failures/retries, and distinguish total decisions from valid decisions. Electricity cost = mean watts × hours / 1,000 × tariff. Add hardware, model preparation, training, API/RPC and operating costs; list chain gas separately. CPU-package counters alone do not measure the whole system.
 
-**“Does 333 ms mean settlement?”** No. It excludes the action readout, messaging and chain operations. Compare time to a usable action, not only time to the first generated token. Measure receipt and finality separately; local Anvil timing does not predict a public chain. LLMs can use short outputs and caching, so a slow verbose baseline would be unfair. [Caching documentation](https://huggingface.co/docs/transformers/main/en/kv_cache).
+**“Does neural processing time include settlement?”** No. It excludes the action readout, messaging and chain operations. Compare time to a usable action, not only time to the first generated token. Measure receipt and finality separately; local Anvil timing does not predict a public chain. LLMs can use short outputs and caching, so a slow verbose baseline would be unfair. [Caching documentation](https://huggingface.co/docs/transformers/main/en/kv_cache).
 
 **“Why not conventional small AI?”** Fixed recurrent circuits with learned outputs have established precedents. [ESN primary paper, §2.1](https://www.ai.rug.nl/minds/uploads/techreport2.pdf). The biological question is whether measured wiring improves temporal decisions or adaptation under a matched budget. That has not been established. The existing seven-neuron foraging task matched a direct-input learner; do not generalize its outcome to full-market performance. [Experiment](../../research/bioagent-adaptation/README.md).
 

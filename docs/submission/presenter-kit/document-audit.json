@@ -1,47 +1,47 @@
 {
-  "auditedAt": "2026-09-26T10:22:53.141994+00:00",
+  "auditedAt": "2026-09-26T10:57:55.214371+00:00",
   "pdfs": [
     {
       "file": "qa-cheatsheet-ja.pdf",
       "pages": 4,
-      "sha256": "560c420825b52179baa09117db23023b5a97212b6b3a7d8c61cb0246bf8f52f3",
+      "sha256": "e92da54ed736e839124ecd2e6fe529f01a219f029440c5b616bb79c6a3c936c9",
       "textCharacters": [
-        845,
-        1373,
-        1760,
-        1635
+        841,
+        1384,
+        1779,
+        1634
       ]
     },
     {
       "file": "qa-cheatsheet-en.pdf",
       "pages": 4,
-      "sha256": "9f7d033a8d7c94e8eb8a89e54b9f48d624be070fca7af593b488ca539e50a2c5",
+      "sha256": "ff23d12c844aa596f18e1e8dcae0267db6db027d6b98248e4b6e046546ff3591",
       "textCharacters": [
-        1957,
-        3148,
-        3388,
-        3284
+        1959,
+        3200,
+        3457,
+        3309
       ]
     },
     {
       "file": "qa-cheatsheet-ja-en.pdf",
       "pages": 8,
-      "sha256": "3af8c3d6aa0b3121cfc1ec69aee082396ff0d4513488b483ea5c733d9e0dc985",
+      "sha256": "41a6b588f8675d84e11ad94bf75c40218cc067566766d6a2af8f5abcbc35deea",
       "textCharacters": [
-        844,
-        1372,
-        1759,
+        840,
+        1383,
+        1778,
         1635,
-        1957,
-        3148,
-        3388,
-        3284
+        1959,
+        3200,
+        3457,
+        3309
       ]
     },
     {
       "file": "explanation-ja.pdf",
       "pages": 6,
-      "sha256": "f99eddadc5537f6ac3de3426114b02e6184a351ea374108cbac6acef40b29f54",
+      "sha256": "3dc674c86aa0d2a70ea28148a786bc4b62277eefea005ea0fc8049f3339d0c71",
       "textCharacters": [
         146,
         150,
@@ -54,7 +54,7 @@
     {
       "file": "explanation-en.pdf",
       "pages": 6,
-      "sha256": "3cb8bef982d08f9c3d8331a74b9cd7486a841c1e38f9ca5e17c7f262522a516e",
+      "sha256": "e9756d0f4c0c89dea18ee7b607d492d95378b4613eab46ff72a0e74838091608",
       "textCharacters": [
         310,
         307,
@@ -71,17 +71,16 @@
       "slides": 6,
       "speakerNotes": 6,
       "editableText": true,
-      "sha256": "40e351c34c62fcbe278c22a7cad5c70bfd8b14cf659118ec0bc1c2e2815c3867"
+      "sha256": "62bfdc6079d22ec2a912fb07d785079c3553cdcfe00bb985f2bac622c1e64d8a"
     },
     {
       "file": "explanation-en.pptx",
       "slides": 6,
       "speakerNotes": 6,
       "editableText": true,
-      "sha256": "1bd9048062181eafa866a1fb0e300a7a3d6496d85ec5e698d84650a6180678fc"
+      "sha256": "96a86ff7f178e82ec7da470f0505512a364219d3666aee04847b771102349552"
     }
   ],
-  "visualReview": "Assistant inspected all 8 Q&A pages and 12 slide pages rendered with PDFium; no clipped text or overlaps observed.",
-  "nativePowerPointRendering": false,
-  "visualReviewedAt": "2026-09-26T10:26:21.039390+00:00"
+  "visualReview": "Reviewed all six Japanese and six English slide pages and four Japanese/four English Q&A pages rendered with PDFium; no clipping observed. Combined PDF contains the same eight Q&A pages.",
+  "nativePowerPointRendering": false
 }

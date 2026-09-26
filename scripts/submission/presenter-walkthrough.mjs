@@ -90,7 +90,7 @@ const base = {
         '動作の証拠と、改善効果を分ける',
         [
           '公開版：定期TXで餌が3 → 4へ増えることを確認',
-          '動画：全神経4個体、Aqua 1件・V3 11件の決済',
+          '動画：全神経4個体のAqua／V3決済（件数は収録記録から生成）',
           '別研究：報酬18.79 → 56.12、直接入力対照56.08',
         ],
         '接続・学習は動いた。生物回路の性能優位は未確認です。',
@@ -205,7 +205,7 @@ const base = {
         'Separate working integration from improved behavior',
         [
           'Public: a scheduled TX increased food from 3 to 4',
-          'Video: four full agents, 1 Aqua and 11 V3 settlements',
+          'Video: four full agents settling on Aqua/V3 (counts from capture)',
           'Research: reward 18.79 → 56.12; direct-input control 56.08',
         ],
         'Integration and learning work; biological superiority is unproven.',

@@ -1,9 +1,162 @@
 {
-  "rawStart": 0.2,
-  "rawEnd": 51.698,
-  "speed": 1,
+  "schema": "bioagent.presenter-edit.v2",
+  "duration": 57.066666,
+  "rawCaptureSeconds": 243.113,
+  "speedWithinShots": 1,
   "audio": false,
-  "presentation": "English UI; English and Japanese burned-in caption masters",
-  "captionEdit": "Opening shortened for reading time. Final SRTs supersede draft text in capture cues.",
-  "resultDataEdited": false
+  "presentation": "English UI; separate Japanese and English burned-in captions",
+  "cutsOmit": "Setup, navigation and long learning/settlement waits. Learning wait omission explicitly captioned.",
+  "resultDataEdited": false,
+  "shots": [
+    {
+      "id": "purpose",
+      "start": 0,
+      "end": 4.033333,
+      "en": [
+        "BioAgent | Test biological decision models",
+        "Anvil · full 166,700-neuron runtime. Inputs, actions and learning."
+      ],
+      "ja": [
+        "BioAgent｜生物由来の判断モデルを、使って検証する",
+        "Anvil＋全166,700神経。入力・行動・学習をつなぎます。"
+      ],
+      "rawStart": 1.238,
+      "rawEnd": 5.239
+    },
+    {
+      "id": "environment",
+      "start": 4.033333,
+      "end": 10.033332999999999,
+      "en": [
+        "1 | Initialize the world with a transaction",
+        "Dimensions, seed and hazard areas are recorded onchain."
+      ],
+      "ja": [
+        "1｜初期環境をトランザクションで構築",
+        "フィールドの寸法・seed・危険エリアもオンチェーン入力です。"
+      ],
+      "rawStart": 6.321,
+      "rawEnd": 12.322
+    },
+    {
+      "id": "receipt",
+      "start": 10.033332999999999,
+      "end": 14.066665999999998,
+      "en": [
+        "Verify the actual environment receipt",
+        "Local Anvil success. No public-chain transaction."
+      ],
+      "ja": [
+        "実際の初期環境TXを確認",
+        "ローカルAnvilの成功receipt。公開チェーンへの送信ではありません。"
+      ],
+      "rawStart": 12.708,
+      "rawEnd": 16.715
+    },
+    {
+      "id": "learn",
+      "start": 14.066665999999998,
+      "end": 20.066665999999998,
+      "en": [
+        "2 | Observe actions and collect experience",
+        "Confirmed stimuli add food. The fixed circuit feeds a learned action readout."
+      ],
+      "ja": [
+        "2｜行動して経験を集める",
+        "確定した刺激TXで餌を追加。固定回路から行動を選び、結果を学習へ。"
+      ],
+      "rawStart": 18.131,
+      "rawEnd": 24.134
+    },
+    {
+      "id": "compare",
+      "start": 20.066665999999998,
+      "end": 27.066665999999998,
+      "en": [
+        "3 | Compare before adopting · learning wait omitted",
+        "Same confirmed input TXs for both policies. Keep an unchanged or worse candidate out."
+      ],
+      "ja": [
+        "3｜同じ入力で比べて採用する（学習待ち時間は省略）",
+        "新旧方策に同じ環境・刺激TXを使用。改善しない候補は採用しません。"
+      ],
+      "rawStart": 92.66,
+      "rawEnd": 99.661
+    },
+    {
+      "id": "model",
+      "start": 27.066665999999998,
+      "end": 32.066666,
+      "en": [
+        "Full measured connectivity, engineered dynamics",
+        "166,700 neurons per agent. Body state and learning run offchain."
+      ],
+      "ja": [
+        "構造は実測、動力学は人工設計",
+        "各166,700神経で計算。身体状態と学習の処理はオフチェーンです。"
+      ],
+      "rawStart": 100.042,
+      "rawEnd": 105.043
+    },
+    {
+      "id": "market",
+      "start": 32.066666,
+      "end": 40.066666,
+      "en": [
+        "4 | Apply the full model to a shared market",
+        "Four agents: Aqua offers and V3 trades. Confirmed outcomes update readouts."
+      ],
+      "ja": [
+        "4｜全神経モデルを、同じ市場の4個体へ",
+        "Aquaへの提示とV3での売買。確定した行動結果でreadoutを更新します。"
+      ],
+      "rawStart": 120.405,
+      "rawEnd": 128.40599999999998
+    },
+    {
+      "id": "aqua",
+      "start": 40.066666,
+      "end": 46.033333,
+      "en": [
+        "Aqua | A freshly confirmed local settlement",
+        "Actual token transfers and contract events. Test tokens on an Anvil fork."
+      ],
+      "ja": [
+        "Aqua｜今回成立したローカル決済",
+        "実トークン移動とコントラクトのイベントを確認。Anvil forkのテスト通貨です。"
+      ],
+      "rawStart": 224.938,
+      "rawEnd": 230.938
+    },
+    {
+      "id": "uniswap",
+      "start": 46.033333,
+      "end": 52.033333,
+      "en": [
+        "Uniswap V3 | A freshly confirmed local settlement",
+        "Actual token transfers and contract events. Test tokens on an Anvil fork."
+      ],
+      "ja": [
+        "Uniswap V3｜今回成立したローカル決済",
+        "実トークン移動とコントラクトのイベントを確認。Anvil forkのテスト通貨です。"
+      ],
+      "rawStart": 231.32299999999998,
+      "rawEnd": 237.32399999999998
+    },
+    {
+      "id": "close",
+      "start": 52.033333,
+      "end": 57.066666,
+      "en": [
+        "A framework for testing benefits and limits",
+        "Learning updates work. Biological superiority and energy savings remain unproven."
+      ],
+      "ja": [
+        "効果と限界を比較できるフレームワークへ",
+        "学習更新は動作。生物回路の優位と省電力効果は、今後同条件で検証します。"
+      ],
+      "rawStart": 237.756,
+      "rawEnd": 242.75699999999998
+    }
+  ]
 }
