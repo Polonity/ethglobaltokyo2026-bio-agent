@@ -37,16 +37,12 @@ npm run local:up
 | `make contracts-check-deployment` | 配置スクリプトの検証 | 専用ローカルAnvilを使用 |
 | `make test` | Pythonモデル・保存 | 一時データで検証 |
 | `npm run test:local` | GUI→Tx→ログ→反応・再同期 | 起動中のAnvilを書き換える |
-| `npm run test:browser` | 12匹モードのGUI・学習等 | 既定URLは127.0.0.1:8797 |
+| `npm run test:browser` | 共通GUIの実TX反映 | `test:local`と同じ。起動中のAnvilを使用 |
 | `node scripts/record-demo.mjs` | 3匹モードの操作を録画 | Status更新、artifacts上書き |
 
 ブラウザーテストは `CHROME_PATH` でChromeを指定できます。`test:local` は `.local/deployment.json` を読み、公開URLでは動作しません。automine切替やsnapshot/revertを含むため、発表・録画中には同時実行しないでください。
 
-公開用12匹モードを検証する場合は別ターミナルで `npm run dev` を起動し、表示されたURLを指定します。
-
-```sh
-ARENA_URL=http://127.0.0.1:8797 npm run test:browser
-```
+`npm run dev`は`local:up`と同じAnvil接続デモを起動します。公開版の確認には`npm run test:sepolia:public`を使い、Sepoliaへの書き込みは行いません。
 
 healthの成功はチェーン接続の確認です。個体が入力を反映して動くことは実ブラウザーで別に確認します。コマンドの成功と、どの範囲を検証したかをセットで記録します。
 
@@ -57,7 +53,7 @@ healthの成功はチェーン接続の確認です。個体が入力を反映�
 | `.local/deployment.json` | 起動中AnvilのRegistry・配置ブロック・owner・モデルhash |
 | `.local/wrangler.json` | ローカル専用Worker設定 |
 | `.local/forge.log` | 配置処理のログ |
-| `wrangler.jsonc` | 公開用Worker設定。ローカル書込APIとは別 |
+| `wrangler.sepolia.jsonc` | 公開用Worker設定。ローカル書込APIとは別 |
 | `contracts/.env` | Sepolia等の契約開発用設定。手順書に従う |
 | `artifacts/` | 画面・動画・検証JSON。Git対象外 |
 | `data/` | PythonのDB・学習成果物。Git対象外 |

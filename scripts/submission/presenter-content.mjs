@@ -79,8 +79,8 @@ export function content(e) {
         ],
         [
           '何がオンチェーン？ 判断も検証できる？',
-          '個体・モデル参照・入力revisionと、実際の決済を記録します。',
-          '神経計算と学習はオフチェーンです。動画はchain 31337のAnvil forkで、公式Aquaのコードと実Transferログを確認。ハッシュは成果物照合用で、神経計算の正しさを証明するZK等ではありません。RPCへの信頼は残ります。',
+          '箱庭の外部入力はすべてオンチェーンデータです。',
+          '現行の箱庭は初期環境・危険エリア・刺激をTXで記録し、そこから感覚入力を計算します。身体と学習はオフチェーンです。提出動画はAnvil forkの決済記録を示します。ハッシュは照合用で、神経計算の正しさを証明するものではありません。',
           'R1, R4',
         ],
         [
@@ -177,8 +177,8 @@ export function content(e) {
         ],
         [
           'What is onchain, and is inference trustless?',
-          'Agent/model references, input revisions and actual settlement are recorded.',
-          'Inference and learning run offchain. The video uses Anvil chain 31337, canonical Aqua code on a fork and real Transfer logs. Hashes identify artifacts; they are not proofs of correct neural computation. The chain reader trusts its RPC.',
+          'All external inputs to the playground come from onchain data.',
+          'The current playground records the initial field, hazards and stimuli in TXs, then derives sensory inputs from them. Body state and learning run offchain. The submitted Anvil-fork video shows settlement evidence. Hashes identify artifacts, not proof of correct neural computation.',
           'R1, R4',
         ],
         [

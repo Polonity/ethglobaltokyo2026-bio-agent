@@ -1,6 +1,6 @@
 {
   "schema": "bioagent.judge-demo-review.v1",
-  "scope": "Live public Cloudflare Workers application, real Sepolia input, read-only browser learning audit, plus two owner-authorized Sepolia input writes via an EIP-1193 bridge.",
+  "scope": "Historical verification of the removed dedicated Sepolia UI; not evidence for the current shared UI. See sepolia-evidence.json.",
   "completedAt": "2026-09-26T08:28:41.431Z",
   "sourceCommit": "5818486",
   "cloudflareVersionId": "6cb795d0-aaef-4e20-afbe-358c42422bb8",

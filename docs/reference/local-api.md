@@ -1,20 +1,20 @@
-# ローカルAPIリファレンス
+# 共通チェーンAPIリファレンス
 
-実装: `services/worker/local.js` / クライアント: `apps/frontend/chain.js`。Anvilモード専用です。既定のベースURLは `http://127.0.0.1:8798`。公開用Workerはchain APIを提供しません。
+読取実装は `services/worker/registry-read.js`、クライアントは `apps/frontend/chain.js`。AnvilとSepoliaで共通です。Anvilの既定URLは `http://127.0.0.1:8798`。Status送信のHTTP APIとhealthはAnvil専用で、Sepoliaの手動送信には所有者ウォレットを使います。
 
 ## 共通仕様
 
-レスポンスはJSON、キャッシュは `no-store`。chainId、agentId、revision、updatedAt、blockNumber、transactionIndex、logIndexは**10進文字列**です。activity、energy、stimulusはJSON整数。ハッシュ・アドレスは `0x` 付き16進数です。
+チェーン読取レスポンスはJSON、キャッシュは `no-store`。chainId、agentId、revision、nonce、updatedAt、blockNumber、transactionIndex、logIndexは**10進文字列**です。activity、energy、stimulusはJSON整数。ハッシュ・アドレスは `0x` 付き16進数です。
 
-`/api/chain/*` とhealthでは、Anvilのchain ID 31337、client名、配置ブロックのハッシュを確認します。config取得だけではチェーン疎通を証明しません。
+チェーン読取時に設定されたchain IDを検証します。Anvilでは加えてclient名と配置ブロックのハッシュを確認します。config取得だけではチェーン疎通を証明しません。
 
 ## 読み取り
 
 | GET | レスポンスの主なフィールド |
 | --- | --- |
-| `/api/config` | mode=`anvil`, chainId, registryAddress, deployBlock, modelHash, agentIds |
-| `/api/health` | status=`ok`, runtime=`browser`, mode=`anvil`, chainConnected=true, registryAddress |
-| `/api/chain/snapshot` | blockNumber, blockHash, agents |
+| `/api/config` | mode=`anvil` / `sepolia`, chainId, registryAddress, deployBlock, modelHash, agentIds, worldInput, walletMode, networkName |
+| `/api/health`（Anvil専用） | status=`ok`, runtime=`browser`, mode=`anvil`, chainConnected=true, registryAddress |
+| `/api/chain/snapshot` | blockNumber, blockHash, agents, events, environment |
 | `/api/chain/events?after=N&hash=H` | blockNumber, blockHash, events |
 | `/api/chain/receipt?hash=H` | stage。採掘後はblockNumber, transactionHashも返す |
 
@@ -29,7 +29,7 @@ eventsは `after + 1` から最新ブロックまでのRegistryログを返し�
 
 receiptのstageは `pending` / `mined` / `reverted`。`mined` はそのトランザクションが採掘されたことを示し、Agent適用済みを示すものではありません。
 
-## Status送信
+## Status送信（Anvil専用）
 
 `POST /api/chain/status`。同一Originと `Content-Type: application/json` が必要です。
 
@@ -71,10 +71,11 @@ Workerが `eth_call` で事前確認し、gasを見積もってAnvilのunlocked 
 
 共通フィールド:
 
-`schemaVersion=1, chainId, registryAddress, blockNumber, blockHash, transactionHash, transactionIndex, logIndex, name, agentId, eventId`
+`chainId, registryAddress, blockNumber, blockHash, transactionHash, transactionIndex, logIndex, name, agentId, eventId, receiptVerified`
 
-- `BioAgentRegistered`: `owner, modelHash, metadataURI` を追加。
 - `BioAgentStatusUpdated`: `writer, status` を追加。statusは `activity, energy, stimulus, revision, updatedAt`。
+- `BioAgentStimulusAccepted`: `writer, nonce, schema, payloadHash, configuration`。環境スキーマはAgent #1から受け、JSONの寸法・seed・危険エリア等を検証する。
+- `environment`は最新の有効な環境入力イベント。環境TXがない場合、箱庭用snapshotを返さず停止する。
 - eventId: `chainId:registryAddress小文字:blockHash:transactionHash:logIndex`。
 
 現在のJSONは `name` と `status` を使います。共有Runtime設計案にある `eventName / payload / canonicality` の形式とは異なります。スキーマ追加時は両側を同時に更新してください。
@@ -85,13 +86,19 @@ Workerが `eth_call` で事前確認し、gasを見積もってAnvilのunlocked 
 | --- | --- | --- |
 | 400 | agent・値域・cursor・hash不正 | 入力を修正 |
 | 403 | Origin不一致、loopback外、owner設定不一致 | 接続設定を確認 |
-| 409 | RevisionMismatch、modelHash不一致、RPC側エラー | 再取得して原因を確認。盲目的に再送しない |
+| 409 | RevisionMismatch、RPC側エラー | 再取得して原因を確認。盲目的に再送しない |
 | 409 + reset | cursorのreorg | snapshotから再初期化 |
 | 413 | 本文が上限超過 | 必要なフィールドだけを送る |
-| 503 | Anvil停止、配置変更、その他の処理失敗 | 起動ログと設定を確認 |
+| 503 | RPC停止、配置・model不一致、環境入力未確認 | 起動ログと設定を確認 |
 | 404 | 未提供のパス・メソッド | API契約を確認 |
 
 基本形式は `{"error":"説明"}`。JSON構文不正は現在の実装では包括的な503になります。すべての不正入力が400になるわけではありません。
+
+## 初期環境TX
+
+`submitStimulus(1, expectedNonce, schema, payload)`を所有者が送信します。`schema`は`keccak256("bioagent.foraging-world.v1")`、payloadは[初期設定JSON](../../packages/bio_agent/browser/foraging-world.json)のUTF-8バイトです。`expectedNonce`は`stimulusNonce(1)`から取得し、Statusのrevisionとは分けて扱います。
+
+コントラクトはowner・nonce・payload長を検査します。環境スキーマと値域は共通読取・ランタイム側で検証し、不正な入力をローカル初期値で補いません。環境変更は新しい環境TXで行い、以前の餌を消去します。初期配置スクリプトは登録後、動作開始前に環境TXを確定させます。
 
 ## 提供しないもの
 

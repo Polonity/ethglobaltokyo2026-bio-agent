@@ -1,80 +1,49 @@
-# 審査員向け公開デモの実動作レビュー
+# 共通Fly Lab — 審査員向け動作確認
 
-2026-09-26 / [日本語デモ](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) / [English demo](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en)
+2026-09-26。[日本語](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=ja) / [English](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/?lang=en)。
 
-**判定：研究・フレームワークの体験デモとして、審査員に見せられます。** 実Sepolia入力を取り込み、ブラウザーで行動し、学習候補を比較・採用・保存する一連の流れが動作しました。学習後の行動変化も目視できます。7神経の生物回路が通常AIより優れているという結論は出ていません。全神経・市場アプリ統合の説明には[提出動画](presenter-kit/README.md)を併用します。
+**初期環境、危険エリア、刺激、餌の追加がTXに結び付いたデモです。** AnvilとSepoliaは同じ画面と判断・学習処理を使います。生物由来モデルの性能優位を実証したという意味ではありません。
 
-[実ブラウザー・別シナリオ・実取引の記録](judge-demo-evidence.json) / [構成と使い方](../deployment/sepolia.md)
+## 確認できたこと
 
-## その場で見せられる効果
+| 項目 | 実行結果 |
+| --- | --- |
+| Anvilの環境更新 | 保留中は危険エリアが変化せず、確定後だけ新しい位置・半径へ切り替わった |
+| 餌の追加 | 保留中は増えず、正の刺激TX確定後に1個追加。重複受信では増えない |
+| 消費 | 食べた餌を削除し、自動補充しない。消費履歴を保存する |
+| 初期環境なし | 合成値で代替せず停止する |
+| 学習 | 確認済み環境のコピーを使い、表示中の環境を変更しない |
+| 全神経版 | 166,700神経・7神経それぞれ4stepの実計算で、環境TX由来の危険エリアと2件の刺激TXを確認 |
+| 公開ページ | 日英・390pxモバイル表示、JavaScript例外なし。HTML・CSS・JSが共通ビルドとbyte単位で一致 |
+| Cloudflare定期TX | 下記の実TXが成功し、開いたままの画面で餌と履歴が3→4へ増えた |
+| 再試行 | 同じ時間帯の再実行では同じhashを確認。中断・再起動・同時起動も専用Anvilで検証 |
 
-画面の「学習して比較する」で、訓練とは別の固定4シナリオを比較しました。数値は各300ステップの平均です。これらは**方策選択用**であり、独立テストではありません。
+## 公開チェーンの証拠
 
-| 指標 | 学習前 | 候補 |
-| --- | ---: | ---: |
-| 報酬 | 3.89 | 33.81 |
-| 獲得した餌 | 6.25 | 12.50 |
-| 障害物への接触 | 9.00 | 0.25 |
-| 最終身体エネルギー | 59.2% | 32.6% |
+- [初期環境TX](https://sepolia.etherscan.io/tx/0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc)
+- [Cloudflare定期送信TX](https://sepolia.etherscan.io/tx/0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd)：block **11785418**、gas **34,209**、手数料 **0.000034342273782621 Sepolia ETH**。
+- 署名者：`0x0d01a92bae0E01754f7102466936397F609D67C3`。確認後残高 **0.016363387080355746 ETH**。
+- 毎時Cronと最低1時間の送信間隔。設定上の24時間最大額 **0.00432 ETH**。24時間の連続試験は未実施。
 
-餌と報酬が増え、接触が減ったため採用されます。一方、休息が減って身体エネルギーも低下しました。**報酬だけを最大化すればよいわけではない**ことが、具体的に説明できる結果です。身体エネルギーはシミュレーション内の体力であり、PCの消費電力ではありません。
+## 実装の範囲
 
-画面のライブ個体でも、学習後の30秒間に餌の累計が2個から23個へ進みました。これは1回の動作確認で、学習前後を同じ開始状態で比べた効果量ではありません。
+外部の環境入力はすべてオンチェーン。位置・身体・学習状態は、その入力からランタイムが計算する内部状態です。餌の位置はTX hashと記録済みseedから決まります。消費や学習結果をチェーンへ書き込む構成ではなく、ブラウザー間で身体状態を同期するデモではありません。
 
-学習はボタン押下時の有限なreadout探索です。固定接続を再学習したり、閲覧中に常時学習したりはしません。再度同じ条件で学習すると今回は追加改善がなく、方策v2を維持しました。再読込では方策を復元し、身体・得点は初期化されます。
+公開デモは7神経の部分回路、提出動画は既存のAnvil＋全神経版。以前の専用Sepolia画面で得た学習比較の数値を、現在の共通UIの測定値として流用しません。[研究比較](../research/bioagent-adaptation/README.md)は独立した実験として扱います。
 
-## 別20シナリオでも確認
-
-公開Workerから配信される計算モジュールで、訓練・選択に使っていない20個のseedを事前に固定して確認しました。同じ採餌条件・各300ステップの探索的な比較です。新しい環境条件への適応や統計的有意差を実証するものではありません。
-
-| 指標の平均 | 初期方策 | 学習後BioAgent | 学習後の直接入力対照 |
-| --- | ---: | ---: | ---: |
-| 報酬 | 21.77 | 48.13 | 50.82 |
-| 餌 | 7.05 | 17.55 | 19.15 |
-| 接触 | 0.00 | 0.00 | 0.00 |
-| 最終身体エネルギー | 74.2% | 24.1% | 25.0% |
-
-**学習の効果は観察できましたが、生物接続を通さない対照も同等以上でした。** この課題で生物回路の優位性を主張しないことが適切です。次の問いは、履歴や環境変化がある課題と体力制約の下で、どの構造が有効かです。
-
-[公開画面：入口](judge-demo-review/initial-en.jpg) / [公開画面：学習結果](judge-demo-review/learning-en.jpg)
-
-## 実動作と使い勝手
-
-- 公開Workers上で7神経・19接続のモデル読み込み、実Sepoliaの観測ブロック更新、学習・採用・JSON保存・方策復元を確認。
-- 所有者の入力変更を実送信し、revision **4→5→6**、休息→採餌を確認。終了時は採餌・供給70%・刺激55%に復帰。
-- 実TX：[休息へ変更](https://sepolia.etherscan.io/tx/0x52fa0e0064620ef35683c834fe4abf3ef2b537a11dfdc9eaf1c0a53c87bc76df) / [採餌へ復帰](https://sepolia.etherscan.io/tx/0xf2ca702c0326e5d8d6f81ab276d833bab08bb208c35411c68aa976ef48423778)。2件の合計ガス費は **0.000075299830071968 Sepolia ETH**。
-- 入力期限切れで停止し、有効な入力へ戻ると復帰。検査用の時刻変更は当該ブラウザー内だけで実施。
-- 日英、1366×768のデスクトップ、390×844のモバイル表示を確認。ページ例外・横はみ出しなし。
-- 初期画面に「1分で学習を試す」を追加。復帰後に古いエラーが残る問題と、未登録IDで前の個体の数値が残る問題を修正し、再公開後に確認。
-
-ウォレット試験はNode署名器を使ったEIP-1193ブリッジです。MetaMask拡張の手動操作、Safari・実機スマートフォンの試験ではありません。ライブRPCへの接続が必要です。再読込後は前回の比較表ではなく保存方策を復元するので、初回の比較は新しいブラウザープロファイルで見せると分かりやすくなります。
-
-## 1分で伝える順番
-
-1. **0–10秒**：「Sepolia上の入力で、実測7神経の回路をブラウザーで動かします。ウォレットなしで試せます。」ブロックと行動を指します。
-2. **10–25秒**：「学習して比較する」を押し、餌・接触・身体エネルギーを並べて見せます。
-3. **25–40秒**：「餌を増やせました。ただし体力を消費しました。何を良い行動とするか、採用条件も必要だと分かります。」
-4. **40–55秒**：「入力検証→学習→評価→採用→保存を共通フレームワークで扱います。」JSONの入力ブロック・モデル・方策hashを示します。hashは計算の正しさの証明ではありません。
-5. **55–60秒**：「これは操作できる縮小版です。全166,700神経と市場アプリの統合は提出動画で見せています。」
-
-## English: what to show judges
-
-**Ready as an interactive research and framework demo.** Live Sepolia inputs drive a measured seven-neuron subgraph in the browser. Judges can train a readout, compare selection results, adopt it, restore it and export input/policy provenance without a wallet. Wallet writes were also exercised through the live page and confirmed on Sepolia; the default agent was returned to foraging.
-
-On the four selection scenarios, average food increased **6.25→12.50**, contacts decreased **9.00→0.25**, and final body energy fell **59.2%→32.6%**. This tradeoff is the useful finding: more reward does not automatically mean a better overall policy.
-
-An additional 20-seed check found more food after learning (**7.05→17.55**), but a trained direct-input control scored **19.15**. There is no demonstrated biological advantage here. These are synthetic, same-profile observations, not a trading, energy-efficiency or generalization guarantee.
-
-**One-minute story:** trace the live input, press Train & compare, show both the improvement and energy tradeoff, then export provenance. Explain that the framework makes validation, evaluation, adoption and persistence reusable. Use the separate full-population video for the 166,700-neuron market integration.
-
-## 再現
+## 再現と記録
 
 ```sh
-# 公開ページを閲覧・操作する。オンチェーン書込は行わない。
-node scripts/sepolia/audit-judge-demo.mjs
-
-# 任意：所有者の実入力変更2件。既存Sepolia署名環境とガスが必要。
-npm run test:sepolia:public -- --broadcast
+npm run local:up      # 別ターミナルで起動
+npm run test:local    # 環境TX・刺激TX・reorgの実ブラウザ試験
+npm run test:sepolia  # 送信journalと共通入力のテスト
+npm run test:sepolia:public
 ```
 
-前者は30秒間の採餌、別20シナリオ、導線、未登録IDからの復帰、期限切れ入力からの復帰、配信ファイルのhash一致を確認します。JSONと日英・モバイル画像は `artifacts/sepolia/judge-review-final/` に保存します。時刻・待ち時間は当該試験の観測値で、性能保証ではありません。
+[検証要約JSON](sepolia-evidence.json)。生の試験出力は`artifacts/local-chain/verification.json`、`artifacts/sepolia/shared-ui-public/`、`artifacts/sepolia/cron-verification.json`、`artifacts/sepolia/full-runtime-environment.json`。削除した旧専用監査スクリプトには依存しません。
+
+## English
+
+The live demo now shows a verifiable input path: an initial environment TX defines hazards and field settings; confirmed positive stimulus TXs add food. Pending or duplicated TXs do not add food, and consumed food does not respawn. Local Anvil and public Sepolia serve identical UI assets and use the same decision and learning code.
+
+A real Cloudflare-scheduled Sepolia TX increased visible food from **3 to 4** without reloading. It consumed **34,209 gas**. Full-neuron and reduced Anvil runtime checks also consumed recorded environment inputs. These checks demonstrate integration and input provenance, not biological superiority, trading performance or 24-hour uptime.

@@ -60,7 +60,7 @@ BioAgent is an experimental platform that connects biologically derived circuits
 
 ## 9. What is onchain, and is inference trustless?
 
-**Agent/model references, input revisions and actual settlement are recorded.** Inference and learning run offchain. The video uses Anvil chain 31337, canonical Aqua code on a fork and real Transfer logs. Hashes identify artifacts; they are not proofs of correct neural computation. The chain reader trusts its RPC.
+**All external inputs to the playground come from onchain data.** The current playground records the initial field, hazards and stimuli in TXs, then derives sensory inputs from them. Body state and learning run offchain. The submitted Anvil-fork video shows settlement evidence. Hashes identify artifacts, not proof of correct neural computation.
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md)
 

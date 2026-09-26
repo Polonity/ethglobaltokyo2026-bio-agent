@@ -1,84 +1,37 @@
 # アーキテクチャ
 
-現在の中心は **Anvilに登録した3匹へ、GUIから入力を送り、ブラウザー内で競争・学習させる構成** です。将来の常駐Runtimeと永続化は [別の設計](design/runtime-and-events.md) として扱います。
+**オンチェーン入力 → receipt・イベント検証 → 感覚入力の計算 → 判断・学習 → 描画**。ハエに与える外部入力はすべてチェーンに記録し、身体と学習状態はオフチェーンで更新します。
 
-**追加: 審査員向けSepolia Lab** — Browser wallet → Sepolia Registry → 読取専用Worker → EvmBioAgentSource → ChainDecisionRunner → LearningBioAgent → 採餌画面。7神経モデルの計算と学習はブラウザー内、ポリシーはlocalStorageへ保存します。[詳細・信頼の境界](deployment/sepolia.md)。提出動画のAnvil＋全166,700神経版とは別環境です。
+## 実行環境
 
-## 実行モード
-
-| モード | 起動 | 入力経路 | 個体数 | 保存 |
-| --- | --- | --- | --- | --- |
-| Sepolia公開デモ | `npm run sepolia:dev` / 独立Worker | Wallet → Sepolia Registry → 読取Worker → 共通Framework | 選択した1個体 | 登録・入力はSepolia、ポリシーはlocalStorage |
-| Anvil接続 | `npm run local:up` | GUI → ローカルWorker → Registry → logs → GUI Runtime | 3 | 登録・入力はAnvil、競争・学習はタブ内 |
-| ブラウザーデモ | `npm run dev` / 公開用Worker | GUI → GUI Runtime | 12 | タブ内 |
-| Pythonひな型 | `make dev` | `/api/demo/step` → 閾値モデル | 1ステップずつ | SQLiteに模擬実行履歴 |
-
-Pythonサーバーもビルド済みGUIを配信しますが、その競争状態をPythonが計算・保存するわけではありません。
-
-## 現在のローカル経路
-
-```text
-Browser GUI                  Local Worker                    Anvil
-  入力を編集
-  POST /api/chain/status  →   値・Origin・設定検証
-                             updateStatus を送信         →   owner / revision 検証
-                                                         →   Status保存・event発行
-  receipt / events取得    →   eth_getTransactionReceipt
-                             eth_getLogs                 ←   採掘済みイベント
-  ChainSession            ←   出典付きイベント
-    対象個体へ入力を適用
-  Arena: 5Hzで行動判定
-    Q値・経験・得点更新
-  Canvas: 描画を継続
-```
-
-WorkerはAgentの行動を計算しません。チェーンに保存するのは入力条件です。座標・体力・蜜の得点・学習結果はArenaが計算します。
-
-`energy` は供給条件、InspectorのENERGYは計算中の体力です。`revision` は入力の更新番号、policy versionは学習候補の採用番号です。どちらも一方が変わっただけでもう一方が更新されることはありません。
-
-## コードの責務
-
-| ファイル・ディレクトリ | 責務 |
-| --- | --- |
-| `contracts/src/interfaces/` | 登録定義、Status、更新関数、イベント・エラー型 |
-| `contracts/src/BioAgentRegistry.sol` | owner権限、値域、revision検証、ストレージ更新 |
-| `contracts/script/DeployLocalArena.s.sol` | ローカル配置と3匹の初期登録 |
-| `scripts/local-up.mjs` | Anvil起動、Forge実行、設定生成、Wrangler起動・終了 |
-| `services/worker/local.js` | 固定Registryへの読取・書込、Anvil確認、イベント整形 |
-| `services/worker/index.js` | 公開アセットとブラウザーモード設定の配信 |
-| `apps/frontend/chain.js` | snapshot取得、polling、重複排除、再同期、送信進捗 |
-| `packages/bio_agent/browser/arena.js` | 個体状態、行動判定、学習、競争、ラウンド |
-| `apps/frontend/app.js` | UI操作、Canvas描画、Inspector、JSON保存 |
-| `services/backend/` / `packages/training/` | 独立したPython永続化・学習ひな型 |
-
-## 起動・更新・復旧
-
-1. `local:up` が新しいAnvilへRegistryと3匹を配置し、`.local/deployment.json` を生成します。
-2. GUIは配信manifestのSHA-256と設定を照合します。Workerは登録済みmodelHashも照合します。
-3. GUIは同一ブロックのsnapshotと各Statusの原因ログから初期化します。
-4. 600ms間隔でcursor以降を取得し、`eventId`で重複を排除します。更新revisionが連続しない場合は再同期します。
-5. 送信成功だけで行動を変更せず、採掘済みイベントを入力として適用します。ローカル版に確認深度待ちはありません。
-6. cursorのブロックハッシュ不一致などでreorgを検知すると、最新snapshotから競争を初期化します。checkpointから過去の学習を厳密に巻き戻す実装ではありません。
-
-一時停止はArenaの進行を止めます。ログ受信は続きます。接続が途切れた場合、GUIは接続待ちを示し、新しい送信と競争の進行を待機します。
-
-## データの寿命
-
-| データ | 保存先 | リロード | `local:up`を終了して再起動 |
+| 環境 | 起動・配信 | 入力・署名 | 計算 |
 | --- | --- | --- | --- |
-| Agent定義・Status・イベント | 起動中のAnvil | 保持し再取得 | 新しいチェーンで再登録 |
-| 座標・得点・経験・Q値 | ブラウザーのタブ | 初期化 | 初期化 |
-| 接続設定・Forgeログ | `.local/` | 保持 | 設定再生成 |
-| 実験JSON | ユーザーが保存したファイル | ファイルは保持 | ファイルは保持 |
-| Python模擬実行 | `data/bio-agent.sqlite3`等 | 保持 | Anvilとは独立 |
+| Anvil | `npm run local:up` / `npm run dev` | ローカルアカウント → Registry | 共通Fly Lab、7神経、3個体 |
+| Sepolia | `npm run sepolia:publish` | 所有者ウォレット、または毎時Workers送信 → Registry | Anvilと同じUI・判断・学習 |
+| 全神経Anvil | `npm run full:apps:dev` | ローカルRegistry・実取引 | Python全166,700神経。環境入力処理はブラウザー版と共有 |
+| 独立した研究 | `npm run framework:lab`等 | 明示的な合成入力・対照条件 | フレームワークの学習・評価実験。チェーン接続デモとは別 |
 
-実験JSONには完全な操作履歴やimport機能がなく、中断再開ファイルではありません。複数タブは同じチェーン入力を受信できますが、競争と学習はタブごとに独立します。
+## 責務
 
-## 次に接続するもの
+| コード | 役割 |
+| --- | --- |
+| `BioAgentStimulusRegistry` / `IBioAgentStimulus` | 個体定義・活動・刺激・供給と、スキーマ付き環境入力。ownerとrevision/nonceを検査 |
+| `scripts/local-up.mjs` / `scripts/sepolia/deploy.mjs` | 配置、個体登録、初期環境TX |
+| `services/worker/registry-read.js` | 両環境のsnapshot・イベント・receiptを同じロジックで検証 |
+| `services/worker/local.js` | Anvil専用署名・RPC接続 |
+| `services/sepolia/worker.js` / `scheduler.js` | Sepolia読取・配信、予算と送信間隔を制限したCron送信 |
+| `apps/frontend/chain.js` | イベント同期、重複排除、環境の適用、手動送信 |
+| `packages/bio_agent/browser/tx-world.js` / `tx-food.js` | 初期環境・危険エリア・餌を確認済みTXから構築。全神経版も使用 |
+| `packages/bio_agent/browser/arena.js` | 身体・行動・経験・Q学習。接続中の学習は確定環境を再生 |
+| `apps/frontend/` | 共通UI。チェーン未接続の合成箱庭へ切り替えない |
+| `packages/bioagent-framework/` | 独立した共通API・入力アダプター・学習採用・保存復元の研究基盤 |
 
-- Sepoliaの継続運用: 現行デモの追加確認0・120秒鮮度検査を越えるfinality、状態復元と共有Runtimeを設計。
-- 共有Runtime: ブラウザーを閉じても稼働するプロセス、適用tick、checkpoint、入力履歴を保存。
-- Backend: 現在の模擬履歴用SQLiteから、イベント・session・モデル成果物のスキーマへ拡張。
-- MaleCNS: リリース・利用回路・入出力対応・モデル実装と評価を確定。
+## 状態と境界
 
-具体的な提案は [設計入口](design/README.md)、起動は [ローカル手順](deployment/local-anvil.md)、APIの正確なフィールドは [APIリファレンス](reference/local-api.md) を参照してください。
+初期環境TXが幅・高さ・seed・危険エリア・餌配置範囲を与えます。正の刺激TXが餌を1個追加し、環境更新TXはフィールドを再構築します。位置・身体・消費・方策はランタイムが計算する内部状態です。クリックで未記録の餌を増やす経路はありません。
+
+未確認の環境では停止します。reorgやrevision欠番ではsnapshotから再同期し、過去の身体や学習を厳密に巻き戻す構成ではありません。Sepoliaは約12秒間隔、Anvilは約600ms間隔で確認します。receipt確認は最終確定や計算の暗号学的証明ではなく、RPCへの信頼が残ります。
+
+個体・入力はチェーン、消費履歴と方策はブラウザーに保存します。タブ間で同じ入力を受信しても、身体や学習の状態は独立します。提出動画は既存のAnvil＋全神経版です。
+
+[ローカル操作](deployment/local-anvil.md) · [Sepoliaと予算](deployment/sepolia.md) · [フレームワークAPI](../packages/bioagent-framework/README.md)

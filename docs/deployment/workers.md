@@ -1,57 +1,18 @@
-# Fly Lab — Cloudflare Workers
+# Cloudflare Workersの公開デモ
 
-**2026-09-26追記:** [独立した審査員向けSepolia Lab](sepolia.md)を公開済み。`npm run sepolia:publish`と`wrangler.sepolia.jsonc`を使用します。以下の旧Fly Lab用コマンドとは別です。
-
-公開 URL: https://ethglobaltokyo-bio-agent-arena.commun-official.workers.dev
-
-Worker: `ethglobaltokyo-bio-agent-arena`
-
-## 構成
-
-`wrangler.jsonc` の Static Assets で `dist/` を配信し、`services/worker/index.js` が `/api/health` とレスポンスヘッダーを処理する。競争・学習 Runtime はブラウザーで動作する。D1 / R2 / Durable Objects は今回使用しない。
-
-[Cloudflare Static Assets](https://developers.cloudflare.com/workers/static-assets/) の構成に基づく。
-
-## Anvil と接続したローカル起動
-
-3匹のコントラクト登録と刺激送信を試す場合は `npm run local:up`。手順は [Anvil + ローカル Workers](local-anvil.md) を参照してください。公開用 Worker とは別の entrypoint で起動し、公開環境を変更しません。
-
-## ブラウザー内デモのローカル起動
-
-Node.js 22以上（今回確認した版は22.14.0）。
+現在の公開先は[Sepolia Fly Lab](https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/)。Anvilと同じUIを配信します。[入力仕様・署名者・ガス予算・配置記録](sepolia.md)。
 
 ```sh
-npm ci
-npm run dev
-# Wrangler が表示するローカル URL を開く
+npm run sepolia:build
+node scripts/cloudflare.mjs deploy --config wrangler.sepolia.jsonc --dry-run
+npm run deploy                 # sepolia:publish と同じ
+npm run test:sepolia:public     # 公開ページを読み取り検証
 ```
 
-ポート競合時は `npm run dev -- --port 8797 --inspector-port 9247` を使用する。
+配信設定は`wrangler.sepolia.jsonc`、Workerは`services/sepolia/worker.js`。Static Assetsが共通UIを配信し、CronとDurable Objectが予算内で刺激TXを定期送信します。実行時の行動判断・学習はブラウザー内です。
 
-## 公開
+Cloudflare配布コマンドはルート`.env`からCloudflareの認証情報だけを読みます。署名鍵は別のCloudflare Secretで管理し、ブラウザーや静的ファイルへ配信しません。
 
-```sh
-npm run deploy
-```
+ローカルは`npm run dev`または`npm run local:up`。[ポート変更などの手順](local-anvil.md)。
 
-ルート `.env` の `CLOUDFLARE_ACCOUNT_ID` と `CLOUDFLARE_API_TOKEN` をデプロイ用の子プロセスに渡す。R2関連のキーは渡さず、Wrangler の .env 自動読込も無効化する。`.env` はビルドの入力ではなく、Worker バインディングにも含めない。
-
-Worker を更新する操作なので、公開前に次を確認する。
-
-```sh
-npm run format:check
-npm run test:arena
-npm run build
-node scripts/cloudflare.mjs deploy --dry-run --outdir /tmp/bio-agent-worker-build
-# npm run dev でローカル起動後
-ARENA_URL=http://127.0.0.1:8787 npm run test:browser
-```
-
-公開後は `ARENA_URL` に公開 URL を指定して実ブラウザーで検証する。Chrome の場所が異なる環境では `CHROME_PATH` を指定する。APIの200だけで稼働判定しない。
-
-## 公開履歴
-
-- 2026-09-25: 初回公開。version `18e03808-54ae-42c9-8b40-f5f2d2188839`。
-- 2026-09-25: 最終版を反映。version `000bd0fb-2770-4bc6-bcc4-82cd4a7b404e`（コード commit `fc3bc57`）。
-- 公開 URL で競争・操作・学習復帰・モバイル表示を実 Chrome で検証済み。
-- この旧Fly Labの公開時点ではSepolia未配置。その後、独立したSepolia Labを配置・公開しました。
+以前の12匹・ブラウザー単独モードの起動・試験・配布設定は削除しました。既存の旧Workerそのものを削除する操作は行っていません。審査用には上記Sepolia URLを使用してください。

@@ -60,7 +60,7 @@ BioAgentは、生物由来の神経回路で行動を決め、入力・学習・
 
 ## 9. 何がオンチェーン？ 判断も検証できる？
 
-**個体・モデル参照・入力revisionと、実際の決済を記録します。** 神経計算と学習はオフチェーンです。動画はchain 31337のAnvil forkで、公式Aquaのコードと実Transferログを確認。ハッシュは成果物照合用で、神経計算の正しさを証明するZK等ではありません。RPCへの信頼は残ります。
+**箱庭の外部入力はすべてオンチェーンデータです。** 現行の箱庭は初期環境・危険エリア・刺激をTXで記録し、そこから感覚入力を計算します。身体と学習はオフチェーンです。提出動画はAnvil forkの決済記録を示します。ハッシュは照合用で、神経計算の正しさを証明するものではありません。
 
 [R1: Capture: receipts, model and learning deltas](capture-evidence.json) / [R4: Framework: API, validation and restore](../../../packages/bioagent-framework/README.md)
 

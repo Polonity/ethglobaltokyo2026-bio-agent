@@ -1,39 +1,45 @@
 {
-  "schema": "bioagent.sepolia-deployment.v1",
+  "schema": "bioagent.sepolia-deployment.v2",
+  "contract": "BioAgentStimulusRegistry",
   "chainId": 11155111,
-  "registryAddress": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
+  "registryAddress": "0x09DF8a4feEaceB690Da135d8355B84A6691c323B",
   "deployer": "0x0d01a92bae0E01754f7102466936397F609D67C3",
-  "deploymentTransaction": "0xc4a174f73f8d4dc3cc5900c70b111fa0b53414d6b3d6d7eb840abc760644f695",
-  "blockNumber": 11784549,
-  "blockHash": "0x06566cb2bdc84f3cc05594dd9e74e6f35f853cf745aa9b88b9b71d684632a69f",
-  "deployedAt": "2026-09-26T06:48:36.000Z",
-  "sourceCommit": "9333a4350dfd76892a81bbe08804a6eed5f3acb8",
+  "deploymentTransaction": "0x45daf96d83f722685d7381662fecbdca592ea47219a43cabb8cc774ee51cc55d",
+  "blockNumber": 11785381,
+  "blockHash": "0x5ceabbee3f4cce8c37a63e68cc268fc6791c1ba4105070655524097e20f51a82",
+  "deployedAt": "2026-09-26T09:35:12.000Z",
+  "sourceCommit": "54a6bf4a21b54f54348d631b1f2ce8845c9d8c93",
   "compiler": {
     "version": "0.8.30",
     "evmVersion": "cancun",
     "optimizerRuns": 200
   },
-  "runtimeBytecodeHash": "0x7ab1d11195a2a839f474412469080d1bbe48d142f2a4320884d7aea259e7f6ab",
-  "abiSha256": "0x80c2c30eb454dce349e566a6c4bcd980d56cc0fb418111ceb175e521f13a7e7b",
+  "runtimeBytecodeHash": "0x3968778a00639b6fbbcebaf9491ebedc9287a16f5e8b3bc2e84913f489c23ef8",
+  "abiSha256": "0xc8c0fbfd03391e51680a2be46897808040cdbad218ba4567fd5b43636156cbca",
   "modelHash": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
   "neurons": 7,
   "edges": 19,
   "demoAgentId": "1",
-  "registrationTransaction": "0x6d4569b951fa6663e0725f9bbb46747e4099b6e02550e1da4aba183d8ef26b73",
-  "initialStatusTransaction": "0xfc30ece997bfedf28569f11b767b935fdf21afdbf589b2c7ce22a2f3387b8339",
-  "metadataURI": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/model.json",
-  "explorer": "https://sepolia.etherscan.io/address/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-  "verification": "runtime-bytecode-matched; sourcify-creation-and-runtime-exact-match",
-  "sourceVerification": {
-    "url": "https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-    "api": "https://sourcify.dev/server/v2/contract/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-    "creationMatch": "exact_match",
-    "runtimeMatch": "exact_match",
-    "verifiedAt": "2026-09-26T07:00:44Z"
-  },
   "demoAgentIds": [
     "1",
     "2",
     "3"
-  ]
+  ],
+  "registrationTransactions": [
+    "0xd0833c6f05d5697bb9f34bfcd13f33ea02289b377bfea87cfe779e0c27f59ad8",
+    "0xf157a0277dba6a8d2a975c9474aebd645d42a40d99dec8495deeb19cee970f0b",
+    "0x00bf15f601728efa7de406803c2d821ca71e6bc11c9b91b565722893e5ae0182"
+  ],
+  "initialStatusTransactions": [
+    "0x9ada499d478d6a17af29ab8acb10b9aaf13c4241213a4017159595c57739e3b6",
+    "0xb959622375879cc96a586f57482f24aa0e455cddfd96800f8875f13b900b3bf4",
+    "0xb7cff2b9aa3c5fac851e7eb8d54d3983253f3bea27a77d35553a8ef860daf686"
+  ],
+  "worldInput": true,
+  "environmentTransaction": "0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc",
+  "environmentSchema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+  "metadataURI": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/model.json",
+  "explorer": "https://sepolia.etherscan.io/address/0x09DF8a4feEaceB690Da135d8355B84A6691c323B",
+  "verification": "runtime-bytecode-matched",
+  "previousRegistry": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa"
 }

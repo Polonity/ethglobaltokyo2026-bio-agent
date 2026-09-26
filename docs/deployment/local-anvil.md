@@ -7,7 +7,7 @@
 | コンポーネント | 実体 | 既定の接続先 |
 | --- | --- | --- |
 | EVM | Foundry Anvil / chain ID 31337 | `http://127.0.0.1:8545` |
-| アプリ層 | `IBioAgentRegistry` / `IBioAgent` を実装する `BioAgentRegistry` | 起動時に Anvil へ実デプロイ |
+| アプリ層 | `IBioAgentRegistry` / `IBioAgent` を実装する `BioAgentStimulusRegistry` | 起動時に Anvil へ実デプロイ |
 | ローカル Web アプリ | Wrangler dev の workerd + Static Assets + ローカル専用 API | `http://127.0.0.1:8798` |
 | Agent Runtime | GUI 内の Q-learning モデル、3個体 | MOMO #1 / SORA #2 / KIKI #3 |
 
@@ -46,7 +46,7 @@ FORGE=/path/to/forge ANVIL=/path/to/anvil npm run local:up
 2. 空いている専用ポートに新しい Anvil を起動する。
 3. chain ID が31337、client が Anvil であることを確認する。
 4. `DeployLocalArena.s.sol` を **ローカルへ broadcast** する。
-5. Registry の CREATE と3回の registerAgent、計4トランザクションの成功 receipt を確認する。
+5. Registry の CREATE・3回の registerAgent・初期環境submitStimulus、計5TXの成功receiptを確認する。
 6. 接続情報を `.local/deployment.json`、ローカル設定を `.local/wrangler.json` に生成する。
 7. `wrangler dev --local` を起動する。
 
@@ -68,9 +68,13 @@ ANVIL_PORT=8555 LOCAL_GUI_PORT=8808 LOCAL_INSPECTOR_PORT=9258 npm run local:up
 6. 対象の1匹が新しい入力で行動する。他の2匹の Status は変化しない。
 7. 同じ個体を「休息」に変更すると、移動よりも休息を選ぶ傾向が強くなる。
 
-登録時の初期値は3匹とも Rest / energy 5000 / stimulus 0 / revision 1。休息モードでも確率的に移動するため、完全停止とは限りません。公開デモの12体一括入力と違い、このローカル版は**選択中の1匹だけ**を書き換えます。
+登録時の初期値は3匹ともRest / energy 5000 / stimulus 0 / revision 1。初期環境TXが寸法・seed・危険エリア・餌配置範囲を記録します。正の刺激TXを送るまで餌はなく、ハエは待機します。
 
-フィールドへの蜜配置、再生速度、学習ボタンはローカルシミュレーションの操作です。オンチェーンで記録されるのは、刺激送信ボタンによる Activity / energy / stimulus の更新です。
+AnvilとSepoliaは `apps/frontend/` の同じUI・判断・学習処理を使います。選択中の個体への正の刺激TXが成功すると、共通フィールドへ餌を1個追加。食べた餌は消え、自動補充しません。フィールドのクリックは個体選択で、「おやつ」も刺激TXを送ります。
+
+**ハエに与える外部入力はすべてオンチェーンデータです。** 環境入力は `IBioAgentStimulus.submitStimulus`、個体の活動・刺激・供給は `updateStatus` を使います。初期環境の送信内容は [foraging-world.json](../../packages/bio_agent/browser/foraging-world.json)。ローカル値での代替はありません。環境TXの更新はフィールドを再構築し、それ以前の餌を消去します。
+
+身体・位置・方策は入力から計算する内部状態です。再生速度は観察の速度で、環境条件ではありません。学習は確認済み環境のコピーを再生し、表示中の餌を増やしません。環境TXと餌の由来は「環境と餌の入力TX」で確認できます。
 
 ## イベントから反応まで
 
@@ -116,7 +120,7 @@ Anvil 内には登録情報・Status・イベントが残ります。Runtime の
 
 ## ローカル専用の書込経路
 
-ローカル API は公開用の Worker entrypoint と別です。`wrangler.jsonc` による通常デプロイにはこのAPIを含めません。
+ローカル API は公開用の Worker entrypoint と別です。`wrangler.sepolia.jsonc` による通常デプロイにはこのAPIを含めません。
 
 - Anvil RPC は loopback のみ、chain IDは31337、client名はAnvilを検証。
 - GUI の接続元も localhost / 127.0.0.1 に限定。
@@ -139,7 +143,7 @@ npm run test:local
 確認項目:
 
 - 3匹の実登録とモデル manifest のハッシュ照合。
-- automine を一時停止し、採掘前にGUIの入力が変化しないこと。
+- automineを一時停止し、危険エリアと餌が採掘前には変化せず、確定後だけ反映されること。
 - GUI送信の receipt・Status・イベント・Runtime入力が一致すること。
 - 採餌と休息で実際の判定回数が変わること。
 - 他個体の入力が変わらないこと。

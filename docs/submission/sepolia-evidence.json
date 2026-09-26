@@ -1,105 +1,353 @@
 {
-  "checkedAt": "2026-09-26T07:04:39.062Z",
-  "publicURL": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/",
-  "workerVersion": "a1397a66-421a-4d75-aaf4-5d9154c58fae",
-  "chainId": 11155111,
-  "registry": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-  "agentId": "1",
-  "modelHash": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
-  "sourceVerification": {
-    "url": "https://repo.sourcify.dev/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-    "api": "https://sourcify.dev/server/v2/contract/11155111/0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa",
-    "creationMatch": "exact_match",
-    "runtimeMatch": "exact_match",
-    "verifiedAt": "2026-09-26T07:00:44Z"
+  "schema": "bioagent.shared-demo-verification.v2",
+  "testedAt": "2026-09-26T10:02:42.318Z",
+  "deployment": {
+    "schema": "bioagent.sepolia-deployment.v2",
+    "contract": "BioAgentStimulusRegistry",
+    "chainId": 11155111,
+    "registryAddress": "0x09DF8a4feEaceB690Da135d8355B84A6691c323B",
+    "deployer": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+    "deploymentTransaction": "0x45daf96d83f722685d7381662fecbdca592ea47219a43cabb8cc774ee51cc55d",
+    "blockNumber": 11785381,
+    "blockHash": "0x5ceabbee3f4cce8c37a63e68cc268fc6791c1ba4105070655524097e20f51a82",
+    "deployedAt": "2026-09-26T09:35:12.000Z",
+    "sourceCommit": "54a6bf4a21b54f54348d631b1f2ce8845c9d8c93",
+    "compiler": {
+      "version": "0.8.30",
+      "evmVersion": "cancun",
+      "optimizerRuns": 200
+    },
+    "runtimeBytecodeHash": "0x3968778a00639b6fbbcebaf9491ebedc9287a16f5e8b3bc2e84913f489c23ef8",
+    "abiSha256": "0xc8c0fbfd03391e51680a2be46897808040cdbad218ba4567fd5b43636156cbca",
+    "modelHash": "0xfa923a4bdf0c41af7d0fc9197507f0935adcee957a6417c765db9700d46df987",
+    "neurons": 7,
+    "edges": 19,
+    "demoAgentId": "1",
+    "demoAgentIds": [
+      "1",
+      "2",
+      "3"
+    ],
+    "registrationTransactions": [
+      "0xd0833c6f05d5697bb9f34bfcd13f33ea02289b377bfea87cfe779e0c27f59ad8",
+      "0xf157a0277dba6a8d2a975c9474aebd645d42a40d99dec8495deeb19cee970f0b",
+      "0x00bf15f601728efa7de406803c2d821ca71e6bc11c9b91b565722893e5ae0182"
+    ],
+    "initialStatusTransactions": [
+      "0x9ada499d478d6a17af29ab8acb10b9aaf13c4241213a4017159595c57739e3b6",
+      "0xb959622375879cc96a586f57482f24aa0e455cddfd96800f8875f13b900b3bf4",
+      "0xb7cff2b9aa3c5fac851e7eb8d54d3983253f3bea27a77d35553a8ef860daf686"
+    ],
+    "worldInput": true,
+    "environmentTransaction": "0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc",
+    "environmentSchema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+    "metadataURI": "https://ethglobaltokyo-bio-agent-sepolia.commun-official.workers.dev/model.json",
+    "explorer": "https://sepolia.etherscan.io/address/0x09DF8a4feEaceB690Da135d8355B84A6691c323B",
+    "verification": "runtime-bytecode-matched",
+    "previousRegistry": "0x4c063705afD2D42627693E1C358F30DB9e5Ba0Aa"
   },
-  "transactions": [
-    {
-      "hash": "0xc4a174f73f8d4dc3cc5900c70b111fa0b53414d6b3d6d7eb840abc760644f695",
-      "block": 11784549,
-      "gasUsed": "827139",
-      "feeETH": "0.000912344461032696",
-      "status": 1
-    },
-    {
-      "hash": "0x6d4569b951fa6663e0725f9bbb46747e4099b6e02550e1da4aba183d8ef26b73",
-      "block": 11784550,
-      "gasUsed": "192047",
-      "feeETH": "0.000198497404730892",
-      "status": 1
-    },
-    {
-      "hash": "0xfc30ece997bfedf28569f11b767b935fdf21afdbf589b2c7ce22a2f3387b8339",
-      "block": 11784552,
-      "gasUsed": "34208",
-      "feeETH": "0.00003604042147536",
-      "status": 1
-    },
-    {
-      "hash": "0xc12669f275cd300e08ae4db0c00fb8da18e1b799252998ae7cf74b6b88fc0e2e",
-      "block": 11784623,
-      "gasUsed": "34196",
-      "feeETH": "0.000034809699745056",
-      "status": 1
-    },
-    {
-      "hash": "0x280a2a5b1b6a3f3280428ef6f50e1a5dda28066a977ecd347e073da803f33402",
-      "block": 11784624,
-      "gasUsed": "34208",
-      "feeETH": "0.000032530024292256",
-      "status": 1
-    }
-  ],
-  "gasSpentETH": "0.00121422201127626",
-  "remainingTestETH": "0.01878577798872374",
-  "gasWallet": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+  "sharedAssets": {
+    "app.js": "8203aade3ad9decb55cd3426890f47617742cb05f5ad9f322a53a8b91718eb48",
+    "index.html": "532413508146dc94a554b10aa94ae264c5e16de7bec8b4db43b339811ffeb336",
+    "style.css": "0c45b70f98df83c2e5ebc64f3941597044e81a95097a43d1d9aa4d3a211404f7"
+  },
   "browser": {
     "passed": true,
-    "initialRevision": "2",
-    "finalRevision": "4",
-    "restored": true,
-    "mobileOverflow": false,
-    "staleInputPauses": true,
     "errors": [],
-    "failedRequests": [],
-    "walletBridge": "EIP-1193 browser bridge; signer in Node only, not a MetaMask UI test",
-    "learning": {
-      "accepted": true,
-      "before": {
-        "reward": 3.8930111794323596,
-        "food": 6.25,
-        "contacts": 9,
-        "rests": 177.75,
-        "finalEnergy": 0.5915999999999995,
-        "finalReserves": 0.5403750000000148
+    "unconfiguredStops": true,
+    "environment": {
+      "chainId": "11155111",
+      "registryAddress": "0x09df8a4feeaceb690da135d8355b84a6691c323b",
+      "blockNumber": "11785385",
+      "blockHash": "0x1fbeecd48a2c3e1cc932a1f010ef03f5ce81d9c2cbb8851537d60449d475fc75",
+      "transactionHash": "0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc",
+      "transactionIndex": "120",
+      "logIndex": "149",
+      "name": "BioAgentStimulusAccepted",
+      "agentId": "1",
+      "writer": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+      "nonce": "1",
+      "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+      "payloadHash": "0x3b9f2208645671f722ea95fa33190705e300310cece2118a2e4467c3fd16385b",
+      "configuration": {
+        "schema": "bioagent.foraging-world.v1",
+        "seed": 2026,
+        "width": 36,
+        "height": 22,
+        "foodMargin": 2,
+        "hazards": [
+          {
+            "x": 12,
+            "y": 8,
+            "radius": 2.2
+          },
+          {
+            "x": 25,
+            "y": 15,
+            "radius": 2.4
+          }
+        ]
       },
-      "after": {
-        "reward": 33.80955833155666,
-        "food": 12.5,
-        "contacts": 0.25,
-        "rests": 12,
-        "finalEnergy": 0.32584999999999903,
-        "finalReserves": 0.17660000000000384
+      "receiptVerified": true,
+      "eventId": "11155111:0x09df8a4feeaceb690da135d8355b84a6691c323b:0x1fbeecd48a2c3e1cc932a1f010ef03f5ce81d9c2cbb8851537d60449d475fc75:0xbe67b3bb2e1e2ed1a84a1582a8cfa4f7ccd9afa522e0a6f916a93c8a7a6542dc:149"
+    },
+    "initialFoodCount": 4,
+    "subsequentFoodCount": 1
+  },
+  "localEnvironment": {
+    "transactionHash": "0x9e4fb0dae7c518a870a19ced5b0d9ad797d2b2344a878837d01f77066a1d5676",
+    "hazards": [
+      {
+        "x": 9,
+        "y": 6,
+        "radius": 1.4
+      },
+      {
+        "x": 27,
+        "y": 14,
+        "radius": 2
+      }
+    ],
+    "pendingDidNotApply": true
+  },
+  "localReaction": {
+    "forageTx": "0x0145ab3b82ce2f3733d7b8601f1d5dcfc8ac5667b35dc5012a7c970b39be5d64",
+    "restTx": "0x17803d88045269e542a548d5d8d2e6f80d7104e5eec0c41692d21bc8765b95d4",
+    "forageDecisions": {
+      "rest": 26,
+      "move": 4
+    },
+    "restDecisions": {
+      "rest": 30,
+      "move": 0
+    }
+  },
+  "cron": {
+    "beforeFood": 3,
+    "afterFood": 4,
+    "reflected": true,
+    "confirmation": {
+      "transactionHash": "0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd",
+      "success": true,
+      "blockNumber": 11785418,
+      "gasUsed": "34209",
+      "feeWei": "34342273782621",
+      "from": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+      "to": "0x09DF8a4feEaceB690Da135d8355B84A6691c323B",
+      "balanceWei": "16363387080355746"
+    },
+    "repeat": {
+      "state": "confirmed",
+      "transactionHash": "0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd",
+      "blockNumber": 11785418,
+      "feeWei": "34342273782621",
+      "checkedAt": "2026-09-26T09:44:35.517Z"
+    },
+    "limits": {
+      "enabled": true,
+      "intervalMinutes": 60,
+      "chainId": 11155111,
+      "gasLimitCap": "60000",
+      "maxFeePerGasWei": "3000000000",
+      "rolling24hBudgetWei": "5000000000000000",
+      "worstCase24hWei": "4320000000000000",
+      "reserveWei": "1000000000000000",
+      "last": {
+        "state": "submitted",
+        "transactionHash": "0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd",
+        "maxCostWei": "92132195641500",
+        "balanceWei": "16397729354138367",
+        "sender": "0x0d01a92bae0E01754f7102466936397F609D67C3",
+        "checkedAt": "2026-09-26T09:42:36.245Z"
       }
     }
   },
-  "scope": {
-    "publicDemo": "Ethereum Sepolia + 7 measured neurons / 19 edges; browser foraging runtime",
-    "submissionVideo": "Anvil + full 166,700 classified neurons; separate existing runtime",
-    "onchain": "Registry identity and status only; no Aqua or Uniswap execution in this public demo"
-  },
-  "workerVersionAtTransactionTest": "f504a11b-caa2-4df8-9099-728dbbdf3cc7",
-  "finalReadOnlyCheck": {
-    "checkedAt": "2026-09-26T07:10:40.779Z",
+  "fullRuntime": {
     "passed": true,
-    "restored": true,
-    "mobileOverflow": false,
-    "staleInputPauses": true,
-    "newTransactions": 0
+    "runs": [
+      {
+        "variant": "full",
+        "neurons": 166700,
+        "environment": {
+          "name": "BioAgentStimulusAccepted",
+          "chainId": "31337",
+          "registryAddress": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+          "agentId": "1",
+          "nonce": "2",
+          "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+          "configuration": {
+            "schema": "bioagent.foraging-world.v1",
+            "seed": 2026,
+            "width": 36,
+            "height": 22,
+            "foodMargin": 2,
+            "hazards": [
+              {
+                "x": 12,
+                "y": 8,
+                "radius": 2.2
+              },
+              {
+                "x": 25,
+                "y": 15,
+                "radius": 2.4
+              }
+            ]
+          },
+          "transactionHash": "0x8f31cde001d20afb5204283abe662e4eb1f394bc3620d674486902833da8cb36",
+          "blockHash": "0xdcb8215a5243ab4be66c3f5b0ad80a2bee9911cee8bd16d961279aa3af16cf94",
+          "blockNumber": "55",
+          "logIndex": "0",
+          "receiptVerified": true
+        },
+        "statuses": [
+          {
+            "kind": "confirmed-bioagent-status",
+            "chainId": 31337,
+            "logIndex": 0,
+            "registry": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+            "agentId": 1,
+            "revision": "3",
+            "transactionHash": "0x7eefb95b353b7a8c068be5db36170a63d01a011aa38ea92d8f7dd4d768f47199",
+            "blockHash": "0x070d3ce55643b52a4f3b66ffbe6c53c24dc3400a48b7440b8c33322219753354",
+            "blockNumber": 56,
+            "stimulus": 5500,
+            "energy": 7000,
+            "activity": 2
+          },
+          {
+            "kind": "confirmed-bioagent-status",
+            "chainId": 31337,
+            "logIndex": 0,
+            "registry": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+            "agentId": 2,
+            "revision": "3",
+            "transactionHash": "0xe56ea1b03e4fa6c2d6733d2fb1950eceb0eac6c5e4fd9aa724a1f6fb0a2445a8",
+            "blockHash": "0xc918f95c370b7208fc09882570fddf0877ace8bb7eb4db60c69c5078c4aee4ef",
+            "blockNumber": 57,
+            "stimulus": 5500,
+            "energy": 7000,
+            "activity": 2
+          }
+        ],
+        "foods": 2,
+        "rewards": [
+          0.7678381990747564,
+          -6.011597473422963
+        ]
+      },
+      {
+        "variant": "legacy",
+        "neurons": 7,
+        "environment": {
+          "name": "BioAgentStimulusAccepted",
+          "chainId": "31337",
+          "registryAddress": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
+          "agentId": "1",
+          "nonce": "1",
+          "schema": "0x7c2ae28905a4824dbd041084357fb6f451344527b8380843d2bbf0102fe137a2",
+          "configuration": {
+            "schema": "bioagent.foraging-world.v1",
+            "seed": 2026,
+            "width": 36,
+            "height": 22,
+            "foodMargin": 2,
+            "hazards": [
+              {
+                "x": 12,
+                "y": 8,
+                "radius": 2.2
+              },
+              {
+                "x": 25,
+                "y": 15,
+                "radius": 2.4
+              }
+            ]
+          },
+          "transactionHash": "0xb9900d75f14c1aaf9ff5738317ce6937de6c131174ae0780fa96cfa7004229b7",
+          "blockHash": "0x8c5b12a26cd63b9990d9551535390976bd38349d0253616ceb631b886d272d1e",
+          "blockNumber": "58",
+          "logIndex": "0",
+          "receiptVerified": true
+        },
+        "statuses": [
+          {
+            "kind": "confirmed-bioagent-status",
+            "chainId": 31337,
+            "logIndex": 0,
+            "registry": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
+            "agentId": 1,
+            "revision": "2",
+            "transactionHash": "0x0558f2b1342ccd4ca131c59bc53824bf41f595fb9224bdeabfcf081db397c2db",
+            "blockHash": "0xa84df663900a1b835dd2aa4dbb2748300b1243bfcdd8a4abb13149e6ee857a81",
+            "blockNumber": 59,
+            "stimulus": 5500,
+            "energy": 7000,
+            "activity": 2
+          },
+          {
+            "kind": "confirmed-bioagent-status",
+            "chainId": 31337,
+            "logIndex": 0,
+            "registry": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
+            "agentId": 2,
+            "revision": "2",
+            "transactionHash": "0xd669f1a7407f98f2ac8e461e9d1becf568065225db45ed050a9b2fe41df8a8c4",
+            "blockHash": "0x99d9afd76267d88e86d3a731ee23577fb3aae933b255bdb724036394e20a4fc3",
+            "blockNumber": 60,
+            "stimulus": 5500,
+            "energy": 7000,
+            "activity": 2
+          }
+        ],
+        "foods": 2,
+        "rewards": [
+          2.650548846778149,
+          -6.410789300713226
+        ]
+      }
+    ]
   },
-  "deploymentResume": {
-    "reusedReceipts": true,
-    "preservedSourceVerification": true,
-    "gasWalletNonceAfterResume": 5
+  "scope": {
+    "externalInputs": "confirmed onchain environment and per-agent status",
+    "internalState": "offchain sensory encoding, body, positions and learning",
+    "uptime": "not a 24-hour soak test",
+    "sourceVerification": "compiled runtime bytecode matched; external source publication awaiting approval"
+  },
+  "worker": {
+    "checkedAt": "2026-09-26T10:03:34.459Z",
+    "workerVersion": "37a177b1-3cfc-4d31-a318-4ac633966622",
+    "schedules": {
+      "schedules": [
+        {
+          "cron": "0 * * * *",
+          "created_on": "2026-09-26T09:45:13.458705Z",
+          "modified_on": "2026-09-26T10:01:03.17414Z"
+        }
+      ]
+    },
+    "scheduler": {
+      "enabled": true,
+      "intervalMinutes": 60,
+      "chainId": 11155111,
+      "gasLimitCap": "60000",
+      "maxFeePerGasWei": "3000000000",
+      "rolling24hBudgetWei": "5000000000000000",
+      "worstCase24hWei": "4320000000000000",
+      "reserveWei": "1000000000000000",
+      "last": {
+        "state": "interval-wait",
+        "transactionHash": "0x48fdd866927b1fa4b4202c877f88e8e630def1f89d944ecfb6f849700c9a77bd",
+        "checkedAt": "2026-09-26T10:00:42.514Z"
+      }
+    }
+  },
+  "tests": {
+    "unitAndIntegration": 24,
+    "localBrowser": true,
+    "localLanguageSwitch": true,
+    "publicBrowser": true,
+    "fullNeuronRuntimeStepsPerVariant": 4
   }
 }
