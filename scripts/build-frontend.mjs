@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { build } from 'esbuild';
-import { mkdir, copyFile, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, copyFile, writeFile, readFile, cp } from 'node:fs/promises';
 await mkdir('dist', { recursive: true });
 await import('./build-male-models.mjs');
 await build({
@@ -92,3 +92,5 @@ for (const file of ['aqua.html', 'aqua.css']) await copyFile('apps/frontend/' + 
 await mkdir('dist/guides', { recursive: true });
 for (const file of ['content.mjs', 'guide.mjs', 'guide.css', 'sheet.html'])
   await copyFile('apps/frontend/guides/' + file, 'dist/guides/' + file);
+
+await cp('apps/frontend/guides/screens', 'dist/guides/screens', { recursive: true });

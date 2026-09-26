@@ -1,0 +1,290 @@
+[
+  {
+    "file": "full-foraging-ja-1.png",
+    "selector": "#live",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:03.659Z"
+  },
+  {
+    "file": "full-foraging-ja-2.png",
+    "selector": "#arena",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:03.747Z"
+  },
+  {
+    "file": "full-foraging-ja-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:03.828Z"
+  },
+  {
+    "file": "full-foraging-ja-4.png",
+    "selector": "#tx",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:03.907Z"
+  },
+  {
+    "file": "full-foraging-en-1.png",
+    "selector": "#live",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:04.789Z"
+  },
+  {
+    "file": "full-foraging-en-2.png",
+    "selector": "#arena",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:04.859Z"
+  },
+  {
+    "file": "full-foraging-en-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:04.943Z"
+  },
+  {
+    "file": "full-foraging-en-4.png",
+    "selector": "#tx",
+    "url": "http://127.0.0.1:8812/",
+    "capturedAt": "2026-09-26T02:26:05.023Z"
+  },
+  {
+    "file": "full-market-ja-1.png",
+    "selector": "#live",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:06.041Z"
+  },
+  {
+    "file": "full-market-ja-2.png",
+    "selector": "#arena",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:06.126Z"
+  },
+  {
+    "file": "full-market-ja-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:06.208Z"
+  },
+  {
+    "file": "full-market-ja-4.png",
+    "selector": "#tx",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:06.273Z"
+  },
+  {
+    "file": "full-market-en-1.png",
+    "selector": "#live",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:07.156Z"
+  },
+  {
+    "file": "full-market-en-2.png",
+    "selector": "#arena",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:07.225Z"
+  },
+  {
+    "file": "full-market-en-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:07.308Z"
+  },
+  {
+    "file": "full-market-en-4.png",
+    "selector": "#tx",
+    "url": "http://127.0.0.1:8812/market",
+    "capturedAt": "2026-09-26T02:26:07.373Z"
+  },
+  {
+    "file": "full-aqua-ja-1.png",
+    "selector": "#live",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:08.373Z"
+  },
+  {
+    "file": "full-aqua-ja-2.png",
+    "selector": "#arena",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:08.441Z"
+  },
+  {
+    "file": "full-aqua-ja-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:08.525Z"
+  },
+  {
+    "file": "full-aqua-ja-4.png",
+    "selector": "#tx",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:08.590Z"
+  },
+  {
+    "file": "full-aqua-en-1.png",
+    "selector": "#live",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:09.472Z"
+  },
+  {
+    "file": "full-aqua-en-2.png",
+    "selector": "#arena",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:09.542Z"
+  },
+  {
+    "file": "full-aqua-en-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:09.609Z"
+  },
+  {
+    "file": "full-aqua-en-4.png",
+    "selector": "#tx",
+    "url": "http://127.0.0.1:8812/aqua",
+    "capturedAt": "2026-09-26T02:26:09.673Z"
+  },
+  {
+    "file": "browser-foraging-ja-1.png",
+    "selector": ".control-panel",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:11.076Z"
+  },
+  {
+    "file": "browser-foraging-ja-2.png",
+    "selector": "#arena canvas",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:11.172Z"
+  },
+  {
+    "file": "browser-foraging-ja-3.png",
+    "selector": "#body-readout",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:11.241Z"
+  },
+  {
+    "file": "browser-foraging-ja-4.png",
+    "selector": ".chain-panel",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:11.329Z"
+  },
+  {
+    "file": "browser-foraging-en-1.png",
+    "selector": ".control-panel",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:12.233Z"
+  },
+  {
+    "file": "browser-foraging-en-2.png",
+    "selector": "#arena canvas",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:12.343Z"
+  },
+  {
+    "file": "browser-foraging-en-3.png",
+    "selector": "#body-readout",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:12.424Z"
+  },
+  {
+    "file": "browser-foraging-en-4.png",
+    "selector": ".chain-panel",
+    "url": "http://127.0.0.1:8800/",
+    "capturedAt": "2026-09-26T02:26:12.511Z"
+  },
+  {
+    "file": "browser-market-ja-1.png",
+    "selector": ".controls",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:13.657Z"
+  },
+  {
+    "file": "browser-market-ja-2.png",
+    "selector": "#field",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:13.727Z"
+  },
+  {
+    "file": "browser-market-ja-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:13.808Z"
+  },
+  {
+    "file": "browser-market-ja-4.png",
+    "selector": ".connection",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:13.895Z"
+  },
+  {
+    "file": "browser-market-en-1.png",
+    "selector": ".controls",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:14.774Z"
+  },
+  {
+    "file": "browser-market-en-2.png",
+    "selector": "#field",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:14.844Z"
+  },
+  {
+    "file": "browser-market-en-3.png",
+    "selector": "#cards",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:14.924Z"
+  },
+  {
+    "file": "browser-market-en-4.png",
+    "selector": ".connection",
+    "url": "http://127.0.0.1:8800/market",
+    "capturedAt": "2026-09-26T02:26:14.993Z"
+  },
+  {
+    "file": "browser-aqua-ja-1.png",
+    "selector": "#send",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:16.089Z"
+  },
+  {
+    "file": "browser-aqua-ja-2.png",
+    "selector": "#brain",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:16.162Z"
+  },
+  {
+    "file": "browser-aqua-ja-3.png",
+    "selector": "#flies",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:16.249Z"
+  },
+  {
+    "file": "browser-aqua-ja-4.png",
+    "selector": ".evidence",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:16.345Z"
+  },
+  {
+    "file": "browser-aqua-en-1.png",
+    "selector": "#send",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:17.225Z"
+  },
+  {
+    "file": "browser-aqua-en-2.png",
+    "selector": "#brain",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:17.311Z"
+  },
+  {
+    "file": "browser-aqua-en-3.png",
+    "selector": "#flies",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:17.398Z"
+  },
+  {
+    "file": "browser-aqua-en-4.png",
+    "selector": ".evidence",
+    "url": "http://127.0.0.1:8800/aqua",
+    "capturedAt": "2026-09-26T02:26:17.489Z"
+  }
+]

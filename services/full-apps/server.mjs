@@ -118,6 +118,13 @@ const server = http.createServer(async (req, res) => {
         '/guides/guide.css': 'text/css',
         '/guides/sheet.html': 'text/html',
       };
+      if (
+        /^\/guides\/screens\/(full|browser)-(foraging|market|aqua)-(ja|en)-[1-4]\.png$/.test(url.pathname)
+      ) {
+        const bytes = await readFile('apps/frontend' + url.pathname);
+        res.writeHead(200, { 'Content-Type': 'image/png', 'Cache-Control': 'no-store' });
+        return res.end(bytes);
+      }
       if (guideFiles[url.pathname])
         return reply(200, await readFile('apps/frontend' + url.pathname, 'utf8'), guideFiles[url.pathname]);
       if (url.pathname === '/' || apps.some((a) => url.pathname === '/' + a))

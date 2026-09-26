@@ -16,6 +16,24 @@
 
 ## 02 画面の見方
 
+実画面の切り抜きです。数値は撮影時の例です。
+
+### 1. 操作する場所
+
+![操作する場所](../../apps/frontend/guides/screens/full-aqua-ja-1.png)
+
+### 2. ハエが反応する場所
+
+![ハエが反応する場所](../../apps/frontend/guides/screens/full-aqua-ja-2.png)
+
+### 3. 状態と成績
+
+![状態と成績](../../apps/frontend/guides/screens/full-aqua-ja-3.png)
+
+### 4. ブロックチェーンの証拠
+
+![ブロックチェーンの証拠](../../apps/frontend/guides/screens/full-aqua-ja-4.png)
+
 | 表示 | 意味 |
 | --- | --- |
 | 折れ線＝判断に使う価格履歴 | 全神経版は実Uniswap履歴を再生し、変動の方向と大きさを使います。Aquaのテストトークン価格そのものを取得しているわけではありません。 |

@@ -70,6 +70,99 @@ function mount(root, app, lang, mode, sheet = false) {
       ),
     );
   root.append(start, el('h3', ja ? '02 画面の見方' : '02 Read the screen'));
+  const visual = el('section');
+  visual.className = 'guide-visuals';
+  visual.append(el('h3', ja ? '実際の画面と見比べよう' : 'Match the manual to the actual screen'));
+  visual.append(
+    el(
+      'p',
+      ja
+        ? 'ローカルアプリの実画面を切り出した図です。数値は撮影時の例です。番号の見出しから、このページの対応する場所へ移動できます。'
+        : 'Crops of the actual local app. Values are examples from capture time. Numbered headings link to the matching area on this page.',
+    ),
+  );
+  if (mode === 'reduced')
+    visual.append(
+      el(
+        'p',
+        ja
+          ? '画像は全神経モードの参考画面です。選択中の7神経モードでは神経数と結果が異なります。'
+          : 'Images show full mode for reference. Neuron counts and results differ in your selected seven-neuron mode.',
+      ),
+    );
+  const names = ja
+    ? ['操作する場所', 'ハエが反応する場所', '状態と成績', 'ブロックチェーンの証拠']
+    : ['Where to act', 'Where flies respond', 'State and performance', 'Blockchain evidence'];
+  const targets =
+    mode !== 'browser'
+      ? ['#live', '#arena', '#cards', '#tx']
+      : {
+          foraging: ['.control-panel', '#arena', '#body-readout', '#chain-panel'],
+          market: ['.controls', '#field', '#cards', '.connection'],
+          aqua: ['#send', '#brain', '#flies', '.evidence'],
+        }[app];
+  const explanations = ja
+    ? [
+        mode === 'browser'
+          ? 'この操作で環境へ入力します。送信・適用と、画面上のローカル操作の違いは「はじめてのプレイ」を参照。'
+          : '「現在の方策で動かす」で開始します。移動や売買の選択はハエが行います。',
+        {
+          foraging:
+            '黄色い小粒＝蜜。桃色の円＝危険。顔のついた個体＝ハエ。蜜と危険はローカルの環境で、オンチェーン刺激と一緒に判断へ入力されます。',
+          market:
+            mode === 'browser'
+              ? 'TOKEN0・TOKEN1・OBSERVEへの移動は保有・観察状態を表します。トークンを物理的に拾っているわけではありません。'
+              : '線は観測した価格の履歴。顔は個体です。入力価格の出典はUniswapのSwapで、売買結果はペーパー口座に反映されます。',
+          aqua:
+            mode === 'browser'
+              ? '光る図はMaleCNS部分回路の人工的な活動です。下の応答を戦略案へ変換します。'
+              : '個体の位置・ラベルを、選択された提示または撤回と一緒に見ます。戦略選択は次の実TXにつながります。',
+        }[app],
+        mode === 'browser'
+          ? '画面に表示された身体状態・保有状態・戦略を読みます。吹き出しは状態や行動の表現で、思考を直接読み取ったものではありません。'
+          : 'Policy＝使った方策、Action＝選んだ行動。Energy＝活動エネルギー、Fullness＝満腹度、Reserves＝蓄え。下の数値は各ゲームの成績です。',
+        'ブロック・コントラクト・TXで入力や適用の出典を確認します。TXリンクを開くとreceiptを確認できます。ローカルAnvilの証拠です。',
+      ]
+    : [
+        mode === 'browser'
+          ? 'These controls change the environment. The first-play steps distinguish transaction submission from local actions.'
+          : 'Run with current policy starts the experiment. The flies choose their own movement or trading actions.',
+        {
+          foraging:
+            'Small yellow dots = nectar. Peach circles = hazards. Faces = flies. Food and hazards are local conditions, combined with onchain stimulus as decision inputs.',
+          market:
+            mode === 'browser'
+              ? 'TOKEN0, TOKEN1 and OBSERVE show holding or observation states, not physical token collection.'
+              : 'The line is observed price history; faces represent individuals. Uniswap Swap events supply prices; trade results affect paper accounts.',
+          aqua:
+            mode === 'browser'
+              ? 'The glowing diagram shows artificial activity in a MaleCNS subcircuit. Its response is decoded into a strategy proposal.'
+              : 'Read each individual’s position and label alongside its offer or withdrawal choice. Strategy choices lead to actual transactions.',
+        }[app],
+        mode === 'browser'
+          ? 'Read body state, holdings or strategy here. Bubbles express state or actions, not directly decoded thoughts.'
+          : 'Policy is the readout used; Action is the chosen action. Energy, Fullness and Reserves describe the body. The score depends on this game.',
+        'Blocks, contracts and TXs identify input or application evidence. Open TX links to inspect receipts on local Anvil.',
+      ];
+  for (let i = 0; i < 4; i++) {
+    const figure = el('figure'),
+      heading = el(sheet ? 'strong' : 'a', `${i + 1}. ${names[i]}`);
+    if (!sheet) {
+      heading.href = '#';
+      heading.onclick = (event) => {
+        event.preventDefault();
+        document.querySelector(targets[i])?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+    }
+    const img = el('img');
+    img.src = `/guides/screens/${mode === 'browser' ? 'browser' : 'full'}-${app}-${lang}-${i + 1}.png`;
+    img.alt = `${names[i]} — ${explanations[i]}`;
+    const caption = el('figcaption');
+    caption.append(heading, el('p', explanations[i]));
+    figure.append(img, caption);
+    visual.append(figure);
+  }
+  root.append(visual);
   const legend = el('div');
   legend.className = 'guide-legend';
   for (const [name, meaning] of g.legend) {

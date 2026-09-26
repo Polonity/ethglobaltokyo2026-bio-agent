@@ -39,6 +39,13 @@ try {
             { app, lang, mode },
           );
           await guide.locator('summary').first().click();
+          await page.waitForFunction(() => {
+            const imgs = [...document.querySelectorAll('[data-bio-guide] .guide-visuals img')];
+            return (
+              imgs.length === 4 &&
+              imgs.every((img) => img.complete && img.naturalWidth > 0 && img.alt.length > 20)
+            );
+          });
           const link = await guide.locator('.guide-links a').getAttribute('href');
           assert(link.includes(`app=${app}`) && link.includes(`lang=${lang}`));
           report.pages.push({ mode, app, lang, link });
@@ -63,6 +70,11 @@ try {
       await page.goto(`http://127.0.0.1:8812/guides/sheet.html?app=${app}&lang=${lang}&mode=full`);
       await page.locator('main h1').waitFor();
       assert.equal(await page.locator('details[open]').count(), 3);
+      await page.waitForFunction(
+        () =>
+          [...document.querySelectorAll('main img')].length === 4 &&
+          [...document.querySelectorAll('main img')].every((img) => img.complete && img.naturalWidth > 0),
+      );
       await page.pdf({
         path: `artifacts/app-guides/${app}-${lang}.pdf`,
         format: 'A4',

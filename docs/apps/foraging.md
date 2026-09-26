@@ -16,6 +16,24 @@
 
 ## 02 画面の見方
 
+実画面の切り抜きです。数値は撮影時の例です。
+
+### 1. 操作する場所
+
+![操作する場所](../../apps/frontend/guides/screens/full-foraging-ja-1.png)
+
+### 2. ハエが反応する場所
+
+![ハエが反応する場所](../../apps/frontend/guides/screens/full-foraging-ja-2.png)
+
+### 3. 状態と成績
+
+![状態と成績](../../apps/frontend/guides/screens/full-foraging-ja-3.png)
+
+### 4. ブロックチェーンの証拠
+
+![ブロックチェーンの証拠](../../apps/frontend/guides/screens/full-foraging-ja-4.png)
+
 | 表示 | 意味 |
 | --- | --- |
 | 黄色い粒＝蜜 | ローカルで生成するゲーム内の食べ物。近づいて取ると得点・満腹度・活動エネルギーが増え、蜜は別の場所に現れます。トークンやNFTではありません。 |
