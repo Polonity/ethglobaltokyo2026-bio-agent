@@ -2,111 +2,109 @@
 
 This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:46 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
 
+Short-language revision: 235 written words; leave silent pauses rather than filling the entire timeline. Read product identifiers naturally; AMD Ryzen 9 9950X = “AMD Ryzen nine, ninety-nine fifty X.”
+
 Read one short line at a time and leave room for the GUI. MOMO: MOH-moh. SORA: SOH-rah. Use a calm conversational voice for explanations and a brighter sports-commentary voice for the approach and collection. Do not rush to imitate a professional race caller.
 
 ## 0:00–0:25 · What if this fly ran on onchain data?
 
-When I saw MaleCNS version one point zero—a map of a male fruit fly's neural connections—I had a thought.
+[0:00–0:15 · Official MaleCNS project webpage screenshot. At 0:15, cut to the GUI as MOMO and SORA are introduced.]
 
-What if we turned it into an agent driven by onchain data?
+This is MaleCNS v1.0: a map of a fruit fly's neural connections.
 
-So we built an application.
-Meet MOMO—and SORA.
+Could it become an agent driven by onchain data?
 
-How will they respond to onchain stimuli?
+We built an app.
+Meet MOMO and SORA.
+
+Let's send them a stimulus.
 
 ## 0:25–0:50 · First, a failed attempt
 
 [Earlier implementation]
 
-And MOMO is off!
-Heading right… still heading right…
+Go, MOMO!
+Right… and still right…
 
-Wait. The food isn't that way.
-MOMO, are you just going to keep going?
+Wait! The food is over here!
 
 [Pause]
 
-…There goes our fly.
+There goes MOMO.
 
-It moved, but it didn't approach food.
-We found that when actions had identical scores, the selection code kept choosing right.
+We found a bug: tied scores always picked right.
 
 ## 0:50–1:51 · The Biological Agent Protocol
 
 [Switch from GUI to the 42-second stimulus-to-action animation. Speak each line as its numbered stage is highlighted; do not read the arrows aloud.]
 
 [01 · 0–6 s · Confirmed TX]
-Transactions record food and hazard coordinates.
+Transactions record food and hazard locations.
 
 [02 · 6–12 s · Sensory encoding]
-The adapter combines them with body state into sixteen inputs.
+The adapter creates sixteen inputs.
 
 [03 · 12–18 s · Neural activity]
-MaleCNS updates neural activity, then extracts population averages.
+MaleCNS turns these inputs into neural activity.
 
 [04 · 18–30 s · Action readout]
-To keep the neural connections fixed and the readout lightweight, we chose ridge regression.
-Ridge regression predicts rewards for eight directions and rest.
+To keep the connections fixed and the readout light, we chose ridge regression.
+It scores eight directions and rest.
 
 [05 · 30–36 s · Execute movement]
-The highest-scoring allowed action updates the fly's coordinates.
+The app moves the fly using the chosen action.
 
 [06 · 36–42 s · Record experience]
-We store neural features, actions, and rewards to train the readout.
+We save actions and rewards for training.
 
 [Return to GUI. Hardware/method lower third; approximately 19 seconds remaining.]
 
-We propose this interface as the Biological Agent Protocol.
-Training ran on an AMD Ryzen nine, ninety-nine fifty X CPU.
-Let's try it again.
+Training runs on an AMD Ryzen 9 9950X CPU.
+Let's try again.
 
 ## 1:51–2:31 · MOMO and SORA try again
 
 [Normal speed; speak after the movement appears]
 
-The stimulus is confirmed.
-MOMO is moving.
-And here comes SORA.
+Stimulus confirmed.
+MOMO moves. SORA follows.
 
-This time, they're getting closer to food.
+They're getting closer!
 
 [Same actions · 0.25x replay]
 
-Let's slow that down for a closer look.
+Let's watch that slowly.
 
-MOMO is almost there…
-Got it! The counter is up to one.
+Almost there…
+MOMO got it!
 
-Now, SORA!
-Closer… closer…
-And got it!
+Now, SORA…
+Got it!
 
 [Show the counters; return to an explanatory tone]
 
-One food item for MOMO, and one for SORA.
-Now, how well does this work across different layouts?
+One each.
+Does it work in other layouts?
 
 ## 2:31–2:56 · What worked—and what remains unresolved
 
 [Recorded validation results]
 
-We also tested twelve previously unseen layouts.
-The model collected all twenty-four food items.
+On twelve new layouts, they collected all twenty-four food items.
 
-But ridge regression on the sensory inputs alone collected twenty-three.
-Our hazard-avoidance criterion was not met either.
+A simpler model collected twenty-three.
+Hazard avoidance still needs work.
 
-Running the experiment revealed both working behavior and unresolved problems.
+We measured both success and failure.
 
 ## 2:56–3:21 · Beyond the terrarium
 
 [Separate verified market recording]
 
-We also connected the idea to wallet-based applications.
+We also built a market app.
 
-Here, agents update liquidity offers through the 1inch Aqua Protocol and execute swaps on Uniswap v3.
-The transaction receipts show ERC-20 token transfers.
+Agents use 1inch Aqua Protocol for liquidity offers, and Uniswap v3 for swaps.
+Here are the ERC-20 transfers.
 
 [On-screen label: Test assets · Ethereum fork]
 
@@ -115,18 +113,18 @@ The transaction receipts show ERC-20 token transfers.
 [Show the 24-second protocol-design animation. Keep the model credits visible in its footer.]
 
 [0–6 s · IBioAgent]
-This is the design we built.
-IBioAgent defines the onchain input status.
+Here is our design.
+IBioAgent defines input status.
 
 [6–12 s · IBioAgentStimulus]
-IBioAgentStimulus accepts structured stimuli, identified by a schema.
+IBioAgentStimulus accepts stimuli with a schema.
 
 [12–18 s · Framework]
-The framework reads those inputs and runs the neural model.
+The framework reads inputs and runs MaleCNS.
 
 [18–24 s · Applications]
-Applications execute the actions.
-This is our proposal: the Biological Agent Protocol.
+Apps execute the actions.
+We call this the Biological Agent Protocol.
 
 ## Model attribution on screen (not spoken)
 

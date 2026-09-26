@@ -10,7 +10,8 @@
 
 | 時刻 | 内容 |
 |---|---|
-| 0:00–0:25 | MaleCNS v1.0との出会い、MOMOとSORA |
+| 0:00–0:15 | MaleCNS公式ページの実スクリーンショットで導入 |
+| 0:15–0:25 | アプリを作ったというセリフでMOMOとSORAのGUIへ |
 | 0:25–0:50 | 過去の失敗。通常速度＋明示付き0.25倍速リプレイ |
 | 0:50–1:32 | 左から右へ流れる処理アニメーション。採用理由→リッジ回帰 |
 | 1:32–1:51 | GUIの保存済み学習結果、CPU環境 |
@@ -28,8 +29,13 @@
 再生成：
 
 ```sh
+node scripts/submission/capture-malecns-intro.mjs
 node scripts/submission/render-protocol-animation.mjs
 node scripts/submission/render-protocol-animation.mjs protocol-design
 node scripts/submission/render-documentary.mjs
 node scripts/submission/check-documentary.mjs
 ```
+
+冒頭の出典：https://male-cns.janelia.org/ 。Chromeで公式ページを改変せずに撮影。URL・取得時刻・画像ハッシュは `artifacts/documentary/sources/malecns-official-page.json` に保存。
+
+英語原稿を361語から235語へ短縮。3分46秒のまま、約62語/分（表記上の語数。製品番号を読む音節分は増える）を目安に、図や動きを見る間を確保。専門名とリッジ回帰の採用理由を残し、文法と一般表現を簡略化した。

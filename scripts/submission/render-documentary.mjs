@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 const out=resolve('artifacts/documentary'), edit=out+'/edit';
 await mkdir(edit,{recursive:true});
+const previous = process.argv.includes('--reuse-cuts') ? JSON.parse(await readFile(out+'/production.json','utf8')) : null;
 const gui=JSON.parse(await readFile('artifacts/presenter-long/gui-evidence.json'));
 const old=(await readFile('artifacts/submission-presenter-rerecord/raw-video-path.txt','utf8')).trim();
 const anim=resolve('artifacts/protocol-animation');
@@ -13,7 +14,8 @@ const run=args=>new Promise((ok,no)=>{const p=spawn('ffmpeg',['-y','-v','error',
 const probe=f=>JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-show_format','-of','json',f]));
 const cut=(id,file,start,length,seconds=length,rate=1)=>({id,file,start,length,seconds,rate});
 const common=[
- cut('intro',gui.clips.purpose.file,0,24.64,25),
+ {...cut('intro-official',resolve('artifacts/documentary/sources/malecns-official-page.png'),0,15),still:true},
+ cut('intro-gui',gui.clips.purpose.file,0,10),
  cut('failure-normal',old,.5,5),cut('failure-replay',old,.5,5,20,.25),
  cut('bridge',gui.clips.learning.file,1.7,19),
  cut('behavior-normal',gui.clips.behavior.file,0,13),
@@ -23,8 +25,8 @@ const common=[
  cut('market',old,145,13),cut('aqua',old,225,5.5,6),cut('uniswap',old,231.4,5.5,6)
 ];
 const manifest={createdAt:new Date().toISOString(),audio:false,submissionReady:false,missing:'Human English narration; subtitle timing must be aligned to the recording.',scope:'Documentary review cut, preserved GUI evidence plus explanatory animation',duration:226,sources:{},languages:{}};
-const record=async f=>{if(!manifest.sources[f])manifest.sources[f]={sha256:createHash('sha256').update(await readFile(f)).digest('hex'),duration:+probe(f).format.duration}};
-async function renderCut(s){await record(s.file);assert(s.start+s.length<=manifest.sources[s.file].duration+.1,`Source overrun ${s.id}`);s.output=`${edit}/${s.id}.mp4`;await run(['-ss',String(s.start),'-t',String(s.length),'-i',s.file,'-vf',`setpts=(PTS-STARTPTS)/${s.rate},fps=30,scale=1920:960:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:0:color=0x09121e,setsar=1,tpad=stop_mode=clone:stop_duration=${s.seconds}`,'-t',String(s.seconds),'-an','-c:v','libx264','-threads','4','-preset','veryfast','-crf','20','-pix_fmt','yuv420p',s.output]);console.log(s.id);return s;}
+const record=async f=>{if(!manifest.sources[f])manifest.sources[f]={sha256:createHash('sha256').update(await readFile(f)).digest('hex'),duration:Number.isFinite(+probe(f).format.duration)?+probe(f).format.duration:null}};
+async function renderCut(s){await record(s.file);assert(s.still||s.start+s.length<=manifest.sources[s.file].duration+.1,`Source overrun ${s.id}`);s.output=`${edit}/${s.id}.mp4`;const cached=previous&&Object.values(previous.languages).flatMap(v=>v.timeline).find(v=>v.id===s.id);if(cached&&['file','start','length','seconds','rate'].every(k=>cached[k]===s[k])&&previous.sources[s.file]?.sha256===manifest.sources[s.file].sha256&&Math.abs(+probe(s.output).format.duration-s.seconds)<.1){console.log('REUSE '+s.id);return s;}await run([...(s.still?['-loop','1','-framerate','30']:['-ss',String(s.start),'-t',String(s.length)]),'-i',s.file,'-vf',`setpts=(PTS-STARTPTS)/${s.rate},fps=30,scale=1920:960:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:0:color=0x09121e,setsar=1,tpad=stop_mode=clone:stop_duration=${s.seconds}`,'-t',String(s.seconds),'-an','-c:v','libx264','-threads','4','-preset','veryfast','-crf','20','-pix_fmt','yuv420p',s.output]);console.log(s.id);return s;}
 for(const s of common)await renderCut(s);
 const stamp=n=>{const c=Math.round(n*100);return `${Math.floor(c/360000)}:${String(Math.floor(c/6000)%60).padStart(2,'0')}:${String(Math.floor(c/100)%60).padStart(2,'0')}.${String(c%100).padStart(2,'0')}`};
 const srt=n=>new Date(Math.round(n*1000)).toISOString().slice(11,23).replace('.',',');
@@ -35,7 +37,7 @@ for(const lang of ['en','ja']){
  const pipeline=await renderCut(cut(`pipeline-${lang}`,`${anim}/stimulus-to-action-${lang}.mp4`,0,42));
  const design=await renderCut(cut(`design-${lang}`,`${anim}/protocol-design-${lang}.mp4`,0,24,25));
  const byId=Object.fromEntries(common.map(s=>[s.id,s]));
- const sequence=['intro','failure-normal','failure-replay',pipeline,'bridge','behavior-normal','behavior-replay','behavior-pause','results','market','aqua','uniswap',design].map(s=>typeof s==='string'?byId[s]:s);
+ const sequence=['intro-official','intro-gui','failure-normal','failure-replay',pipeline,'bridge','behavior-normal','behavior-replay','behavior-pause','results','market','aqua','uniswap',design].map(s=>typeof s==='string'?byId[s]:s);
  let offset=0;const timeline=sequence.map(s=>{const row={...s,startOnTimeline:offset,endOnTimeline:offset+s.seconds};offset+=s.seconds;return row});assert(offset===226);
  const md=await readFile(`docs/submission/presenter-kit/documentary-script-${lang}.md`,'utf8');
  const sections=md.split(/^## /m).slice(1,8).map(sec=>sec.split('\n').slice(1).filter(l=>!l.startsWith('[')).join('\n').split(/\n\s*\n/).map(p=>p.replace(/\s+/g,' ').trim()).filter(Boolean));
@@ -49,8 +51,8 @@ for(const lang of ['en','ja']){
   else add(start+.1,end-.12,p);
  });});
  // Collection captions aligned to the visible counter changes in the 0.25x replay.
- if(lang==='en'){add(129,135,'MOMO is almost there…');add(135,137,'Got it! The counter is up to one.');add(137,139,'Now, SORA! Closer… closer…');add(139,144,'And got it!');}
- else {add(129,135,'MOMO、餌まであと少し。');add(135,137,'……取りました！ 回収数、一個です。');add(137,139,'さあ、SORAはどうでしょう。こちらも近づいて……');add(139,144,'取りました！');}
+ if(lang==='en'){add(129,135,'Almost there…');add(135,137,'MOMO got it!');add(137,139,'Now, SORA…');add(139,144,'Got it!');}
+ else {add(129,135,'あと少し……。');add(135,137,'MOMO、取りました！');add(137,139,'さあ、SORA……。');add(139,144,'取りました！');}
  add(0,14,'Connectome data: MaleCNS v1.0 · male-cns.janelia.org','Note');
  add(25,30,lang==='ja'?'以前の実装 · 通常速度':'Earlier implementation · normal speed','Note');
  add(30,50,lang==='ja'?'以前の実装 · 同じ動作の0.25倍速リプレイ':'Earlier implementation · same actions, 0.25x replay','Note');

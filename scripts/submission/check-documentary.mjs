@@ -13,12 +13,12 @@ for(const lang of ['en','ja']){
  await page.goto(pathToFileURL(`${out}/review-${lang}.html`).href);await page.waitForFunction(()=>document.querySelector('video').readyState>=2);
  const meta=await page.evaluate(()=>{const v=document.querySelector('video');return {duration:v.duration,width:v.videoWidth,height:v.videoHeight}});assert(Math.abs(meta.duration-226)<.1);assert(meta.width===1920&&meta.height===1080);
  await page.evaluate(()=>document.querySelector('video').play());await page.waitForTimeout(1500);const played=await page.evaluate(()=>document.querySelector('video').currentTime);assert(played>1);
- for(const t of [5,35,70,100,135.5,139.5,164,191,221]){
+ for(const t of [5,14.9,15.1,35,70,100,135.5,139.5,164,191,221]){
   await page.evaluate(async t=>{const v=document.querySelector('video');v.pause();await new Promise(r=>{v.addEventListener('seeked',r,{once:true});v.currentTime=t})},t);
   await page.screenshot({path:`${out}/checks/${lang}-${t}.jpg`,type:'jpeg',quality:90});
  }
  await page.evaluate(async()=>{const v=document.querySelector('video');await new Promise(r=>{v.addEventListener('seeked',r,{once:true});v.currentTime=225.5});await v.play()});
  await page.waitForFunction(()=>document.querySelector('video').ended);
- assert(errors.length===0);results.push({lang,...meta,playbackAdvanced:played,ended:true,errors,samples:[5,35,70,100,135.5,139.5,164,191,221]});await page.close();
+ assert(errors.length===0);results.push({lang,...meta,playbackAdvanced:played,ended:true,errors,samples:[5,14.9,15.1,35,70,100,135.5,139.5,164,191,221]});await page.close();
 }
 await browser.close();await writeFile(`${out}/browser-check.json`,JSON.stringify(results,null,2));console.log(JSON.stringify(results));

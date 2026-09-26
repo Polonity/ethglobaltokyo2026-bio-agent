@@ -1,0 +1,15 @@
+import { chromium } from '@playwright/test';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { createHash } from 'node:crypto';
+const out=resolve('artifacts/documentary/sources');await mkdir(out,{recursive:true});
+const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox']});
+const page=await browser.newPage({viewport:{width:1920,height:960},deviceScaleFactor:1});
+const response=await page.goto('https://male-cns.janelia.org/',{waitUntil:'networkidle',timeout:60000});
+if(!response?.ok())throw Error('Official source unavailable');
+await page.evaluate(()=>document.fonts.ready);
+await page.locator('img').evaluateAll(imgs=>Promise.all(imgs.map(i=>i.decode().catch(()=>{}))));
+const title=await page.title();
+const shot=await page.screenshot({path:`${out}/malecns-official-page.png`});
+await writeFile(`${out}/malecns-official-page.json`,JSON.stringify({url:page.url(),title,capturedAt:new Date().toISOString(),viewport:{width:1920,height:960},sha256:createHash('sha256').update(shot).digest('hex'),method:'Unmodified official webpage viewport screenshot in Chrome'},null,2));
+console.log(JSON.stringify({title,url:page.url(),file:`${out}/malecns-official-page.png`}));await browser.close();
