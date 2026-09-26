@@ -169,3 +169,34 @@
     margin: 15mm;
   }
 }
+
+.bio-guide .guide-start {
+  background: #e7efdf;
+  border-left: 4px solid #628747;
+  border-radius: 10px;
+  padding: 14px;
+  margin: 16px 0;
+}
+.bio-guide .guide-start ol {
+  padding-left: 24px;
+  margin: 8px 0;
+}
+.bio-guide .guide-start li {
+  margin: 10px 0;
+}
+.bio-guide > h3 {
+  margin-top: 20px;
+}
+.bio-guide > h2 {
+  margin-top: 14px;
+  font-size: 22px;
+}
+@media print {
+  .guide-start {
+    break-inside: avoid;
+  }
+  .bio-guide li {
+    orphans: 2;
+    widows: 2;
+  }
+}

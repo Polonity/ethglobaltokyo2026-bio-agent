@@ -116,8 +116,8 @@ const apps = {
       ),
     ],
     body: t(
-      'Energyは動くための活動エネルギーで、移動で減り、休息や採餌で回復。満腹度は最近食べた量の指標で、採餌で増え、時間とともに減ります。蓄えは消化と消費でゆっくり変わり、体格の目標値になります。これらは人工的な身体モデルで、次の神経入力にも入ります。',
-      'Energy supports activity: movement consumes it, while rest and feeding replenish it. Fullness tracks recent feeding and declines over time. Reserves change more slowly through digestion and expenditure and determine target body size. These synthetic body states also feed subsequent neural inputs.',
+      'Energyは動くための活動エネルギーで、移動で減り、休息や採餌で回復。満腹度は最近食べた量の指標で、採餌で増え、時間とともに減ります。蓄えは消化と消費でゆっくり変わり、体格の目標値になります。次の神経入力に入るのはEnergy・満腹度・蓄えです。個体のEnergy残量と、Statusのenergy（供給設定）は別の値です。全神経GUIの供給設定は固定。体格は蓄えから決まる表示用の指標で、従来版のお腹に反映されますが、全神経版の顔の大きさは現在固定です。',
+      'Energy supports activity: movement consumes it, while rest and feeding replenish it. Fullness tracks recent feeding and declines over time. Reserves change more slowly through digestion and expenditure and determine target body size. Energy, fullness and reserves feed subsequent neural inputs. Individual Energy differs from the Status energy supply setting, which is fixed in the full GUI. Body size derives from reserves for display: it changes the original app’s belly, while the full app currently draws faces at a fixed size.',
     ),
     bubbles: t(
       '全神経版のカードは「使用した方策」と「選んだ行動」の説明です。ハエの上の？はreadout学習中。従来版の♡＝蜜を獲得、！＝危険、すやすや＝休息、おなかいっぱい／ぐぅ＝満腹度の閾値による表示です。感情を計測したものではなく、処理結果を人が読める表現に変えています。',
@@ -464,6 +464,164 @@ apps.aqua.browser.flow = [
     'Inspect test-token exchange and its receipt. Learning separately uses a synthetic risk-target curriculum.',
   ),
 ];
+
+// Gameplay first; implementation and evidence follow in the manual.
+const manuals = {
+  foraging: {
+    mission: t('蜜を集めて、生き延びよう', 'Gather nectar and keep going'),
+    role: t(
+      'あなたは箱庭の環境を変える観察者です。ハエを方向キーで操作するのではなく、刺激を与え、2匹が自分で選ぶ移動・休息を見守ります。',
+      'You shape the environment. Set a stimulus and watch two flies choose movement or rest; there are no arrow-key controls.',
+    ),
+    steps: [
+      t(
+        '刺激スライダーを決めて「現在の方策で動かす」を押します。まずは中くらいの刺激から。',
+        'Set the stimulus slider, then press “Run with current policy”. Start near the middle.',
+      ),
+      t(
+        '黄色い蜜と桃色の危険エリアを見ながら、2匹の採餌数・衝突数・Energyを比べます。通常実行は64ステップで終了します。',
+        'Watch the yellow nectar and peach hazards. Compare food collected, collisions and Energy. A normal run ends after 64 steps.',
+      ),
+      t(
+        '「収集→学習→評価」を実行し、採用されたPolicyと評価結果を見ます。この学習は固定条件を使い、刺激スライダーの値では進みません。',
+        'Run “Collect → learn → evaluate”, then inspect adopted policies and evaluation results. This uses fixed learning conditions, not the stimulus slider.',
+      ),
+    ],
+    score: t(
+      '蜜の数だけでなく、危険への接触や移動コストも累積報酬に影響します。決まったクリア点はありません。2匹の結果と、学習前後の評価を比べる実験ゲームです。',
+      'Nectar, hazard contact and movement cost all affect cumulative reward. There is no fixed winning score. Compare the two individuals and their before/after learning evaluations.',
+    ),
+  },
+  market: {
+    mission: t('買う？ 売る？ 待つ？ 相場を生き抜こう', 'Buy, sell or wait: navigate the market'),
+    role: t(
+      'あなたは相場実験の観察者です。価格履歴を読み、2匹が仮想資金で売買を判断します。直接売買ボタンを押してハエを操作するゲームではありません。',
+      'You observe a market experiment. Two flies read a price history and decide how to trade virtual funds; you do not directly place their trades.',
+    ),
+    steps: [
+      t(
+        '市場ページで「現在の方策で動かす」を押します。確認済みのローカルUniswap価格履歴を再生します。',
+        'On Market, press “Run with current policy” to replay confirmed local Uniswap price observations.',
+      ),
+      t(
+        '価格線と、各個体の買う・売る・待つ、保有状態、ペーパーPnLを見比べます。取引判断と約定にはブロックの時間差があります。',
+        'Compare the price line with each fly’s buy/sell/hold action, position and paper PnL. Decision and execution occur at different observed blocks.',
+      ),
+      t(
+        '「収集→学習→評価」で売買判断を学び直し、新しい評価入力で結果を確かめます。',
+        'Use “Collect → learn → evaluate” to refit trade decisions and inspect results on new evaluation inputs.',
+      ),
+    ],
+    score: t(
+      '初期資金は100 token1、買いは10 token1単位、保有は1ポジションです。売却見積もり・手数料・想定ガス代を含むペーパーPnLで比較します。実資金の売買や将来の利益を示すものではありません。',
+      'Start with 100 virtual token1; buys use 10 token1 and only one position is held. Compare paper PnL including liquidation quotes, fees and assumed gas. This is not real-money trading or evidence of future profit.',
+    ),
+  },
+  aqua: {
+    mission: t('流動性を出す？ 広げる？ 引き上げる？', 'Offer liquidity, widen it or withdraw?'),
+    role: t(
+      'あなたは流動性実験の観察者です。2匹は価格変化を受け、狭い提示・広い提示・撤回を選びます。テストトークンの実TXと、その評価を一緒に見ます。',
+      'Observe two flies respond to price changes with a tight offer, a wide offer or withdrawal. Follow actual test-token transactions alongside their evaluation.',
+    ),
+    steps: [
+      t(
+        'Aquaページで「現在の方策で動かす」を押します。価格履歴を入力にして判断が始まります。',
+        'On Aqua, press “Run with current policy”. Decisions use a recorded price history.',
+      ),
+      t(
+        'tight（30 bps）・wide（800 bps）・withdrawの選択と、TX・約定・代理報酬を見ます。TX処理を待つため、採餌よりゆっくり進みます。',
+        'Watch tight (30 bps), wide (800 bps) or withdraw choices, TXs, fills and proxy reward. Transaction processing makes this slower than Foraging.',
+      ),
+      t(
+        '「収集→学習→評価」で戦略選択を学び直します。処理中はフェーズ表示を確認し、完了後に採用Policyと評価を比較します。',
+        'Use “Collect → learn → evaluate” to refit strategy selection. Follow the phase indicator, then compare adopted policies and evaluations after completion.',
+      ),
+    ],
+    score: t(
+      '約定の残高変化を、別ペアの次のUniswap価格比で評価した「代理報酬」を競います。feesは手数料相当の差分です。どちらもウォレットの実現PnLやLVR回避の実証とは異なります。',
+      'Compare proxy reward: fill balance changes valued using the next Uniswap price ratio from another pair. Fees are gross fill differences. Neither metric establishes realized wallet PnL or LVR protection.',
+    ),
+  },
+};
+const browserManuals = {
+  foraging: {
+    role: t(
+      '刺激・活動モード・供給設定を変えて、ハエの自律行動を観察します。',
+      'Change stimulus, activity mode and supply settings, then observe autonomous behavior.',
+    ),
+    steps: [
+      t(
+        '採餌・探索・休息を選び、刺激とエネルギー供給を調整して適用します。',
+        'Choose forage, explore or rest, adjust stimulus and energy supply, then apply.',
+      ),
+      t(
+        '蜜を取ったときの♡、危険の！、休息、学び直しの？を観察します。おやつを置く操作はローカルの操作です。',
+        'Look for hearts after food, danger marks, rest and learning question marks. Placing a snack is a local action.',
+      ),
+      t(
+        '「学習室へ」で学び直しを試し、ラウンド終了後は学習を引き継いで次へ進みます。',
+        'Try relearning with the learning-room button; after a round, continue with the learned policy.',
+      ),
+    ],
+    score: t(
+      '採餌や危険への接触が成績に関係します。画面のラウンド成績と各個体の状態を比べてください。',
+      'Foraging and hazard contact affect performance. Compare round results and individual states.',
+    ),
+  },
+  market: {
+    role: t(
+      'テストプールの価格を動かし、ハエのペーパー売買の反応を観察します。',
+      'Move a test-pool price and observe the flies’ paper-trading responses.',
+    ),
+    steps: [
+      t(
+        '「価格を上げる」「価格を下げる」、または「デモ相場を再生」を選びます。',
+        'Choose a price-up, price-down or demo-market playback button.',
+      ),
+      t(
+        '入力TXと、TOKEN1・TOKEN0・OBSERVEの場所へ移るハエの保有・観察状態を見ます。',
+        'Follow the input TX and flies moving between TOKEN1, TOKEN0 and OBSERVE states.',
+      ),
+      t(
+        'ペーパーPnLと学習結果を確認します。学習採用は報酬予測誤差で判定され、PnL改善を保証しません。',
+        'Inspect paper PnL and learning results. Adoption uses reward-prediction error, not guaranteed PnL improvement.',
+      ),
+    ],
+    score: t(
+      '仮想口座のPnLを比べます。価格を動かすSwapは実TXですが、ハエの売買はペーパートレードです。',
+      'Compare virtual-account PnL. Price-changing swaps are real TXs; fly trades are paper trades.',
+    ),
+  },
+  aqua: {
+    role: t(
+      '危険刺激を手動で送り、回路の応答とAqua戦略を試します。',
+      'Send artificial risk manually and explore circuit responses and Aqua strategies.',
+    ),
+    steps: [
+      t(
+        '個体と危険刺激を選び、送信してStatusのTXを確認します。',
+        'Select an individual and risk level, send the stimulus and inspect its Status TX.',
+      ),
+      t(
+        '応答と戦略案を見て「適用」。続いてテスト約定の操作でreceiptを確認します。',
+        'Inspect the response and proposal, then Apply. Use the separate test-fill control to inspect a receipt.',
+      ),
+      t(
+        '学習ボタンで人工risk-target教材によるgain調整を試します。市場収益による学習ではありません。',
+        'Use the learning button to fit gain on synthetic risk-target examples, not market returns.',
+      ),
+    ],
+    score: t(
+      '提示・撤回・約定の違いを確かめる実験です。応答メーターや学習gainは投資収益ではありません。',
+      'Explore offers, withdrawals and fills. Response meters and learned gain are not investment returns.',
+    ),
+  },
+};
+for (const app of Object.keys(manuals)) {
+  apps[app].manual = manuals[app];
+  apps[app].browser.manual = { ...manuals[app], ...browserManuals[app] };
+}
+
 function localize(value, lang) {
   if (Array.isArray(value)) return value.map((v) => localize(v, lang));
   if (value && typeof value === 'object') {

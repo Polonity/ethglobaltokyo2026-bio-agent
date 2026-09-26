@@ -47,11 +47,29 @@ function mount(root, app, lang, mode, sheet = false) {
   root.replaceChildren();
   const g = guideFor(app, lang, mode),
     w = titles[lang];
+  const ja = lang === 'ja';
   root.append(
-    el('div', `${w[mode]} · MaleCNS · ${g.title}`),
+    el('div', `${w[mode]} · MaleCNS · ${ja ? 'ゲームの説明書' : 'Game manual'}`),
     el(sheet ? 'h1' : 'h3', g.name),
-    el('p', g.goal),
+    el('h2', g.manual.mission),
+    el('p', g.manual.role),
   );
+  const start = el('section');
+  start.className = 'guide-start';
+  start.append(el('h3', ja ? '01 はじめてのプレイ' : '01 Your first play'));
+  const steps = el('ol');
+  for (const text of g.manual.steps) steps.append(el('li', text));
+  start.append(steps);
+  if (mode !== 'browser')
+    start.append(
+      el(
+        'p',
+        ja
+          ? '途中で止めるには「停止」。進行中の動作が完了してから止まります。フェーズ表示は実行中・収集・学習・評価の進み具合を示します。'
+          : 'Press Stop to end after the current action completes. The phase indicator tracks running, collection, learning and evaluation.',
+      ),
+    );
+  root.append(start, el('h3', ja ? '02 画面の見方' : '02 Read the screen'));
   const legend = el('div');
   legend.className = 'guide-legend';
   for (const [name, meaning] of g.legend) {
@@ -60,9 +78,23 @@ function mount(root, app, lang, mode, sheet = false) {
     legend.append(item);
   }
   root.append(legend);
-  const route = el('p', g.flow.map(([name]) => name).join(' → '));
-  route.className = 'guide-label';
-  root.append(route);
+  const status = el('details');
+  status.open = sheet;
+  status.append(el('summary', ja ? '身体・吹き出し・成績の読み方' : 'Body, bubbles and scores'));
+  for (const key of ['body', 'bubbles']) status.append(section(w[key], g[key]));
+  status.append(
+    section(ja ? '成績と目標' : 'Scores and goals', g.manual.score),
+    el('h3', w.metrics),
+    definitions(g.metrics),
+  );
+  root.append(
+    status,
+    el('h3', ja ? '03 学び直して、もう一度' : '03 Learn and try again'),
+    el('p', g.learning),
+  );
+  if (mode !== 'browser') root.append(el('p', g.phase));
+  root.append(section(w.tryIt, g.tryIt));
+  root.append(el('h3', ja ? '04 ゲームの裏側' : '04 Behind the game'));
   const flow = el('details');
   flow.open = sheet;
   flow.append(el('summary', g.flowTitle));
@@ -70,7 +102,7 @@ function mount(root, app, lang, mode, sheet = false) {
   ol.className = 'guide-flow';
   for (const [name, meaning] of g.flow) {
     const item = el('li');
-    item.append(el('strong', name), document.createTextNode(meaning));
+    item.append(el('strong', name.replace(/^[1-4]\s+/, '')), document.createTextNode(meaning));
     ol.append(item);
   }
   flow.append(ol, el('p', g.boundary));
@@ -78,11 +110,10 @@ function mount(root, app, lang, mode, sheet = false) {
   const details = el('details');
   details.open = sheet;
   details.append(el('summary', g.more));
-  for (const key of ['body', 'bubbles', 'model', 'learning']) details.append(section(w[key], g[key]));
-  if (mode !== 'browser') details.append(el('p', g.phase));
   details.append(
+    section(w.model, g.model),
     el('h3', w.metrics),
-    definitions([...g.metrics, ...(mode === 'browser' ? [g.numbers[0], g.numbers[3]] : g.numbers)]),
+    definitions(mode === 'browser' ? [g.numbers[0], g.numbers[3]] : g.numbers),
     el('p', g.biology),
   );
   root.append(details);
@@ -103,10 +134,9 @@ function mount(root, app, lang, mode, sheet = false) {
     ),
   );
   root.append(trace);
-  root.append(section(w.tryIt, g.tryIt));
   const links = el('div');
   links.className = 'guide-links';
-  const link = el('a', g.sheet);
+  const link = el('a', ja ? 'ゲームの説明書を開く・印刷する ↗' : 'Open / print the game manual ↗');
   link.href = `/guides/sheet.html?app=${app}&mode=${mode}&lang=${lang}`;
   link.target = '_blank';
   link.rel = 'noopener';
@@ -116,6 +146,9 @@ function mount(root, app, lang, mode, sheet = false) {
 function trace(root, p, app, lang) {
   if (!p?.decisions?.length) return;
   const target = root.querySelector('.guide-trace');
+  const traceKey = lang + ':' + p.decisions.map((d) => d.id).join(':');
+  if (target.dataset.traceKey === traceKey) return;
+  target.dataset.traceKey = traceKey;
   target.replaceChildren(el('strong', guideFor(app, lang).traceTitle));
   const list = el('ol'),
     ja = lang === 'ja',
