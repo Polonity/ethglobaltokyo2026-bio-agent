@@ -1,0 +1,23 @@
+{
+  "schema": "bioagent.adaptation-study.v1",
+  "stage": "Frozen after development seeds 310001, 311000+19i, 312000+19i; before final fitting or test execution",
+  "question": "Does reward-trained readout improve held-out foraging versus an identical untrained encoder and guard? Does a measured connectome outperform matched raw inputs?",
+  "trainingRuns": [321001, 321019, 321037, 321053, 321071],
+  "trainWorldSeeds": [322001,322020,322039,322058,322077,322096,322115,322134,322153,322172,322191,322210],
+  "selectionSeeds": [323001,323020,323039,323058,323077,323096,323115,323134,323153,323172,323191,323210,323229,323248,323267,323286,323305,323324,323343,323362],
+  "testSeedRule": { "start": 324001, "count": 60, "stride": 23 },
+  "episodeTicks": 300,
+  "searchTrials": 48,
+  "encoders": ["malecns","raw"],
+  "profiles": [
+    { "name": "default", "stimulus": 0.55, "energy": 0.7 },
+    { "name": "low-energy-high-stimulus", "stimulus": 0.9, "energy": 0.35 }
+  ],
+  "stressProfile": { "name": "relocated-hazards", "stimulus": 0.75, "energy": 0.5, "hazards": [{"x":17,"y":11,"radius":3},{"x":28,"y":6,"radius":2}] },
+  "adoptionRule": "Every selection profile: reward > previous+0.01, food >= previous, contacts <= previous. Otherwise keep prior. Test scenarios never influence adoption.",
+  "heldOutSuccess": "Per profile: paired mean reward improvement above zero and no increased mean contacts; report number of passing training runs and bootstrap intervals, not only pooled ticks.",
+  "controls": ["untrained with identical guard and deterministic rollout", "raw-input encoder with identical 3 weights, search candidates and evaluation budget", "engineered greedy-direction rule with identical guard", "untrained without guard", "fitted readout without guard"],
+  "method": "Reward-driven random search over three readout coefficients: rest bias, fatigue gain, directional persistence. Fixed biological topology and artificial dynamics. Not synaptic learning or Q-learning.",
+  "statistics": "Two-axis bootstrap over independent training-search runs and test worlds, 2000 resamples with seed 325001; pair worlds and runs. Five search runs share the same training worlds. Intervals do not capture new training-world datasets or all possible environments.",
+  "limits": ["Synthetic reward includes progress, nectar, contact and resting terms", "Deployment and evaluation both deterministic, 300 ticks; exploratory training evaluates candidate policies in simulation", "Same initial seed is paired, but food trajectories diverge after different collection events", "Engineering changes and reward choice cannot establish biological superiority or financial return", "Raw control currently shares observation computation; do not claim runtime speedup from this comparison", "Separate exploratory stress profile is excluded from selection and reported separately"]
+}
