@@ -835,9 +835,14 @@ function renderDetails() {
     const r = state?.reports?.[`${app}:${v}`];
     if (!r) continue;
     const row = node('tr');
-    [v, ...['before', 'after', 'test'].map((k) => r[k].map((x) => sign(x, 2)).join(' / '))].forEach((x) =>
-      row.append(node('td', x)),
-    );
+    [
+      v,
+      ...['before', 'after', 'test'].map(
+        (k) =>
+          r[k].map((x) => sign(x, 2)).join(' / ') +
+          (app === 'foraging' ? ` (${r.episodeCounts?.[k] || 1} ${t('配置合計', 'worlds total')})` : ''),
+      ),
+    ].forEach((x) => row.append(node('td', x)));
     $('comparison').append(row);
   }
   put(
@@ -847,6 +852,21 @@ function renderDetails() {
       `MOMO / SORA. Unit: ${app === 'market' ? units() : app === 'aqua' ? 'proxy points' : 'training reward points (not nectar count)'}`,
     ),
   );
+  if (app === 'foraging') {
+    const r = state?.reports?.['foraging:full'];
+    if (r?.behavior?.test) {
+      const sum = (key) => r.behavior.test.reduce((total, b) => total + b[key], 0);
+      $('learning-unit').append(
+        node(
+          'p',
+          t(
+            `全神経版・別条件 ${r.episodeCounts.test} 配置：回収 ${sum('collected')} 個、危険域内 ${sum('hazardSteps')} ステップ。`,
+            `Full model, ${r.episodeCounts.test} test worlds: ${sum('collected')} food collected; ${sum('hazardSteps')} hazard steps.`,
+          ),
+        ),
+      );
+    }
+  }
   put('summary', p?.report ? `Policy v${p.report.versions.join(' / v')}` : '');
 }
 async function openReceipt(url) {

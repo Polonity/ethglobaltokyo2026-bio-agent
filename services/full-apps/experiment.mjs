@@ -1,3 +1,4 @@
+import { FORAGING_PROTOCOL, summarizeEpisodes, foragingSafetyGate } from './foraging-protocol.mjs';
 import { ForagingEnvironment } from './foraging.mjs';
 import { MarketEnvironment } from './market.mjs';
 import { AquaEnvironment } from './aqua.mjs';
@@ -13,6 +14,7 @@ export async function rollout({
   offset = 0,
   candidates = [null, null],
   stimulus = null,
+  epsilon = null,
   replayForaging = null,
   onProgress = () => {},
 }) {
@@ -52,6 +54,7 @@ export async function rollout({
     env.world.mode = ['rest', 'explore', 'forage'][initialStatus[0].activity];
     for (const event of initialStatus) env.addStimulus(event);
   }
+  const behavior = [0, 1].map(() => ({ collected: 0, hazardSteps: 0, toward: 0, moves: 0, rest: 0 }));
   const rewards = [0, 0],
     ids = [[], []];
   let neuralMs = 0,
@@ -66,6 +69,7 @@ export async function rollout({
         session,
         seed,
         candidates,
+        ...(epsilon === null ? {} : { epsilon }),
         observations,
         drives: observations.map((x) => x.drives),
         allowed: observations.map((x) => x.allowed),
@@ -104,6 +108,17 @@ export async function rollout({
             tick: env.tick,
           },
         });
+        if (app === 'foraging') {
+          const m = outcomes[agent].metrics,
+            b = behavior[agent];
+          b.collected += Number(m.collected);
+          b.hazardSteps += Number(m.hit);
+          b.rest += Number(m.action === 8);
+          if (m.targetId && m.action < 8) {
+            b.moves++;
+            b.toward += Number(m.progress > 1e-8);
+          }
+        }
         rewards[agent] += outcomes[agent].reward;
         ids[agent].push(d.id);
       }
@@ -123,6 +138,7 @@ export async function rollout({
       });
     }
     return {
+      behavior,
       brainHash: last.neural.brainHash,
       app,
       variant,
@@ -157,6 +173,7 @@ export async function trainApplication({
   collectionSeed = 51027,
   onProgress = () => {},
 }) {
+  if (app === 'foraging') return trainForaging({ client, chain, tape, variant, onProgress, collectionSeed });
   const collection = await rollout({
     client,
     chain,
@@ -227,4 +244,75 @@ export async function trainApplication({
     onProgress,
   });
   return { app, variant, collection, candidates, before, after, adoption, test };
+}
+
+async function trainForaging({ client, chain, tape, variant, onProgress, collectionSeed }) {
+  const app = 'foraging',
+    protocol = FORAGING_PROTOCOL;
+  const run = (phase, seed, extra = {}) =>
+    rollout({
+      client,
+      chain,
+      tape,
+      app,
+      variant,
+      phase,
+      seed,
+      steps: phase === 'collect' ? protocol.collectionSteps : protocol.evaluationSteps,
+      onProgress,
+      ...extra,
+    });
+  const collected = [];
+  // Repeated learning uses fresh collection layouts; evaluation layouts remain disjoint.
+  for (const seed of protocol.training) collected.push(await run('collect', seed + collectionSeed - 51027));
+  const collection = summarizeEpisodes(collected);
+  await onProgress({ app, variant, phase: 'training' });
+  const candidates = [];
+  for (let agent = 0; agent < 2; agent++)
+    candidates.push(await client.call('train', { app, variant, agent }));
+  const old = [],
+    next = [];
+  for (const seed of protocol.selection) {
+    const before = await run('selection', seed);
+    old.push(before);
+    next.push(
+      await run('selection', seed, {
+        candidates: candidates.map((c) => c.candidateHash),
+        replayForaging: chain ? { environment: before.environmentInput, statuses: before.inputEvents } : null,
+      }),
+    );
+  }
+  const before = summarizeEpisodes(old),
+    after = summarizeEpisodes(next),
+    adoption = [];
+  for (let agent = 0; agent < 2; agent++) {
+    if (!foragingSafetyGate(before, after, agent)) {
+      adoption.push({ adopted: false, reason: 'Food collection or hazard exposure regressed' });
+      continue;
+    }
+    adoption.push(
+      await client.call('adopt', {
+        candidateHash: candidates[agent].candidateHash,
+        evaluation: {
+          before: before.mean[agent],
+          after: after.mean[agent],
+          metric: 'mean observed foraging action reward across six paired TX worlds',
+          evaluationDecisionIds: [...before.ids[agent], ...after.ids[agent]],
+        },
+      }),
+    );
+  }
+  const evaluated = [];
+  for (const seed of protocol.test) evaluated.push(await run('test', seed));
+  return {
+    app,
+    variant,
+    protocol,
+    collection,
+    candidates,
+    before,
+    after,
+    adoption,
+    test: summarizeEpisodes(evaluated),
+  };
 }

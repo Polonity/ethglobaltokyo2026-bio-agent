@@ -43,6 +43,8 @@ const cleanReport = (r) => ({
   before: r.before.rewards,
   after: r.after.rewards,
   test: r.test.rewards,
+  episodeCounts: Object.fromEntries(['before', 'after', 'test'].map((k) => [k, r[k].episodes?.length || 1])),
+  behavior: Object.fromEntries(['before', 'after', 'test'].map((k) => [k, r[k].behavior || null])),
   adopted: r.adoption.map((a) => a.adopted),
   versions: r.test.lastDecision.map((a) => a.policyVersion),
   trainingMs: r.candidates.map((c) => c.trainingMs),
