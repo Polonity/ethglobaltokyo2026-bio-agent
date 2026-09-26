@@ -1,6 +1,6 @@
 # Biological Agent Protocol — English spoken demo script
 
-This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:40 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
+This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:46 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
 
 Read one short line at a time and leave room for the GUI. MOMO: MOH-moh. SORA: SOH-rah. Use a calm conversational voice for explanations and a brighter sports-commentary voice for the approach and collection. Do not rush to imitate a professional race caller.
 
@@ -32,9 +32,9 @@ MOMO, are you just going to keep going?
 It moved, but it didn't approach food.
 We found that when actions had identical scores, the selection code kept choosing right.
 
-## 0:50–1:45 · The Biological Agent Protocol
+## 0:50–1:51 · The Biological Agent Protocol
 
-[Switch from GUI to the 36-second stimulus-to-action animation. Speak each line as its numbered stage is highlighted; do not read the arrows aloud.]
+[Switch from GUI to the 42-second stimulus-to-action animation. Speak each line as its numbered stage is highlighted; do not read the arrows aloud.]
 
 [01 · 0–6 s · Confirmed TX]
 Transactions record food and hazard coordinates.
@@ -45,22 +45,23 @@ The adapter combines them with body state into sixteen inputs.
 [03 · 12–18 s · Neural activity]
 MaleCNS updates neural activity, then extracts population averages.
 
-[04 · 18–24 s · Action readout]
+[04 · 18–30 s · Action readout]
+To keep the neural connections fixed and the readout lightweight, we chose ridge regression.
 Ridge regression predicts rewards for eight directions and rest.
 
-[05 · 24–30 s · Execute movement]
+[05 · 30–36 s · Execute movement]
 The highest-scoring allowed action updates the fly's coordinates.
 
-[06 · 30–36 s · Record experience]
+[06 · 36–42 s · Record experience]
 We store neural features, actions, and rewards to train the readout.
 
 [Return to GUI. Hardware/method lower third; approximately 19 seconds remaining.]
 
 We propose this interface as the Biological Agent Protocol.
-We trained the readout with ridge regression on an AMD Ryzen nine, ninety-nine fifty X CPU.
+Training ran on an AMD Ryzen nine, ninety-nine fifty X CPU.
 Let's try it again.
 
-## 1:45–2:25 · MOMO and SORA try again
+## 1:51–2:31 · MOMO and SORA try again
 
 [Normal speed; speak after the movement appears]
 
@@ -86,7 +87,7 @@ And got it!
 One food item for MOMO, and one for SORA.
 Now, how well does this work across different layouts?
 
-## 2:25–2:50 · What worked—and what remains unresolved
+## 2:31–2:56 · What worked—and what remains unresolved
 
 [Recorded validation results]
 
@@ -98,7 +99,7 @@ Our hazard-avoidance criterion was not met either.
 
 Running the experiment revealed both working behavior and unresolved problems.
 
-## 2:50–3:15 · Beyond the terrarium
+## 2:56–3:21 · Beyond the terrarium
 
 [Separate verified market recording]
 
@@ -109,7 +110,7 @@ The transaction receipts show ERC-20 token transfers.
 
 [On-screen label: Test assets · Ethereum fork]
 
-## 3:15–3:40 · Our proposal
+## 3:21–3:46 · Our proposal
 
 [Show the 24-second protocol-design animation. Keep the model credits visible in its footer.]
 

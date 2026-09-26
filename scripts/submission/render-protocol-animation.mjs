@@ -12,7 +12,7 @@ const page = await browser.newPage({viewport:{width:1280,height:720},deviceScale
 const errors=[];page.on('pageerror',e=>errors.push(String(e)));
 await page.goto(pathToFileURL(resolve(`docs/submission/presenter-kit/visuals/${name}.html`)).href+'?capture');
 await page.evaluate(()=>document.fonts.ready);
-const fps=15, seconds=name === 'protocol-design' ? 24 : 36;
+const fps=15, seconds=name === 'protocol-design' ? 24 : 42;
 for(const lang of ['en','ja']) {
   const encoder=spawn('ffmpeg',['-y','-v','error','-f','image2pipe','-vcodec','mjpeg','-r',String(fps),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','19','-pix_fmt','yuv420p','-movflags','+faststart',`${out}/${name}-${lang}.mp4`],{stdio:['pipe','inherit','inherit']});
   const done=new Promise((res,rej)=>{encoder.on('error',rej);encoder.on('close',c=>c===0?res():rej(Error(`ffmpeg ${c}`)))});

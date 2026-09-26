@@ -1,6 +1,6 @@
 # 刺激から行動へ — アニメーションと読み上げ
 
-本番は英語の本人音声。日本語は理解用。台本の0:50から36秒の説明アニメーションを挿入し、その後GUIに戻す。各段階のセリフは [英語台本](documentary-script-en.md) と [日本語対訳](documentary-script-ja.md) に記載。収録音声に合わせて各段階の尺を調整する。現時点の6秒ずつはリハーサル用。
+本番は英語の本人音声。日本語は理解用。台本の0:50から42秒の説明アニメーションを挿入し、その後GUIに戻す。各段階のセリフは [英語台本](documentary-script-en.md) と [日本語対訳](documentary-script-ja.md) に記載。収録音声に合わせて各段階の尺を調整する。行動評価の段階だけ12秒、他は6秒ずつのリハーサル用。
 
 [ブラウザで再生・日本語切り替え](visuals/stimulus-to-action.html)。シークで各場面を確認可能。
 
@@ -9,9 +9,9 @@
 | 0–6秒 | 確定receiptから環境データへ | TX由来の餌・危険エリアの座標を取得 |
 | 6–12秒 | 16本の入力バーが立ち上がる | 環境と身体状態から16次元のdrivesを構成 |
 | 12–18秒 | 接続図の活動が広がる | MaleCNSの接続で4ステップ更新し、神経群ごとの平均活動を抽出 |
-| 18–24秒 | 9本の予測スコア、最大値を強調 | Ridge Regressionで行動ごとの即時報酬を予測。実行可能な行動から選択 |
-| 24–30秒 | 左方向の行動でハエのx座標が変化 | JavaScriptが座標を更新し、GUIが描画 |
-| 30–36秒 | 経験を保存して学習へ戻す | 特徴量・行動・報酬をSQLiteに保存し、別の学習フェーズでreadoutを更新 |
+| 18–30秒 | 9本の予測スコア、最大値を強調 | 接続を固定した軽量な行動評価を目的に採用した理由を説明し、Ridge Regressionで行動ごとの即時報酬を予測。実行可能な行動から選択 |
+| 30–36秒 | 左方向の行動でハエのx座標が変化 | JavaScriptが座標を更新し、GUIが描画 |
+| 36–42秒 | 経験を保存して学習へ戻す | 特徴量・行動・報酬をSQLiteに保存し、別の学習フェーズでreadoutを更新 |
 
 図は説明用。入力値・スコア・移動は模式例であり、実測の神経活動や記録済みMOMOの再生ではない。冒頭から画面に明記する。環境入力はTX由来だが、身体状態・座標更新・神経計算はオフチェーン。最後の学習矢印は毎フレーム学習する意味ではない。
 
@@ -36,11 +36,11 @@
 
 `node scripts/submission/render-protocol-animation.mjs`
 
-出力：`artifacts/protocol-animation/stimulus-to-action-en.mp4` と `stimulus-to-action-ja.mp4`。1280×720、36秒、無音。人の英語ナレーションを収録するための説明映像素材であり、完成版サブミッション動画ではない。出典全体は最終動画の [クレジット](video-credits.md) に表示する。
+出力：`artifacts/protocol-animation/stimulus-to-action-en.mp4` と `stimulus-to-action-ja.mp4`。1280×720、42秒、無音。人の英語ナレーションを収録するための説明映像素材であり、完成版サブミッション動画ではない。出典全体は最終動画の [クレジット](video-credits.md) に表示する。
 
 ## 最後の24秒：今回の設計
 
-[設計アニメーション](visuals/protocol-design.html)を3:15から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は24秒間フッターに常時表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
+[設計アニメーション](visuals/protocol-design.html)を3:21から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は24秒間フッターに常時表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
 
 - `IBioAgent`：`getStatus()` / `updateStatus()`。入力条件の共通化であり、計算済みの神経状態を書き戻すAPIではない。
 - `IBioAgentRegistry extends IBioAgent`：個体・モデルの登録。`BioAgentRegistry`はこのinterfaceと`IBioAgentWallet`を実装。
