@@ -1,0 +1,73 @@
+// GUI-led narration plan for a human presenter. No synthesized audio is permitted in delivery.
+export const scenes = [
+  {
+    id: 'purpose',
+    seconds: 20,
+    title: { ja: '何を作ったか', en: 'What we built' },
+    ja: 'バイオエージェントは、生物由来の判断モデルを、アプリで使って検証するフレームワークです。入力の出典、行動、学習結果を追えることが、開発者や研究者への価値です。',
+    en: 'BioAgent is a framework for using biologically derived decision models in applications. It lets developers and researchers trace the inputs, actions, and learning results. This demo runs all one hundred sixty-six thousand seven hundred neurons per agent, locally on Anvil.',
+  },
+  {
+    id: 'inputs',
+    seconds: 25,
+    title: { ja: '1 · 環境と刺激はTXから', en: '1 · Environment and stimulus transactions' },
+    ja: 'まず、環境の記録を開きます。広さ、初期配置のシード、危険エリアは、最初のトランザクションに記録されています。正の刺激が確定すると、餌が一個増えます。レシートで成功と出典を確認できます。移動や身体状態の計算はオフチェーンです。',
+    en: 'First, open the environment record. Arena dimensions, the initial seed, and hazard areas come from the initial transaction. Each confirmed positive stimulus adds one food item. The receipt shows success and its source. Movement, body state, and neural inference are computed off-chain.',
+  },
+  {
+    id: 'behavior',
+    seconds: 25,
+    title: { ja: '2 · 学習済みモデルが餌へ向かう', en: '2 · The learned model approaches food' },
+    ja: '学習済みモデルを動かします。確定した餌に近づき、回収数が増えます。続いて、同じ動きを四分の一の速度で再生します。餌へ向ける決め打ちの処理は加えていません。ただし、感覚の方向変換と行動への変換は、人工設計です。',
+    en: 'Now run the learned model. The agents approach confirmed food and the collection counters increase. We then replay the same movement at one-quarter speed. We added no hard-coded target-steering rule. However, directional sensory encoding and the mapping from neural activity to actions are engineered.',
+  },
+  {
+    id: 'learning',
+    seconds: 25,
+    title: { ja: '3 · 経験と未使用配置を分ける', en: '3 · Separate learning from evaluation' },
+    ja: 'この画面は保存済みの学習結果です。十二の配置で行動と結果を集め、別の六配置で、現在のモデルと候補を同じ入力で比べます。回収数や危険域への接触が悪化した候補は採用しません。神経接続は固定し、行動を選ぶ読み出し部分を学習します。',
+    en: 'This panel shows a completed learning evaluation. We collect actions and outcomes across twelve worlds, then compare the current model and candidate on six separate worlds with identical inputs. Candidates that collect less food or increase hazard exposure are rejected. Neural connections stay fixed; the action readout learns.',
+  },
+  {
+    id: 'results',
+    seconds: 27,
+    title: { ja: '4 · 効果と限界を比較する', en: '4 · Measure benefits and limitations' },
+    ja: 'モデルを固定した後の未使用十二配置では、餌を二十四個中、二十四個回収しました。ランダムは四個、神経回路を使わない小さなモデルも二十三個です。危険域にいた時間は七ステップで、事前の安全基準は未達でした。採餌は改善しましたが、生物固有の優位性は、まだ断定できません。',
+    en: 'After freezing the model, twelve unseen worlds yielded twenty-four of twenty-four food items. Random actions collected four; a small direct-input model collected twenty-three. The full model spent seven steps inside hazards and failed our preset safety criterion. Foraging improved, but a unique biological advantage remains unproven.',
+  },
+  {
+    id: 'market',
+    seconds: 22,
+    title: { ja: '5 · 同じ発想を市場へ接続する', en: '5 · Connect the model to a market' },
+    ja: '次は、同じ全神経モデルを使う市場アプリです。ここからは、検証済みの別収録です。四個体が、アクアへの提示と売買を担当します。目標の保有比率に応じて行動を選び、確定した結果から読み出し部分を更新します。',
+    en: 'Next is the market application using the full neural model. This is a separate, verified recording. Four agents make Aqua offers and trading decisions. They act toward configured target holdings and update their readouts from confirmed outcomes. These are local test tokens, not real-money trading.',
+  },
+  {
+    id: 'trading',
+    seconds: 26,
+    title: { ja: '6 · 行動と決済ルートを見る', en: '6 · Inspect actions and settlement routes' },
+    ja: '提示側は、価格幅を変えるか、提示を撤回します。売買側は、買う、売る、待つを選びます。取引先は通常のコードが受取量を比較して決めます。この記録ではアクアとユニスワップ、両方の決済が成立しました。学習更新だけで収益性を証明したわけではありません。',
+    en: 'Makers choose tighter offers, wider offers, or withdrawal. Traders choose buy, sell, or hold. Ordinary code compares quoted outputs to choose the venue. This recording contains settlements through both Aqua and Uniswap. Learning updates demonstrate a functioning feedback loop, not a profitable trading strategy.',
+  },
+  {
+    id: 'aqua',
+    seconds: 20,
+    title: { ja: '7 · Aquaの決済を確認する', en: '7 · Verify an Aqua settlement' },
+    ja: 'アクアの取引記録を開きます。成功状態だけでなく、実際のトークン移動と、コントラクトのイベントを確認します。これはメインネットの状態を取り込んだローカル環境です。公開チェーンへ送信した取引ではありません。',
+    en: 'Open the Aqua receipt. Check the actual token transfers and contract events, not only the success status. This transaction executed in a local fork of mainnet state. It was not broadcast to the public chain.',
+  },
+  {
+    id: 'uniswap',
+    seconds: 20,
+    title: { ja: '8 · Uniswapの決済を確認する', en: '8 · Verify a Uniswap settlement' },
+    ja: 'こちらはユニスワップの決済です。価格の観測から、判断、取引、結果までを追えます。現在は独自のルーターとバージョン三のコアを使っています。ユニバーサルルーターやトレーディングエーピーアイを使った実装ではありません。',
+    en: 'Here is the Uniswap settlement. We can trace the price observation, decision, trade, and outcome. The current implementation uses a custom router with Uniswap version three core. It does not use Universal Router or the Trading API.',
+  },
+  {
+    id: 'close',
+    seconds: 23,
+    title: { ja: '成果と次の検証', en: 'What we proved, and what comes next' },
+    ja: '成果は、生物由来の判断を実際のアプリへ接続し、改善と失敗の両方を検証できる基盤です。次は同じ仕事で小型モデルと比べ、適応時間、メモリー、消費電力を測ります。低コストや利用者増加は、今後確かめたい仮説です。',
+    en: 'Our contribution is a working platform that connects biological decision models to applications and measures both improvements and failures. Next, we will compare small models on identical tasks, measuring adaptation time, memory, and energy. Lower operating cost and increased protocol adoption remain hypotheses to test.',
+  },
+];
