@@ -379,6 +379,8 @@ function renderUI() {
   $('session-badge').textContent = chain
     ? `${config.networkName} ${translate(chain.ready ? '接続中' : '未接続')} / ${config.chainId}`
     : 'チェーン未接続 · ブラウザーデモ';
+  $('world-input-help').textContent =
+    `${config.networkName} · ${translate('刺激TXで餌を1個追加。自動補充なし。')}`;
   const remaining = Math.ceil(arena.duration - arena.time);
   $('timer').textContent =
     `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
@@ -687,10 +689,7 @@ function frame(now) {
   $('apply').innerHTML = 'コントラクトに刺激を送信 <span>↗</span>';
   $('intro-agent-count').textContent = '蜜を探す3つの個体。';
   $('world-input-title').textContent = 'この子に刺激を届けよう。';
-  $('world-input-help').textContent =
-    `${config.networkName} · ${translate('刺激TXで餌を1個追加。自動補充なし。')}`;
-  $('about-chain').parentElement.textContent =
-    `${config.networkName} / ${config.chainId} · ${translate('実測7神経・19接続。刺激TXで餌を追加し、行動選択を学習します。身体と動力学は人工設計です。')}`;
+  $('about-chain').textContent = `${config.networkName} / ${config.chainId} · `;
   chain = new ChainSession(arena, config, renderUI);
   if (new URLSearchParams(location.search).has('test')) window.__chain = chain;
   await chain.sync();
