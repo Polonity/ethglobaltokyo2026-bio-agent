@@ -11,3 +11,9 @@ The background is decorative. Mushrooms, leaves and beads do not create stimuli 
 Integration: `frontend/src/game-assets.ts`, `main.ts`, `growth.ts`, `style.css`, and `index.html`. Keep these original assets available when building; Vite copies `public/assets` into the distributable.
 
 Verification: TypeScript/Vite build; browser start/pause on a new observation run; memory-walk replay; all three images decoded; both sprite corner alpha values are zero; 390px layout without horizontal overflow; no browser JavaScript errors. Visual review of desktop/mobile captures caught and corrected narrow heading wrapping. Browser evidence is saved under `artifacts/local-verification/game-art/`.
+
+## Copy used in the full-population GUI
+
+Restored unchanged into `services/full-apps/assets/` on 2026-09-26. The local server serves these files at `/assets/`; `experience.mjs` draws the new cute fly and original food sprites at runtime coordinates. `market-garden-v1.png` and `aqua-garden-v1.png` were generated with built-in image_gen for the new market and liquidity contexts. `ux-provenance.json` records their purpose, generation briefs and SHA-256 hashes. Numeric outcomes are always rendered from runtime data, never baked into artwork.
+
+`cute-fly-v1.png` is the shared chibi mascot generated with image_gen on 2026-09-26. The realistic `bioagent.png` is retained only as historical source material and is not displayed. The mascot stays upright with a slight directional lean; learning keeps it still.

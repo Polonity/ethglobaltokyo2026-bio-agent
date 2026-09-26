@@ -139,7 +139,7 @@ const server = http.createServer(async (req, res) => {
           url.pathname.endsWith('.css') ? 'text/css' : 'text/javascript',
         );
       if (
-        /^\/assets\/(terrarium|bioagent|sugar-crystal|market-garden-v1|aqua-garden-v1)\.png$/.test(
+        /^\/assets\/(terrarium|bioagent|cute-fly-v1|sugar-crystal|market-garden-v1|aqua-garden-v1)\.png$/.test(
           url.pathname,
         )
       ) {

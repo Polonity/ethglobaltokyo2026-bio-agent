@@ -28,10 +28,17 @@
       "file": "sugar-crystal.png",
       "sha256": "1bf4a39919e5e278177b48f97392c266102c3d2ac5843a804705e694a196c948",
       "origin": "restored original image_gen 2026-09-23"
+    },
+    {
+      "file": "cute-fly-v1.png",
+      "sha256": "cb6af131d4b068430ce2646281b89bb9f3ab854242d69c1778bafc8eee582031",
+      "origin": "image_gen 2026-09-26",
+      "usage": "Shared visible mascot for all three full apps; supersedes realistic bioagent.png."
     }
   ],
   "generationBriefs": {
     "market-garden-v1.png": "Top-down botanical trading garden with two leaf-and-brass exchange stalls, golden/lavender token trays at edges, dark quiet center for real PnL and sprites. No labels or numerical results.",
-    "aqua-garden-v1.png": "Top-down botanical water laboratory, one shared brass/glass wallet reservoir linked to two offering docks. Quiet center for live choices. No labels or data."
+    "aqua-garden-v1.png": "Top-down botanical water laboratory, one shared brass/glass wallet reservoir linked to two offering docks. Quiet center for live choices. No labels or data.",
+    "cute-fly-v1.png": "Original friendly chibi fly mascot with a round cream marshmallow body, large brown eyes, rosy cheeks, tiny feet, pastel mint wings and amber antenna tips. Transparent background, upright face, no realistic insect anatomy or text."
   }
 }

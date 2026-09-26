@@ -16,7 +16,7 @@ const colors = ['#efbb7e', '#b7c7ff'];
 const assets = Object.fromEntries(
   ['bioagent', 'sugar-crystal'].map((n) => {
     const image = new Image();
-    image.src = `/assets/${n}.png`;
+    image.src = `/assets/${n === 'bioagent' ? 'cute-fly-v1' : n}.png`;
     return [n, image];
   }),
 );
@@ -780,9 +780,10 @@ function drawFly(c, x, y, heading, i, p) {
   c.ellipse(0, 16, 27, 8, 0, 0, Math.PI * 2);
   c.stroke();
   c.shadowBlur = 0;
-  const size = 78;
+  const size = 92;
   c.save();
-  if (app === 'foraging' && !learning) c.rotate(heading + Math.PI / 2);
+  // Keep the mascot face upright; a small lean conveys its actual heading.
+  if (app === 'foraging' && !learning) c.rotate(Math.cos(heading) * 0.12);
   if (assets.bioagent.complete && assets.bioagent.naturalWidth)
     c.drawImage(assets.bioagent, -size / 2, -size / 2, size, size);
   c.restore();
