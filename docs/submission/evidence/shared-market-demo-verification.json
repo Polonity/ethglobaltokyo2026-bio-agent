@@ -1,0 +1,222 @@
+{
+  "recordedAt": "2026-09-26T05:06:47.021Z",
+  "before": {
+    "tick": 24,
+    "routes": {
+      "Aqua": 12,
+      "Uniswap V3": 35
+    }
+  },
+  "after": {
+    "tick": 32,
+    "routes": {
+      "Aqua": 17,
+      "Uniswap V3": 46
+    },
+    "metrics": {
+      "neuralMs": 363.201719999779,
+      "cycleMs": 2506.4815970000345,
+      "peakRSSMiB": 443.1484375,
+      "neuronsPerFly": 166700,
+      "connections": 25582938,
+      "active": [
+        166391,
+        166407,
+        166443,
+        166443
+      ]
+    },
+    "pnl": [
+      -0.7068403526303086,
+      -1.4692429538629312,
+      -0.527026249184928
+    ],
+    "flies": [
+      {
+        "name": "MOMO",
+        "role": "maker",
+        "status": "wide",
+        "updates": 33,
+        "id": "1790399180804326519-0",
+        "individual": 0,
+        "action": 1,
+        "scores": [
+          -0.2386139885972035,
+          0.36068862878669566,
+          0.21382018493070068
+        ],
+        "exploration": false,
+        "policyHash": "0xf5b771562b2e46b2b4b5ed94656051648217bc2dcf5ccc77ff808aa7bcbbbee6",
+        "spread": 80,
+        "reward": 0.015932820140843296
+      },
+      {
+        "name": "SORA",
+        "role": "maker",
+        "status": "wide",
+        "updates": 33,
+        "id": "1790399180804704222-1",
+        "individual": 1,
+        "action": 1,
+        "scores": [
+          -0.26295813538533114,
+          0.38295813538533113,
+          0.23851971160187516
+        ],
+        "exploration": false,
+        "policyHash": "0xc71267828ff04aeda7a2ddbad8b57d050a6c9f5c5273873b37ac8c631e5d60ca",
+        "spread": 80,
+        "reward": 0
+      },
+      {
+        "name": "KOHARU",
+        "role": "trader",
+        "status": "sell",
+        "updates": 33,
+        "id": "1790399182169506806-2",
+        "individual": 2,
+        "action": 2,
+        "scores": [
+          0.06,
+          0.40634436496829374,
+          0.41734471243240556
+        ],
+        "exploration": false,
+        "policyHash": "0xd4c757e47f2369622238bb89855aaca5cd36464e75cae92a1f8f8c161658b7e9",
+        "target": 0.7,
+        "route": "Uniswap V3",
+        "reward": 0.07496930675640767
+      },
+      {
+        "name": "HINATA",
+        "role": "trader",
+        "status": "sell",
+        "updates": 33,
+        "id": "1790399182169925841-3",
+        "individual": 3,
+        "action": 2,
+        "scores": [
+          0.06,
+          0.37122114629630365,
+          0.3792471910093313
+        ],
+        "exploration": false,
+        "policyHash": "0x1d211f5d9885ffcb85e8e16b6e0e44e437e046f8713bcfdaa4bede5b0d0e141d",
+        "target": 0.3,
+        "route": "Aqua",
+        "reward": -0.10745646476915727
+      }
+    ]
+  },
+  "newRoutes": {
+    "Aqua": 5,
+    "Uniswap V3": 11
+  },
+  "receipt": {
+    "hash": "0xf668dc2f66eb59ea65c761cda34a296ae01dc9f27a0d26c8fdb2dc8db146c7d8",
+    "block": 26060581,
+    "status": 1,
+    "gasUsed": "127865",
+    "logs": [
+      {
+        "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9",
+          "0x000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000"
+      },
+      {
+        "address": "0x5D7851E545452467726B57503DD053921F7739aC",
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046",
+          "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000001bc16d674ec80000"
+      },
+      {
+        "address": "0x1111113CCf1426A8E30e2bfF5E005d929bF6a90a",
+        "topics": [
+          "0x3f18354abbd5306dd1665c2c90f614a4559e39dd620d04fbe5458e613b6588f3"
+        ],
+        "data": "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046d57b5d0b85252a91bc54aff217d0e1291ea8e001404855e6b30409c385b4b1e00000000000000000000000005d7851e545452467726b57503dd053921f7739ac0000000000000000000000000000000000000000000000001bc16d674ec80000"
+      },
+      {
+        "address": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65",
+          "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000001b6afd1f482c5c00"
+      },
+      {
+        "address": "0x1111113CCf1426A8E30e2bfF5E005d929bF6a90a",
+        "topics": [
+          "0x3ad61047071575417c75e3311e5d46ff042e292b5dd8769ff18b4b254098ca7a"
+        ],
+        "data": "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65000000000000000000000000f8c6da1f8046acc28ae41fdbd3467dd77fe93046d57b5d0b85252a91bc54aff217d0e1291ea8e001404855e6b30409c385b4b1e0000000000000000000000000e77e534351d431a9f695fcc04ebe422f72a1ff420000000000000000000000000000000000000000000000001b6afd1f482c5c00"
+      },
+      {
+        "address": "0xF8c6dA1F8046acc28AE41fDbd3467DD77fe93046",
+        "topics": [
+          "0xc88f3fd8df2c786e330e638e87197fa3b93d179aeefb190fe49681055e459ad9",
+          "0x00000000000000000000000015d34aaf54267db7d7c367839aaf71a00a2c6a65",
+          "0xd57b5d0b85252a91bc54aff217d0e1291ea8e001404855e6b30409c385b4b1e0",
+          "0x000000000000000000000000976ea74026e726554db657fa54763abd0c3a0aa9"
+        ],
+        "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001b6afd1f482c5c00"
+      }
+    ]
+  },
+  "browserErrors": [],
+  "cues": [
+    {
+      "start": 0.162,
+      "title": "bioAgent | A living shared market",
+      "detail": "Four MaleCNS agents. One token pair. Real transactions on a local Ethereum fork."
+    },
+    {
+      "start": 5.743,
+      "title": "MOMO + SORA | Liquidity makers",
+      "detail": "Two strategies share one wallet and publish, widen or withdraw their Aqua offers."
+    },
+    {
+      "start": 11.495,
+      "title": "KOHARU + HINATA | Independent traders",
+      "detail": "Target holdings stimulate each fly. Buy and sell orders compare Aqua with Uniswap V3."
+    },
+    {
+      "start": 18.998,
+      "title": "Executable quotes determine the route",
+      "detail": "The same ERC20 pair is exchanged on both venues. Routing maximizes token output before gas."
+    },
+    {
+      "start": 26.499,
+      "title": "Observe, act, learn",
+      "detail": "166,700 MaleCNS neurons per fly. Confirmed outcomes update an experimental action readout."
+    },
+    {
+      "start": 34.676,
+      "title": "Honest portfolio accounting",
+      "detail": "PnL is marked in the displayed test token, including swap costs. Gas is separate, in ETH."
+    },
+    {
+      "start": 38.46,
+      "title": "A real transaction, not an animation",
+      "detail": "Inspect the confirmed receipt, input and output tokens, route, quote and gas used."
+    },
+    {
+      "start": 46.12,
+      "title": "Traceable biology meets on-chain execution",
+      "detail": "Inspect the official Aqua address, shared token pair, neural workload and policy hashes."
+    },
+    {
+      "start": 53.695,
+      "title": "A sandbox for bio-inspired agents",
+      "detail": "Artificial demand, experimental learning, real local token transfers. No profitability claim."
+    }
+  ]
+}

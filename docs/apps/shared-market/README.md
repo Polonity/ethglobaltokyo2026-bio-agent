@@ -1,5 +1,7 @@
 # Shared Market — 4匹のハエが同じ市場で実売買する
 
+[60秒の英語デモ動画](../../submission/evidence/shared-market-demo-en.mp4) / [収録内容・再現手順](../../demo-video.md)
+
 新しい統合モード: **http://127.0.0.1:8814/**。元の採餌・ペーパートレード・Aqua提出デモ（8812/8813）は残しています。このページは新モード専用です。
 
 ![4匹の共有市場の実画面](screen-en.png)

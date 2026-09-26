@@ -1,4 +1,33 @@
-# 最新版：Aqua 英語デモ（現在のUI）
+# 最新版：4匹の共有市場デモ
+
+2026-09-26収録。**60秒・英語GUI＋英語字幕・音声なし**。1600×1120、30fps、H.264 / faststart、約8.9 MB。
+
+**[動画を再生・ダウンロード](submission/evidence/shared-market-demo-en.mp4)** / [収録中の実TX・学習状態](submission/evidence/shared-market-demo-verification.json) / [英語字幕SRT](submission/evidence/shared-market-demo-en.srt)
+
+現在のアプリ http://127.0.0.1:8814/ を実操作しました。MOMO/SORAのAqua提示とKOHARU/HINATAの実売買、取引先比較、評価損益、実TXモーダル、MaleCNS・policy情報を約1分で紹介します。字幕はGUIを隠さない下部専用帯に表示しています。
+
+収録中の8周期で **Aqua 5約定・Uniswap V3 11スワップ**が新規に成立しました。モーダルに表示するTXも今回成立したものです。既存の累積カウンターはリセットせず、そのまま収録しています。全4個体のMaleCNS（166,700神経/個体）と実結果からのオンラインreadout更新を使い、利益や数値を映像用に作り替えていません。ブラウザ例外なし、完成MP4の全編デコードと主要場面を確認済みです。
+
+| 時間の目安 | 内容 |
+| --- | --- |
+| 0–6秒 | 4匹・共通市場の概要 |
+| 6–19秒 | 提示側2匹と売買側2匹の役割 |
+| 19–35秒 | 経路比較、神経判断、実約定と学習 |
+| 35–39秒 | 評価損益とガス代の区別 |
+| 39–46秒 | 今回成立したAqua取引のreceipt |
+| 46–54秒 | 公式Aqua、共通通貨、全神経の計測とpolicy情報 |
+| 54–60秒 | 実験の位置づけ |
+
+ローカルEthereumフォーク内のテスト通貨交換です。人工需要と実験的オンライン学習を使い、公開市場での需要・利益・生物学的妥当性の検証を主張しません。詳しくは[実画面付き説明書](apps/shared-market/README.md)。
+
+再収録は共有市場サーバーが起動・一時停止中で、既存の取引がある状態で実行します。約30秒間、実際のローカル取引を再開します。終了後は停止します。
+
+```sh
+node scripts/full/record-shared-market.mjs
+# artifacts/shared-market-demo/shared-market-demo-en.mp4
+```
+
+# アーカイブ：2個体Aqua 英語デモ
 
 2026-09-26収録。**61.04秒・英語GUI＋説明テロップ・音声なし**。1600×1050、H.264 / faststart。
 

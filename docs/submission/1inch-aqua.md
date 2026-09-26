@@ -1,6 +1,6 @@
 # 1inch submission — BioAgent Aqua
 
-> 追加実装: [4匹の共有市場・実画面・検証](../apps/shared-market/README.md)（8814）。同じERC20ペアで、2匹のAqua提示と2匹の実注文を接続しました。この文書の既存動画・8813の証拠は従来2個体デモのものです。
+> 追加実装: [4匹の共有市場・実画面・検証](../apps/shared-market/README.md)（8814）。同じERC20ペアで、2匹のAqua提示と2匹の実注文を接続しました。[新しい4個体の60秒デモ](evidence/shared-market-demo-en.mp4)も用意しました。この文書の従来動画・8813の証拠は2個体デモのものです。
 
 **提出の要点：MOMOとSORAのMaleCNSベースの判断が、同じ自己管理ウォレットに結び付く2つのAqua戦略を更新する。公式AquaのEthereum配置をlocal forkで利用し、テストトークンの実決済を示す。**
 

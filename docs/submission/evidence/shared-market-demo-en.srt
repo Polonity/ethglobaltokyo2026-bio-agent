@@ -1,0 +1,44 @@
+1
+00:00:00,000 --> 00:00:05,743
+bioAgent | A living shared market
+Four MaleCNS agents. One token pair. Real transactions on a local Ethereum fork.
+
+2
+00:00:05,743 --> 00:00:11,495
+MOMO + SORA | Liquidity makers
+Two strategies share one wallet and publish, widen or withdraw their Aqua offers.
+
+3
+00:00:11,495 --> 00:00:18,998
+KOHARU + HINATA | Independent traders
+Target holdings stimulate each fly. Buy and sell orders compare Aqua with Uniswap V3.
+
+4
+00:00:18,998 --> 00:00:26,499
+Executable quotes determine the route
+The same ERC20 pair is exchanged on both venues. Routing maximizes token output before gas.
+
+5
+00:00:26,499 --> 00:00:34,676
+Observe, act, learn
+166,700 MaleCNS neurons per fly. Confirmed outcomes update an experimental action readout.
+
+6
+00:00:34,676 --> 00:00:38,460
+Honest portfolio accounting
+PnL is marked in the displayed test token, including swap costs. Gas is separate, in ETH.
+
+7
+00:00:38,460 --> 00:00:46,120
+A real transaction, not an animation
+Inspect the confirmed receipt, input and output tokens, route, quote and gas used.
+
+8
+00:00:46,120 --> 00:00:53,695
+Traceable biology meets on-chain execution
+Inspect the official Aqua address, shared token pair, neural workload and policy hashes.
+
+9
+00:00:53,695 --> 00:00:59,261
+A sandbox for bio-inspired agents
+Artificial demand, experimental learning, real local token transfers. No profitability claim.
