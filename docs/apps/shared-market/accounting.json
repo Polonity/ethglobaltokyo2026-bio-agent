@@ -1,0 +1,87 @@
+{
+  "checkedAt": "2026-09-26T04:53:12.843Z",
+  "fork": {
+    "schema": "bioagent.official-aqua-fork.v1",
+    "chainId": 1,
+    "blockNumber": 26058941,
+    "blockHash": "0x08428251d0788f21b4c5ff641416c3918ec76bf1a43ef899d11c597580c1329c",
+    "aqua": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+    "codeHash": "0x720bc02d220db318164dc3bade86eec1f3655bdc00fc1174de7d816a95c341f8",
+    "deploymentSource": "https://github.com/1inch/aqua#deployments",
+    "checkedAt": "2026-09-26T03:45:10.048Z"
+  },
+  "cycles": 24,
+  "transfers": [
+    {
+      "wallet": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+      "token": "0x5D7851E545452467726B57503DD053921F7739aC",
+      "rawBalance": "100026951726973461518",
+      "transferLogs": 56,
+      "reconciled": true
+    },
+    {
+      "wallet": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+      "token": "0x5D7851E545452467726B57503DD053921F7739aC",
+      "rawBalance": "139762329912095864205",
+      "transferLogs": 56,
+      "reconciled": true
+    },
+    {
+      "wallet": "0x976ea74026e726554db657fa54763abd0c3a0aa9",
+      "token": "0x5D7851E545452467726B57503DD053921F7739aC",
+      "rawBalance": "57990473254188431553",
+      "transferLogs": 56,
+      "reconciled": true
+    },
+    {
+      "wallet": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+      "token": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+      "rawBalance": "100029535049902428000",
+      "transferLogs": 56,
+      "reconciled": true
+    },
+    {
+      "wallet": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+      "token": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+      "rawBalance": "59971123075896526463",
+      "transferLogs": 56,
+      "reconciled": true
+    },
+    {
+      "wallet": "0x976ea74026e726554db657fa54763abd0c3a0aa9",
+      "token": "0xe77E534351d431a9F695fCc04ebe422F72a1ff42",
+      "rawBalance": "142005134805637834984",
+      "transferLogs": 56,
+      "reconciled": true
+    }
+  ],
+  "traces": [
+    {
+      "route": "Aqua",
+      "hash": "0x2b08349c07283e553be20968ca67a3839d8c6e5ff3022cc290b9ae5568676e8c",
+      "target": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+      "receiptEvents": [
+        "Pushed(address,address,bytes32,address,uint256)",
+        "Pulled(address,address,bytes32,address,uint256)"
+      ],
+      "trace": "unavailable: Anvil historical bytecode lookup; receipt events verified instead"
+    },
+    {
+      "route": "Uniswap V3",
+      "hash": "0x650e88cf3cee6cf918011a792ae14584f6e21a0e421eaf489f9a63076b51e541",
+      "target": "0x5edbcfe589b4725f6be625f6efd46b3d16a2c80d",
+      "receiptEvents": [
+        "Swap(address,address,int256,int256,uint160,uint128,int24)"
+      ],
+      "trace": "unavailable: Anvil historical bytecode lookup; receipt events verified instead"
+    }
+  ],
+  "resources": {
+    "neuronsPerFly": 166700,
+    "flies": 4,
+    "medianNeuralMs": 336.75728499656543,
+    "maxNeuralMs": 349.9146410031244,
+    "peakRSSMiB": 443.1484375
+  },
+  "scope": "Local fork transactions only; reconciliation is not profitability or biological validation."
+}

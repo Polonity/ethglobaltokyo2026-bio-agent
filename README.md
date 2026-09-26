@@ -1,5 +1,7 @@
 # Bio Agent — ETHGlobal Tokyo 2026
 
+**新しい共有市場（4匹）:** [説明書・実画面・実売買の検証](docs/apps/shared-market/README.md)。`npm run shared:dev` → http://127.0.0.1:8814/ 。MOMO/SORAが公式Aquaへ提示し、KOHARU/HINATAが同じ通貨のUniswap/Aquaを比較して実売買します。全166,700神経/個体、独立状態・オンラインreadout更新。ローカルフォーク専用です。
+
 **[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](docs/submission/1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
