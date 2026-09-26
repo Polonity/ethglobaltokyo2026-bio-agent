@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>
+    bioAgent · Shared Market</title
+  ><link rel="stylesheet" href="/style.css" />
+  <body>
+    <header>
+      <strong>bioAgent <span>shared market</span></strong>
+      <div>
+        <span id="network"></span
+        ><select id="language" aria-label="Language">
+          <option value="system">System</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option></select
+        ><button id="help">ⓘ</button>
+      </div>
+    </header>
+    <main>
+      <section id="world">
+        <div class="intro">
+          <small id="eyebrow"></small>
+          <h1 id="title"></h1>
+          <p id="subtitle"></p>
+        </div>
+        <div class="venue aqua"><b>1inch Aqua</b><small id="aqua-label"></small></div>
+        <div class="venue uni"><b>Uniswap V3</b><small id="uni-label"></small></div>
+        <div id="flies"></div>
+        <div id="flow"></div>
+        <div class="price card"><span id="price-label"></span><b id="price"></b></div>
+      </section>
+      <aside>
+        <section class="card">
+          <h2 id="summary-title"></h2>
+          <div id="scores"></div>
+          <canvas id="chart" width="500" height="150" aria-label="Portfolio PnL history"></canvas
+          ><small id="pnl-note"></small>
+        </section>
+        <section class="card controls">
+          <h2 id="control-title"></h2>
+          <p id="status"></p>
+          <div><button id="start"></button><button id="stop"></button></div>
+          <label
+            >KOHARU <input id="target0" type="range" min="10" max="90" value="70" /><output id="value0"
+              >70%</output
+            ></label
+          ><label
+            >HINATA <input id="target1" type="range" min="10" max="90" value="30" /><output id="value1"
+              >30%</output
+            ></label
+          ><small id="target-note"></small><button id="apply"></button>
+        </section>
+        <section class="card">
+          <h2 id="fills-title"></h2>
+          <div id="fills"></div>
+          <button id="details"></button>
+        </section>
+      </aside>
+    </main>
+    <dialog id="modal">
+      <button id="close">×</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-body"></div>
+    </dialog>
+    <script type="module" src="/app.mjs"></script>
+  </body>
+</html>

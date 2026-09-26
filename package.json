@@ -51,7 +51,9 @@
     "docs:apps": "node scripts/build-app-guides.mjs",
     "test:guides": "node scripts/check-app-guides.mjs",
     "submission:aqua": "node scripts/submission/aqua-fork-up.mjs",
-    "test:submission:aqua": "node --test tests/aqua-fork.test.mjs && node scripts/submission/verify-aqua-fork.mjs"
+    "test:submission:aqua": "node --test tests/aqua-fork.test.mjs && node scripts/submission/verify-aqua-fork.mjs",
+    "shared:dev": "node services/shared-market/server.mjs",
+    "test:shared": "forge test --root contracts --match-path test/SharedFlyMarket.t.sol && node scripts/full/check-shared-market.mjs && node scripts/full/audit-shared-market.mjs"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "5.4.0",

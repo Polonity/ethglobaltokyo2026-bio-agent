@@ -1,10 +1,10 @@
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
 export class BrainClient {
-  constructor() {
+  constructor(module = 'packages.bio_agent.full_apps') {
     this.nextId = 0;
     this.pending = new Map();
-    this.child = spawn('.local/connectome-tools/bin/python', ['-m', 'packages.bio_agent.full_apps'], {
+    this.child = spawn('.local/connectome-tools/bin/python', ['-m', module], {
       stdio: ['pipe', 'pipe', 'inherit'],
       env: { ...process.env, OPENBLAS_NUM_THREADS: '1', OMP_NUM_THREADS: '1' },
     });
