@@ -1,6 +1,8 @@
-# Biological Agent Protocol — English subtitle script
+# Biological Agent Protocol — English spoken demo script
 
-Companion to the Japanese human narration. Approximate 3:25 structure, not final subtitle timing. Align captions to the presenter's actual recording and the visible actions. No synthetic voiceover. Bracketed directions are not spoken.
+This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:25 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
+
+Read one short line at a time and leave room for the GUI. MOMO: MOH-moh. SORA: SOH-rah. Use a calm conversational voice for explanations and a brighter sports-commentary voice for the approach and collection. Do not rush to imitate a professional race caller.
 
 ## 0:00–0:25 · What if this fly ran on onchain data?
 
@@ -55,8 +57,9 @@ Let's try it again.
 
 [Normal speed; speak after the movement appears]
 
-The stimulus is in.
-MOMO is moving. SORA follows.
+The stimulus is confirmed.
+MOMO is moving.
+And here comes SORA.
 
 This time, they're getting closer to food.
 
@@ -67,8 +70,9 @@ Let's slow that down for a closer look.
 MOMO is almost there…
 Got it! The counter is up to one.
 
-Now, what about SORA?
-Getting closer… and got it!
+Now, SORA!
+Closer… closer…
+And got it!
 One food item each.
 
 [Show the counters; return to an explanatory tone]
