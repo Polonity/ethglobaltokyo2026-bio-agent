@@ -1,0 +1,57 @@
+{
+  "schema": "bioagent.research-protocol.v1",
+  "purpose": "Determine learning effects and concrete benefits/limits of shared BioAgent interfaces, including negative results",
+  "scope": "Offline simulations and isolated local EVM tests; no live service changes or real trading",
+  "lightForaging": {
+    "trainingSeeds": [261001,261019,261037,261053,261071],
+    "collectionTicksPerRound": 80,
+    "learningStepsPerRound": 960,
+    "rounds": 5,
+    "checkpoints": [1,3,5],
+    "selectionSeeds": [262001,262003,262007,262009,262013,262027,262031,262037,262049,262051],
+    "testSeeds": [263001,263003,263007,263009,263011,263017,263023,263029,263033,263039,263041,263047,263051,263057,263063,263069,263071,263077,263081,263087],
+    "episodeTicks": 300,
+    "profiles": [{"name":"default","stimulus":0.55,"energy":0.7},{"name":"higher-stimulus-lower-supply","stimulus":0.9,"energy":0.35}],
+    "variants": ["existing-adoption","constrained-selection"],
+    "constrainedSelection": "Existing internal adoption must pass; on ten additional selection seeds require higher mean reward, nondecreasing food, and nonincreasing contacts. Otherwise retain prior policy. Experimental external gate, not a production change.",
+    "primaryOutcome": "Held-out reward increase with no mean contact increase; report food, collisions, all training seeds and all checkpoints",
+    "limitations": "Fixed engineered reward; five trained policies; same synthetic task; cannot establish biological-topology superiority"
+  },
+  "fullForaging": {
+    "trainingSeeds": [264001,264019,264037],
+    "collectionTicks": 200,
+    "selectionSeed": 265001,
+    "evaluationTicks": 80,
+    "testSeeds": [266001,266019],
+    "variants": ["untrained-full","adopted-full","engineered-greedy-input"],
+    "primaryOutcome": "Held-out cumulative reward; report food and contacts alongside; two agents share a world so the episode, not each fly, is the independent unit",
+    "limitations": "Exploratory small sample; artificial mappings; learning changes readout, not biological connectivity; zero-readout baseline has no learned prior"
+  },
+  "market": {
+    "trainingSeeds": [267001,267019,267037],
+    "collectionEvents": 360,
+    "regimes": ["up","down","oscillating"],
+    "testSeeds": [268001,268019,268037,268053,268071],
+    "testEvents": 180,
+    "variants": ["frozen-prior","trained-readout"],
+    "execution": "Synthetic constant-product quote with fixed 100000-token1 depth anchored to generated prices, 0.3% pool fee, existing 0.001-token1 paper gas. Not Uniswap V3 execution or historical replay.",
+    "primaryOutcome": "Final liquidatable paper equity versus identical frozen-prior run; prediction MSE is not profit",
+    "limitations": "Synthetic prices and quotes; three engineered personalities share code but not a market; no real market or Uniswap cost claims"
+  },
+  "aqua": {
+    "agents": [1,2,3],
+    "trainingRounds": 5,
+    "risks": [500,1500,2500,3500,4500,5500,6500,7500,8500,9500],
+    "variants": ["initial-gain","trained-gain","known-target-rule"],
+    "primaryOutcome": "Error to declared artificial target risk*0.24; action/spread changes and preserved raw-response hard gate",
+    "limitations": "Known target rule is an oracle-by-construction diagnostic, not a competitive trading strategy; calibration is not market learning"
+  },
+  "interfaces": {
+    "runtime": "Same observe/step/snapshot loop over ForagingBioAgent, UniswapPriceBioAgent, UniswapSwapBioAgent, using explicit fixtures",
+    "negativeControl": "Two runtime adapters sharing one Arena: per-agent stepping versus per-environment scheduling",
+    "onchain": "One IBioAgent status update invalidates old-revision strategies in AquaFlyApp and SharedAquaFlyApp; another agent remains usable",
+    "reuse": "Same existing export/restore helper for foraging and market; cross-task/model artifacts must be rejected",
+    "limits": "Solidity IBioAgent is not the JavaScript superclass; applications do not all inherit one learning engine; no external full-profile interoperability claim"
+  },
+  "reporting": "Keep every run including regressions and no-effect. Report descriptive paired results; no post-hoc best-seed pitch. All protocol modifications or harness repairs must be logged. New confirmatory claims need new unseen conditions."
+}
