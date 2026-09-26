@@ -9,6 +9,7 @@ import numpy as np
 
 from .brain import BrainPool, APPS, digest
 from .learning import ExperienceStore, ACTIONS
+from .action_selection import select_action
 from packages.bio_agent.full.model import ROOT
 
 
@@ -55,10 +56,11 @@ def main():
             if candidate and phase not in ('selection','test'): raise ValueError('Candidate requires evaluation phase')
             policy=store.policy(app,variant,agent,len(features),candidate)
             scores=store.scores(policy,features)
-            action=int(rng.choice(allowed[agent]) if rng.random()<epsilon else max(allowed[agent],key=lambda a:scores[a]))
+            action, selection_mode = select_action(scores, allowed[agent], rng, epsilon)
             identifier=store.decision(app,variant,agent,session,phase,features,action,policy['version'],observations[agent],{**data.get('source',{}),'policyHash':digest(policy)})
             decisions.append({'id':identifier,'agent':agent,'action':action,'policyVersion':policy['version'],
-                              'candidateHash':candidate,'policyHash':digest(policy),'scores':scores.tolist()})
+                              'candidateHash':candidate,'policyHash':digest(policy),'scores':scores.tolist(),
+                              'selectionMode':selection_mode,'explorationRate':epsilon})
         neural['processPeakRSSMiB']=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024
         return {'neural':neural,'decisions':decisions}
     print(json.dumps({'ready':True,'brainHash':brain.hash}),flush=True)

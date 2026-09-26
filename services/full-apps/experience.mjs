@@ -53,7 +53,7 @@ function phase(p) {
   return (
     {
       live: t('観察中', 'Observing'),
-      collect: t('経験を集めています', 'Collecting experience'),
+      collect: t('ランダム探索で経験を収集中', 'Collecting: random exploration'),
       training: t('学び直し中', 'Learning'),
       selection: t('学習結果を比べています', 'Comparing policies'),
       test: t('新しい条件で確認中', 'Testing new conditions'),
