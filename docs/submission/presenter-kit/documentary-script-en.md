@@ -1,14 +1,14 @@
 # Biological Agent Protocol — English spoken demo script
 
-This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:46 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
+This is the primary script for the presenter's own English narration, also used for supporting English captions. The Japanese file is for comprehension only. Approximate 3:56 structure; actual speaking time and subtitle timing must be checked against the human recording. No synthetic voiceover. Bracketed directions are not spoken.
 
 Short-language revision: 235 written words; leave silent pauses rather than filling the entire timeline. Read product identifiers naturally; AMD Ryzen 9 9950X = “AMD Ryzen nine, ninety-nine fifty X.”
 
 Read one short line at a time and leave room for the GUI. MOMO: MOH-moh. SORA: SOH-rah. Use a calm conversational voice for explanations and a brighter sports-commentary voice for the approach and collection. Do not rush to imitate a professional race caller.
 
-## 0:00–0:25 · What if this fly ran on onchain data?
+## 0:00–0:30 · What if this fly ran on onchain data?
 
-[0:00–0:15 · Official MaleCNS project webpage screenshot. At 0:15, cut to the GUI as MOMO and SORA are introduced.]
+[0:00–0:20 · Official MaleCNS project webpage screenshot. First 5 seconds: greeting pause without captions. At 0:20, cut to the GUI as MOMO and SORA are introduced.]
 
 This is MaleCNS v1.0: a map of a fruit fly's neural connections.
 
@@ -19,7 +19,7 @@ Meet MOMO and SORA.
 
 Let's send them a stimulus.
 
-## 0:25–0:50 · First, a failed attempt
+## 0:30–0:55 · First, a failed attempt
 
 [Earlier implementation]
 
@@ -34,7 +34,7 @@ There goes MOMO.
 
 We found a bug: tied scores always picked right.
 
-## 0:50–1:51 · The Biological Agent Protocol
+## 0:55–1:56 · The Biological Agent Protocol
 
 [Switch from GUI to the 42-second stimulus-to-action animation. Speak each line as its numbered stage is highlighted; do not read the arrows aloud.]
 
@@ -62,7 +62,7 @@ We save actions and rewards for training.
 Training runs on an AMD Ryzen 9 9950X CPU.
 Let's try again.
 
-## 1:51–2:31 · MOMO and SORA try again
+## 1:56–2:36 · MOMO and SORA try again
 
 [Normal speed; speak after the movement appears]
 
@@ -86,7 +86,7 @@ Got it!
 One each.
 Does it work in other layouts?
 
-## 2:31–2:56 · What worked—and what remains unresolved
+## 2:36–3:01 · What worked—and what remains unresolved
 
 [Recorded validation results]
 
@@ -97,7 +97,7 @@ Hazard avoidance still needs work.
 
 We measured both success and failure.
 
-## 2:56–3:21 · Beyond the terrarium
+## 3:01–3:26 · Beyond the terrarium
 
 [Separate verified market recording]
 
@@ -108,9 +108,9 @@ Here are the ERC-20 transfers.
 
 [On-screen label: Test assets · Ethereum fork]
 
-## 3:21–3:46 · Our proposal
+## 3:26–3:56 · Our proposal
 
-[Show the 24-second protocol-design animation. Keep the model credits visible in its footer.]
+[Show the 24-second protocol-design animation, then hold its final frame. 3:51–3:56 is a closing greeting pause without captions. Keep the model credits visible in its footer.]
 
 [0–6 s · IBioAgent]
 Here is our design.

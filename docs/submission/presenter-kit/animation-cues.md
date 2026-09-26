@@ -1,6 +1,6 @@
 # 刺激から行動へ — アニメーションと読み上げ
 
-本番は英語の本人音声。日本語は理解用。台本の0:50から42秒の説明アニメーションを挿入し、その後GUIに戻す。各段階のセリフは [英語台本](documentary-script-en.md) と [日本語対訳](documentary-script-ja.md) に記載。収録音声に合わせて各段階の尺を調整する。行動評価の段階だけ12秒、他は6秒ずつのリハーサル用。
+本番は英語の本人音声。日本語は理解用。台本の0:55から42秒の説明アニメーションを挿入し、その後GUIに戻す。各段階のセリフは [英語台本](documentary-script-en.md) と [日本語対訳](documentary-script-ja.md) に記載。収録音声に合わせて各段階の尺を調整する。行動評価の段階だけ12秒、他は6秒ずつのリハーサル用。
 
 [ブラウザで再生・日本語切り替え](visuals/stimulus-to-action.html)。シークで各場面を確認可能。
 
@@ -40,7 +40,7 @@
 
 ## 最後の24秒：今回の設計
 
-[設計アニメーション](visuals/protocol-design.html)を3:21から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は後半12秒間フッターに表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
+[設計アニメーション](visuals/protocol-design.html)を3:26から表示。IBioAgent → IBioAgentStimulus → フレームワーク → アプリの順に6秒ずつ強調する。出典は後半12秒間フッターに表示。本人音声の字幕はフッターや各箱に重ねず、最終編集で別の余白を確保する。
 
 - `IBioAgent`：`getStatus()` / `updateStatus()`。入力条件の共通化であり、計算済みの神経状態を書き戻すAPIではない。
 - `IBioAgentRegistry extends IBioAgent`：個体・モデルの登録。`BioAgentRegistry`はこのinterfaceと`IBioAgentWallet`を実装。
@@ -57,6 +57,6 @@
 
 ## 通し動画
 
-`node scripts/submission/render-documentary.mjs` で日英の3分46秒の編集確認版を再生成する。映像・字幕・出典を結合するが、本人音声は未収録。`artifacts/documentary/production.json` に元映像のSHA-256、切り出し範囲、再生倍率と完成ファイルを記録する。
+`node scripts/submission/render-documentary.mjs` で日英の3分56秒の編集確認版を再生成する。映像・字幕・出典を結合するが、本人音声は未収録。`artifacts/documentary/production.json` に元映像のSHA-256、切り出し範囲、再生倍率と完成ファイルを記録する。
 
 処理図は左から右へ並ぶ層形式へ更新。MaleCNS部分は再帰接続として描く。図内の矢印はデータの受け渡しであり、全体が誤差逆伝播で学習するフィードフォワードネットワークであることを意味しない。
