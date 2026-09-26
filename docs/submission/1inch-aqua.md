@@ -5,7 +5,8 @@
 ## 今回の確認結果と提出リンク
 
 - **コード**：[Polonity/ethglobaltokyo2026-bio-agent](https://github.com/Polonity/ethglobaltokyo2026-bio-agent)
-- **英語デモ（46.84秒）**：[公式Aqua forkでの判断と実決済](evidence/aqua-official-fork-en.mp4)
+- **最新の説明付き英語デモ（61.04秒）**：[現在のAqua UIと実決済](evidence/aqua-current-demo-en.mp4)。[この収録の検証結果](evidence/aqua-current-demo-verification.json)
+- **初回の証拠収録（46.84秒）**：[公式Aqua forkでの判断と実決済](evidence/aqua-official-fork-en.mp4)
 - **固定fork**：Ethereum block **26,058,941**。[ブロック・コードhash](evidence/upstream.json)
 - **実GUI**：MOMO/SORAが各166,700神経で19ステップ。10件の交換、70件のship/dockイベントを確認。
 - **決済証拠**：全Transferをmaker/taker残高差分に照合。代表TXのcall traceは `safeBalances → push → pull`。[検証JSON](evidence/verification.json)

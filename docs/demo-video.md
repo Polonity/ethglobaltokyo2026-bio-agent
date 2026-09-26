@@ -1,6 +1,18 @@
+# 最新版：Aqua 英語デモ（現在のUI）
+
+2026-09-26収録。**61.04秒・英語GUI＋説明テロップ・音声なし**。1600×1050、H.264 / faststart。
+
+**[動画を再生・ダウンロード](submission/evidence/aqua-current-demo-en.mp4)** / [今回のTX・policy・残高照合](submission/evidence/aqua-current-demo-verification.json)
+
+かわいいMOMO/SORAの選択 → 同じウォレットでの提示 → 公式AquaのEthereum fork → 成功receiptのトークン移動 → 結び、の順です。現在の提出用GUI `http://127.0.0.1:8813/aqua` を実操作しました。各166,700神経、10件の交換を検証し、数値を映像用に作り替えていません。学習済みpolicyを利用しており、収録中の再学習ではありません。local fork内のテストトークン取引です。
+
+```sh
+AQUA_DEMO_CAPTIONS=1 AQUA_EVIDENCE_OUTPUT=artifacts/aqua-current-demo-20260926 node scripts/submission/verify-aqua-fork.mjs
+```
+
 > UI刷新後の画面は[観察中心のUI](design/player-experience.md)を参照。以下の既存動画は刷新前のUIの記録です。収録スクリプトは詳細モーダルに対応しましたが、このUI変更では動画は再生成していません。
 
-# 最新版：全MaleCNS・3アプリ別の英語デモ
+# アーカイブ：全MaleCNS・3アプリ別の英語デモ
 
 2026-09-26の画像付きゲーム説明書を含む全神経GUIを、実際に操作して収録しています。英語GUI・英語字幕、音声なし、1600×1100 H.264 / faststart。各動画は約1分です。
 

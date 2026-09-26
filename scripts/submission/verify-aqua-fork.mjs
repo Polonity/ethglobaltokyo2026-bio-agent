@@ -6,7 +6,9 @@ import { Contract, Interface } from 'ethers';
 import { JsonRpcProvider } from 'ethers';
 import { verifyAquaFork } from '../../services/full-apps/fork.mjs';
 const base = 'http://127.0.0.1:8813',
-  out = 'artifacts/aqua-fork';
+  out = process.env.AQUA_EVIDENCE_OUTPUT || 'artifacts/aqua-fork';
+const captioned = process.env.AQUA_DEMO_CAPTIONS === '1';
+const chapters = [];
 await mkdir(`${out}/video`, { recursive: true });
 const provider = new JsonRpcProvider('http://127.0.0.1:18551');
 const upstream = await verifyAquaFork(provider, '.local/aqua-fork/upstream.json');
@@ -61,18 +63,51 @@ const page = await context.newPage(),
   video = page.video(),
   errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
+const recordingStart = performance.now();
+async function caption(title, detail) {
+  if (!captioned) return;
+  chapters.push({ seconds: (performance.now() - recordingStart) / 1000, title, detail });
+  await page.evaluate(
+    ({ title, detail }) => {
+      let box = document.getElementById('demo-caption');
+      if (!box) {
+        box = document.createElement('aside');
+        box.id = 'demo-caption';
+        box.style.cssText =
+          'position:fixed;top:84px;left:50%;transform:translateX(-50%);width:660px;padding:20px 24px;border-radius:18px;background:#092d28ed;border:1px solid #adcfad88;color:#f7f7e9;z-index:50;text-align:center;pointer-events:none;font:20px/1.4 system-ui';
+        document.body.append(box);
+      }
+      const heading = document.createElement('strong');
+      heading.textContent = title;
+      heading.style.cssText = 'display:block;font-size:26px;margin-bottom:7px';
+      const text = document.createElement('span');
+      text.textContent = detail;
+      box.replaceChildren(heading, text);
+    },
+    { title, detail },
+  );
+}
 let final;
 try {
   await page.goto(base + '/aqua');
   await page.selectOption('#language', 'en');
   await page.waitForFunction(() => !document.querySelector('#live').disabled);
   assert.match(await page.locator('.network').innerText(), /Ethereum fork/);
-  await page.waitForTimeout(3500);
+  await caption(
+    'MOMO & SORA · BioAgent Aqua',
+    'Two neural agents. One shared wallet. Real test-token settlement.',
+  );
+  await page.waitForTimeout(captioned ? 5500 : 3500);
   await page.locator('#live').click();
+  await caption(
+    'Biological structure → liquidity decisions',
+    '166,700 MaleCNS neurons per fly · engineered dynamics and learned readouts',
+  );
   for (let i = 0; i < 600; i++) {
     final = await fetch(base + '/api/state').then((r) => r.json());
     if (final.latest.aqua?.phase === 'error') throw Error(final.latest.aqua.error);
-    if (final.latest.aqua?.tick >= 18) break;
+    if (final.latest.aqua?.startedAt !== initial.latest.aqua?.startedAt && final.latest.aqua?.tick >= 18)
+      break;
     if (i === 599) throw Error('Live fork decisions timed out');
     await page.waitForTimeout(200);
   }
@@ -84,6 +119,7 @@ try {
     await page.waitForTimeout(200);
   }
   assert.equal(final.latest.aqua.neural.neuronsPerIndividual, 166700);
+  assert(final.latest.aqua.tick >= 18, 'Record the new run, not a previous run snapshot');
   await page.waitForTimeout(800);
   await page.screenshot({ path: `${out}/aqua-live-en.png` });
   const abi = new Interface(JSON.parse(await readFile('contracts/out/AquaFlyApp.sol/AquaFlyApp.json')).abi);
@@ -147,6 +183,12 @@ try {
   }
   walk(trace);
   assert(calls.includes('push') && calls.includes('pull'));
+  await caption(
+    'Offer. Widen. Withdraw.',
+    'The selected strategies use one maker wallet through Aqua virtual balances.',
+  );
+  if (captioned) await page.waitForTimeout(4500);
+  await page.evaluate(() => document.getElementById('demo-caption')?.remove());
   await page.locator('#open-details').click();
   await page.locator('[data-pane="evidence"]').click();
   await page.locator('#official-aqua-proof').scrollIntoViewIfNeeded();
@@ -158,12 +200,23 @@ try {
   );
   await page.waitForTimeout(3000);
   await page.screenshot({ path: `${out}/transfer-receipt-en.png` });
-  await page.getByText('Actual token transfers', { exact: true }).scrollIntoViewIfNeeded();
+  await page.locator('#receipt-body .receipt-row').last().scrollIntoViewIfNeeded();
   await page.waitForTimeout(4500);
   await page.screenshot({ path: `${out}/token-transfers-en.png` });
+  if (captioned) {
+    await page.locator('#close-receipt').click();
+    await page.locator('#close-details').click();
+    await caption(
+      'Aqua settles. BioAgent decides.',
+      'Official Aqua on an Ethereum local fork · test tokens · saved learned policies',
+    );
+    await page.waitForTimeout(5500);
+    await page.screenshot({ path: `${out}/closing-en.png` });
+  }
   assert.deepEqual(errors, []);
   const report = {
     checkedAt: new Date().toISOString(),
+    chapters,
     upstream,
     app: cfg.aquaApps.full.app,
     maker: cfg.owner,

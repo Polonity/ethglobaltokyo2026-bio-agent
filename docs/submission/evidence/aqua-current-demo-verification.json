@@ -1,0 +1,953 @@
+{
+  "checkedAt": "2026-09-26T04:03:46.771Z",
+  "chapters": [
+    {
+      "seconds": 0.19043016299999999,
+      "title": "MOMO & SORA · BioAgent Aqua",
+      "detail": "Two neural agents. One shared wallet. Real test-token settlement."
+    },
+    {
+      "seconds": 5.751979045,
+      "title": "Biological structure → liquidity decisions",
+      "detail": "166,700 MaleCNS neurons per fly · engineered dynamics and learned readouts"
+    },
+    {
+      "seconds": 41.043855817,
+      "title": "Offer. Widen. Withdraw.",
+      "detail": "The selected strategies use one maker wallet through Aqua virtual balances."
+    },
+    {
+      "seconds": 57.78508507,
+      "title": "Aqua settles. BioAgent decides.",
+      "detail": "Official Aqua on an Ethereum local fork · test tokens · saved learned policies"
+    }
+  ],
+  "upstream": {
+    "schema": "bioagent.official-aqua-fork.v1",
+    "chainId": 1,
+    "blockNumber": 26058941,
+    "blockHash": "0x08428251d0788f21b4c5ff641416c3918ec76bf1a43ef899d11c597580c1329c",
+    "aqua": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+    "codeHash": "0x720bc02d220db318164dc3bade86eec1f3655bdc00fc1174de7d816a95c341f8",
+    "deploymentSource": "https://github.com/1inch/aqua#deployments",
+    "checkedAt": "2026-09-26T03:45:10.048Z"
+  },
+  "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+  "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "taker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+  "neuronsPerIndividual": 166700,
+  "names": [
+    "MOMO",
+    "SORA"
+  ],
+  "steps": 19,
+  "policies": [
+    {
+      "id": "9a30a8836df748c685948762d8eec0ba",
+      "agent": 0,
+      "action": 1,
+      "policyVersion": 2,
+      "candidateHash": null,
+      "policyHash": "0x007f8f4fdf67f378e81cce7f69f8dab94a9d8ce144077fb11a2c040d07926234",
+      "scores": [
+        0.04108484668345941,
+        0.5994630340452977,
+        0
+      ]
+    },
+    {
+      "id": "046463b0743b4dffb5771201483cc79c",
+      "agent": 1,
+      "action": 0,
+      "policyVersion": 2,
+      "candidateHash": null,
+      "policyHash": "0xa5f5b582dd783d3a85265b1652b5c4b612660a5852a1a25c67c94ef4e9e60bf3",
+      "scores": [
+        0.0022060012976003913,
+        -0.001881520998093373,
+        0
+      ]
+    }
+  ],
+  "before": [
+    {
+      "address": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+      "symbol": "NECTAR-full",
+      "decimals": 18,
+      "maker": "501015000000000000000",
+      "taker": "498985000000000000000"
+    },
+    {
+      "address": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+      "symbol": "POLLEN-full",
+      "decimals": 18,
+      "maker": "499018000000000000000",
+      "taker": "500982000000000000000"
+    }
+  ],
+  "after": [
+    {
+      "address": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+      "symbol": "NECTAR-full",
+      "decimals": 18,
+      "maker": "503027000000000000000",
+      "taker": "496973000000000000000"
+    },
+    {
+      "address": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+      "symbol": "POLLEN-full",
+      "decimals": 18,
+      "maker": "497036000000000000000",
+      "taker": "502964000000000000000"
+    }
+  ],
+  "fills": [
+    {
+      "hash": "0xd5df44285e94629e3462d57e26dc8a097b5767581d3bfc68dbbe7a315784456e",
+      "blockNumber": 26060116,
+      "transfers": [
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0x8443c195833a059be712d1c31f82e7795ef47b6decb4007a17730011350f986c",
+      "blockNumber": 26060123,
+      "transfers": [
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0x626922adba6dee9bd58fae4a85c188c9a5420dfc28ca156d8bc53ebcde6577a5",
+      "blockNumber": 26060130,
+      "transfers": [
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0x9d58a381cba6d11133fa5c918b35821864bd3d360d6ea1b58a012c800d9db8fb",
+      "blockNumber": 26060137,
+      "transfers": [
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0xa30158a5c11120d58bb6436e00f5a47680789a540d9d91149971fa419004ee3b",
+      "blockNumber": 26060144,
+      "transfers": [
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0x20df61e7e5e0aafd82809908c373519beaabfc6d0a4d0610f3f9fca710e157fd",
+      "blockNumber": 26060151,
+      "transfers": [
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0xf8ac6a210c97a744c8e70f78bb757f9e941cbb6ffdaa6880401cb4b2ae0adea8",
+      "blockNumber": 26060190,
+      "transfers": [
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0xeab2198b3a2b6c6c4e692a79799e0803099448695b675494560d54c282a1b44b",
+      "blockNumber": 26060197,
+      "transfers": [
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0x95ab244ca4af8c5b051ff4d2be5bd73a241b363777eab66df0ab5230d3753b3c",
+      "blockNumber": 26060204,
+      "transfers": [
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    },
+    {
+      "hash": "0xb63f338ea5b45235c6580ece6c450520db82b6863deb48211dc9387d6cce147e",
+      "blockNumber": 26060229,
+      "transfers": [
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "to": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xc5F2644C1Ea29f328347980E92344a92D5d6f852",
+          "symbol": "NECTAR-full",
+          "decimals": 18,
+          "from": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "rawAmount": "1000000000000000000",
+          "amount": "1.0"
+        },
+        {
+          "token": "0xb039f465365DF5ad987dd92dA2a5a1093c426FB8",
+          "symbol": "POLLEN-full",
+          "decimals": 18,
+          "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "rawAmount": "997000000000000000",
+          "amount": "0.997"
+        }
+      ]
+    }
+  ],
+  "lifecycle": [
+    {
+      "name": "Docked",
+      "hash": "0xc14d2632a49a2440a5a786e7ac5e48374b99ff9b8cb4fdcd803a95a5437518db",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x1ccbd854286ba1504ab5deca655bc46ed1295de87ec925266b9833256cf49258"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xf64d69d5d7e75ac2d1867bb0c7c9ec3eab196eb353ec4359ea51c71d05fd47b4",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x956754f65a44f524bf80727413c3b226f5a2554dadebcfbc129b944d5567090a"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xecba30cf8af013e959fe8ecfa1f267d7e629276ca86937f248539236762c1196",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xe232694d5b304fd278193d42f565fa8beb3d9d75d0e3d831536ba20d14e67e1c"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x5b6f30a038b57e29ffc6effba90c0b67fd8e98c429c4e6a32b9abc0dac9c0431",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x6b19a7276ba17c1d07111fd1a90b3795983db4f38a7c966488342b9f0ce8a727"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x9bccdb599c6b4537d769e9f758359cc87e80c07461f84d00ac7a75b4b7b4454e",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x956754f65a44f524bf80727413c3b226f5a2554dadebcfbc129b944d5567090a"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x2005b70fb425a5f4cda3b294532f10a9938b5a5a79d98b61bd10252e0899ee61",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x565589d34cdbbdd17cb6d7d9b29adb132aaa1fe2306413bcd2fefb60a4b65d6d"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xb589f8dc7961df3234924bd1b6277882229d4d1a0256ef8a148e50a307e2faaf",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x6b19a7276ba17c1d07111fd1a90b3795983db4f38a7c966488342b9f0ce8a727"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x7c30a31067ec929f1bbb491fed91ab5658bb6bd2ce8735ce9f6086d58b006a2b",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x8a373a4690376f88b3e5bd2207c5594ca589834128ad94247051fd81123752a3"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x91f3d7247ef227ef070c6bfeacdc6dcd7125be560dc456a354b099347ed59881",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x565589d34cdbbdd17cb6d7d9b29adb132aaa1fe2306413bcd2fefb60a4b65d6d"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x5e8210f183220a0ca8b0a3f9c25ac88d967a14be4abbdd9398b3b2897546e9d4",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x82d82609dba06d45cf7162f1b58d7447f1b13ab4bff92cf48524408ff4635622"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xd014d250386627b437473b8d043eb6a83e7e4ab67e1009100586aacfa7075c75",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x8a373a4690376f88b3e5bd2207c5594ca589834128ad94247051fd81123752a3"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xaf22d040b9042e169c11a6da28f956ef1de57799c2921c895a1637a3873079df",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xe924bec5e8c04595ab312423d1b02a0616353fca14eb6ec3d6aff105a8570e54"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x924ad4957af2077d3445f0157050fd4653c7eacf75f5749bf03c83a76a994253",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x82d82609dba06d45cf7162f1b58d7447f1b13ab4bff92cf48524408ff4635622"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x8d74aa39a350a4e4ec37c8a9ce936e3a118f2ccf17369944dc2f3d2659078fae",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x1a57041d0f50c45ebd877e8051284e93c85396f0d101be4a72ce21a890dfb57b"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x3d0aeef3955898a02074797071fb2e50cdad90903bcfde650b0e58ce8ece3e99",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xe924bec5e8c04595ab312423d1b02a0616353fca14eb6ec3d6aff105a8570e54"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xb8847568589e327e27d45de5f9550fda4974c60cc5e3528a329991f6fcdd7726",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x6d5cc1776dbd2b3e6f0ba369510d0fbb33a339aed9f567a1e604fddf8c818da0"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x585559c4dc55236786bd36a4b3f9bc23d3852095da2f0d2eef89a1ee6f586703",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x1a57041d0f50c45ebd877e8051284e93c85396f0d101be4a72ce21a890dfb57b"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x55f5ac930520a8cf4a6ecec3ab489a6bdd2f4069610914215a4b882ebbee052a",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x4bb057f2be5559c8fa24f63c8a48b7c1dbc9b4892b6c8baee64098d675378912"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x3d299744fd21fc28567f5af2d4d88be89d194d449d2427e6883bf741798ec2d3",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x6d5cc1776dbd2b3e6f0ba369510d0fbb33a339aed9f567a1e604fddf8c818da0"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x471fe49285b0027fd847aba0ae50af671d5faa7df4e618017a96b9e596792bf9",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xd4992dee67f1cf31c928bad5c95f3c739ccd01c10548f851a6babff65c81a97c"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x3c2cb986c4f0087c89a950006aaf754658baa65026e6ad8dafc4a843472c29d6",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x4bb057f2be5559c8fa24f63c8a48b7c1dbc9b4892b6c8baee64098d675378912"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x23f0e562fba27c74ebb1d7d72c683d798f575c448defc865a5241cd1c138d310",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x20a7c10fe1b3d3c843a4b5fbf5056146fb173349cb8c8ed94cb6b9e48c829576"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xe3b5ab07fcf8677b3ee9fcd9a39907e47dd259d864a6e03e4e69826bbcc47157",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xd4992dee67f1cf31c928bad5c95f3c739ccd01c10548f851a6babff65c81a97c"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xf97a05ec4596305daf6d2f4b078183c207debf26bcfb281e2cee4063d1f009dc",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xdeb9f025d7b2db80202118da6dc61d67661fdc0fc2df9e26d12ca57cb6b173ed"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xad70921c40b81ed9d6d90463eb8d181ac3738864e801c6781885e197a1804dbf",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x20a7c10fe1b3d3c843a4b5fbf5056146fb173349cb8c8ed94cb6b9e48c829576"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xd1db77367bd8125ed2117adff0a8d248a1163f0ef5bb56e0c70425afa742703f",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xf0a35e2aad403de726b086cfe6928cbb08ba3d5755d973f9aa285e98bf5e389f"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x57a7f1a7751e6f20d820b0adf857c40cda2cd85ef319604bc3def0ef784e239c",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xdeb9f025d7b2db80202118da6dc61d67661fdc0fc2df9e26d12ca57cb6b173ed"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xb022797d1d469f1cd3955d0670892efe8aedbc5e542d3b8f7cd27682bfa87148",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xf0a35e2aad403de726b086cfe6928cbb08ba3d5755d973f9aa285e98bf5e389f"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xde94d1461a8493e38dbf289007bf2b5aa006f23fc9be269b27924eb3a01a7927",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x263b258b5f97fc50a74e36a5ad46bb45dd76c2398e756b501cc6149670a5249b"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xc50fc5d26a9b08a325a9a0fed16a8f00a941726ab88496fa133b9cd2cde4d16f",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x996b5025dcf9b9e870dfb4f142683e839658df234781796301c6427a63ceb63a"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x14f6d1a9a6bff1a3eec7ee9c2d32d970e5ce20daee8fff65bf3e104930ac0a5c",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x263b258b5f97fc50a74e36a5ad46bb45dd76c2398e756b501cc6149670a5249b"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xaf8f635571d2e1f4636cbc83f6375b3d8e2980bbb251931e205bbe3cdeba003e",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xde7ea4f37bc70d4ef42ea12af64a91bb2bfdc2923171701ed1ae9c99d66cbba8"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xab77c2192037039ddca1575e5662caca811584d909119dd17b782d1f61960ba5",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x996b5025dcf9b9e870dfb4f142683e839658df234781796301c6427a63ceb63a"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x5c5a40dceedcc538b155dcf488e693edc28c7d1296b68887dc9b0f4a7d94f8f8",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x6acf7c5d65333db65b323ed7c5bec6f38d35f8f9e51657f325eb5eac5975a88c"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xd85b36d9df7d56f1cf7bdca23097dc903959170db6ea8861985acc8fc0f4c9bd",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xde7ea4f37bc70d4ef42ea12af64a91bb2bfdc2923171701ed1ae9c99d66cbba8"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xded02b9adff4890322d585e14f4501427b8b5d0b6eb7136c6b70f7591740c962",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x0a1b6150aa13a158121b023f01cdce8c61197987a338d7931926dc7ebd340eff"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xc5593d3cc8768b7651339e45324148aec29998fd59893ce679926bee0a06d5bf",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x6acf7c5d65333db65b323ed7c5bec6f38d35f8f9e51657f325eb5eac5975a88c"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x317d2e3dc466ba5ab3b738909ffb79864e7f14a945d7bb6eb14c50f48824739d",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xa866e0f066bdf3819b35eb497e448470ccb27fff23181687e16cf60dbbf6cfcf"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x7747463567c6d5ffb67260baaf069d8c7e0f9a680aea097302def60ff6af3dfe",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x0a1b6150aa13a158121b023f01cdce8c61197987a338d7931926dc7ebd340eff"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x298b9f85d8b917ffb77ec0c065cff00132d7c726855b0a123e37fbe539f38222",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x0d82e3b58df61a71cc08bde92bb9bcb00969c1e8b77f595b83e07166ae3913a7"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xf7a62ec23c0a8a4df89f910c61795e45d75fb70ef3b301b38ba9070c9dd70396",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xa866e0f066bdf3819b35eb497e448470ccb27fff23181687e16cf60dbbf6cfcf"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xec0ebb2ca937be2c121a638de56abcc8d7ecb98b01bb35aac72e0f1040c00b77",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x4e039e76076514cf6141fe3926d2ad09151e07f2de6676bd056300ddaa219216"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xc760ccaf7255ff9d6b5e76affbb145a5b12733a8b2c5ef011d2e9e0b66607e54",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x0d82e3b58df61a71cc08bde92bb9bcb00969c1e8b77f595b83e07166ae3913a7"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x012445af8c6104c6b732bd346333940678196dd4b026eaf3c50be8ed66a181ad",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x5e845e97a542f3ed049222a5c3482b182c54dbd96ad798e4b8345fe96759d5a1"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x42519dbc959c89ad9f884acb6ee9112be0f8c88e1998f5b708c2e0dbf5b85343",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x4e039e76076514cf6141fe3926d2ad09151e07f2de6676bd056300ddaa219216"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xe09c26ffa0f777d9b8415e8f5d22e27478f16aaac2e661eded634867fed0ffd7",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x5e845e97a542f3ed049222a5c3482b182c54dbd96ad798e4b8345fe96759d5a1"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x3f4f3bd27d3fdc6a53df1548af4c8ec6c9b45f236b12d22f79b0d25bfd156e34",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x7cf0a8edadeffd1a67dc6bc135d85e757a41d849fd306be8879fec59622108f0"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x977628d9ffbf211fa8a03fcc3ded4af10132ff2db57240fafa3cea46125ead90",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x3701bf9f2cf3fd3cd9ba7e6eb06f70dcfc9505e7e517194bf73ff8b0efcfae05"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xa5d0f51196bd2274da112f2a5be5616d999a9c5b624871ac21c78aac2d7e0158",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x7cf0a8edadeffd1a67dc6bc135d85e757a41d849fd306be8879fec59622108f0"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x180d32fb6b7d9ae1f9b40c9f520628056a06e9b2058b830dad747f411274163a",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xbf20bf5e0d4a717c79de64afa1ce911b8af9a9957ed2dea69eb4c52deb941e96"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x02bec2a3111f4ab59cb9a526ea4b7018977b228e81d04523c12b73abc168f224",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x3701bf9f2cf3fd3cd9ba7e6eb06f70dcfc9505e7e517194bf73ff8b0efcfae05"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x332711812cf716e3babc6f51a0b9f7ec1adfaff6d5177e5cd484b3e4cf5dc143",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xc846f7171cc2cf657451859bee288ba4f3b39b32f8fc1ebcaf22c5afd9cac083"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x2b7515eee1799710c14a37b19b45e24c50745eea758e8cf946734c84173a460a",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xbf20bf5e0d4a717c79de64afa1ce911b8af9a9957ed2dea69eb4c52deb941e96"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xa9e3dfe2ce7e00afee78238f15f831104e83d87c22c1ad913fda46c0a324d796",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x945b5b5f47e40cccd58dbd4ace34687f09332a3fb1b80a619ffb1f62c0c033c0"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xfbf4c72d0d903d169eee1a786357f1694081f1b4c71608552fa2ec2d5c92ebb1",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xc846f7171cc2cf657451859bee288ba4f3b39b32f8fc1ebcaf22c5afd9cac083"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xa5b8ecf586376a531476980d3ab1d9265a62bb0cb93a94b9332c447ac0016c2f",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x8bfce660348e939d237d26733358298dc009deebbd26f374ccbfea9b545df0b4"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x18d915b6162a0806c88de8cc30c1eb0fcca9c67a32b8224fed3bd5db1e02b6b5",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x945b5b5f47e40cccd58dbd4ace34687f09332a3fb1b80a619ffb1f62c0c033c0"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x6debde91c5c7f38fe3dbd2ec34bf6b3e8696d5668f7ded9b81331e7c133b4f4a",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x700376b4157d8c64ec3abeee65a2f4eb1ea75502500d4a0c9e201dab3d8838ed"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xdb02f99b16b8c1b27080d6d6ab8346ea6bc4deeb4bc8b22cbe54a9deb47375f1",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x8bfce660348e939d237d26733358298dc009deebbd26f374ccbfea9b545df0b4"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xad38ea95fdb3bb8c61b26fefff77747347adb1b796e620aecdb894347f06a122",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x5ec63e053e8483ecf7bda500a897050eb961a3dfb25d0bc93ae9caec895091ce"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xe0f8e9193601c332373f117a7cd550dfd872a19f46dbe09d8cc06de003a031e8",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x700376b4157d8c64ec3abeee65a2f4eb1ea75502500d4a0c9e201dab3d8838ed"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x95015725c58bc67891a3d3b0f7a89a6606a0df68377142e26045309f1bd4fc46",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xe834b430c4a9b5eceeffb87c0849ea96183cea2b3be8cd8e509359b5068c2b3c"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xbfcb8f8ebdf62dbab92e16d99e1f4063ea326908d229f4f71966930460b240f9",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x5ec63e053e8483ecf7bda500a897050eb961a3dfb25d0bc93ae9caec895091ce"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x5cb8e44c34d7d7669c61a51ee183fd9d8d29542c26e9d30b1200b36b2adfa01b",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x856e2a96d495044a25120ea92bfe69db6dfb4ad7e86d2797359f5fb2282ff35e"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x8166b4d3e25b2aefc18909ba83e6937a3a6225e22899f2bd360a1d67b610a082",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xe834b430c4a9b5eceeffb87c0849ea96183cea2b3be8cd8e509359b5068c2b3c"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xf74793e44883f3a19f332e23981a837ab463295a5e643d31792a32d8d673f873",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x83a6770fc170ab8ad03a598884e10ade2d5e5ac69668849ae5fafd421fd92fba"
+    },
+    {
+      "name": "Docked",
+      "hash": "0xdfd7d06d062c4f0612f7156427e0f27c5b2adfc61873e35b6935c53d985eddbe",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x856e2a96d495044a25120ea92bfe69db6dfb4ad7e86d2797359f5fb2282ff35e"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0x8b1850d41a8fb3ed6dbd191ea2d60be229f0a0bfaa7644e44d40441f93cc2fb3",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xf0e663d4260681c12b9b3d4851f77ed19725de82122a4dd0ac79698986af20de"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x176e2ef8b70b45fcb1b0c976b7621b0ad27fc6390420e705109545d89fb367c9",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x83a6770fc170ab8ad03a598884e10ade2d5e5ac69668849ae5fafd421fd92fba"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xaf78a44f9e2b585ba6e9755036b6db29d9e7a26b4a5516d48d70d59500595dbd",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xc9b2a81b0240154eb470118b7291db722abd90d8471f5a4c1bc0c90773c2bab3"
+    },
+    {
+      "name": "Docked",
+      "hash": "0x1aa853c3d71e7eef5fbf24fbe6e7eef58e8ac592b162dbcd9f08320594c79b8c",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0xf0e663d4260681c12b9b3d4851f77ed19725de82122a4dd0ac79698986af20de"
+    },
+    {
+      "name": "Shipped",
+      "hash": "0xfac3fe7c08dc17697ce9da7eab7acad09399fa3f75325873d81defec526e6d80",
+      "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "app": "0x4016f5E291dB65b59592ceFa7820Da21E30D4087",
+      "strategyHash": "0x5e2031dd3ad4999e9119a14682ba1b0babdc407e9fcc07ace30b3b79b37508e3"
+    }
+  ],
+  "representative": {
+    "transactionHash": "0xb63f338ea5b45235c6580ece6c450520db82b6863deb48211dc9387d6cce147e",
+    "aquaCalls": [
+      "safeBalances",
+      "push",
+      "pull"
+    ]
+  },
+  "foundry": "6 official-fork tests passed; see foundry-fork-tests.txt",
+  "browserErrors": [],
+  "limits": "Local fork test tokens; engineered prices/taker; no mainnet transactions, SwapVM or profitability claim."
+}
