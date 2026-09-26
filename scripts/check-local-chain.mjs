@@ -1,4 +1,3 @@
-import defaultWorld from '../packages/bio_agent/browser/foraging-world.json' with { type: 'json' };
 import { WORLD_SCHEMA } from '../packages/bio_agent/browser/tx-world.js';
 import { toUtf8Bytes } from 'ethers';
 import { chromium } from '@playwright/test';
@@ -60,9 +59,10 @@ try {
     window.__arena.duration = 300;
   });
   await page.getByRole('button', { name: '一時停止', exact: true }).click();
-  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), defaultWorld.hazards);
+  const initialWorld = initial.environment.configuration;
+  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), initialWorld.hazards);
   const hazards = [
-    { x: 8, y: 6, radius: 1.4 },
+    { x: initialWorld.hazards[0]?.x === 8 ? 9 : 8, y: 6, radius: 1.4 },
     { x: 27, y: 14, radius: 2 },
   ];
   await rpc('evm_setAutomine', [false]);
@@ -74,13 +74,13 @@ try {
         1,
         initial.environment.nonce,
         WORLD_SCHEMA,
-        toUtf8Bytes(JSON.stringify({ ...defaultWorld, hazards })),
+        toUtf8Bytes(JSON.stringify({ ...initialWorld, hazards })),
       ]),
       gas: '0x493e0',
     },
   ]);
   await page.waitForTimeout(800);
-  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), defaultWorld.hazards);
+  assert.deepEqual(await page.evaluate(() => window.__arena.world.hazards), initialWorld.hazards);
   await rpc('evm_mine');
   await rpc('evm_setAutomine', [true]);
   await page.waitForFunction(

@@ -1,7 +1,7 @@
 import { registryRead } from './registry-read.js';
 import { aquaRoute } from './aqua.js';
 import { marketRoute } from './market.js';
-// Local-only application API. This entrypoint is never used by wrangler.jsonc (public hosting).
+// Local-only signing API; the public Sepolia Worker uses a separate signing adapter.
 import { Interface } from 'ethers/abi';
 import abi from '../../contracts/abi/BioAgentRegistry.json';
 import hosting from './index.js';

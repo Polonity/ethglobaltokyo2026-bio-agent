@@ -79,8 +79,8 @@ const apps = {
       row(
         '赤い点線の輪＝危険地帯',
         'Red dashed rings = hazards',
-        '入ると減点とエネルギー消費。オンチェーンの刺激が強いほど衝突の罰が大きくなります。',
-        'Entering costs reward and energy. Stronger onchain stimulus increases the collision penalty.',
+        '位置と半径は環境TXの入力です。入ると減点とエネルギー消費。オンチェーンの刺激が強いほど衝突の罰が大きくなります。',
+        'Position and radius come from the environment TX. Entering costs reward and energy. Stronger onchain stimulus increases the collision penalty.',
       ),
       row(
         'ハエ＝独立した個体',
@@ -143,12 +143,12 @@ const apps = {
     ),
     browser: {
       flowStart: t(
-        '刺激TXのreceiptとイベントを確認して個体の入力へ反映します。正の刺激1件につき蜜を1個追加。食べた蜜は自動補充せず、同じTXを再受信しても増えません。座標・消費・障害物はオフチェーンです。',
-        'A verified receipt and event update the individual’s input. Each positive stimulus adds one food, with no refill or duplicate addition. Coordinates, consumption and hazards remain offchain.',
+        '刺激TXのreceiptとイベントを確認して個体の入力へ反映します。正の刺激1件につき蜜を1個追加。食べた蜜は自動補充せず、同じTXを再受信しても増えません。危険エリア・寸法・seedは環境TXに記録。餌の座標はTXとseedから計算し、消費は内部状態です。',
+        'A verified receipt and event update the individual’s input. Each positive stimulus adds one food, with no refill or duplicate addition. An environment TX records hazards, dimensions and seed. Food coordinates derive from TX data and that seed; consumption is internal state.',
       ),
       learning: t(
-        '従来版は経験からQ値を更新し、別の採餌評価で改善した個体を復帰させます。？の個体はその場で停止して学び直します。全神経版の共通readout学習とは別の実装です。',
-        'The original app updates Q values from experience and returns improved individuals after a separate foraging evaluation. A ? fly pauses in place to learn. This differs from the full-app shared readout learner.',
+        'ブラウザー版は経験からQ値を更新します。チェーン接続時は確認済み環境を複製して学習・比較し、表示中の餌は増やしません。比較条件で改善した候補だけ採用します。全神経版は別のreadout学習です。',
+        'The browser updates Q values from experience. In chain mode, learning and comparison replay copies of the confirmed environment without adding visible food. Only a candidate with a better comparison score is adopted. The full runtime uses a separate readout learner.',
       ),
       tryIt: t(
         '個体を選び、刺激を送信してTX確定後の変化と餌のTX履歴を確認します。AnvilとSepoliaは同じ画面です。Sepoliaは所有者ウォレットまたは1時間ごとの自動送信で刺激を追加します。',

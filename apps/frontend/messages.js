@@ -1,6 +1,10 @@
 // Japanese source messages, translated only at the presentation boundary.
 // Technical identifiers (hashes, event names, agent names) remain unchanged.
 export const messages = {
+  環境と餌の入力TX: 'Environment and food input TXs',
+  '初期環境・危険エリアは環境TXから構築。正の刺激TXごとに餌を1個追加し、食べた点は消えます。':
+    'The environment TX defines the initial field and hazards. Each positive stimulus TX adds one food; eating removes it.',
+  チェーン接続とトランザクション: 'Chain connection and transactions',
   危険エリア: 'Hazards',
   環境TXを待っています: 'Waiting for environment TX',
 

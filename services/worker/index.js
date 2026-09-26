@@ -1,15 +1,6 @@
 export default {
   async fetch(request, env) {
     const path = new URL(request.url).pathname;
-    if (path === '/api/config') return Response.json({ mode: 'browser' });
-    if (path === '/api/health')
-      return Response.json({
-        status: 'ok',
-        app: 'fly-lab',
-        model: 'foraging-malecns-q-v3',
-        runtime: 'browser',
-        chainConnected: false,
-      });
     if (path.startsWith('/api/')) return Response.json({ error: 'not_found' }, { status: 404 });
     const asset = await env.ASSETS.fetch(request);
     const response = new Response(asset.body, asset);

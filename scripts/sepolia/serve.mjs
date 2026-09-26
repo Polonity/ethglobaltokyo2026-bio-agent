@@ -19,9 +19,14 @@ export function createDemoServer({ root = 'dist/sepolia-demo', rpcURL = process.
       try {
         const body = await fs.readFile(file);
         const type =
-          { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css' }[
-            path.extname(file)
-          ] || 'application/octet-stream';
+          {
+            '.html': 'text/html',
+            '.js': 'text/javascript',
+            '.mjs': 'text/javascript',
+            '.png': 'image/png',
+            '.json': 'application/json',
+            '.css': 'text/css',
+          }[path.extname(file)] || 'application/octet-stream';
         return new Response(request.method === 'HEAD' ? null : body, { headers: { 'Content-Type': type } });
       } catch {
         return new Response('Not found', { status: 404 });

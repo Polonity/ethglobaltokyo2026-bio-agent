@@ -17,7 +17,13 @@ const config = await fetch('/api/config').then((r) => {
   return r.json();
 });
 const bodyModel = await fetch('/models/body-reference.json').then((r) => r.json());
-const chainMode = ['anvil', 'sepolia'].includes(config.mode);
+if (!['anvil', 'sepolia'].includes(config.mode)) {
+  $('chain-panel').hidden = false;
+  $('chain-summary').textContent =
+    'チェーン接続が必要です。npm run local:up または公開Sepoliaデモを使用してください。 / A chain connection is required.';
+  document.querySelectorAll('button,input,select').forEach((el) => (el.disabled = true));
+  throw Error('Chain configuration required; synthetic playground mode has been removed');
+}
 let modelError = '';
 try {
   await verifyMaleAssets(await fetch(`/models/${MODEL}.json`).then((r) => r.json()));
@@ -25,7 +31,7 @@ try {
   modelError = e.message;
   document.getElementById('intro-agent-count').textContent = e.message;
 }
-const arena = new Arena(2026, { agentCount: chainMode ? config.agentIds.length : 12, txFood: chainMode });
+const arena = new Arena(2026, { agentCount: config.agentIds.length, txFood: true });
 if (modelError) arena.paused = true;
 let savedPolicies = null;
 try {
@@ -320,7 +326,7 @@ function draw(time) {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#44543b';
     ctx.fillText(f.name, x, y + 29);
-    if (chainMode || i === arena.selected || f.state === 'learning') bubble(ctx, x, y, f, w);
+    bubble(ctx, x, y, f, w);
   });
 }
 function renderUI() {
@@ -371,7 +377,7 @@ function renderUI() {
             ? 'その場で立ち止まって経験から練習中。評価を終えたら動き出します。'
             : `${leader.name} が ${leader.score} 個でリード。好きな子を選んで、刺激を届けよう。`;
   $('session-badge').textContent = chain
-    ? `${config.networkName} ${chain.ready ? '接続中' : '未接続'} / ${config.chainId}`
+    ? `${config.networkName} ${translate(chain.ready ? '接続中' : '未接続')} / ${config.chainId}`
     : 'チェーン未接続 · ブラウザーデモ';
   const remaining = Math.ceil(arena.duration - arena.time);
   $('timer').textContent =
@@ -404,14 +410,12 @@ function renderUI() {
   const view = foragingView(
     arena,
     f,
-    chainMode
-      ? {
-          kind: 'evm',
-          chainId: uint(String(config.chainId)),
-          registry: address(config.registryAddress),
-          agentId: uint(String(f.id + 1)),
-        }
-      : { kind: 'local', sessionId: 'gui', agentId: String(f.id + 1) },
+    {
+      kind: 'evm',
+      chainId: uint(String(config.chainId)),
+      registry: address(config.registryAddress),
+      agentId: uint(String(f.id + 1)),
+    },
     bodyModel,
     Date.now(),
   );
@@ -554,10 +558,10 @@ field.addEventListener('click', (e) => {
     y = ((e.clientY - rect.top) / rect.height) * arena.world.height;
   const fly = arena.flies.find((f) => Math.hypot(f.x - x, f.y - y) < 1.2);
   if (fly) selectFly(fly.id);
-  else if (chain) {
+  else {
     $('input-feedback').textContent =
       '餌は刺激TXの採掘後に追加されます。刺激を0より大きくして送信してください。';
-  } else arena.addFood(x, y);
+  }
   renderUI();
 });
 $('pause').onclick = () => {
@@ -583,30 +587,17 @@ for (const button of document.querySelectorAll('[data-mode]'))
     });
   };
 $('apply').onclick = async () => {
-  if (chain) {
-    try {
-      await chain.send(String(arena.selected + 1), {
-        activity: ['rest', 'explore', 'forage'].indexOf(pendingMode),
-        energy: Number($('energy').value) * 100,
-        stimulus: Number($('stimulus').value) * 100,
-      });
-      $('input-feedback').textContent = 'イベント受信後、選択したハエに適用しました';
-    } catch (error) {
-      $('input-feedback').textContent = error.message;
-    }
-    renderUI();
-    return;
+  if (!chain?.ready) return;
+  try {
+    await chain.send(String(arena.selected + 1), {
+      activity: ['rest', 'explore', 'forage'].indexOf(pendingMode),
+      energy: Number($('energy').value) * 100,
+      stimulus: Number($('stimulus').value) * 100,
+    });
+    $('input-feedback').textContent = 'イベント受信後、選択したハエに適用しました';
+  } catch (error) {
+    $('input-feedback').textContent = error.message;
   }
-  arena.applyStatus({
-    stimulus: Number($('stimulus').value) / 100,
-    energy: Number($('energy').value) / 100,
-    mode: pendingMode,
-  });
-  $('input-feedback').textContent = '刺激を適用しました';
-  $('apply').innerHTML = '適用しました ✓';
-  setTimeout(() => {
-    $('apply').innerHTML = '刺激を適用する <span>↗</span>';
-  }, 1200);
   renderUI();
 };
 $('train-selected').onclick = () => {
@@ -641,7 +632,7 @@ $('export').onclick = () => {
     round: arena.round,
     time: arena.time,
     world: arena.world,
-    source: chain ? `${config.mode}-${config.chainId}` : 'browser-local',
+    source: `${config.mode}-${config.chainId}`,
     chain: chain
       ? { registryAddress: config.registryAddress, cursor: chain.cursor, lastTx: chain.lastTx }
       : null,
@@ -686,7 +677,7 @@ function frame(now) {
   }
   requestAnimationFrame(frame);
 }
-if (chainMode) {
+{
   document.body.classList.add('chain-mode');
   document.querySelector('.standings').append(document.querySelector('.control-panel'));
   $('about-mechanism').textContent =
@@ -747,21 +738,13 @@ window.addEventListener('storage', (event) => {
     renderUI();
   }
 });
-$('field').setAttribute(
-  'aria-label',
-  chainMode
-    ? translate('刺激TXで餌を1個追加。自動補充なし。')
-    : `蜜を競って集める${arena.flies.length}匹のハエ。クリックするとその場所に蜜を置けます。`,
-);
+$('field').setAttribute('aria-label', translate('刺激TXで餌を1個追加。自動補充なし。'));
 renderUI();
 requestAnimationFrame(frame);
 
 $('feed-selected').onclick = async () => {
   const f = arena.flies[arena.selected];
-  if (!chain) {
-    arena.addFood(f.x, f.y);
-    return;
-  }
+  if (!chain?.ready) return;
   try {
     await chain.send(String(f.id + 1), {
       activity: 2,

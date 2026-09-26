@@ -109,7 +109,7 @@ function mount(root, app, lang, mode, sheet = false) {
         {
           foraging:
             mode === 'browser'
-              ? '花＝みつ。囲まれた領域＝危険。蜜と危険はローカルの環境で、オンチェーン刺激と一緒に判断へ入力されます。'
+              ? '花＝みつ。囲まれた領域＝危険。危険エリアは環境TX、蜜の追加は刺激TXから受け取ります。身体状態は内部計算です。'
               : '葉の上の金色の結晶＝みつ。赤い点線の輪＝危険。これらの位置と身体状態、オンチェーン刺激が判断に使われます。',
           market:
             mode === 'browser'
@@ -132,7 +132,7 @@ function mount(root, app, lang, mode, sheet = false) {
         {
           foraging:
             mode === 'browser'
-              ? 'Flowers are nectar; marked regions are hazards. These local conditions combine with onchain stimulus as decision inputs.'
+              ? 'Flowers are nectar; marked regions are hazards. The environment TX defines hazards, and stimulus TXs add food. Body state is computed internally.'
               : 'Golden crystals on leaves are nectar; red dashed rings are hazards. Their positions, body state and onchain stimulus feed decisions.',
           market:
             mode === 'browser'

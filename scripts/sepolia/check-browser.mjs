@@ -27,9 +27,14 @@ try {
   });
   result.initial = await page.evaluate(() => ({
     network: window.__chain.config,
+    environment: window.__arena.world.worldSource,
+    hazards: window.__arena.world.hazards,
     foodEvents: window.__arena.world.foodEvents,
     foodCount: window.__arena.world.foods.length,
   }));
+  assert.ok(result.initial.environment.receiptVerified);
+  assert.equal(result.initial.environment.name, 'BioAgentStimulusAccepted');
+  assert.deepEqual(result.initial.hazards, result.initial.environment.configuration.hazards);
   assert.ok(result.initial.foodEvents.length > 0);
   assert.ok(result.initial.foodEvents.every((e) => e.source.transactionHash && e.source.revision !== '1'));
   const first = await page.evaluate(() => ({ x: window.__arena.flies[0].x, y: window.__arena.flies[0].y }));
@@ -50,6 +55,12 @@ try {
     window.__chain.ingest([window.__arena.flies[0].chain.cause]);
   });
   assert.equal(await page.evaluate(() => window.__arena.world.foods.length), result.foodsBeforeDedup);
+  await page.locator('#food-source-panel summary').click();
+  assert.ok(
+    (await page.locator('#environment-tx').getAttribute('href')).includes(
+      result.initial.environment.transactionHash,
+    ),
+  );
   await page.screenshot({ path: out + '/ja.png', fullPage: true });
   await page.locator('#language').selectOption('en');
   await page.screenshot({ path: out + '/en.png', fullPage: true });
@@ -66,6 +77,18 @@ try {
     assert.equal(h, sha(await fs.readFile('dist/' + name)));
     result.assetHashes[name] = h;
   }
+  const disconnected = await browser.newPage();
+  const rejected = [];
+  disconnected.on('pageerror', (e) => rejected.push(e.message));
+  await disconnected.route('**/api/config', (route) => route.fulfill({ json: { mode: 'browser' } }));
+  await disconnected.goto(base + '?test=1');
+  await disconnected.waitForFunction(() =>
+    document.querySelector('#chain-summary').textContent.includes('chain connection is required'),
+  );
+  assert.equal(await disconnected.evaluate(() => window.__arena), undefined);
+  assert.ok(rejected.some((message) => message.includes('synthetic playground mode has been removed')));
+  result.unconfiguredStops = true;
+  await disconnected.close();
   assert.deepEqual(errors, []);
   result.passed = true;
 } catch (e) {

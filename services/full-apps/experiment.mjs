@@ -56,6 +56,7 @@ export async function rollout({
           kind:
             app === 'foraging' ? 'confirmed-status-and-foraging-observation' : 'confirmed-market-observation',
           statuses: initialStatus,
+          environment: app === 'foraging' ? env.world.worldSource : null,
           event: observations[0].source,
           seed,
           tick,
@@ -70,6 +71,7 @@ export async function rollout({
         outcomes[agent].source ||= {
           kind: 'foraging-transition',
           statuses: initialStatus,
+          environment: app === 'foraging' ? env.world.worldSource : null,
           seed,
           tick: env.tick,
         };
@@ -80,6 +82,7 @@ export async function rollout({
           source: outcomes[agent].source || {
             kind: 'foraging-transition',
             statuses: initialStatus,
+            environment: app === 'foraging' ? env.world.worldSource : null,
             seed,
             tick: env.tick,
           },
@@ -118,6 +121,7 @@ export async function rollout({
       neurons: last.neural.neuronsPerIndividual,
       processPeakRSSMiB: last.neural.processPeakRSSMiB,
       snapshot: env.snapshot(),
+      environmentInput: app === 'foraging' ? env.world.worldSource : null,
       inputEvents:
         app === 'foraging'
           ? initialStatus
