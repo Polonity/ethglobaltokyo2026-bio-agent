@@ -121,6 +121,9 @@ try {
       if (e.code !== 'ENOENT') throw e;
     }
   }
+  await run('.local/connectome-tools/bin/python', ['-m', 'scripts.submission.seed_aqua_policies'], {
+    env: { ...env, PYTHONPATH: '.' },
+  }).done;
   await run(process.env.FORGE_BIN || `${process.env.HOME}/.foundry/bin/forge`, [
     'build',
     '--root',

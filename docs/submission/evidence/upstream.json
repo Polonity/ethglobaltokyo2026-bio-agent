@@ -1,0 +1,10 @@
+{
+  "schema": "bioagent.official-aqua-fork.v1",
+  "chainId": 1,
+  "blockNumber": 26058941,
+  "blockHash": "0x08428251d0788f21b4c5ff641416c3918ec76bf1a43ef899d11c597580c1329c",
+  "aqua": "0x1111113ccf1426a8e30e2bff5e005d929bf6a90a",
+  "codeHash": "0x720bc02d220db318164dc3bade86eec1f3655bdc00fc1174de7d816a95c341f8",
+  "deploymentSource": "https://github.com/1inch/aqua#deployments",
+  "checkedAt": "2026-09-26T03:45:10.048Z"
+}

@@ -1,5 +1,6 @@
 # Bio Agent — ETHGlobal Tokyo 2026
 
+**[1inch提出の要点・公式Aqua local fork・実TX証拠・英語説明](docs/submission/1inch-aqua.md)** — 提出用GUIは `http://127.0.0.1:8813/aqua`。
 ブロックチェーン上の情報を刺激として受け取り、内部状態と学習結果に基づいて振る舞う Bio Agent。生物由来の神経回路を使った学習・自律性と、その様子を観察できる体験を目指します。
 
 現在は、12体のハエが競争し、成績下位の個体が自己学習して復帰する **Fly Lab** を Cloudflare Workers で公開しています。公開版は旧Q-learningモデルです。従来のローカル版（8800）は採餌・市場・Aquaの全用途でMaleCNS実測部分回路を必須とし、行動選択部分を学習します。ローカルでは Anvil に3匹を登録し、GUIからオンチェーン刺激を送る構成にも対応しています。別のCircuit LabではMaleCNS部分グラフを人工動力学で計算できます。Sepoliaは未配置で、コントラクトは Foundry によるデプロイ準備まで完了しています。
@@ -25,6 +26,8 @@
 **[現在の判断・学習基盤](docs/design/malecns-learning.md)**。MaleCNSを省略するフォールバックはありません。出典とRuntimeをhashで照合し、採用した学習結果を次の判断へ反映・保存します。現行の専用ローカルGUIは http://127.0.0.1:8800/ です。
 
 ## Aqua Connectome — 共有流動性の箱庭
+
+**1inch提出用は全166,700神経・2個体の公式Aqua fork版です。** `npm run submission:aqua` → <http://127.0.0.1:8813/aqua>。以下は既存の軽量ブラウザー版の説明です。
 
 **Powered by Aqua — © Degensoft Ltd 2025.** 実測7神経・19接続の人工rate modelを公式Aqua SDKへ接続。3個体が同じウォレットから仮想残高を提示し、人工刺激に応じて縮小・撤回します。実Aqua本体と独自AquaAppをAnvilに配置し、実TX・テストトークン交換を確認できます。実測接続を固定し、行動変換を学習します。全脳・ガスレス撤回・クロスチェーンではありません。
 

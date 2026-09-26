@@ -1,0 +1,16 @@
+No files changed, compilation skipped
+
+Ran 6 tests for test/AquaOfficialFork.t.sol:AquaOfficialForkTest
+[PASS] testDockPreventsFillAndKeepsWallet() (gas: 138872)
+[PASS] testInsufficientWalletRollsBackInputAndAccounting() (gas: 198973)
+[PASS] testNewStimulusBlocksOldStrategyBeforeDock() (gas: 130718)
+[PASS] testSharedWalletAndAtomicFill() (gas: 309767)
+[PASS] testSlippageAndIdentity() (gas: 159880)
+[PASS] testStrategyCannotBeReshippedAfterDock() (gas: 84161)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 4.06s (3.12s CPU time)
+
+Ran 1 test suite in 4.24s (4.06s CPU time): 6 tests passed, 0 failed, 0 skipped (6 total tests)
+Warning: This is a nightly build of Foundry. It is recommended to use the latest stable version. To mute this warning set `FOUNDRY_DISABLE_NIGHTLY_WARNING` in your environment. 
+
+2026-09-26T03:52:41.553214Z  WARN evm::traces::external: failed to get etherscan config err=Unresolved(UnresolvedEnvVarError { unresolved: "${ETHERSCAN_API_KEY}", var: "ETHERSCAN_API_KEY", source: NotPresent })
+2026-09-26T03:52:41.728915Z  WARN foundry_fork_db::cache: Failed to read cache file err=Os { code: 2, kind: NotFound, message: "No such file or directory" } path="/home/polonity/.foundry/cache/rpc/mainnet/26058941"
