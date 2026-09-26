@@ -155,10 +155,10 @@ export const messages = {
   '元のreceipt JSONを見る ↗': 'View raw receipt JSON ↗',
   閉じる: 'Close',
   '小さな判断の積み重ね。': 'Little decisions add up.',
-  '各ハエは蜜の方向・危険な方向・エネルギーを観測し、Q値から移動や休息を選びます。18秒ごとに成績下位の2体が学習室に入り、レース中の経験と練習環境から実際にQ値を更新します。':
-    'Each fly observes nectar, danger and energy, then uses Q-values to choose movement or rest. Every 18 seconds, up to two lower-performing flies pause to learn from experience and a practice environment.',
-  '学習に使わない固定3コースで新旧方策を比較し、改善した候補のみ採用。復帰時の体力回復は学習効果とは別です。検証スコアは蜜の数ではなく報酬の合計です。':
-    'Compare old and candidate policies on three fixed validation courses not used for training. Only improved candidates are adopted. Energy recovery on return is separate from learning. Validation scores measure reward, not nectar count.',
+  'まず環境TXで危険エリアとフィールドを用意し、確定した刺激TXで蜜を追加します。3匹は蜜・危険・身体状態から移動や休息を選びます。':
+    'First, an environment TX defines the field and hazards; confirmed stimulus TXs add food. Three flies use food, danger and body state to choose movement or rest.',
+  '「学習室へ」で、確認済み環境のコピーと経験からQ値を更新します。同じ環境の再生で新旧方策を比較し、改善した候補のみ採用。未知環境での効果や、復帰時の体力回復とは区別します。':
+    'Start learning updates Q-values using experience and a copy of the confirmed environment. Replay compares old and candidate policies; only improved candidates are adopted. This is separate from unseen-world performance and energy recovery on return.',
   'これはブラウザー内で動く適応モデルです。': 'This adaptive model runs in your browser.',
   'MaleCNSの実測部分回路を判断に使用します。動力学と身体は人工設計で、全脳の再現ではありません。実験データを保存できます。':
     'Measured MaleCNS partial connectivity drives decisions. Dynamics and body are engineered; this is not a whole brain. Export experiment evidence below.',
@@ -226,8 +226,6 @@ export const messages = {
   'イベント受信後、選択したハエに適用しました': 'Event received and applied to the target fly',
   刺激を適用しました: 'Stimulus applied',
   '適用しました ✓': 'Applied ✓',
-  '3匹が蜜・危険・エネルギーから行動を選びます。18秒ごとに下位1匹が学習室に入り、経験を再生して方策を更新します。入力は選択した個体のコントラクト Status に記録されます。':
-    'Three flies choose actions from nectar, danger and energy. Every 18 seconds, one lower-performing fly pauses to learn from experience. Inputs are recorded in the selected fly’s contract Status.',
   'ANVIL 31337 · 選択中の1匹に送信': 'ANVIL 31337 · Send to the selected fly',
   コントラクトに刺激を送信: 'Send stimulus onchain',
   'この子に刺激を届けよう。': 'Send this little one a stimulus.',
@@ -299,7 +297,7 @@ export const patterns = [
   ['Block {block} / log {log} / 適用tick {tick}', 'Block {block} / log {log} / applied tick {tick}'],
   ['{name} への刺激', 'Stimulus for {name}'],
   ['直近の送信先：{name} #{id} · {status}', 'Latest recipient: {name} #{id} · {status}'],
-  ['経験再生 + 練習環境 / {steps} updates', 'Experience replay + practice / {steps} updates'],
+  ['経験再生 + 確認済み環境 / {steps} updates', 'Experience replay + confirmed world / {steps} updates'],
   ['検証報酬 {before} → {after}', 'Validation reward {before} → {after}'],
   ['v{version} で競争に復帰', 'Returning with v{version}'],
   ['接続待ち: {error}', 'Connection pending: {error}'],

@@ -151,8 +151,8 @@ const apps = {
         'The browser updates Q values from experience. In chain mode, learning and comparison replay copies of the confirmed environment without adding visible food. Only a candidate with a better comparison score is adopted. The full runtime uses a separate readout learner.',
       ),
       tryIt: t(
-        '個体を選び、刺激を送信してTX確定後の変化と餌のTX履歴を確認します。AnvilとSepoliaは同じ画面です。Sepoliaは所有者ウォレットまたは1時間ごとの自動送信で刺激を追加します。',
-        'Select an individual, send a stimulus, and inspect the confirmed change and food transaction history. Anvil and Sepolia share this UI. Sepolia stimuli come from the owner wallet or the hourly scheduler.',
+        '①環境と餌の元TXを見る → ②個体を観察 → ③「学習室へ」 → ④学習前・候補・採用結果を確認。閲覧と学習はウォレット不要です。手動送信は所有者のみ。定期送信は毎時確認・最低1時間間隔です。',
+        '1 Open environment and food source TXs. 2 Observe an agent. 3 Start learning. 4 Check before/candidate and adoption. Viewing and learning need no wallet. Manual sends require the owner. The sender checks hourly, at least one hour between sends.',
       ),
     },
   },
@@ -546,21 +546,21 @@ const manuals = {
 const browserManuals = {
   foraging: {
     role: t(
-      '刺激・活動モード・供給設定を変えて、ハエの自律行動を観察します。',
-      'Change stimulus, activity mode and supply settings, then observe autonomous behavior.',
+      'あなたはオンチェーン入力で動く3個体の観察者です。環境・刺激の出典をたどり、経験から判断を変えられるかを確かめます。',
+      'Observe three agents driven by onchain inputs. Trace environment and stimulus sources, then test whether experience changes their decisions.',
     ),
     steps: [
       t(
-        '採餌・探索・休息を選び、刺激とエネルギー供給を調整して適用します。',
-        'Choose forage, explore or rest, adjust stimulus and energy supply, then apply.',
+        'まず「環境と餌の入力TX」を開き、危険エリアの初期TXと蜜の元TXを確認します。観察はウォレット不要です。',
+        'First open “Environment and food input TXs” to inspect the initial hazard TX and food source TXs. Watching requires no wallet.',
       ),
       t(
-        '蜜を取ったときの♡、危険の！、休息、学び直しの？を観察します。チェーン接続時のおやつボタンも刺激TXを送ります。餌がないときは次のTXを待ちます。',
-        'Look for hearts after food, danger marks, rest and learning question marks. With a chain connection, the snack button also sends a stimulus TX. No food means waiting for the next TX.',
+        '個体を選び、蜜・危険・休息の反応を見ます。手動刺激とおやつボタンは所有者のTX送信です。餌がないときは次のTXを待ち、自動補充しません。',
+        'Select an agent and observe food, danger and rest. Manual stimuli and the snack button require an owner-signed TX. With no food, wait for the next TX; there is no refill.',
       ),
       t(
-        '「学習室へ」で学び直しを試し、ラウンド終了後は学習を引き継いで次へ進みます。',
-        'Try relearning with the learning-room button; after a round, continue with the learned policy.',
+        '「学習室へ」で確認済み環境を再生し、学習前・候補・採用／維持を見ます。この比較だけで未知環境への適応を証明したことにはなりません。',
+        'Use “Start learning” to replay the confirmed environment, then read before/candidate and adopt/keep. This comparison alone does not establish unseen-world adaptation.',
       ),
     ],
     score: t(

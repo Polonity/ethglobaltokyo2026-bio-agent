@@ -34,7 +34,7 @@
 
 ## 定期TXとガス代
 
-Cloudflare Cron → `StimulusScheduler` Durable Object → Registry。毎時1回、Agent #1へ正の刺激を送ります。ブラウザーを閉じても実行され、外部HTTPから送信を起動するAPIはありません。
+Cloudflare Cron → `StimulusScheduler` Durable Object → Registry。毎時送信条件を確認し、最低1時間の間隔を空けてAgent #1へ正の刺激を送ります。ブラウザーを閉じても実行され、外部HTTPから送信を起動するAPIはありません。
 
 署名者は既存の試験用EOA **0x0d01a92bae0E01754f7102466936397F609D67C3**。ユーザーの許可で同じ試験資金を再利用します。鍵はCloudflare Secretで保管し、静的ファイル・ブラウザーへ渡しません。現在スマートウォレットではありません。
 

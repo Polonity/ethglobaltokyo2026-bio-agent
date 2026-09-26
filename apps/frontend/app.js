@@ -515,7 +515,7 @@ function renderUI() {
       if (!f) {
         el.innerHTML = `<div class="slot-heading"><span>◎</span> TRAINING POD ${String(i + 1).padStart(2, '0')}<span>STANDBY</span></div><p class="slot-detail">下位の個体が到着するまで待機中</p>`;
       } else if (active) {
-        el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${Math.floor((f.training.steps / f.training.totalUpdates) * 100)}%</span></div><p class="slot-detail">経験再生 + 練習環境 / ${f.training.steps} updates</p><div class="training-track"><i style="width:${(f.training.steps / f.training.totalUpdates) * 100}%"></i></div>`;
+        el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${Math.floor((f.training.steps / f.training.totalUpdates) * 100)}%</span></div><p class="slot-detail">経験再生 + 確認済み環境 / ${f.training.steps} updates</p><div class="training-track"><i style="width:${(f.training.steps / f.training.totalUpdates) * 100}%"></i></div>`;
       } else {
         const r = f.lastReport;
         el.innerHTML = `<div class="slot-heading"><i class="rank-dot" style="background:${f.color}"></i>${f.name}<span>${r.accepted ? 'POLICY UPDATED' : 'POLICY KEPT'}</span></div><p class="slot-detail">検証報酬 ${r.before.toFixed(1)} → ${r.after.toFixed(1)}<br>${r.accepted ? `v${f.version} で競争に復帰` : '改善なし。既存方策で復帰'}</p>`;
@@ -680,8 +680,6 @@ function frame(now) {
 {
   document.body.classList.add('chain-mode');
   document.querySelector('.standings').append(document.querySelector('.control-panel'));
-  $('about-mechanism').textContent =
-    '3匹が蜜・危険・エネルギーから行動を選びます。18秒ごとに下位1匹が学習室に入り、経験を再生して方策を更新します。入力は選択した個体のコントラクト Status に記録されます。';
   $('chain-panel').hidden = false;
   $('chain-registry').textContent = config.registryAddress;
   $('input-source-label').textContent = `${config.networkName} ${config.chainId}`;
